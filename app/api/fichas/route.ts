@@ -1,18 +1,26 @@
 import { createClient } from "@supabase/supabase-js";
 
+export const dynamic = "force-dynamic"; // 👈 IMPORTANTE
+
 const supabase = createClient(
-  "https://sflymzqhptzdmkevkwxw.supabase.co",
+  "https://sflfymzqhptzdmkevkwx.supabase.co",
   process.env.SUPABASE_KEY!
 );
 
 export async function GET() {
-  const { data, error } = await supabase
-    .from("fichas")
-    .select("*");
+  try {
+    const { data, error } = await supabase
+      .from("fichas")
+      .select("*");
 
-  if (error) {
-    return Response.json({ error }, { status: 500 });
+    if (error) {
+      return new Response(JSON.stringify(error), { status: 500 });
+    }
+
+    return new Response(JSON.stringify(data), { status: 200 });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: "Server error" }), {
+      status: 500,
+    });
   }
-
-  return Response.json(data);
 }
