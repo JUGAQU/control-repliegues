@@ -10,23 +10,27 @@ const [datos, setDatos] = useState<any[]>([]);
 
 // 🚀 CARGA DESDE TU API (NO desde Supabase directo)
 useEffect(() => {
-const cargarDatos = async () => {
-try {
-const res = await fetch("/api/fichas");
-const data = await res.json();
+  const cargarDatos = async () => {
+    try {
+      const res = await fetch("/api/fichas");
+      const data = await res.json();
 
-```
-    console.log("DATOS API:", data);
+      console.log("DATOS API:", data);
 
-    setDatos(data);
-  } catch (error) {
-    console.error("Error cargando datos:", error);
-  }
-};
+      // 👇 ESTA ES LA CLAVE
+      if (Array.isArray(data)) {
+        setDatos(data);
+      } else {
+        console.error("La API no devuelve array:", data);
+        setDatos([]); // evita que rompa
+      }
 
-cargarDatos();
-```
+    } catch (error) {
+      console.error("Error cargando datos:", error);
+    }
+  };
 
+  cargarDatos();
 }, []);
 
 // 🔍 FILTROS
@@ -98,7 +102,7 @@ if (!orden.campo) return 0;
   return 0;
 });
 ```
-
+console.log("DATOS ESTADO:", datos);
 return (
 <div style={{ padding: 10, fontSize: 12 }}>
 <div style={{ overflowX: "auto", maxHeight: "500px" }}>
