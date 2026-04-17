@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 export const dynamic = "force-dynamic"; // 👈 IMPORTANTE
 
 const supabase = createClient(
-  "https://sflfymzqhptzdmkevkwx.supabase.co",
+  "https://sflfymzqhptzdmkevkxw.supabase.co",
   process.env.SUPABASE_KEY!
 );
 
