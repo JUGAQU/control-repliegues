@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+export const dynamic = "force-dynamic";
+
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export default function Ficha() {
   const [formData, setFormData] = useState<any>({});
