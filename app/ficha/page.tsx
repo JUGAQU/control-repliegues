@@ -102,7 +102,7 @@ export default function Ficha() {
         </button>
       </div>
 
-      <div
+<div
   style={{
     border: "1px solid #ccc",
     padding: 15,
@@ -171,6 +171,7 @@ export default function Ficha() {
       onChange={handleChange}
     />
   </div>
-</div>     
+</div>
+</div>      
   );
 }
