@@ -68,24 +68,21 @@ setOrden({ campo, direccion });
 };
 
 // 🔍 FILTRADO + ORDEN
-const datosFiltrados = datos
-  .filter((item) => {
-    return (
-      (item.atlas ?? "").toString().toLowerCase().includes((filtros.atlas ?? "").toLowerCase()) &&
-      (item.lote ?? "").toString().toLowerCase().includes((filtros.lote ?? "").toLowerCase()) &&
-      (item.nombre ?? "").toString().toLowerCase().includes((filtros.nombre ?? "").toLowerCase()) &&
-      (item.provincia ?? "").toString().toLowerCase().includes((filtros.provincia ?? "").toLowerCase()) &&
-      (item.miga ?? "").toString().toLowerCase().includes((filtros.miga ?? "").toLowerCase()) &&
-      (item.coordenadas ?? "").toString().toLowerCase().includes((filtros.coordenadas ?? "").toLowerCase()) &&
-      (item.tipo_edificio ?? "").toString().toLowerCase().includes((filtros.tipo_edificio ?? "").toLowerCase()) &&
-      (item.tipo_repliegue ?? "").toString().toLowerCase().includes((filtros.tipo_repliegue ?? "").toLowerCase()) &&
-      (item.tipo_senda ?? "ACELERADA_2026").toString().toLowerCase().includes((filtros.tipo_senda ?? "").toLowerCase()) &&
-      (item.fecha_abandono ?? "").toString().toLowerCase().includes((filtros.fecha_abandono ?? "").toLowerCase()) &&
-      (item.prioritario ? "si" : "no").includes(
-        (filtros.prioritario ?? "").toLowerCase()
-      )
-    );
-  })
+const datosFiltrados = datos.filter((item) => {
+  return (
+    safe(item.atlas).includes(safe(filtros.atlas)) &&
+    safe(item.lote).includes(safe(filtros.lote)) &&
+    safe(item.nombre).includes(safe(filtros.nombre)) &&
+    safe(item.provincia).includes(safe(filtros.provincia)) &&
+    safe(item.miga).includes(safe(filtros.miga)) &&
+    safe(item.coordenadas).includes(safe(filtros.coordenadas)) &&
+    safe(item.tipo_edificio).includes(safe(filtros.tipo_edificio)) &&
+    safe(item.tipo_repliegue).includes(safe(filtros.tipo_repliegue)) &&
+    safe(item.tipo_senda || "ACELERADA_2026").includes(safe(filtros.tipo_senda)) &&
+    safe(item.fecha_abandono).includes(safe(filtros.fecha_abandono)) &&
+    (item.prioritario ? "si" : "no").includes(safe(filtros.prioritario))
+  );
+});
 .sort((a: any, b: any) => {
 if (!orden.campo) return 0;
 
