@@ -43,9 +43,6 @@ export default function Ficha() {
 const guardarCambios = async () => {
   console.log("GUARDANDO:", formData);
 
-const guardarCambios = async () => {
-  console.log("GUARDANDO:", formData);
-
   const { data, error } = await supabase
     .from("fichas")
     .update({
