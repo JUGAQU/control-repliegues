@@ -43,6 +43,9 @@ export default function Ficha() {
 const guardarCambios = async () => {
   console.log("GUARDANDO:", formData);
 
+const guardarCambios = async () => {
+  console.log("GUARDANDO:", formData);
+
   const { data, error } = await supabase
     .from("fichas")
     .update({
@@ -57,19 +60,20 @@ const guardarCambios = async () => {
       fecha_abandono: formData.fecha_abandono,
       prioritario: formData.prioritario,
     })
-    .eq("atlas", formData.atlas); // 👈 CLAVE
+    .eq("atlas", formData.atlas);
 
   console.log("RESPUESTA:", data);
   console.log("ERROR:", error);
 
   if (error) {
+    console.error("Error guardando:", error);
     alert("Error al guardar");
   } else {
     alert("Guardado en Supabase ✅");
     setCambiosSinGuardar(false);
+    router.push("/listado");
   }
 };
-
     if (error) {
       console.error("Error guardando:", error);
       alert("Error al guardar");
