@@ -11,3 +11,8 @@ export default function Ficha() {
     </div>
   );
 }
+
+import { useSearchParams, useRouter } from "next/navigation";
+const searchParams = useSearchParams();
+const router = useRouter();
+const id = searchParams.get("id");
