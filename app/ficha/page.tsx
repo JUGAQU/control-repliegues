@@ -103,35 +103,74 @@ export default function Ficha() {
       </div>
 
       <div
-        style={{
-          border: "1px solid #ccc",
-          padding: 15,
-          background: "#f5f5f5",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 15,
-        }}
-      >
-        <div style={campo}>
-          <span>Atlas:</span>
-          <input value={formData.atlas || ""} readOnly style={valor} />
-        </div>
+  style={{
+    border: "1px solid #ccc",
+    padding: 15,
+    background: "#f5f5f5",
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 15,
+  }}
+>
+  <div style={campo}>
+    <span>Atlas:</span>
+    <input value={formData.atlas || ""} readOnly style={valor} />
+  </div>
 
-        <div style={campo}>
-          <span>Nombre:</span>
-          <input name="nombre" value={formData.nombre || ""} onChange={handleChange} style={valor} />
-        </div>
+  <div style={campo}>
+    <span>Lote:</span>
+    <input name="lote" value={formData.lote || ""} onChange={handleChange} style={valor} />
+  </div>
 
-        <div style={campo}>
-          <span>Prioritario:</span>
-          <input
-            type="checkbox"
-            name="prioritario"
-            checked={formData.prioritario || false}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-    </div>
+  <div style={campo}>
+    <span>Nombre:</span>
+    <input name="nombre" value={formData.nombre || ""} onChange={handleChange} style={valor} />
+  </div>
+
+  <div style={campo}>
+    <span>Provincia:</span>
+    <input name="provincia" value={formData.provincia || ""} onChange={handleChange} style={valor} />
+  </div>
+
+  <div style={campo}>
+    <span>Miga:</span>
+    <input name="miga" value={formData.miga || ""} onChange={handleChange} style={valor} />
+  </div>
+
+  <div style={campo}>
+    <span>Coordenadas:</span>
+    <input name="coordenadas" value={formData.coordenadas || ""} onChange={handleChange} style={valor} />
+  </div>
+
+  <div style={campo}>
+    <span>Tipo Edificio:</span>
+    <input name="tipo_edificio" value={formData.tipo_edificio || ""} onChange={handleChange} style={valor} />
+  </div>
+
+  <div style={campo}>
+    <span>Tipo Repliegue:</span>
+    <input name="tipo_repliegue" value={formData.tipo_repliegue || ""} onChange={handleChange} style={valor} />
+  </div>
+
+  <div style={campo}>
+    <span>Tipo Senda:</span>
+    <input name="tipo_senda" value={formData.tipo_senda || ""} onChange={handleChange} style={valor} />
+  </div>
+
+  <div style={campo}>
+    <span>Fecha Abandono:</span>
+    <input name="fecha_abandono" value={formData.fecha_abandono || ""} onChange={handleChange} style={valor} />
+  </div>
+
+  <div style={campo}>
+    <span>Prioritario:</span>
+    <input
+      type="checkbox"
+      name="prioritario"
+      checked={formData.prioritario || false}
+      onChange={handleChange}
+    />
+  </div>
+</div>     
   );
 }
