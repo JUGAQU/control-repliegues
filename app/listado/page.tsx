@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+const safe = (v: any) => (v ?? "").toString().toLowerCase();
 
 export default function Listado() {
 const router = useRouter();
@@ -68,32 +69,32 @@ setOrden({ campo, direccion });
 };
 
 // 🔍 FILTRADO + ORDEN
-const datosFiltrados = datos.filter((item) => {
-  return (
-    safe(item.atlas).includes(safe(filtros.atlas)) &&
-    safe(item.lote).includes(safe(filtros.lote)) &&
-    safe(item.nombre).includes(safe(filtros.nombre)) &&
-    safe(item.provincia).includes(safe(filtros.provincia)) &&
-    safe(item.miga).includes(safe(filtros.miga)) &&
-    safe(item.coordenadas).includes(safe(filtros.coordenadas)) &&
-    safe(item.tipo_edificio).includes(safe(filtros.tipo_edificio)) &&
-    safe(item.tipo_repliegue).includes(safe(filtros.tipo_repliegue)) &&
-    safe(item.tipo_senda || "ACELERADA_2026").includes(safe(filtros.tipo_senda)) &&
-    safe(item.fecha_abandono).includes(safe(filtros.fecha_abandono)) &&
-    (item.prioritario ? "si" : "no").includes(safe(filtros.prioritario))
-  );
-});
-.sort((a: any, b: any) => {
-if (!orden.campo) return 0;
+const datosFiltrados = datos
+  .filter((item) => {
+    return (
+      safe(item.atlas).includes(safe(filtros.atlas)) &&
+      safe(item.lote).includes(safe(filtros.lote)) &&
+      safe(item.nombre).includes(safe(filtros.nombre)) &&
+      safe(item.provincia).includes(safe(filtros.provincia)) &&
+      safe(item.miga).includes(safe(filtros.miga)) &&
+      safe(item.coordenadas).includes(safe(filtros.coordenadas)) &&
+      safe(item.tipo_edificio).includes(safe(filtros.tipo_edificio)) &&
+      safe(item.tipo_repliegue).includes(safe(filtros.tipo_repliegue)) &&
+      safe(item.tipo_senda || "ACELERADA_2026").includes(safe(filtros.tipo_senda)) &&
+      safe(item.fecha_abandono).includes(safe(filtros.fecha_abandono)) &&
+      (item.prioritario ? "si" : "no").includes(safe(filtros.prioritario))
+    );
+  })
+  .sort((a: any, b: any) => {
+    if (!orden.campo) return 0;
 
-```
-  const valorA = (a[orden.campo] || "").toString().toLowerCase();
-  const valorB = (b[orden.campo] || "").toString().toLowerCase();
+    const valorA = safe(a[orden.campo]);
+    const valorB = safe(b[orden.campo]);
 
-  if (valorA < valorB) return orden.direccion === "asc" ? -1 : 1;
-  if (valorA > valorB) return orden.direccion === "asc" ? 1 : -1;
-  return 0;
-});
+    if (valorA < valorB) return orden.direccion === "asc" ? -1 : 1;
+    if (valorA > valorB) return orden.direccion === "asc" ? 1 : -1;
+    return 0;
+  });
 ```
 console.log("DATOS ESTADO:", datos);
 return (
