@@ -69,27 +69,23 @@ setOrden({ campo, direccion });
 
 // 🔍 FILTRADO + ORDEN
 const datosFiltrados = datos
-.filter((item) => {
-return (
-(item.atlas || "").toLowerCase().includes(filtros.atlas.toLowerCase()) &&
-(item.lote || "").toLowerCase().includes(filtros.lote.toLowerCase()) &&
-(item.nombre || "").toLowerCase().includes(filtros.nombre.toLowerCase()) &&
-(item.provincia || "").toLowerCase().includes(filtros.provincia.toLowerCase()) &&
-item.miga.toLowerCase().includes(filtros.miga.toLowerCase()) &&
-(item.coordenadas || "").toString().toLowerCase().includes(filtros.coordenadas.toLowerCase()) &&
-(item.tipo_edificio || "").toLowerCase().includes(filtros.tipo_edificio.toLowerCase()) &&
-(item.tipo_repliegue || "").toLowerCase().includes(filtros.tipo_repliegue.toLowerCase()) &&
-(item.tipo_senda || "ACELERADA_2026")
-.toLowerCase()
-.includes(filtros.tipo_senda.toLowerCase()) &&
-(item.fecha_abandono || "")
-.toLowerCase()
-.includes(filtros.fecha_abandono.toLowerCase()) &&
-(item.prioritario ? "si" : "no").includes(
-filtros.prioritario.toLowerCase()
-)
-);
-})
+  .filter((item) => {
+    return (
+      (item.atlas ?? "").toString().toLowerCase().includes(filtros.atlas.toLowerCase()) &&
+      (item.lote ?? "").toString().toLowerCase().includes(filtros.lote.toLowerCase()) &&
+      (item.nombre ?? "").toString().toLowerCase().includes(filtros.nombre.toLowerCase()) &&
+      (item.provincia ?? "").toString().toLowerCase().includes(filtros.provincia.toLowerCase()) &&
+      (item.miga ?? "").toString().toLowerCase().includes(filtros.miga.toLowerCase()) &&
+      (item.coordenadas ?? "").toString().toLowerCase().includes(filtros.coordenadas.toLowerCase()) &&
+      (item.tipo_edificio ?? "").toString().toLowerCase().includes(filtros.tipo_edificio.toLowerCase()) &&
+      (item.tipo_repliegue ?? "").toString().toLowerCase().includes(filtros.tipo_repliegue.toLowerCase()) &&
+      (item.tipo_senda ?? "ACELERADA_2026").toString().toLowerCase().includes(filtros.tipo_senda.toLowerCase()) &&
+      (item.fecha_abandono ?? "").toString().toLowerCase().includes(filtros.fecha_abandono.toLowerCase()) &&
+      (item.prioritario ? "si" : "no").includes(
+        filtros.prioritario.toLowerCase()
+      )
+    );
+  })
 .sort((a: any, b: any) => {
 if (!orden.campo) return 0;
 
