@@ -81,9 +81,7 @@ const datosFiltrados = datos
       (item.tipo_repliegue ?? "").toString().toLowerCase().includes(filtros.tipo_repliegue.toLowerCase()) &&
       (item.tipo_senda ?? "ACELERADA_2026").toString().toLowerCase().includes(filtros.tipo_senda.toLowerCase()) &&
       (item.fecha_abandono ?? "").toString().toLowerCase().includes(filtros.fecha_abandono.toLowerCase()) &&
-      (item.prioritario ? "si" : "no").includes(
-        filtros.prioritario.toLowerCase()
-      )
+      (item.prioritario ? "si" : "no").includes(filtros.prioritario.toLowerCase())
     );
   })
 .sort((a: any, b: any) => {
