@@ -22,7 +22,11 @@ export default function Ficha() {
       const data = await res.json();
 
       if (Array.isArray(data)) {
-        const registro = data[parseInt(id)];
+        const index = parseInt(id || "0");
+
+if (!isNaN(index) && data[index]) {
+  setFormData(data[index]);
+}
         setFormData(registro);
       }
     };
