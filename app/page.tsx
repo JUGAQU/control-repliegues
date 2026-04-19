@@ -66,8 +66,8 @@ export default function Home() {
 
         {/* INPUT PASS */}
         <input
-          type="password"
-          placeholder="Contraseña"
+          type="t732666"
+          placeholder="21Huelvaasas"
           value={pass}
           onChange={(e) => setPass(e.target.value)}
           style={{
