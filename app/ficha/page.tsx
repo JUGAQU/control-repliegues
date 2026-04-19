@@ -12,7 +12,6 @@ export default function Ficha() {
   const router = useRouter();
   const id = searchParams.get("id");
 
-  // 🔄 CARGAR REGISTRO DESDE API
   useEffect(() => {
     const cargar = async () => {
       if (!id) return;
@@ -40,44 +39,32 @@ export default function Ficha() {
     setCambiosSinGuardar(true);
   };
 
-const guardarCambios = async () => {
-  console.log("GUARDANDO:", formData);
+  const guardarCambios = async () => {
+    console.log("GUARDANDO:", formData);
 
-  const { data, error } = await supabase
-    .from("fichas")
-    .update({
-      lote: formData.lote,
-      nombre: formData.nombre,
-      provincia: formData.provincia,
-      miga: formData.miga,
-      coordenadas: formData.coordenadas,
-      tipo_edificio: formData.tipo_edificio,
-      tipo_repliegue: formData.tipo_repliegue,
-      tipo_senda: formData.tipo_senda,
-      fecha_abandono: formData.fecha_abandono,
-      prioritario: formData.prioritario,
-    })
-    .eq("atlas", formData.atlas);
+    const { data, error } = await supabase
+      .from("fichas")
+      .update({
+        lote: formData.lote,
+        nombre: formData.nombre,
+        provincia: formData.provincia,
+        miga: formData.miga,
+        coordenadas: formData.coordenadas,
+        tipo_edificio: formData.tipo_edificio,
+        tipo_repliegue: formData.tipo_repliegue,
+        tipo_senda: formData.tipo_senda,
+        fecha_abandono: formData.fecha_abandono,
+        prioritario: formData.prioritario,
+      })
+      .eq("atlas", formData.atlas);
 
-  console.log("RESPUESTA:", data);
-  console.log("ERROR:", error);
-
-  if (error) {
-    console.error("Error guardando:", error);
-    alert("Error al guardar");
-  } else {
-    alert("Guardado en Supabase ✅");
-    setCambiosSinGuardar(false);
-    router.push("/listado");
-  }
-};
     if (error) {
       console.error("Error guardando:", error);
       alert("Error al guardar");
     } else {
       alert("Guardado en Supabase ✅");
       setCambiosSinGuardar(false);
-      router.push("/listado"); // 👈 vuelve al listado
+      router.push("/listado");
     }
   };
 
@@ -98,22 +85,8 @@ const guardarCambios = async () => {
   return (
     <div style={{ padding: 20, fontFamily: "Arial" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 15 }}>
+        <button onClick={guardarCambios}>💾</button>
 
-        {/* 💾 GUARDAR */}
-        <button
-          onClick={guardarCambios}
-          title="Guardar"
-          style={{
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-            fontSize: 18,
-          }}
-        >
-          💾
-        </button>
-
-        {/* ❌ VOLVER */}
         <button
           onClick={() => {
             if (cambiosSinGuardar) {
@@ -122,76 +95,29 @@ const guardarCambios = async () => {
             }
             router.push("/listado");
           }}
-          style={{
-            background: "#eee",
-            border: "1px solid #ccc",
-            padding: "6px 10px",
-            cursor: "pointer",
-          }}
         >
           ✖
         </button>
-
       </div>
 
-      {/* FORMULARIO */}
-      <div style={{
-        border: "1px solid #ccc",
-        padding: 15,
-        background: "#f5f5f5",
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 15,
-      }}>
-
+      <div
+        style={{
+          border: "1px solid #ccc",
+          padding: 15,
+          background: "#f5f5f5",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 15,
+        }}
+      >
         <div style={campo}>
           <span>Atlas:</span>
           <input value={formData.atlas || ""} readOnly style={valor} />
         </div>
 
         <div style={campo}>
-          <span>Lote:</span>
-          <input name="lote" value={formData.lote || ""} onChange={handleChange} style={valor} />
-        </div>
-
-        <div style={campo}>
           <span>Nombre:</span>
           <input name="nombre" value={formData.nombre || ""} onChange={handleChange} style={valor} />
-        </div>
-
-        <div style={campo}>
-          <span>Provincia:</span>
-          <input name="provincia" value={formData.provincia || ""} onChange={handleChange} style={valor} />
-        </div>
-
-        <div style={campo}>
-          <span>Miga:</span>
-          <input name="miga" value={formData.miga || ""} onChange={handleChange} style={valor} />
-        </div>
-
-        <div style={campo}>
-          <span>Coordenadas:</span>
-          <input name="coordenadas" value={formData.coordenadas || ""} onChange={handleChange} style={valor} />
-        </div>
-
-        <div style={campo}>
-          <span>Tipo Edificio:</span>
-          <input name="tipo_edificio" value={formData.tipo_edificio || ""} onChange={handleChange} style={valor} />
-        </div>
-
-        <div style={campo}>
-          <span>Tipo Repliegue:</span>
-          <input name="tipo_repliegue" value={formData.tipo_repliegue || ""} onChange={handleChange} style={valor} />
-        </div>
-
-        <div style={campo}>
-          <span>Senda:</span>
-          <input name="tipo_senda" value={formData.tipo_senda || ""} onChange={handleChange} style={valor} />
-        </div>
-
-        <div style={campo}>
-          <span>Fecha Abandono:</span>
-          <input name="fecha_abandono" value={formData.fecha_abandono || ""} onChange={handleChange} style={valor} />
         </div>
 
         <div style={campo}>
@@ -203,7 +129,6 @@ const guardarCambios = async () => {
             onChange={handleChange}
           />
         </div>
-
       </div>
     </div>
   );
