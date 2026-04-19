@@ -30,6 +30,7 @@ if (!isNaN(index) && data[index]) {
         setFormData(registro);
       }
     };
+    
 
     cargar();
   }, [id]);
