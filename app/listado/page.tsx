@@ -75,7 +75,7 @@ return (
 (item.lote || "").toLowerCase().includes(filtros.lote.toLowerCase()) &&
 (item.nombre || "").toLowerCase().includes(filtros.nombre.toLowerCase()) &&
 (item.provincia || "").toLowerCase().includes(filtros.provincia.toLowerCase()) &&
-(item.miga || "")  .toString()  .toLowerCase()  .includes(filtros.miga.toLowerCase()) &&
+item.miga.toLowerCase().includes(filtros.miga.toLowerCase()) &&
 (item.coordenadas || "").toString().toLowerCase().includes(filtros.coordenadas.toLowerCase()) &&
 (item.tipo_edificio || "").toLowerCase().includes(filtros.tipo_edificio.toLowerCase()) &&
 (item.tipo_repliegue || "").toLowerCase().includes(filtros.tipo_repliegue.toLowerCase()) &&
