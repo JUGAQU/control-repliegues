@@ -40,28 +40,35 @@ export default function Ficha() {
     setCambiosSinGuardar(true);
   };
 
-  // 💾 GUARDAR EN SUPABASE
-  const guardarCambios = async () => {
-    if (!formData.id) {
-      alert("No hay ID para guardar");
-      return;
-    }
+const guardarCambios = async () => {
+  console.log("GUARDANDO:", formData);
 
-    const { error } = await supabase
-      .from("fichas")
-      .update({
-        lote: formData.lote,
-        nombre: formData.nombre,
-        provincia: formData.provincia,
-        miga: formData.miga,
-        coordenadas: formData.coordenadas,
-        tipo_edificio: formData.tipo_edificio,
-        tipo_repliegue: formData.tipo_repliegue,
-        tipo_senda: formData.tipo_senda,
-        fecha_abandono: formData.fecha_abandono,
-        prioritario: formData.prioritario,
-      })
-      .eq("id", formData.id);
+  const { data, error } = await supabase
+    .from("fichas")
+    .update({
+      lote: formData.lote,
+      nombre: formData.nombre,
+      provincia: formData.provincia,
+      miga: formData.miga,
+      coordenadas: formData.coordenadas,
+      tipo_edificio: formData.tipo_edificio,
+      tipo_repliegue: formData.tipo_repliegue,
+      tipo_senda: formData.tipo_senda,
+      fecha_abandono: formData.fecha_abandono,
+      prioritario: formData.prioritario,
+    })
+    .eq("atlas", formData.atlas); // 👈 CLAVE
+
+  console.log("RESPUESTA:", data);
+  console.log("ERROR:", error);
+
+  if (error) {
+    alert("Error al guardar");
+  } else {
+    alert("Guardado en Supabase ✅");
+    setCambiosSinGuardar(false);
+  }
+};
 
     if (error) {
       console.error("Error guardando:", error);
