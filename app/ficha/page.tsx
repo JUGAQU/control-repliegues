@@ -208,15 +208,14 @@ export default function Ficha() {
 
     {/* 🆕 NUEVO BLOQUE */}
 <div
-  style={{
-    border: "1px solid #ccc",
-    padding: 15,
-    background: "#eef6fb",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: 15,
-    marginTop: 20,
-  }}
+        style={{
+          border: "1px solid #ccc",
+          padding: 15,
+          background: "#f5f5f5",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 15,
+        }}
 >
 
   <div style={campo}>
