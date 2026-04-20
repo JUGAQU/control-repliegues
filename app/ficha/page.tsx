@@ -52,39 +52,24 @@ export default function Ficha() {
     }
     console.log("UPDATE RESULT:", data);
 
-    const { data, error } = await supabase
-  .from("fichas")
-  .update({
-    lote: formData.lote,
-    nombre: formData.nombre,
-    provincia: formData.provincia,
-    miga: formData.miga,
-    coordenadas: formData.coordenadas,
-    tipo_edificio: formData.tipo_edificio,
-    tipo_repliegue: formData.tipo_repliegue,
-    tipo_senda: formData.tipo_senda,
-    fecha_abandono: formData.fecha_abandono,
-    prioritario: formData.prioritario,
-  })
-  .eq("id", formData.id)
-  .select(); // 👈 🔥 IMPORTANTE
 
 
-    // const { error } = await supabase
-    //  .from("fichas")
-    //  .update({
-    //    lote: formData.lote,
-    //    nombre: formData.nombre,
-    //    provincia: formData.provincia,
-    //    miga: formData.miga,
-    //    coordenadas: formData.coordenadas,
-    //    tipo_edificio: formData.tipo_edificio,
-    //    tipo_repliegue: formData.tipo_repliegue,
-    //    tipo_senda: formData.tipo_senda,
-    //    fecha_abandono: formData.fecha_abandono,
-    //    prioritario: formData.prioritario,
-    //  })
-    //  .eq("id", formData.id); // ✅ CLAVE
+
+    const { error } = await supabase
+      .from("fichas")
+      .update({
+        lote: formData.lote,
+        nombre: formData.nombre,
+        provincia: formData.provincia,
+        miga: formData.miga,
+        coordenadas: formData.coordenadas,
+        tipo_edificio: formData.tipo_edificio,
+        tipo_repliegue: formData.tipo_repliegue,
+        tipo_senda: formData.tipo_senda,
+        fecha_abandono: formData.fecha_abandono,
+        prioritario: formData.prioritario,
+     })
+     .eq("id", formData.id); // ✅ CLAVE
 
 
 
