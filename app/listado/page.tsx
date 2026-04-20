@@ -29,7 +29,7 @@ export default function Listado() {
     checkUser();
   }, []);
 
-  // 🚀 CARGA DATOS
+  // 🚀 CGA DATOS
   useEffect(() => {
     const cargarDatos = async () => {
       try {
@@ -75,15 +75,15 @@ export default function Listado() {
   direccion: "asc",
 });
 
-  const ordenar = (campo: string) => {
-    let direccion = "asc";
+const ordenar = (campo: string) => {
+  let direccion: "asc" | "desc" = "asc";
 
-    if (orden.campo === campo && orden.direccion === "asc") {
-      direccion = "desc";
-    }
+  if (orden.campo === campo && orden.direccion === "asc") {
+    direccion = "desc";
+  }
 
-    setOrden({ campo, direccion });
-  };
+  setOrden({ campo, direccion });
+};
 
   // 🔍 FILTRADO + ORDEN
   const datosFiltrados = datos
@@ -159,17 +159,17 @@ export default function Listado() {
 
             {/* 🧾 CABECERA */}
             <tr style={{ background: "#ddd" }}>
-              <th style={th} onClick={() => ar("atlas")}>Atlas</th>
-              <th style={th} onClick={() => ar("lote")}>Lote</th>
-              <th style={th} onClick={() => ar("nombre")}>Nombre</th>
-              <th style={th} onClick={() => ar("provincia")}>Provincia</th>
-              <th style={th} onClick={() => ar("miga")}>Miga</th>
-              <th style={th} onClick={() => ar("coadas")}>Coadas</th>
-              <th style={th} onClick={() => ar("tipo_edificio")}>Tipo Edificio</th>
-              <th style={th} onClick={() => ar("tipo_repliegue")}>Tipo Repliegue</th>
-              <th style={th} onClick={() => ar("tipo_senda")}>Senda</th>
-              <th style={th} onClick={() => ar("fecha_abandono")}>Abandono</th>
-              <th style={th} onClick={() => ar("prioritario")}>Prioritaria</th>
+              <th style={th} onClick={() => ordenar("atlas")}>Atlas</th>
+              <th style={th} onClick={() => ordenar("lote")}>Lote</th>
+              <th style={th} onClick={() => ordenar("nombre")}>Nombre</th>
+              <th style={th} onClick={() => ordenar("provincia")}>Provincia</th>
+              <th style={th} onClick={() => ordenar("miga")}>Miga</th>
+              <th style={th} onClick={() => ordenar("coadas")}>Coadas</th>
+              <th style={th} onClick={() => ordenar("tipo_edificio")}>Tipo Edificio</th>
+              <th style={th} onClick={() => ordenar("tipo_repliegue")}>Tipo Repliegue</th>
+              <th style={th} onClick={() => ordenar("tipo_senda")}>Senda</th>
+              <th style={th} onClick={() => ordenar("fecha_abandono")}>Abandono</th>
+              <th style={th} onClick={() => ordenar("prioritario")}>Prioritaria</th>
             </tr>
           </thead>
 
