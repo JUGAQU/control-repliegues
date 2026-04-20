@@ -221,7 +221,7 @@ export default function Ficha() {
   <div style={campo}>
     <span>Observaciones:</span>
     <input
-      name="observaciones"
+      name="E.C Planta Interior"
       value={formData.observaciones || ""}
       onChange={handleChange}
       style={{ ...valor, width: 250 }}
@@ -231,20 +231,20 @@ export default function Ficha() {
   <div style={campo}>
     <span>Estado:</span>
     <input
-      name="estado"
+      name="E.C Planta Ext."
       value={formData.estado || ""}
       onChange={handleChange}
-      style={{ ...valor, width: 120 }}
+      style={{ ...valor, width: 250 }}
     />
   </div>
 
   <div style={campo}>
     <span>Responsable:</span>
     <input
-      name="responsable"
+      name="Empresa Desmantelamiento"
       value={formData.responsable || ""}
       onChange={handleChange}
-      style={{ ...valor, width: 150 }}
+      style={{ ...valor, width: 250 }}
     />
   </div>
 
