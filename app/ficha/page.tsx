@@ -219,9 +219,9 @@ export default function Ficha() {
 >
 
   <div style={campo}>
-    <span>Observaciones:</span>
+    <span>E.C Planta Int.:</span>
     <input
-      name="E.C Planta Interior"
+      name="Empresa_Planta_Interior"
       value={formData.observaciones || ""}
       onChange={handleChange}
       style={{ ...valor, width: 250 }}
@@ -229,9 +229,9 @@ export default function Ficha() {
   </div>
 
   <div style={campo}>
-    <span>Estado:</span>
+    <span>E.C Planta Ext.:</span>
     <input
-      name="E.C Planta Ext."
+      name="Empresa_Planta_Exterior"
       value={formData.estado || ""}
       onChange={handleChange}
       style={{ ...valor, width: 250 }}
@@ -239,9 +239,9 @@ export default function Ficha() {
   </div>
 
   <div style={campo}>
-    <span>Responsable:</span>
+    <span>Empresa Desmantelamiento:</span>
     <input
-      name="Empresa Desmantelamiento"
+      name="Empresa_Desmantelamiento"
       value={formData.responsable || ""}
       onChange={handleChange}
       style={{ ...valor, width: 250 }}
