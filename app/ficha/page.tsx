@@ -204,16 +204,7 @@ export default function Ficha() {
       </div>
     </div>
     {/* 🆕 NUEVO BLOQUE */}
-<div
-  style={{
-    border: "1px solid #ccc",
-    padding: 15,
-    background: "#eef6fb",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: 15,
-    marginTop: 20,
-  }}
+
 >
 
   <div style={campo}>
