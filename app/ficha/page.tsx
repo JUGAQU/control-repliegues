@@ -219,9 +219,29 @@ export default function Ficha() {
 >
 
   <div style={campo}>
+    <span>Técnico Análisis:</span>
+    <input
+      name="tecnico_analisis"
+      value={formData.observaciones || ""}
+      onChange={handleChange}
+      style={{ ...valor, width: 250 }}
+    />
+  </div>
+
+  <div style={campo}>
+    <span>Técnico Reasignaciones:</span>
+    <input
+      name="tecnico_reasignaciones"
+      value={formData.observaciones || ""}
+      onChange={handleChange}
+      style={{ ...valor, width: 250 }}
+    />
+  </div>
+
+  <div style={campo}>
     <span>E.C Planta Int.:</span>
     <input
-      name="Empresa_Planta_Interior"
+      name="empresa_planta_interior"
       value={formData.observaciones || ""}
       onChange={handleChange}
       style={{ ...valor, width: 250 }}
@@ -231,7 +251,7 @@ export default function Ficha() {
   <div style={campo}>
     <span>E.C Planta Ext.:</span>
     <input
-      name="Empresa_Planta_Exterior"
+      name="empresa_planta_exterior"
       value={formData.estado || ""}
       onChange={handleChange}
       style={{ ...valor, width: 250 }}
@@ -241,7 +261,7 @@ export default function Ficha() {
   <div style={campo}>
     <span>Empresa Desmantelamiento:</span>
     <input
-      name="Empresa_Desmantelamiento"
+      name="empresa_desmantelamiento"
       value={formData.responsable || ""}
       onChange={handleChange}
       style={{ ...valor, width: 250 }}
