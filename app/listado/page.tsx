@@ -1,12 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
+
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "../lib/supabase";
 
 // 🔒 función segura (evita errores con null, números, etc.)
 const safe = (v: any) => (v ?? "").toString().toLowerCase();
 
 export default function Listado() {
+
+
+// esto es lo que he añadido
+  
+useEffect(() => {
+  const checkUser = async () => {
+    const { data } = await supabase.auth.getSession();
+
+    if (!data.session) {
+      router.push("/");
+    }
+  };
+
+  checkUser();
+}, []);
+
+// hasta aquí
+
+
+  
   const router = useRouter();
 
   const [datos, setDatos] = useState<any[]>([]);
