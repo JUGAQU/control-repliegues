@@ -133,12 +133,12 @@ const ordenar = (campo: string) => {
           }}
         >
           <thead
-            style={{
-              position: "sticky",
-              top: 0,
-              background: "#ddd",
-              zIndex: 1,
-            }}
+              style={{
+                position: "sticky",
+                top: 0,
+                background: "#ddd",
+                zIndex: 2,
+              }}
           >
             {/* 🔍 FILTROS */}
             <tr>
