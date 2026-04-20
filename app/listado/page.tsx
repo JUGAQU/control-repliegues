@@ -8,11 +8,11 @@ import { supabase } from "../lib/supabase";
 const safe = (v: any) => (v ?? "").toString().toLowerCase();
 
 export default function Listado() {
-
   const router = useRouter();
 
   const [datos, setDatos] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true); // 👈 clave
+  const [loading, setLoading] = useState(true);
+  const [cargandoDatos, setCargandoDatos] = useState(true);
 
   // 🔐 PROTECCIÓN LOGIN
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function Listado() {
       if (!data.session) {
         router.push("/");
       } else {
-        setLoading(false); // 👈 solo carga si hay sesión
+        setLoading(false);
       }
     };
 
@@ -46,6 +46,8 @@ export default function Listado() {
         }
       } catch (error) {
         console.error("Error cargando datos:", error);
+      } finally {
+        setCargandoDatos(false);
       }
     };
 
@@ -86,6 +88,8 @@ export default function Listado() {
   // 🔍 FILTRADO + ORDEN
   const datosFiltrados = datos
     .filter((item) => {
+      if (!item) return false; // 🔥 evita errores
+
       return (
         safe(item.atlas).includes(safe(filtros.atlas)) &&
         safe(item.lote).includes(safe(filtros.lote)) &&
@@ -111,8 +115,12 @@ export default function Listado() {
       return 0;
     });
 
-  // 🛑 BLOQUEO RENDER
+  // 🛑 BLOQUEOS DE RENDER
   if (loading) return null;
+
+  if (cargandoDatos) {
+    return <div style={{ padding: 20 }}>Cargando datos...</div>;
+  }
 
   return (
     <div style={{ padding: 10, fontSize: 12 }}>
@@ -166,11 +174,17 @@ export default function Listado() {
           </thead>
 
           <tbody>
-            {datosFiltrados.map((item, i) => (
-              <tr key={i}>
+            {datosFiltrados.map((item) => (
+              <tr key={item.id}>
                 <td
                   style={{ ...td, cursor: "pointer" }}
-                  onClick={() => router.push(`/ficha?id=${item.id}`)}
+                  onClick={() => {
+                    if (!item?.id) {
+                      console.error("ID inválido:", item);
+                      return;
+                    }
+                    router.push(`/ficha?id=${item.id}`);
+                  }}
                 >
                   {item.atlas}
                 </td>
@@ -181,9 +195,7 @@ export default function Listado() {
                 <td style={td}>{item.coordenadas}</td>
                 <td style={td}>{item.tipo_edificio}</td>
                 <td style={td}>{item.tipo_repliegue}</td>
-                <td style={td}>
-                  {item.tipo_senda || "ACELERADA_2026"}
-                </td>
+                <td style={td}>{item.tipo_senda || "ACELERADA_2026"}</td>
                 <td style={td}>{item.fecha_abandono}</td>
                 <td style={td}>{item.prioritario ? "SI" : "NO"}</td>
               </tr>
