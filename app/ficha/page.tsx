@@ -244,7 +244,7 @@ export default function Ficha() {
       name="empresa_planta_interior"
       value={formData.observaciones || ""}
       onChange={handleChange}
-      style={{ ...valor, width: 250 }}
+      style={{ ...valor, width: 240 }}
     />
   </div>
 
@@ -254,7 +254,7 @@ export default function Ficha() {
       name="empresa_planta_exterior"
       value={formData.estado || ""}
       onChange={handleChange}
-      style={{ ...valor, width: 250 }}
+      style={{ ...valor, width: 240 }}
     />
   </div>
 
@@ -264,7 +264,7 @@ export default function Ficha() {
       name="empresa_desmantelamiento"
       value={formData.responsable || ""}
       onChange={handleChange}
-      style={{ ...valor, width: 250 }}
+      style={{ ...valor, width: 240 }}
     />
   </div>
 
