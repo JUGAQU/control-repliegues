@@ -12,6 +12,7 @@ export default function Listado() {
   const router = useRouter();
 
   const [datos, setDatos] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true); // 👈 clave
 
   // 🔐 PROTECCIÓN LOGIN
   useEffect(() => {
@@ -20,6 +21,8 @@ export default function Listado() {
 
       if (!data.session) {
         router.push("/");
+      } else {
+        setLoading(false); // 👈 solo carga si hay sesión
       }
     };
 
@@ -107,6 +110,9 @@ export default function Listado() {
       if (valorA > valorB) return orden.direccion === "asc" ? 1 : -1;
       return 0;
     });
+
+  // 🛑 BLOQUEO RENDER
+  if (loading) return null;
 
   return (
     <div style={{ padding: 10, fontSize: 12 }}>
