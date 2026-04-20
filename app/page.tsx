@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "./lib/supabase";
 
 export default function Home() {
   const router = useRouter();
@@ -10,14 +11,22 @@ export default function Home() {
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    // 🔐 usuario y contraseña (puedes cambiarlos)
-    if (user === "t732666" && pass === "21Huelvaasas") {
-      router.push("/listado");
-    } else {
-      setError("Usuario o contraseña incorrectos");
-    }
-  };
+const handleLogin = async () => {
+  setError("");
+
+  const email = user + "@app.com"; // 👈 convierte usuario en email
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password: pass,
+  });
+
+  if (error) {
+    setError("Usuario o contraseña incorrectos");
+  } else {
+    router.push("/listado");
+  }
+};
 
   return (
     <div
