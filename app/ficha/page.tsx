@@ -196,6 +196,11 @@ export default function Ficha() {
           <span>Fecha Abandono:</span>
           <input name="fecha_abandono" value={formData.fecha_abandono || ""} onChange={handleChange} style={{ ...valor, width: 80 }} />
         </div>
+
+        <div style={campo}>
+          <span>Fecha Prioritaria:</span>
+          <input name="prioritario" value={formData.prioritario || ""} onChange={handleChange} style={{ ...valor, width: 10 }} />
+        </div>
       </div>
     </div>
   );
