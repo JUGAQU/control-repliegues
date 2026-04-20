@@ -1,218 +1,207 @@
 "use client";
 
-import { useState } from "react";
-import { datos } from "../data";
-import { useRouter } from "next/navigation";
+export const dynamic = "force-dynamic";
 
-export default function Listado() {
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { supabase } from "../lib/supabase";
+
+export default function Ficha() {
+  const [formData, setFormData] = useState<any>(null);
+  const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
+
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const id = searchParams.get("id");
 
-  const [filtros, setFiltros] = useState({
-    atlas: "",
-    lote: "",
-    nombre: "",
-    provincia: "",
-    miga: "",
-    coordenadas: "",
-    tipo_edificio: "",
-    tipo_repliegue: "",
-    senda: "",
-    fecha_abandono: "",
-    prioritario: "",
-  });
+  // 🔥 CARGA CORRECTA
+  useEffect(() => {
+    const cargar = async () => {
+      if (!id) return;
 
-  const [orden, setOrden] = useState<{
-    campo: string;
-    direccion: "asc" | "desc";
-  }>({
-    campo: "atlas",
-    direccion: "asc",
-  });
+      const res = await fetch("/api/fichas");
+      const data = await res.json();
 
-  const ordenar = (campo: string) => {
-    let direccion: "asc" | "desc" = "asc";
+      console.log("ID URL:", id);
+      console.log("DATA:", data);
 
-    if (orden.campo === campo && orden.direccion === "asc") {
-      direccion = "desc";
-    }
+      if (Array.isArray(data)) {
+        const registro = data.find(
+          (d: any) => String(d.id) === String(id)
+        );
 
-    setOrden({ campo, direccion });
-  };
+        console.log("REGISTRO ENCONTRADO:", registro);
 
-  const datosFiltrados = datos
-    .filter((item) => {
-      return (
-        (item.atlas || "").toLowerCase().includes(filtros.atlas.toLowerCase()) &&
-        (item.lote || "").toLowerCase().includes(filtros.lote.toLowerCase()) &&
-        (item.nombre || "").toLowerCase().includes(filtros.nombre.toLowerCase()) &&
-        (item.provincia || "").toLowerCase().includes(filtros.provincia.toLowerCase()) &&
-        (item.miga || "").toLowerCase().includes(filtros.miga.toLowerCase()) &&
-        (item.coordenadas || "").toLowerCase().includes(filtros.coordenadas.toLowerCase()) &&
-        (item.tipo_edificio || "").toLowerCase().includes(filtros.tipo_edificio.toLowerCase()) &&
-        (item.tipo_repliegue || "").toLowerCase().includes(filtros.tipo_repliegue.toLowerCase()) &&
-        ((item.senda || "ACELERADA_2026").toLowerCase()).includes(
-          filtros.senda.toLowerCase()
-        ) &&
-        ((item.fecha_abandono || "").toLowerCase()).includes(
-          filtros.fecha_abandono.toLowerCase()
-        ) &&
-        ((item.prioritario ? "si" : "no").toLowerCase()).includes(
-          filtros.prioritario.toLowerCase()
-        )
-      );
-    })
-    .sort((a, b) => {
-      if (!orden.campo) return 0;
+        if (registro) {
+          setFormData(registro);
+        } else {
+          console.error("❌ No se encontró el registro");
+        }
+      }
+    };
 
-      const valorA = (a[orden.campo as keyof typeof a] || "")
-        .toString()
-        .toLowerCase()
-        .replace(/\./g, "");
+    cargar();
+  }, [id]);
 
-      const valorB = (b[orden.campo as keyof typeof b] || "")
-        .toString()
-        .toLowerCase()
-        .replace(/\./g, "");
+  const handleChange = (e: any) => {
+    const { name, value, type, checked } = e.target;
 
-      if (valorA < valorB) return orden.direccion === "asc" ? -1 : 1;
-      if (valorA > valorB) return orden.direccion === "asc" ? 1 : -1;
-      return 0;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
     });
 
-  const flecha = (campo: string) => {
-    if (orden.campo !== campo) return "";
-    return orden.direccion === "asc" ? " ▲" : " ▼";
+    setCambiosSinGuardar(true);
+  };
+
+  // 🔥 GUARDAR BIEN EN SUPABASE
+  const guardarCambios = async () => {
+    if (!formData?.id) {
+      alert("Error: no hay ID");
+      return;
+    }
+
+    console.log("GUARDANDO:", formData);
+
+    const { data, error } = await supabase
+      .from("fichas")
+      .update({
+        lote: formData.lote,
+        nombre: formData.nombre,
+        provincia: formData.provincia,
+        miga: formData.miga,
+        coordenadas: formData.coordenadas,
+        tipo_edificio: formData.tipo_edificio,
+        tipo_repliegue: formData.tipo_repliegue,
+        tipo_senda: formData.tipo_senda,
+        fecha_abandono: formData.fecha_abandono,
+        prioritario: formData.prioritario,
+      })
+      .eq("atlas", formData.atlas)
+      .select(); // 👈 clave
+
+    console.log("UPDATE RESULT:", data);
+
+    if (error) {
+      console.error("Error guardando:", error);
+      alert("Error al guardar");
+    } else {
+      alert("Guardado en Supabase ✅");
+      setCambiosSinGuardar(false);
+
+      // 🔥 REFRESCO CORRECTO
+      router.replace("/listado");
+      router.refresh();
+    }
+  };
+
+  // 🛑 BLOQUEO HASTA CARGAR
+  if (!formData) {
+    return <div style={{ padding: 20 }}>Cargando ficha...</div>;
+  }
+
+  const campo = {
+    display: "flex",
+    alignItems: "center",
+    gap: 5,
+    fontSize: 12,
+  };
+
+  const valor = {
+    background: "#d9eef7",
+    padding: "3px 8px",
+    borderRadius: 4,
+    border: "1px solid #bcd",
   };
 
   return (
-    <div style={{ padding: 10, fontSize: 12 }}>
-      <div style={{ overflowX: "auto", maxHeight: "500px" }}>
-        <table
-          style={{
-            borderCollapse: "collapse",
-            width: "100%",
-            tableLayout: "fixed",
+    <div style={{ padding: 20, fontFamily: "Arial" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 15 }}>
+        <button onClick={guardarCambios}>💾</button>
+
+        <button
+          onClick={() => {
+            if (cambiosSinGuardar) {
+              const confirmar = confirm("Tienes cambios sin guardar. ¿Salir sin guardar?");
+              if (!confirmar) return;
+            }
+            router.push("/listado");
           }}
         >
-          <thead
-            style={{
-              position: "sticky",
-              top: 0,
-              background: "#ddd",
-              zIndex: 1,
-            }}
-          >
-            <tr>
-              {Object.keys(filtros).map((campo) => (
-                <th key={campo} style={th}>
-                  <input
-                    placeholder="Filtrar"
-                    value={filtros[campo as keyof typeof filtros]}
-                    onChange={(e) =>
-                      setFiltros({
-                        ...filtros,
-                        [campo]: e.target.value,
-                      })
-                    }
-                    style={inputFiltro}
-                  />
-                </th>
-              ))}
-            </tr>
+          ✖
+        </button>
+      </div>
 
-            <tr style={{ background: "#ddd" }}>
-              <th style={th} onClick={() => ordenar("atlas")}>
-                Atlas{flecha("atlas")}
-              </th>
-              <th style={th} onClick={() => ordenar("lote")}>
-                Lote{flecha("lote")}
-              </th>
-              <th style={th} onClick={() => ordenar("nombre")}>
-                Nombre{flecha("nombre")}
-              </th>
-              <th style={th} onClick={() => ordenar("provincia")}>
-                Provincia{flecha("provincia")}
-              </th>
-              <th style={th} onClick={() => ordenar("miga")}>
-                Miga{flecha("miga")}
-              </th>
-              <th style={th} onClick={() => ordenar("coordenadas")}>
-                Coordenadas{flecha("coordenadas")}
-              </th>
-              <th style={th} onClick={() => ordenar("tipo_edificio")}>
-                Tipo Edificio{flecha("tipo_edificio")}
-              </th>
-              <th style={th} onClick={() => ordenar("tipo_repliegue")}>
-                Tipo Repliegue{flecha("tipo_repliegue")}
-              </th>
-              <th style={th} onClick={() => ordenar("senda")}>
-                Senda{flecha("senda")}
-              </th>
-              <th style={th} onClick={() => ordenar("fecha_abandono")}>
-                Abandono{flecha("fecha_abandono")}
-              </th>
-              <th style={th} onClick={() => ordenar("prioritario")}>
-                Prioritaria{flecha("prioritario")}
-              </th>
-            </tr>
-          </thead>
+      <div
+        style={{
+          border: "1px solid #ccc",
+          padding: 15,
+          background: "#f5f5f5",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 15,
+        }}
+      >
+        <div style={campo}>
+          <span>Atlas:</span>
+          <input
+            name="atlas"
+            value={formData.atlas || ""}
+            readOnly
+            style={{ ...valor, width: 70, background: "#eee" }}
+          />
+        </div>
 
-          <tbody>
-            {datosFiltrados.map((item, i) => {
-              const indiceReal = datos.findIndex((d) => d.atlas === item.atlas);
+        <div style={campo}>
+          <span>Lote:</span>
+          <input name="lote" value={formData.lote || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
+        </div>
 
-              return (
-                <tr key={i}>
-                  <td
-                    style={{
-                      ...td,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => router.push(`/ficha?id=${indiceReal}`)}
-                  >
-                    {item.atlas}
-                  </td>
-                  <td style={td}>{item.lote}</td>
-                  <td style={td}>{item.nombre}</td>
-                  <td style={td}>{item.provincia}</td>
-                  <td style={td}>{item.miga}</td>
-                  <td style={td}>{item.coordenadas}</td>
-                  <td style={td}>{item.tipo_edificio}</td>
-                  <td style={td}>{item.tipo_repliegue}</td>
-                  <td style={td}>{item.senda || "ACELERADA_2026"}</td>
-                  <td style={td}>{item.fecha_abandono}</td>
-                  <td style={td}>{item.prioritario ? "SI" : "NO"}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div style={campo}>
+          <span>Nombre:</span>
+          <input name="nombre" value={formData.nombre || ""} onChange={handleChange} style={{ ...valor, width: 200 }} />
+        </div>
+
+        <div style={campo}>
+          <span>Provincia:</span>
+          <input name="provincia" value={formData.provincia || ""} onChange={handleChange} style={{ ...valor, width: 90 }} />
+        </div>
+
+        <div style={campo}>
+          <span>Miga:</span>
+          <input name="miga" value={formData.miga || ""} onChange={handleChange} style={{ ...valor, width: 70 }} />
+        </div>
+
+        <div style={campo}>
+          <span>Coordenadas:</span>
+          <input name="coordenadas" value={formData.coordenadas || ""} onChange={handleChange} style={{ ...valor, width: 130 }} />
+        </div>
+
+        <div style={campo}>
+          <span>Tipo Edificio:</span>
+          <input name="tipo_edificio" value={formData.tipo_edificio || ""} onChange={handleChange} style={{ ...valor, width: 60 }} />
+        </div>
+
+        <div style={campo}>
+          <span>Tipo Repliegue:</span>
+          <input name="tipo_repliegue" value={formData.tipo_repliegue || ""} onChange={handleChange} style={{ ...valor, width: 80 }} />
+        </div>
+
+        <div style={campo}>
+          <span>Senda:</span>
+          <input name="tipo_senda" value={formData.tipo_senda || "ACELERADA_2026"} onChange={handleChange} style={{ ...valor, width: 130 }} />
+        </div>
+
+        <div style={campo}>
+          <span>Fecha Abandono:</span>
+          <input name="fecha_abandono" value={formData.fecha_abandono || ""} onChange={handleChange} style={{ ...valor, width: 80 }} />
+        </div>
+
+        <div style={campo}>
+          <span>Prioritaria:</span>
+          <input name="prioritario" value={formData.prioritario || ""} onChange={handleChange} style={{ ...valor, width: 10 }} />
+        </div>
       </div>
     </div>
   );
 }
-
-const th = {
-  border: "1px solid #999",
-  padding: "4px 6px",
-  fontWeight: "bold",
-  textAlign: "left" as const,
-  cursor: "pointer",
-  background: "#ddd",
-};
-
-const td = {
-  border: "1px solid #ccc",
-  padding: "3px 6px",
-  whiteSpace: "nowrap" as const,
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  background: "#fff",
-};
-
-const inputFiltro = {
-  width: "100%",
-  fontSize: 11,
-  padding: 2,
-  boxSizing: "border-box" as const,
-};
