@@ -123,8 +123,22 @@ const ordenar = (campo: string) => {
   }
 
   return (
-    <div style={{ padding: 10, fontSize: 12 }}>
-      <div style={{ overflowX: "auto", maxHeight: "500px" }}>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        margin: 0,
+        padding: 0,
+        fontSize: 11,
+      }}
+  >
+      <div
+        style={{
+        flex: 1,
+        overflow: "auto",
+        }}
+  >
         <table
           style={{
             borderCollapse: "collapse",
