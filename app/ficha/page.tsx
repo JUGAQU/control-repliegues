@@ -204,7 +204,7 @@ export default function Ficha() {
       </div>
     
 
-    
+ // prueba   
 
     {/* 🆕 NUEVO BLOQUE */}
 <div
