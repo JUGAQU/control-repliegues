@@ -282,7 +282,7 @@ export default function Ficha() {
 
       
 
-</div>
+
 
 
 
