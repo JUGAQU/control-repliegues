@@ -71,7 +71,7 @@ export default function Listado() {
 
   // 🔼 ORDEN
   const [orden, setOrden] = useState({
-  campo: "atlas",
+  campo: "",
   direccion: "asc",
 });
 
