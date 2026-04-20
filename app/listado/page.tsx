@@ -1,25 +1,32 @@
 "use client";
 
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../lib/supabase";
 
-// 🔒 función segura (evita errores con null, números, etc.)
+// 🔒 función segura
 const safe = (v: any) => (v ?? "").toString().toLowerCase();
 
 export default function Listado() {
 
-
-
-
-
-  
   const router = useRouter();
 
   const [datos, setDatos] = useState<any[]>([]);
 
-  // 🚀 CARGA DESDE TU API
+  // 🔐 PROTECCIÓN LOGIN
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data } = await supabase.auth.getSession();
+
+      if (!data.session) {
+        router.push("/");
+      }
+    };
+
+    checkUser();
+  }, []);
+
+  // 🚀 CARGA DATOS
   useEffect(() => {
     const cargarDatos = async () => {
       try {
@@ -100,8 +107,6 @@ export default function Listado() {
       if (valorA > valorB) return orden.direccion === "asc" ? 1 : -1;
       return 0;
     });
-
-  console.log("DATOS ESTADO:", datos);
 
   return (
     <div style={{ padding: 10, fontSize: 12 }}>
