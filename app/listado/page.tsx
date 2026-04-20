@@ -71,9 +71,9 @@ export default function Listado() {
 
   // 🔼 ORDEN
   const [orden, setOrden] = useState({
-    campo: "",
-    direccion: "asc",
-  });
+  campo: "atlas",
+  direccion: "asc",
+});
 
   const ordenar = (campo: string) => {
     let direccion = "asc";
@@ -159,17 +159,17 @@ export default function Listado() {
 
             {/* 🧾 CABECERA */}
             <tr style={{ background: "#ddd" }}>
-              <th style={th} onClick={() => ordenar("atlas")}>Atlas</th>
-              <th style={th} onClick={() => ordenar("lote")}>Lote</th>
-              <th style={th} onClick={() => ordenar("nombre")}>Nombre</th>
-              <th style={th} onClick={() => ordenar("provincia")}>Provincia</th>
-              <th style={th} onClick={() => ordenar("miga")}>Miga</th>
-              <th style={th} onClick={() => ordenar("coordenadas")}>Coordenadas</th>
-              <th style={th} onClick={() => ordenar("tipo_edificio")}>Tipo Edificio</th>
-              <th style={th} onClick={() => ordenar("tipo_repliegue")}>Tipo Repliegue</th>
-              <th style={th} onClick={() => ordenar("tipo_senda")}>Senda</th>
-              <th style={th} onClick={() => ordenar("fecha_abandono")}>Abandono</th>
-              <th style={th} onClick={() => ordenar("prioritario")}>Prioritaria</th>
+              <th style={th} onClick={() => ar("atlas")}>Atlas</th>
+              <th style={th} onClick={() => ar("lote")}>Lote</th>
+              <th style={th} onClick={() => ar("nombre")}>Nombre</th>
+              <th style={th} onClick={() => ar("provincia")}>Provincia</th>
+              <th style={th} onClick={() => ar("miga")}>Miga</th>
+              <th style={th} onClick={() => ar("coadas")}>Coadas</th>
+              <th style={th} onClick={() => ar("tipo_edificio")}>Tipo Edificio</th>
+              <th style={th} onClick={() => ar("tipo_repliegue")}>Tipo Repliegue</th>
+              <th style={th} onClick={() => ar("tipo_senda")}>Senda</th>
+              <th style={th} onClick={() => ar("fecha_abandono")}>Abandono</th>
+              <th style={th} onClick={() => ar("prioritario")}>Prioritaria</th>
             </tr>
           </thead>
 
@@ -192,7 +192,7 @@ export default function Listado() {
                 <td style={td}>{item.nombre}</td>
                 <td style={td}>{item.provincia}</td>
                 <td style={td}>{item.miga}</td>
-                <td style={td}>{item.coordenadas}</td>
+                <td style={td}>{item.coadas}</td>
                 <td style={td}>{item.tipo_edificio}</td>
                 <td style={td}>{item.tipo_repliegue}</td>
                 <td style={td}>{item.tipo_senda || "ACELERADA_2026"}</td>
