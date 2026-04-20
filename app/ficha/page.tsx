@@ -268,67 +268,7 @@ export default function Ficha() {
     />
   </div>
 
-      {/* 🆕 NUEVO BLOQUE */}
-<div
-        style={{
-          border: "1px solid #ccc",
-          padding: 15,
-          background: "#f5f5f5",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 15,
-        }}
->
 
-  <div style={campo}>
-    <span>Técnico Análisis:</span>
-    <input
-      name="tecnico_analisis"
-      value={formData.observaciones || ""}
-      onChange={handleChange}
-      style={{ ...valor, width: 240 }}
-    />
-  </div>
-
-  <div style={campo}>
-    <span>Técnico Reasignaciones:</span>
-    <input
-      name="tecnico_reasignaciones"
-      value={formData.observaciones || ""}
-      onChange={handleChange}
-      style={{ ...valor, width: 240 }}
-    />
-  </div>
-
-  <div style={campo}>
-    <span>E.C Planta Int.:</span>
-    <input
-      name="empresa_planta_interior"
-      value={formData.observaciones || ""}
-      onChange={handleChange}
-      style={{ ...valor, width: 240 }}
-    />
-  </div>
-
-  <div style={campo}>
-    <span>E.C Planta Ext.:</span>
-    <input
-      name="empresa_planta_exterior"
-      value={formData.estado || ""}
-      onChange={handleChange}
-      style={{ ...valor, width: 240 }}
-    />
-  </div>
-
-  <div style={campo}>
-    <span>Empresa Desmantelamiento:</span>
-    <input
-      name="empresa_desmantelamiento"
-      value={formData.responsable || ""}
-      onChange={handleChange}
-      style={{ ...valor, width: 240 }}
-    />
-  </div>
 
 </div>
 
