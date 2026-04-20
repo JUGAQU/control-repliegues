@@ -234,7 +234,7 @@ export default function Ficha() {
     <span>Técnico Reasignaciones:</span>
     <input
       name="tecnico_reasignaciones"
-      value={formData.observaciones || ""}
+      value={formData.tecnico_analisis || ""}
       onChange={handleChange}
       style={{ ...valor, width: 240 }}
     />
