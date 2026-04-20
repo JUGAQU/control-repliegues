@@ -7,14 +7,14 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { supabase } from "../lib/supabase";
 
 export default function Ficha() {
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("id");
 
-  // 🔥 CARGAR REGISTRO CORRECTAMENTE
+  // 🔥 CARGA CORRECTA
   useEffect(() => {
     const cargar = async () => {
       if (!id) return;
@@ -22,9 +22,21 @@ export default function Ficha() {
       const res = await fetch("/api/fichas");
       const data = await res.json();
 
+      console.log("ID URL:", id);
+      console.log("DATA:", data);
+
       if (Array.isArray(data)) {
-        const registro = data.find((d: any) => d.id == id); // ✅ CLAVE
-        setFormData(registro);
+        const registro = data.find(
+          (d: any) => String(d.id) === String(id)
+        );
+
+        console.log("REGISTRO ENCONTRADO:", registro);
+
+        if (registro) {
+          setFormData(registro);
+        } else {
+          console.error("❌ No se encontró el registro");
+        }
       }
     };
 
@@ -44,18 +56,14 @@ export default function Ficha() {
 
   // 🔥 GUARDAR BIEN EN SUPABASE
   const guardarCambios = async () => {
-    console.log("GUARDANDO:", formData);
-
-    if (!formData.id) {
+    if (!formData?.id) {
       alert("Error: no hay ID");
       return;
     }
-    console.log("UPDATE RESULT:", data);
 
+    console.log("GUARDANDO:", formData);
 
-
-
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("fichas")
       .update({
         lote: formData.lote,
@@ -68,10 +76,11 @@ export default function Ficha() {
         tipo_senda: formData.tipo_senda,
         fecha_abandono: formData.fecha_abandono,
         prioritario: formData.prioritario,
-     })
-     .eq("id", formData.id); // ✅ CLAVE
+      })
+      .eq("id", formData.id)
+      .select(); // 👈 clave
 
-
+    console.log("UPDATE RESULT:", data);
 
     if (error) {
       console.error("Error guardando:", error);
@@ -79,9 +88,17 @@ export default function Ficha() {
     } else {
       alert("Guardado en Supabase ✅");
       setCambiosSinGuardar(false);
-      router.push("/listado");
+
+      // 🔥 REFRESCO CORRECTO
+      router.replace("/listado");
+      router.refresh();
     }
   };
+
+  // 🛑 BLOQUEO HASTA CARGAR
+  if (!formData) {
+    return <div style={{ padding: 20 }}>Cargando ficha...</div>;
+  }
 
   const campo = {
     display: "flex",
@@ -131,13 +148,7 @@ export default function Ficha() {
             name="atlas"
             value={formData.atlas || ""}
             readOnly
-            style={{
-              ...valor,
-              width: 70,
-              background: "#eee",
-              color: "#666",
-              cursor: "not-allowed",
-            }}
+            style={{ ...valor, width: 70, background: "#eee" }}
           />
         </div>
 
