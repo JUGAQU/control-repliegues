@@ -170,7 +170,7 @@ export default function Listado() {
               <tr key={i}>
                 <td
                   style={{ ...td, cursor: "pointer" }}
-                  onClick={() => router.push(`/ficha?id=${i}`)}
+                  onClick={() => router.push(`/ficha?id=${item.id}`)}
                 >
                   {item.atlas}
                 </td>
