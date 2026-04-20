@@ -273,7 +273,7 @@ export default function Ficha() {
 
 </div>
 
-      //*************************************
+
 
     {/* 🆕 NUEVO BLOQUE */}
 <div
@@ -342,7 +342,7 @@ export default function Ficha() {
 
 </div>
 
- //************************************** 
+
 
 
     </div>
