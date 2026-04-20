@@ -202,7 +202,7 @@ export default function Ficha() {
           <input name="prioritario" value={formData.prioritario || ""} onChange={handleChange} style={{ ...valor, width: 10 }} />
         </div>
       </div>
-    </div>
+    
 
     //**************************************
 
@@ -252,5 +252,6 @@ export default function Ficha() {
 </div>
 
   //****************************************************************************
+    </div>
   );
 }
