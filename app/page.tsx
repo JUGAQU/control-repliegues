@@ -20,6 +20,7 @@ const handleLogin = async () => {
     email,
     password: pass,
   });
+  console.log("LOGIN ERROR:", error);
 
   if (error) {
     setError("Usuario o contraseña incorrectos");
