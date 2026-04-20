@@ -77,7 +77,7 @@ export default function Ficha() {
         fecha_abandono: formData.fecha_abandono,
         prioritario: formData.prioritario,
       })
-      .eq("id", formData.id)
+      .eq("atlas", formData.atlas)
       .select(); // 👈 clave
 
     console.log("UPDATE RESULT:", data);
