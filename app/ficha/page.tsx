@@ -1,60 +1,11 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { datos } from "../data";
 import { useRouter } from "next/navigation";
-import { supabase } from "../lib/supabase";
-
-// 🔒 función segura
-const safe = (v: any) => (v ?? "").toString().toLowerCase();
 
 export default function Listado() {
   const router = useRouter();
 
-  const [datos, setDatos] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [cargandoDatos, setCargandoDatos] = useState(true);
-
-  // 🔐 PROTECCIÓN LOGIN
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getSession();
-
-      if (!data.session) {
-        router.push("/");
-      } else {
-        setLoading(false);
-      }
-    };
-
-    checkUser();
-  }, []);
-
-  // 🚀 CARGA DATOS
-  useEffect(() => {
-    const cargarDatos = async () => {
-      try {
-        const res = await fetch("/api/fichas");
-        const data = await res.json();
-
-        console.log("DATOS API:", data);
-
-        if (Array.isArray(data)) {
-          setDatos(data);
-        } else {
-          console.error("La API no devuelve array:", data);
-          setDatos([]);
-        }
-      } catch (error) {
-        console.error("Error cargando datos:", error);
-      } finally {
-        setCargandoDatos(false);
-      }
-    };
-
-    cargarDatos();
-  }, []);
-
-  // 🔍 FILTROS
   const [filtros, setFiltros] = useState({
     atlas: "",
     lote: "",
@@ -69,58 +20,68 @@ export default function Listado() {
     prioritario: "",
   });
 
-  // 🔼 ORDEN
-  const [orden, setOrden] = useState({
-    campo: "",
+  // Orden por defecto al cargar: atlas ascendente
+  const [orden, setOrden] = useState<{
+    campo: string;
+    direccion: "asc" | "desc";
+  }>({
+    campo: "atlas",
     direccion: "asc",
   });
 
-const ordenar = (campo: string) => {
-  let direccion = "asc";
+  const ordenar = (campo: string) => {
+    let direccion: "asc" | "desc" = "asc";
 
-  if (orden.campo === campo && orden.direccion === "asc") {
-    direccion = "desc";
-  }
+    if (orden.campo === campo && orden.direccion === "asc") {
+      direccion = "desc";
+    }
 
-  setOrden({ campo, direccion });
-};
+    setOrden({ campo, direccion });
+  };
 
-  // 🔍 FILTRADO + ORDEN
   const datosFiltrados = datos
     .filter((item) => {
-      if (!item) return false; // 🔥 evita errores
-
       return (
-        safe(item.atlas).includes(safe(filtros.atlas)) &&
-        safe(item.lote).includes(safe(filtros.lote)) &&
-        safe(item.nombre).includes(safe(filtros.nombre)) &&
-        safe(item.provincia).includes(safe(filtros.provincia)) &&
-        safe(item.miga).includes(safe(filtros.miga)) &&
-        safe(item.coordenadas).includes(safe(filtros.coordenadas)) &&
-        safe(item.tipo_edificio).includes(safe(filtros.tipo_edificio)) &&
-        safe(item.tipo_repliegue).includes(safe(filtros.tipo_repliegue)) &&
-        safe(item.tipo_senda || "ACELERADA_2026").includes(safe(filtros.tipo_senda)) &&
-        safe(item.fecha_abandono).includes(safe(filtros.fecha_abandono)) &&
-        (item.prioritario ? "si" : "no").includes(safe(filtros.prioritario))
+        (item.atlas || "").toLowerCase().includes(filtros.atlas.toLowerCase()) &&
+        (item.lote || "").toLowerCase().includes(filtros.lote.toLowerCase()) &&
+        (item.nombre || "").toLowerCase().includes(filtros.nombre.toLowerCase()) &&
+        (item.provincia || "").toLowerCase().includes(filtros.provincia.toLowerCase()) &&
+        (item.miga || "").toLowerCase().includes(filtros.miga.toLowerCase()) &&
+        (item.coordenadas || "").toLowerCase().includes(filtros.coordenadas.toLowerCase()) &&
+        (item.tipo_edificio || "").toLowerCase().includes(filtros.tipo_edificio.toLowerCase()) &&
+        (item.tipo_repliegue || "").toLowerCase().includes(filtros.tipo_repliegue.toLowerCase()) &&
+        ((item.tipo_senda || "ACELERADA_2026").toLowerCase()).includes(
+          filtros.tipo_senda.toLowerCase()
+        ) &&
+        ((item.fecha_abandono || "").toLowerCase()).includes(
+          filtros.fecha_abandono.toLowerCase()
+        ) &&
+        ((item.prioritario ? "si" : "no").toLowerCase()).includes(
+          filtros.prioritario.toLowerCase()
+        )
       );
     })
     .sort((a: any, b: any) => {
       if (!orden.campo) return 0;
 
-      const valorA = safe(a[orden.campo]);
-      const valorB = safe(b[orden.campo]);
+      const valorA = (a[orden.campo] || "")
+        .toString()
+        .toLowerCase()
+        .replace(/\./g, "");
+      const valorB = (b[orden.campo] || "")
+        .toString()
+        .toLowerCase()
+        .replace(/\./g, "");
 
       if (valorA < valorB) return orden.direccion === "asc" ? -1 : 1;
       if (valorA > valorB) return orden.direccion === "asc" ? 1 : -1;
       return 0;
     });
 
-  // 🛑 BLOQUEOS DE RENDER
-  if (loading) return null;
-
-  if (cargandoDatos) {
-    return <div style={{ padding: 20 }}>Cargando datos...</div>;
-  }
+  const flecha = (campo: string) => {
+    if (orden.campo !== campo) return "";
+    return orden.direccion === "asc" ? " ▲" : " ▼";
+  };
 
   return (
     <div style={{ padding: 10, fontSize: 12 }}>
@@ -140,11 +101,12 @@ const ordenar = (campo: string) => {
               zIndex: 1,
             }}
           >
-            {/* 🔍 FILTROS */}
             <tr>
               {Object.keys(filtros).map((campo) => (
                 <th key={campo} style={th}>
                   <input
+                    placeholder="Filtrar"
+                    value={filtros[campo as keyof typeof filtros]}
                     onChange={(e) =>
                       setFiltros({
                         ...filtros,
@@ -157,35 +119,52 @@ const ordenar = (campo: string) => {
               ))}
             </tr>
 
-            {/* 🧾 CABECERA */}
             <tr style={{ background: "#ddd" }}>
-              <th style={th} onClick={() => ordenar("atlas")}>Atlas</th>
-              <th style={th} onClick={() => ordenar("lote")}>Lote</th>
-              <th style={th} onClick={() => ordenar("nombre")}>Nombre</th>
-              <th style={th} onClick={() => ordenar("provincia")}>Provincia</th>
-              <th style={th} onClick={() => ordenar("miga")}>Miga</th>
-              <th style={th} onClick={() => ordenar("coordenadas")}>Coordenadas</th>
-              <th style={th} onClick={() => ordenar("tipo_edificio")}>Tipo Edificio</th>
-              <th style={th} onClick={() => ordenar("tipo_repliegue")}>Tipo Repliegue</th>
-              <th style={th} onClick={() => ordenar("tipo_senda")}>Senda</th>
-              <th style={th} onClick={() => ordenar("fecha_abandono")}>Abandono</th>
-              <th style={th} onClick={() => ordenar("prioritario")}>Prioritaria</th>
-              
+              <th style={th} onClick={() => ordenar("atlas")}>
+                Atlas{flecha("atlas")}
+              </th>
+              <th style={th} onClick={() => ordenar("lote")}>
+                Lote{flecha("lote")}
+              </th>
+              <th style={th} onClick={() => ordenar("nombre")}>
+                Nombre{flecha("nombre")}
+              </th>
+              <th style={th} onClick={() => ordenar("provincia")}>
+                Provincia{flecha("provincia")}
+              </th>
+              <th style={th} onClick={() => ordenar("miga")}>
+                Miga{flecha("miga")}
+              </th>
+              <th style={th} onClick={() => ordenar("coordenadas")}>
+                Coordenadas{flecha("coordenadas")}
+              </th>
+              <th style={th} onClick={() => ordenar("tipo_edificio")}>
+                Tipo Edificio{flecha("tipo_edificio")}
+              </th>
+              <th style={th} onClick={() => ordenar("tipo_repliegue")}>
+                Tipo Repliegue{flecha("tipo_repliegue")}
+              </th>
+              <th style={th} onClick={() => ordenar("tipo_senda")}>
+                Senda{flecha("tipo_senda")}
+              </th>
+              <th style={th} onClick={() => ordenar("fecha_abandono")}>
+                Abandono{flecha("fecha_abandono")}
+              </th>
+              <th style={th} onClick={() => ordenar("prioritario")}>
+                Prioritaria{flecha("prioritario")}
+              </th>
             </tr>
           </thead>
 
           <tbody>
-            {datosFiltrados.map((item) => (
-              <tr key={item.id}>
+            {datosFiltrados.map((item, i) => (
+              <tr key={i}>
                 <td
-                  style={{ ...td, cursor: "pointer" }}
-                  onClick={() => {
-                    if (!item?.id) {
-                      console.error("ID inválido:", item);
-                      return;
-                    }
-                    router.push(`/ficha?id=${item.id}`);
+                  style={{
+                    ...td,
+                    cursor: "pointer",
                   }}
+                  onClick={() => router.push(`/ficha?id=${i}`)}
                 >
                   {item.atlas}
                 </td>
@@ -208,25 +187,27 @@ const ordenar = (campo: string) => {
   );
 }
 
-// 🎨 ESTILOS
 const th = {
   border: "1px solid #999",
   padding: "4px 6px",
   fontWeight: "bold",
   textAlign: "left" as const,
   cursor: "pointer",
+  background: "#ddd",
 };
 
 const td = {
   border: "1px solid #ccc",
   padding: "3px 6px",
-  whiteSpace: "nowrap",
+  whiteSpace: "nowrap" as const,
   overflow: "hidden",
   textOverflow: "ellipsis",
+  background: "#fff",
 };
 
 const inputFiltro = {
   width: "100%",
   fontSize: 11,
   padding: 2,
+  boxSizing: "border-box" as const,
 };
