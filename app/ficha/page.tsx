@@ -75,15 +75,15 @@ export default function Listado() {
     direccion: "asc",
   });
 
-  const ordenar = (campo: string) => {
-    let direccion = "asc";
+const ordenar = (campo: string) => {
+  let direccion = "asc";
 
-    if (orden.campo === campo && orden.direccion === "asc") {
-      direccion = "desc";
-    }
+  if (orden.campo === campo && orden.direccion === "asc") {
+    direccion = "desc";
+  }
 
-    setOrden({ campo, direccion });
-  };
+  setOrden({ campo, direccion });
+};
 
   // 🔍 FILTRADO + ORDEN
   const datosFiltrados = datos
@@ -170,6 +170,7 @@ export default function Listado() {
               <th style={th} onClick={() => ordenar("tipo_senda")}>Senda</th>
               <th style={th} onClick={() => ordenar("fecha_abandono")}>Abandono</th>
               <th style={th} onClick={() => ordenar("prioritario")}>Prioritaria</th>
+              
             </tr>
           </thead>
 
