@@ -12,7 +12,7 @@ export default function Home() {
 
   const handleLogin = () => {
     // 🔐 usuario y contraseña (puedes cambiarlos)
-    if (user === "admin" && pass === "1234") {
+    if (user === "t732666" && pass === "21Huelvaasas") {
       router.push("/listado");
     } else {
       setError("Usuario o contraseña incorrectos");
@@ -66,8 +66,8 @@ export default function Home() {
 
         {/* INPUT PASS */}
         <input
-          type="t732666"
-          placeholder="21Huelvaasas"
+          type="usuario"
+          placeholder="contraseña"
           value={pass}
           onChange={(e) => setPass(e.target.value)}
           style={{
