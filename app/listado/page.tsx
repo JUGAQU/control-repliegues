@@ -11,21 +11,7 @@ const safe = (v: any) => (v ?? "").toString().toLowerCase();
 export default function Listado() {
 
 
-// esto es lo que he añadido
-  
-useEffect(() => {
-  const checkUser = async () => {
-    const { data } = await supabase.auth.getSession();
 
-    if (!data.session) {
-      router.push("/");
-    }
-  };
-
-  checkUser();
-}, []);
-
-// hasta aquí
 
 
   
