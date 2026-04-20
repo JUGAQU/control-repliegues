@@ -75,7 +75,7 @@ const handleLogin = async () => {
 
         {/* INPUT PASS */}
         <input
-          type="usuario"
+          type="password"
           placeholder="contraseña"
           value={pass}
           onChange={(e) => setPass(e.target.value)}
