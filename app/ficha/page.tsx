@@ -203,5 +203,54 @@ export default function Ficha() {
         </div>
       </div>
     </div>
+
+    //**************************************
+
+    {/* 🆕 NUEVO BLOQUE */}
+<div
+  style={{
+    border: "1px solid #ccc",
+    padding: 15,
+    background: "#eef6fb",
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 15,
+    marginTop: 20,
+  }}
+>
+
+  <div style={campo}>
+    <span>Observaciones:</span>
+    <input
+      name="observaciones"
+      value={formData.observaciones || ""}
+      onChange={handleChange}
+      style={{ ...valor, width: 250 }}
+    />
+  </div>
+
+  <div style={campo}>
+    <span>Estado:</span>
+    <input
+      name="estado"
+      value={formData.estado || ""}
+      onChange={handleChange}
+      style={{ ...valor, width: 120 }}
+    />
+  </div>
+
+  <div style={campo}>
+    <span>Responsable:</span>
+    <input
+      name="responsable"
+      value={formData.responsable || ""}
+      onChange={handleChange}
+      style={{ ...valor, width: 150 }}
+    />
+  </div>
+
+</div>
+
+  //****************************************************************************
   );
 }
