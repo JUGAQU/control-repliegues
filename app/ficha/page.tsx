@@ -215,7 +215,7 @@ export default function Ficha() {
           display: "flex",
           flexWrap: "wrap",
           gap: 15,
-          marginTop: 20
+          marginTop: 10
         }}
 >
 
@@ -284,7 +284,7 @@ export default function Ficha() {
           display: "flex",
           flexWrap: "wrap",
           gap: 15,
-          marginTop: 20
+          marginTop: 10
         }}
 >
 
