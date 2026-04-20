@@ -70,8 +70,11 @@ export default function Listado() {
   });
 
   // 🔼 ORDEN
-  const [orden, setOrden] = useState({
-  campo: "",
+  const [orden, setOrden] = useState<{
+    campo: string;
+    direccion: "asc" | "desc";
+}>({
+  campo: "atlas",
   direccion: "asc",
 });
 
