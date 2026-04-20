@@ -198,7 +198,7 @@ export default function Ficha() {
         </div>
 
         <div style={campo}>
-          <span>Fecha Prioritaria:</span>
+          <span>Prioritaria:</span>
           <input name="prioritario" value={formData.prioritario || ""} onChange={handleChange} style={{ ...valor, width: 10 }} />
         </div>
       </div>
