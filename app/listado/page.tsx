@@ -65,6 +65,7 @@ export default function Listado() {
     tipo_edificio: "",
     tipo_repliegue: "",
     tipo_senda: "",
+    central_vendida: "",
     fecha_abandono: "",
     prioritario: "",
   });
@@ -103,6 +104,7 @@ const ordenar = (campo: string) => {
         safe(item.tipo_edificio).includes(safe(filtros.tipo_edificio)) &&
         safe(item.tipo_repliegue).includes(safe(filtros.tipo_repliegue)) &&
         safe(item.tipo_senda || "ACELERADA_2026").includes(safe(filtros.tipo_senda)) &&
+        safe(item.central_vendida).includes(safe(filtros.central_vendida)) &&
         safe(item.fecha_abandono).includes(safe(filtros.fecha_abandono)) &&
         (item.prioritario ? "si" : "no").includes(safe(filtros.prioritario))
       );
@@ -186,6 +188,7 @@ const ordenar = (campo: string) => {
               <th style={th} onClick={() => ordenar("tipo_edificio")}>Tipo Edificio</th>
               <th style={th} onClick={() => ordenar("tipo_repliegue")}>Tipo Repliegue</th>
               <th style={th} onClick={() => ordenar("tipo_senda")}>Senda</th>
+              <th style={th} onClick={() => ordenar("central_vendida")}>CCVV</th>
               <th style={th} onClick={() => ordenar("fecha_abandono")}>Abandono</th>
               <th style={th} onClick={() => ordenar("prioritario")}>Prioritaria</th>
             </tr>
@@ -214,6 +217,7 @@ const ordenar = (campo: string) => {
                 <td style={td}>{item.tipo_edificio}</td>
                 <td style={td}>{item.tipo_repliegue}</td>
                 <td style={td}>{item.tipo_senda || "ACELERADA_2026"}</td>
+                <td style={td}>{item.central_vendida}</td>
                 <td style={td}>{item.fecha_abandono}</td>
                 <td style={td}>{item.prioritario ? "SI" : "NO"}</td>
               </tr>
