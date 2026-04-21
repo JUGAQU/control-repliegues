@@ -305,103 +305,104 @@ return (
     </div>
 
     {/* TECNICOS Y EE.CC */}
-    <div
-      style={{
-        border: "1px solid #ccc",
-        padding: 15,
-        background: "#f5f5f5",
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 15,
-      }}
-    >
-      <div style={campo}>
-        <span>Prioritaria:</span>
-        <input
-          type="checkbox"
-          name="prioritario"
-          checked={!!formData.prioritario}
-          onChange={handleChange}
-        />
-      </div>
+          <div
+        style={{
+          border: "1px solid #ccc",
+          padding: 15,
+          background: "#f5f5f5",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 15,
+        }}
+      >
+        <div style={campo}>
+          <span>Prioritaria:</span>
+          <input
+            type="checkbox"
+            name="prioritario"
+            checked={!!formData.prioritario}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div style={campo}>
-        <span>CCVV:</span>
-        <input
-          type="checkbox"
-          name="central_vendida"
-          checked={!!formData.central_vendida}
-          onChange={handleChange}
-        />
-      </div>
+        <div style={campo}>
+          <span>CCVV:</span>
+          <input
+            type="checkbox"
+            name="central_vendida"
+            checked={!!formData.central_vendida}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div style={campo}>
-        <span>Proyecto Inversión:</span>
-        <input
-          name="proyecto_inversion"
-          value={formData.proyecto_inversion || ""}
-          onChange={handleChange}
-          style={{ ...valor, width: 60 }}
-        />
-      </div>
+        <div style={campo}>
+          <span>Proyecto Inversión:</span>
+          <input
+            name="proyecto_inversion"
+            value={formData.proyecto_inversion || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 60 }}
+          />
+        </div>
 
-      <div style={campo}>
-        <span>Técnico Análisis:</span>
-        <input
-          name="tecnico_analisis"
-          value={formData.tecnico_analisis || ""}
-          onChange={handleChange}
-          style={{ ...valor, width: 120 }}
-        />
-      </div>
+        <div style={campo}>
+          <span>Técnico Análisis:</span>
+          <input
+            name="tecnico_analisis"
+            value={formData.tecnico_analisis || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 120 }}
+          />
+        </div>
 
-      <div style={campo}>
-        <span>Técnico Reasignaciones:</span>
-        <input
-          name="tecnico_reasignaciones"
-          value={formData.tecnico_reasignaciones || ""}
-          onChange={handleChange}
-          style={{ ...valor, width: 120 }}
-        />
-      </div>
+        <div style={campo}>
+          <span>Técnico Reasignaciones:</span>
+          <input
+            name="tecnico_reasignaciones"
+            value={formData.tecnico_reasignaciones || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 120 }}
+          />
+        </div>
 
-      <div style={campo}>
-        <span>Empresa Planta Int.:</span>
-        <select
-          name="empresa_pi"
-          value={formData.empresa_pi || ""}
-          onChange={handleChange}
-          style={{ ...valor, width: 150 }}
-        >
-          <option value="">-- Seleccionar --</option>
-          {empresasPI.map((empresa) => (
-            <option key={empresa.id} value={empresa.nombre}>
-              {empresa.nombre}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div style={campo}>
+          <span>Empresa Planta Int.:</span>
+          <select
+            name="empresa_pi"
+            value={formData.empresa_pi || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 150 }}
+          >
+            <option value="">-- Seleccionar --</option>
+            {empresasPI.map((empresa) => (
+              <option key={empresa.id} value={empresa.nombre}>
+                {empresa.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div style={campo}>
-        <span>Empresa Planta Ext.:</span>
-        <input
-          name="empresa_pe"
-          value={formData.empresa_pe || ""}
-          onChange={handleChange}
-          style={{ ...valor, width: 150 }}
-        />
-      </div>
+        <div style={campo}>
+          <span>Empresa Planta Ext.:</span>
+          <input
+            name="empresa_pe"
+            value={formData.empresa_pe || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 150 }}
+          />
+        </div>
 
-      <div style={campo}>
-        <span>Empresa Recicladora:</span>
-        <input
-          name="empresa_recicladora"
-          value={formData.empresa_recicladora || ""}
-          onChange={handleChange}
-          style={{ ...valor, width: 150 }}
-        />
+        <div style={campo}>
+          <span>Empresa Recicladora:</span>
+          <input
+            name="empresa_recicladora"
+            value={formData.empresa_recicladora || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 150 }}
+          />
+        </div>
       </div>
     </div>
-  </div>
-);
-  
+  );
+}
+   
