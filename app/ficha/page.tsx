@@ -172,22 +172,6 @@ return (
   
 <div style={{ display: "flex", gap: 10 }}>
   <button onClick={guardarCambios}>💾</button>
-
-  <a
-    href={`https://spock.es.telefonica/spoc_ec/faro2/faro_detalle_nacional_repliegue.asp?central=${encodeURIComponent(formData.atlas || "")}`}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <img
-      src="/spock.png"
-      alt="Spock"
-      style={{
-        width: 18,
-        height: 18,
-        objectFit: "contain",
-      }}
-    />
-  </a>
 </div>
       
 
@@ -456,6 +440,37 @@ return (
           >
           📝 Memoria
           </button>
+          <button
+  onClick={() =>
+    window.open(
+      `https://spock.es.telefonica/spoc_ec/faro2/faro_detalle_nacional_repliegue.asp?central=${encodeURIComponent(formData.atlas || "")}`,
+      "_blank"
+    )
+  }
+  style={{
+    marginLeft: 6,
+    width: 30,
+    height: 30,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 6,
+    border: "1px solid #ccc",
+    background: "#e8f4ff",
+    cursor: "pointer",
+  }}
+  title="Abrir en Spock"
+>
+  <img
+    src="/spock.png"
+    alt="Spock"
+    style={{
+      width: 18,
+      height: 18,
+      objectFit: "contain",
+    }}
+  />
+</button>
 
 
           {mostrarMemoria && (
