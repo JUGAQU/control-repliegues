@@ -101,6 +101,7 @@ export default function Ficha() {
         tipo_repliegue: formData.tipo_repliegue,
         tipo_senda: formData.tipo_senda,
         fecha_abandono: formData.fecha_abandono,
+        central_vendida: formData.central_vendida,
         prioritario: formData.prioritario,
         proyecto_inversion: formData.proyecto_inversion,
         tecnico_analisis: formData.tecnico_analisis,
@@ -317,7 +318,7 @@ export default function Ficha() {
           <input
             type="checkbox"
             name="central_vendida"
-            checked={!!formData.prioritario}
+            checked={!!formData.central_vendida}
             onChange={handleChange}
           />
         </div>
