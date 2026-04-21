@@ -50,7 +50,33 @@ export default function Ficha() {
       setEmpresasPI(data || []);
     };
 
+    useEffect(() => {
+    const cargarProvincias = async () => {
+      const { data, error } = await supabase
+        .from("provincias")
+        .select("id, nombre")
+        .order("nombre", { ascending: true });
+
+      if (error) {
+        console.error("Error cargando empresaspi:", error);
+        return;
+      }
+
+      setProvincias(data || []);
+    };
+
     cargarEmpresasPI();
+  }, []);
+
+  const handleChange = (e: any) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+
+        cargarProvincias();
   }, []);
 
   const handleChange = (e: any) => {
