@@ -66,7 +66,6 @@ export default function Listado() {
     tipo_repliegue: "",
     tipo_senda: "",
     central_vendida: "",
-    // fecha_abandono: "",
     prioritario: "",
     tecnico_analisis: "",
     tecnico_reasignaciones: "",
@@ -107,7 +106,6 @@ const ordenar = (campo: string) => {
         safe(item.tipo_repliegue).includes(safe(filtros.tipo_repliegue)) &&
         safe(item.tipo_senda || "ACELERADA_2026").includes(safe(filtros.tipo_senda)) &&
         (item.central_vendida ? "si" : "no").includes(safe(filtros.central_vendida)) &&
-        // safe(item.fecha_abandono).includes(safe(filtros.fecha_abandono)) &&
         (item.prioritario ? "si" : "no").includes(safe(filtros.prioritario)) &&
         safe(item.tecnico_analisis).includes(safe(filtros.tecnico_analisis)) &&
         safe(item.tecnico_reasignaciones).includes(safe(filtros.tecnico_reasignaciones))
@@ -193,7 +191,6 @@ const ordenar = (campo: string) => {
               <th style={th} onClick={() => ordenar("tipo_repliegue")}>Tipo Repliegue</th>
               <th style={th} onClick={() => ordenar("tipo_senda")}>Senda</th>
               <th style={th} onClick={() => ordenar("central_vendida")}>CCVV</th>
-              // <th style={th} onClick={() => ordenar("fecha_abandono")}>Fecha Abandono</th>
               <th style={th} onClick={() => ordenar("prioritario")}>Prioritaria</th>
               <th style={th} onClick={() => ordenar("tecnico_analisis")}>Tecnico Analisis</th>
               <th style={th} onClick={() => ordenar("tecnico_reasignaciones")}>Tecnico RI</th>
@@ -224,7 +221,6 @@ const ordenar = (campo: string) => {
                 <td style={td}>{item.tipo_repliegue}</td>
                 <td style={td}>{item.tipo_senda || "ACELERADA_2026"}</td>
                 <td style={td}>{item.central_vendida ? "SI" : "NO"}</td>
-                //<td style={td}>{item.fecha_abandono}</td>
                 <td style={td}>{item.prioritario ? "SI" : "NO"}</td>
                 <td style={td}>{item.tecnico_analisis}</td>
                 <td style={td}>{item.tecnico_reasignaciones}</td>
