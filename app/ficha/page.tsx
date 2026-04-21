@@ -75,6 +75,8 @@ export default function Ficha() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+     setCambiosSinGuardar(true);
+  };
 
         cargarProvincias();
   }, []);
