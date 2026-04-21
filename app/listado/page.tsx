@@ -182,7 +182,7 @@ const ordenar = (campo: string) => {
               <th style={th} onClick={() => ordenar("nombre")}>Nombre</th>
               <th style={th} onClick={() => ordenar("provincia")}>Provincia</th>
               <th style={th} onClick={() => ordenar("miga")}>Miga</th>
-              <th style={th} onClick={() => ordenar("coadas")}>Coadas</th>
+              <th style={th} onClick={() => ordenar("coordenadas")}>coordenadas</th>
               <th style={th} onClick={() => ordenar("tipo_edificio")}>Tipo Edificio</th>
               <th style={th} onClick={() => ordenar("tipo_repliegue")}>Tipo Repliegue</th>
               <th style={th} onClick={() => ordenar("tipo_senda")}>Senda</th>
@@ -210,7 +210,7 @@ const ordenar = (campo: string) => {
                 <td style={td}>{item.nombre}</td>
                 <td style={td}>{item.provincia}</td>
                 <td style={td}>{item.miga}</td>
-                <td style={td}>{item.coadas}</td>
+                <td style={td}>{item.coordenadas}</td>
                 <td style={td}>{item.tipo_edificio}</td>
                 <td style={td}>{item.tipo_repliegue}</td>
                 <td style={td}>{item.tipo_senda || "ACELERADA_2026"}</td>
