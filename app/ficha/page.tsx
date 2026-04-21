@@ -247,25 +247,6 @@ export default function Ficha() {
         </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       
     </div>
   );
