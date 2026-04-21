@@ -8,7 +8,7 @@ import { supabase } from "../lib/supabase";
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
-  const [empresasPI, setEmpresasPI] = useState<any[]>([]);
+  const [provincias, setProvincias] = useState<any[]>([]);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -23,7 +23,6 @@ export default function Ficha() {
 
       if (Array.isArray(data)) {
         const registro = data.find((d: any) => String(d.id) === String(id));
-
         if (registro) {
           setFormData(registro);
         } else {
@@ -36,21 +35,21 @@ export default function Ficha() {
   }, [id]);
 
   useEffect(() => {
-    const cargarEmpresasPI = async () => {
+    const cargarProvincias = async () => {
       const { data, error } = await supabase
-        .from("empresaspi")
+        .from("co")
         .select("id, nombre")
         .order("nombre", { ascending: true });
 
       if (error) {
-        console.error("Error cargando empresaspi:", error);
+        console.error("Error cargando provincias:", error);
         return;
       }
 
-      setEmpresasPI(data || []);
+      setProvincias(data || []);
     };
 
-    cargarEmpresasPI();
+    cargarProvincias();
   }, []);
 
   const handleChange = (e: any) => {
@@ -192,12 +191,19 @@ export default function Ficha() {
 
         <div style={campo}>
           <span>Provincia:</span>
-          <input
+          <select
             name="provincia"
             value={formData.provincia || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 90 }}
-          />
+            style={{ ...valor, width: 160 }}
+          >
+            <option value="">-- Seleccionar --</option>
+            {provincias.map((provincia) => (
+              <option key={provincia.id} value={provincia.nombre}>
+                {provincia.nombre}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div style={campo}>
@@ -206,7 +212,7 @@ export default function Ficha() {
             name="miga"
             value={formData.miga || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 60 }}
+            style={{ ...valor, width: 70 }}
           />
         </div>
 
@@ -216,7 +222,7 @@ export default function Ficha() {
             name="coordenadas"
             value={formData.coordenadas || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 130 }}
           />
         </div>
 
@@ -236,7 +242,7 @@ export default function Ficha() {
             name="tipo_repliegue"
             value={formData.tipo_repliegue || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 70 }}
+            style={{ ...valor, width: 100 }}
           />
         </div>
 
@@ -257,7 +263,7 @@ export default function Ficha() {
             name="fecha_abandono"
             value={formData.fecha_abandono || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 130 }}
           />
         </div>
 
@@ -315,19 +321,12 @@ export default function Ficha() {
 
         <div style={campo}>
           <span>Empresa Planta Int.:</span>
-          <select
+          <input
             name="empresa_pi"
             value={formData.empresa_pi || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
-          >
-            <option value="">-- Seleccionar --</option>
-            {empresasPI.map((empresa) => (
-              <option key={empresa.id} value={empresa.nombre}>
-                {empresa.nombre}
-              </option>
-            ))}
-          </select>
+            style={{ ...valor, width: 120 }}
+          />
         </div>
 
         <div style={campo}>
@@ -336,7 +335,7 @@ export default function Ficha() {
             name="empresa_pe"
             value={formData.empresa_pe || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 120 }}
           />
         </div>
 
