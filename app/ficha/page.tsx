@@ -167,7 +167,29 @@ return (
         marginBottom: 5,
       }}
     >
-      <button onClick={guardarCambios}>💾</button>
+
+
+  
+<div style={{ display: "flex", gap: 10 }}>
+  <button onClick={guardarCambios}>💾</button>
+
+  <a
+    href={`https://spock.es.telefonica/spoc_ec/faro2/faro_detalle_nacional_repliegue.asp?central=${encodeURIComponent(formData.atlas || "")}`}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      src="/spock.png"
+      alt="Spock"
+      style={{
+        width: 24,
+        height: 24,
+        cursor: "pointer",
+      }}
+    />
+  </a>
+</div>
+      
 
 
 
