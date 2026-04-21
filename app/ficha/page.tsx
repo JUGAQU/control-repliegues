@@ -76,6 +76,14 @@ export default function Ficha() {
         tipo_senda: formData.tipo_senda,
         fecha_abandono: formData.fecha_abandono,
         prioritario: formData.prioritario,
+        tecnico_analisis: formData.tecnico_analisis,
+        tecnico_reasignaciones: formData.tecnico_reasignaciones,
+        empresa_pi: formData.empresa_pi,
+        empresa_pe: formData.empresa_pe,
+        empresa_recicladora: formData.empresa_recicladora,
+
+
+        
       })
       .eq("atlas", formData.atlas)
       .select(); // 👈 clave
