@@ -32,7 +32,7 @@ export default function Home() {
         ) {
           setError("No se puede iniciar sesión con CARU activo.");
         } else {
-          setError("Usuario o contraseña incorrectos");
+          setError("Usuario o contraseña incorrectos. ¡Para accederCARU no puede estarvactivo!");
         }
         return;
       }
