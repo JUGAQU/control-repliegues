@@ -189,7 +189,7 @@ const ordenar = (campo: string) => {
               <th style={th} onClick={() => ordenar("tipo_repliegue")}>Tipo Repliegue</th>
               <th style={th} onClick={() => ordenar("tipo_senda")}>Senda</th>
               <th style={th} onClick={() => ordenar("central_vendida")}>CCVV</th>
-              <th style={th} onClick={() => ordenar("fecha_abandono")}>Abandono</th>
+              <th style={th} onClick={() => ordenar("fecha_abandono")}>Fecha Abandono</th>
               <th style={th} onClick={() => ordenar("prioritario")}>Prioritaria</th>
             </tr>
           </thead>
