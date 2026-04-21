@@ -132,6 +132,9 @@ export default function Ficha() {
         </button>
       </div>
 
+
+      // 🛑 DATOS DE IDENTIFICACION
+
       <div
         style={{
           border: "1px solid #ccc",
@@ -205,7 +208,7 @@ export default function Ficha() {
       </div>
 
 
-
+// 🛑 TECNICOS
 
  <div
         style={{
@@ -218,12 +221,8 @@ export default function Ficha() {
         }}
       >
         <div style={campo}>
-          <span>Atlas:</span>
-          <input
-            name="atlas"
-            value={formData.atlas || ""}
-            readOnly
-            style={{ ...valor, width: 70, background: "#eee" }}
+          <span>Técnico Análisis:</span>
+          <input name="tecnico_analisis" value={formData.tecnico_analisis || ""} style={{ ...valor, width: 150, }}
           />
         </div>
 
