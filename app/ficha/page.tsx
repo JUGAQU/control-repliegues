@@ -227,8 +227,8 @@ export default function Ficha() {
         </div>
 
         <div style={campo}>
-          <span>Lote:</span>
-          <input name="lote" value={formData.lote || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
+          <span>Técnico Reasignaciones:</span>
+          <input name="tecnico_reasignaciones" value={formData.tecnico_reasignaciones || ""} onChange={handleChange} style={{ ...valor, width: 150 }} />
         </div>
 
         <div style={campo}>
