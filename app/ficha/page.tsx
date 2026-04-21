@@ -12,7 +12,7 @@ export default function Ficha() {
   const [provincias, setProvincias] = useState<any[]>([]);
 
   const [mostrarMemoria, setMostrarMemoria] = useState(false);
-  const [memoria, setMemoria] = useState(formData?.memoria || "");
+  const [memoria, setMemoria] = useState("");
 
 
   
@@ -20,6 +20,12 @@ export default function Ficha() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("id");
+
+  useEffect(() => {
+    if (formData) {
+      setMemoria(formData.memoria || "");
+    }
+  }, [formData]);
 
   useEffect(() => {
     const cargarFicha = async () => {
@@ -159,6 +165,13 @@ return (
       }}
     >
       <button onClick={guardarCambios}>💾</button>
+
+
+
+
+
+
+      
       <button
         onClick={() => {
           if (cambiosSinGuardar) {
