@@ -231,7 +231,7 @@ export default function Ficha() {
       >
         <div style={campo}>
           <span>Proyecto Inversión:</span>
-          <input name="proyecto_inversio" value={formData.proyecto_inversion || ""} onChange={handleChange} style={{ ...valor, width: 80, }}
+          <input name="proyecto_inversion" value={formData.proyecto_inversion || ""} onChange={handleChange} style={{ ...valor, width: 80, }}
           />
         </div>
    
