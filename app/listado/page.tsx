@@ -184,7 +184,7 @@ const ordenar = (campo: string) => {
               <th style={th} onClick={() => ordenar("nombre")}>Nombre</th>
               <th style={th} onClick={() => ordenar("provincia")}>Provincia</th>
               <th style={th} onClick={() => ordenar("miga")}>Miga</th>
-              <th style={th} onClick={() => ordenar("coordenadas")}>coordenadas</th>
+              <th style={th} onClick={() => ordenar("coordenadas")}>Coordenadas</th>
               <th style={th} onClick={() => ordenar("tipo_edificio")}>Tipo Edificio</th>
               <th style={th} onClick={() => ordenar("tipo_repliegue")}>Tipo Repliegue</th>
               <th style={th} onClick={() => ordenar("tipo_senda")}>Senda</th>
