@@ -1,4 +1,5 @@
 "use client";
+
 export const dynamic = "force-dynamic";
 
 import { useState, useEffect } from "react";
@@ -8,68 +9,61 @@ import { supabase } from "../lib/supabase";
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
-  const [provincias, setProvincias] = useState<any[]>([]);
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("id");
 
+  // 🔥 CARGA CORRECTA
   useEffect(() => {
-    const cargarFicha = async () => {
+    const cargar = async () => {
       if (!id) return;
 
       const res = await fetch("/api/fichas");
       const data = await res.json();
 
+      console.log("ID URL:", id);
+      console.log("DATA:", data);
+
       if (Array.isArray(data)) {
-        const registro = data.find((d: any) => String(d.id) === String(id));
+        const registro = data.find(
+          (d: any) => String(d.id) === String(id)
+        );
+
+        console.log("REGISTRO ENCONTRADO:", registro);
+
         if (registro) {
           setFormData(registro);
         } else {
-          console.error("No se encontró el registro");
+          console.error("❌ No se encontró el registro");
         }
       }
     };
 
-    cargarFicha();
+    cargar();
   }, [id]);
-
-  useEffect(() => {
-    const cargarProvincias = async () => {
-      const { data, error } = await supabase
-        .from("co")
-        .select("id, nombre")
-        .order("nombre", { ascending: true });
-
-      if (error) {
-        console.error("Error cargando provincias:", error);
-        return;
-      }
-
-      setProvincias(data || []);
-    };
-
-    cargarProvincias();
-  }, []);
 
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
 
-    setFormData((prev: any) => ({
-      ...prev,
+    setFormData({
+      ...formData,
       [name]: type === "checkbox" ? checked : value,
-    }));
+    });
 
     setCambiosSinGuardar(true);
   };
 
+  // 🔥 GUARDAR BIEN EN SUPABASE
   const guardarCambios = async () => {
     if (!formData?.id) {
       alert("Error: no hay ID");
       return;
     }
 
-    const { error } = await supabase
+    console.log("GUARDANDO:", formData);
+
+    const { data, error } = await supabase
       .from("fichas")
       .update({
         lote: formData.lote,
@@ -88,21 +82,29 @@ export default function Ficha() {
         empresa_pi: formData.empresa_pi,
         empresa_pe: formData.empresa_pe,
         empresa_recicladora: formData.empresa_recicladora,
+
+
+        
       })
-      .eq("id", formData.id);
+      .eq("atlas", formData.atlas)
+      .select(); // 👈 clave
+
+    console.log("UPDATE RESULT:", data);
 
     if (error) {
       console.error("Error guardando:", error);
       alert("Error al guardar");
-      return;
-    }
+    } else {
+      alert("Guardado en Supabase ✅");
+      setCambiosSinGuardar(false);
 
-    alert("Guardado en Supabase ✅");
-    setCambiosSinGuardar(false);
-    router.replace("/listado");
-    router.refresh();
+      // 🔥 REFRESCO CORRECTO
+      router.replace("/listado");
+      router.refresh();
+    }
   };
 
+  // 🛑 BLOQUEO HASTA CARGAR
   if (!formData) {
     return <div style={{ padding: 20 }}>Cargando ficha...</div>;
   }
@@ -123,21 +125,13 @@ export default function Ficha() {
 
   return (
     <div style={{ padding: 20, fontFamily: "Arial" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: 15,
-        }}
-      >
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 15 }}>
         <button onClick={guardarCambios}>💾</button>
 
         <button
           onClick={() => {
             if (cambiosSinGuardar) {
-              const confirmar = confirm(
-                "Tienes cambios sin guardar. ¿Salir sin guardar?"
-              );
+              const confirmar = confirm("Tienes cambios sin guardar. ¿Salir sin guardar?");
               if (!confirmar) return;
             }
             router.push("/listado");
@@ -147,7 +141,9 @@ export default function Ficha() {
         </button>
       </div>
 
-      {/* DATOS DE IDENTIFICACION */}
+
+      {/* 🛑 DATOS DE IDENTIFICACION */}
+
       <div
         style={{
           border: "1px solid #ccc",
@@ -156,7 +152,6 @@ export default function Ficha() {
           display: "flex",
           flexWrap: "wrap",
           gap: 15,
-          marginBottom: 20,
         }}
       >
         <div style={campo}>
@@ -165,121 +160,66 @@ export default function Ficha() {
             name="atlas"
             value={formData.atlas || ""}
             readOnly
-            style={{ ...valor, width: 70, background: "#eee", color: "#666" }}
+            style={{ ...valor, width: 70, background: "#eee" }}
           />
         </div>
 
         <div style={campo}>
           <span>Lote:</span>
-          <input
-            name="lote"
-            value={formData.lote || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 100 }}
-          />
+          <input name="lote" value={formData.lote || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
         </div>
 
         <div style={campo}>
           <span>Nombre:</span>
-          <input
-            name="nombre"
-            value={formData.nombre || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 200 }}
-          />
+          <input name="nombre" value={formData.nombre || ""} onChange={handleChange} style={{ ...valor, width: 200 }} />
         </div>
 
         <div style={campo}>
           <span>Provincia:</span>
-          <select
-            name="provincia"
-            value={formData.provincia || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 160 }}
-          >
-            <option value="">-- Seleccionar --</option>
-            {provincias.map((provincia) => (
-              <option key={provincia.id} value={provincia.nombre}>
-                {provincia.nombre}
-              </option>
-            ))}
-          </select>
+          <input name="provincia" value={formData.provincia || ""} onChange={handleChange} style={{ ...valor, width: 90 }} />
         </div>
 
         <div style={campo}>
           <span>Miga:</span>
-          <input
-            name="miga"
-            value={formData.miga || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 70 }}
-          />
+          <input name="miga" value={formData.miga || ""} onChange={handleChange} style={{ ...valor, width: 70 }} />
         </div>
 
         <div style={campo}>
           <span>Coordenadas:</span>
-          <input
-            name="coordenadas"
-            value={formData.coordenadas || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 130 }}
-          />
+          <input name="coordenadas" value={formData.coordenadas || ""} onChange={handleChange} style={{ ...valor, width: 130 }} />
         </div>
 
         <div style={campo}>
           <span>Tipo Edificio:</span>
-          <input
-            name="tipo_edificio"
-            value={formData.tipo_edificio || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 80 }}
-          />
+          <input name="tipo_edificio" value={formData.tipo_edificio || ""} onChange={handleChange} style={{ ...valor, width: 60 }} />
         </div>
 
         <div style={campo}>
           <span>Tipo Repliegue:</span>
-          <input
-            name="tipo_repliegue"
-            value={formData.tipo_repliegue || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 100 }}
-          />
+          <input name="tipo_repliegue" value={formData.tipo_repliegue || ""} onChange={handleChange} style={{ ...valor, width: 80 }} />
         </div>
 
         <div style={campo}>
           <span>Senda:</span>
-          <input
-            name="tipo_senda"
-            value={formData.tipo_senda || "ACELERADA_2026"}
-            onChange={handleChange}
-            style={{ ...valor, width: 130 }}
-          />
+          <input name="tipo_senda" value={formData.tipo_senda || "ACELERADA_2026"} onChange={handleChange} style={{ ...valor, width: 130 }} />
         </div>
 
         <div style={campo}>
           <span>Fecha Abandono:</span>
-          <input
-            type="date"
-            name="fecha_abandono"
-            value={formData.fecha_abandono || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 130 }}
-          />
+          <input name="fecha_abandono" value={formData.fecha_abandono || ""} onChange={handleChange} style={{ ...valor, width: 80 }} />
         </div>
 
         <div style={campo}>
           <span>Prioritaria:</span>
-          <input
-            type="checkbox"
-            name="prioritario"
-            checked={!!formData.prioritario}
-            onChange={handleChange}
-          />
+          <input name="prioritario" value={formData.prioritario || ""} onChange={handleChange} style={{ ...valor, width: 10 }} />
         </div>
+    
       </div>
 
-      {/* TECNICOS Y EE.CC */}
-      <div
+
+// 🛑 TECNICOS y EE.CC
+
+ <div
         style={{
           border: "1px solid #ccc",
           padding: 15,
@@ -291,64 +231,38 @@ export default function Ficha() {
       >
         <div style={campo}>
           <span>Proyecto Inversión:</span>
-          <input
-            name="proyecto_inversion"
-            value={formData.proyecto_inversion || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 120 }}
+          <input name="proyecto_inversion" value={formData.proyecto_inversion || ""} onChange={handleChange} style={{ ...valor, width: 80, }}
           />
         </div>
-
+   
         <div style={campo}>
           <span>Técnico Análisis:</span>
-          <input
-            name="tecnico_analisis"
-            value={formData.tecnico_analisis || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+          <input name="tecnico_analisis" value={formData.tecnico_analisis || ""} onChange={handleChange} style={{ ...valor, width: 150, }}
           />
         </div>
 
         <div style={campo}>
           <span>Técnico Reasignaciones:</span>
-          <input
-            name="tecnico_reasignaciones"
-            value={formData.tecnico_reasignaciones || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 150 }}
-          />
+          <input name="tecnico_reasignaciones" value={formData.tecnico_reasignaciones || ""} onChange={handleChange} style={{ ...valor, width: 150 }} />
         </div>
 
-        <div style={campo}>
+         <div style={campo}>
           <span>Empresa Planta Int.:</span>
-          <input
-            name="empresa_pi"
-            value={formData.empresa_pi || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 120 }}
-          />
+          <input name="empresa_pi" value={formData.empresa_pi || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
         </div>
 
         <div style={campo}>
           <span>Empresa Planta Ext.:</span>
-          <input
-            name="empresa_pe"
-            value={formData.empresa_pe || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 120 }}
-          />
+          <input name="empresa_pe" value={formData.empresa_pe || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
         </div>
 
         <div style={campo}>
           <span>Empresa Recicladora:</span>
-          <input
-            name="empresa_recicladora"
-            value={formData.empresa_recicladora || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 120 }}
-          />
+          <input name="empresa_recicladora" value={formData.empresa_recicladora || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
         </div>
-      </div>
+
+</div>
+      
     </div>
   );
 }
