@@ -11,6 +11,12 @@ export default function Ficha() {
   const [empresasPI, setEmpresasPI] = useState<any[]>([]);
   const [provincias, setProvincias] = useState<any[]>([]);
 
+  const [mostrarMemoria, setMostrarMemoria] = useState(false);
+  const [memoria, setMemoria] = useState(formData?.memoria || "");
+
+
+  
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("id");
@@ -400,6 +406,80 @@ return (
             onChange={handleChange}
             style={{ ...valor, width: 150 }}
           />
+
+          <button
+            onClick={() => setMostrarMemoria(true)}
+            style={{
+              marginLeft: 10,
+              padding: "5px 10px",
+              cursor: "pointer",
+            }}
+          >
+          📝 Memoria
+          </button>
+
+
+          {mostrarMemoria && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      background: "rgba(0,0,0,0.4)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 999,
+    }}
+  >
+    <div
+      style={{
+        background: "white",
+        padding: 20,
+        borderRadius: 8,
+        width: "500px",
+      }}
+    >
+      <h3>Memoria del Repliegue</h3>
+
+      <textarea
+        value={memoria}
+        onChange={(e) => setMemoria(e.target.value)}
+        style={{
+          width: "100%",
+          height: 200,
+          marginBottom: 10,
+        }}
+      />
+
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <button onClick={() => setMostrarMemoria(false)}>
+          ❌ Cerrar
+        </button>
+
+        <button
+          onClick={() => {
+            setFormData((prev: any) => ({
+              ...prev,
+              memoria,
+            }));
+            setMostrarMemoria(false);
+            setCambiosSinGuardar(true);
+          }}
+        >
+          💾 Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+          
+
+
+          
         </div>
       </div>
     </div>
