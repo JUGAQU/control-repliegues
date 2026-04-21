@@ -231,13 +231,13 @@ export default function Ficha() {
       >
         <div style={campo}>
           <span>Proyecto Inversión:</span>
-          <input name="proyecto_inversio" value={formData.proyecto_inversion || ""} style={{ ...valor, width: 80, }}
+          <input name="proyecto_inversio" value={formData.proyecto_inversion || ""} onChange={handleChange} style={{ ...valor, width: 80, }}
           />
         </div>
    
         <div style={campo}>
           <span>Técnico Análisis:</span>
-          <input name="tecnico_analisis" value={formData.tecnico_analisis || ""} style={{ ...valor, width: 150, }}
+          <input name="tecnico_analisis" value={formData.tecnico_analisis || ""} onChange={handleChange} style={{ ...valor, width: 150, }}
           />
         </div>
 
