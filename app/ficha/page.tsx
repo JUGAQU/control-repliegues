@@ -215,7 +215,7 @@ export default function Ficha() {
             name="provincia"
             value={formData.provincia || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 140 }}
           >
             <option value="">-- Seleccionar --</option>
             {provincias.map((provincia) => (
@@ -232,7 +232,7 @@ export default function Ficha() {
             name="miga"
             value={formData.miga || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 50 }}
+            style={{ ...valor, width: 60 }}
           />
         </div>
 
