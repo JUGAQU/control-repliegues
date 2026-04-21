@@ -257,7 +257,7 @@ export default function Ficha() {
             name="fecha_abandono"
             value={formData.fecha_abandono || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 130 }}
+            style={{ ...valor, width: 100 }}
           />
         </div>
 
@@ -336,7 +336,7 @@ export default function Ficha() {
             name="empresa_pe"
             value={formData.empresa_pe || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 150 }}
           />
         </div>
 
@@ -346,7 +346,7 @@ export default function Ficha() {
             name="empresa_recicladora"
             value={formData.empresa_recicladora || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 120 }}
+            style={{ ...valor, width: 150 }}
           />
         </div>
       </div>
