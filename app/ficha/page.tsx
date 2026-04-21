@@ -133,7 +133,7 @@ export default function Ficha() {
       </div>
 
 
-      // 🛑 DATOS DE IDENTIFICACION
+      {/* 🛑 DATOS DE IDENTIFICACION */}
 
       <div
         style={{
@@ -208,7 +208,7 @@ export default function Ficha() {
       </div>
 
 
-// 🛑 TECNICOS
+// 🛑 TECNICOS y EE.CC
 
  <div
         style={{
@@ -231,51 +231,22 @@ export default function Ficha() {
           <input name="tecnico_reasignaciones" value={formData.tecnico_reasignaciones || ""} onChange={handleChange} style={{ ...valor, width: 150 }} />
         </div>
 
-        <div style={campo}>
-          <span>Nombre:</span>
-          <input name="nombre" value={formData.nombre || ""} onChange={handleChange} style={{ ...valor, width: 200 }} />
+         <div style={campo}>
+          <span>Empresa Planta Int.:</span>
+          <input name="empresa_pi" value={formData.empresa_pi || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
         </div>
 
         <div style={campo}>
-          <span>Provincia:</span>
-          <input name="provincia" value={formData.provincia || ""} onChange={handleChange} style={{ ...valor, width: 90 }} />
+          <span>Empresa Planta Ext.:</span>
+          <input name="empresa_pe" value={formData.empresa_pe || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
         </div>
 
         <div style={campo}>
-          <span>Miga:</span>
-          <input name="miga" value={formData.miga || ""} onChange={handleChange} style={{ ...valor, width: 70 }} />
+          <span>Empresa Recicladora:</span>
+          <input name="empresa_recicladora" value={formData.empresa_recicladora || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
         </div>
 
-        <div style={campo}>
-          <span>Coordenadas:</span>
-          <input name="coordenadas" value={formData.coordenadas || ""} onChange={handleChange} style={{ ...valor, width: 130 }} />
-        </div>
 
-        <div style={campo}>
-          <span>Tipo Edificio:</span>
-          <input name="tipo_edificio" value={formData.tipo_edificio || ""} onChange={handleChange} style={{ ...valor, width: 60 }} />
-        </div>
-
-        <div style={campo}>
-          <span>Tipo Repliegue:</span>
-          <input name="tipo_repliegue" value={formData.tipo_repliegue || ""} onChange={handleChange} style={{ ...valor, width: 80 }} />
-        </div>
-
-        <div style={campo}>
-          <span>Senda:</span>
-          <input name="tipo_senda" value={formData.tipo_senda || "ACELERADA_2026"} onChange={handleChange} style={{ ...valor, width: 130 }} />
-        </div>
-
-        <div style={campo}>
-          <span>Fecha Abandono:</span>
-          <input name="fecha_abandono" value={formData.fecha_abandono || ""} onChange={handleChange} style={{ ...valor, width: 80 }} />
-        </div>
-
-        <div style={campo}>
-          <span>Prioritaria:</span>
-          <input name="prioritario" value={formData.prioritario || ""} onChange={handleChange} style={{ ...valor, width: 10 }} />
-        </div>
-      </div>
 
 
 
