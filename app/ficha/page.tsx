@@ -216,7 +216,7 @@ export default function Ficha() {
             name="coordenadas"
             value={formData.coordenadas || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 130 }}
+            style={{ ...valor, width: 100 }}
           />
         </div>
 
