@@ -51,7 +51,10 @@ export default function Ficha() {
       setEmpresasPI(data || []);
     };
 
-    useEffect(() => {
+    cargarEmpresasPI();
+  }, []);
+
+  useEffect(() => {
     const cargarProvincias = async () => {
       const { data, error } = await supabase
         .from("provincias")
@@ -59,27 +62,14 @@ export default function Ficha() {
         .order("nombre", { ascending: true });
 
       if (error) {
-        console.error("Error cargando empresaspi:", error);
+        console.error("Error cargando provincias:", error);
         return;
       }
 
       setProvincias(data || []);
     };
 
-    cargarEmpresasPI();
-  }, []);
-
-  const handleChange = (e: any) => {
-    const { name, value, type, checked } = e.target;
-
-    setFormData((prev: any) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-     setCambiosSinGuardar(true);
-  };
-
-        cargarProvincias();
+    cargarProvincias();
   }, []);
 
   const handleChange = (e: any) => {
@@ -221,12 +211,19 @@ export default function Ficha() {
 
         <div style={campo}>
           <span>Provincia:</span>
-          <input
+          <select
             name="provincia"
             value={formData.provincia || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 90 }}
-          />
+            style={{ ...valor, width: 150 }}
+          >
+            <option value="">-- Seleccionar --</option>
+            {provincias.map((provincia) => (
+              <option key={provincia.id} value={provincia.nombre}>
+                {provincia.nombre}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div style={campo}>
