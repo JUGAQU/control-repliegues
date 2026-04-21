@@ -257,14 +257,20 @@ export default function Ficha() {
     style={{ ...valor, width: 120 }}
   />
 
-  <a
-    href={`https://www.google.com/maps?q=${encodeURIComponent(formData.coordenadas || "")}`}
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ marginLeft: 6 }}
-  >
-    Ver mapa
-  </a>
+  {formData.coordenadas && (
+    <a
+      href={`https://www.google.com/maps?q=${encodeURIComponent(formData.coordenadas)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        marginLeft: 6,
+        textDecoration: "none",
+        fontSize: 14,
+      }}
+    >
+      🌍
+    </a>
+  )}
 </div>
 
 
