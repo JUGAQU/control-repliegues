@@ -182,9 +182,9 @@ return (
       src="/spock.png"
       alt="Spock"
       style={{
-        width: 24,
-        height: 24,
-        cursor: "pointer",
+        width: 18,
+        height: 18,
+        objectFit: "contain",
       }}
     />
   </a>
