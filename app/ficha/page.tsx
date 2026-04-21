@@ -287,15 +287,7 @@ export default function Ficha() {
           />
         </div>
 
-        <div style={campo}>
-          <span>Prioritaria:</span>
-          <input
-            type="checkbox"
-            name="prioritario"
-            checked={!!formData.prioritario}
-            onChange={handleChange}
-          />
-        </div>
+
       </div>
 
       {/* TECNICOS Y EE.CC */}
@@ -309,6 +301,17 @@ export default function Ficha() {
           gap: 15,
         }}
       >
+
+        <div style={campo}>
+          <span>Prioritaria:</span>
+          <input
+            type="checkbox"
+            name="prioritario"
+            checked={!!formData.prioritario}
+            onChange={handleChange}
+          />
+        </div>
+        
         <div style={campo}>
           <span>Proyecto Inversión:</span>
           <input
