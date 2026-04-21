@@ -361,7 +361,7 @@ export default function Ficha() {
             name="empresa_pi"
             value={formData.empresa_pi || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 170 }}
+            style={{ ...valor, width: 150 }}
           >
             <option value="">-- Seleccionar --</option>
             {empresasPI.map((empresa) => (
@@ -378,7 +378,7 @@ export default function Ficha() {
             name="empresa_pe"
             value={formData.empresa_pe || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 170 }}
+            style={{ ...valor, width: 10 }}
           />
         </div>
 
@@ -388,7 +388,7 @@ export default function Ficha() {
             name="empresa_recicladora"
             value={formData.empresa_recicladora || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 170 }}
+            style={{ ...valor, width: 150 }}
           />
         </div>
       </div>
