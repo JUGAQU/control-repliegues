@@ -195,7 +195,7 @@ export default function Ficha() {
             name="lote"
             value={formData.lote || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 90 }}
           />
         </div>
 
