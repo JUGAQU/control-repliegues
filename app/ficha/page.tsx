@@ -115,6 +115,7 @@ export default function Ficha() {
         empresa_pi: formData.empresa_pi,
         empresa_pe: formData.empresa_pe,
         empresa_recicladora: formData.empresa_recicladora,
+        memoria: formData.memoria,
       })
       .eq("id", formData.id);
 
