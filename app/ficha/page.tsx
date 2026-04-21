@@ -15,6 +15,7 @@ export default function Ficha() {
   const [memoria, setMemoria] = useState("");
 
 
+
   
 
   const searchParams = useSearchParams();
