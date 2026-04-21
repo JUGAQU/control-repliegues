@@ -328,7 +328,7 @@ export default function Ficha() {
             name="tecnico_analisis"
             value={formData.tecnico_analisis || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 160 }}
           />
         </div>
 
@@ -338,7 +338,7 @@ export default function Ficha() {
             name="tecnico_reasignaciones"
             value={formData.tecnico_reasignaciones || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 160 }}
           />
         </div>
 
@@ -348,7 +348,7 @@ export default function Ficha() {
             name="empresa_pi"
             value={formData.empresa_pi || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 160 }}
           >
             <option value="">-- Seleccionar --</option>
             {empresasPI.map((empresa) => (
@@ -365,7 +365,7 @@ export default function Ficha() {
             name="empresa_pe"
             value={formData.empresa_pe || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 160 }}
           />
         </div>
 
@@ -375,7 +375,7 @@ export default function Ficha() {
             name="empresa_recicladora"
             value={formData.empresa_recicladora || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 160 }}
           />
         </div>
       </div>
