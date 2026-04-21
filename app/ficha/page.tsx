@@ -9,6 +9,7 @@ export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
   const [empresasPI, setEmpresasPI] = useState<any[]>([]);
+  const [provincias, setProvincias] = useState<any[]>([]);
 
   const searchParams = useSearchParams();
   const router = useRouter();
