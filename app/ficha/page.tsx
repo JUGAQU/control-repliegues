@@ -206,7 +206,7 @@ export default function Ficha() {
             name="miga"
             value={formData.miga || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 70 }}
+            style={{ ...valor, width: 50 }}
           />
         </div>
 
