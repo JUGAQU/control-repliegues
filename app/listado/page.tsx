@@ -217,7 +217,7 @@ const ordenar = (campo: string) => {
                 <td style={td}>{item.tipo_edificio}</td>
                 <td style={td}>{item.tipo_repliegue}</td>
                 <td style={td}>{item.tipo_senda || "ACELERADA_2026"}</td>
-                <td style={td}>{item.central_vendida}</td>
+                <td style={td}>{item.central_vendida ? "SI" : "NO"}</td>
                 <td style={td}>{item.fecha_abandono}</td>
                 <td style={td}>{item.prioritario ? "SI" : "NO"}</td>
               </tr>
