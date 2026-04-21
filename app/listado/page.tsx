@@ -147,6 +147,7 @@ const ordenar = (campo: string) => {
             borderCollapse: "collapse",
             width: "100%",
             tableLayout: "fixed",
+            fontSize: 10, // 👈 reduce todo
           }}
         >
           <thead
