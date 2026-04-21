@@ -1,33 +1,48 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "./lib/supabase";
 
 export default function Home() {
   const router = useRouter();
-
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
 
-const handleLogin = async () => {
-  setError("");
+  const handleLogin = async () => {
+    setError("");
 
-  const email = user + "@app.com"; // 👈 convierte usuario en email
+    try {
+      const email = user.trim() + "@app.com";
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password: pass,
-  });
-  console.log("LOGIN ERROR:", error);
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password: pass,
+      });
 
-  if (error) {
-    setError("Usuario o contraseña incorrectos");
-  } else {
-    router.push("/listado");
-  }
-};
+      console.log("LOGIN ERROR:", error);
+
+      if (error) {
+        const msg = (error.message || "").toLowerCase();
+
+        if (
+          msg.includes("failed to fetch") ||
+          msg.includes("fetch") ||
+          msg.includes("network")
+        ) {
+          setError("No se puede iniciar sesión con CARU activo.");
+        } else {
+          setError("Usuario o contraseña incorrectos");
+        }
+        return;
+      }
+
+      router.push("/listado");
+    } catch (e) {
+      console.error("ERROR LOGIN:", e);
+      setError("No se puede iniciar sesión con la VPN activa.");
+    }
+  };
 
   return (
     <div
@@ -50,7 +65,6 @@ const handleLogin = async () => {
           width: 320,
         }}
       >
-        {/* LOGO */}
         <img
           src="/logo.png"
           alt="Logo"
@@ -60,7 +74,6 @@ const handleLogin = async () => {
           }}
         />
 
-        {/* INPUT USER */}
         <input
           placeholder="Usuario"
           value={user}
@@ -74,7 +87,6 @@ const handleLogin = async () => {
           }}
         />
 
-        {/* INPUT PASS */}
         <input
           type="password"
           placeholder="contraseña"
@@ -89,14 +101,12 @@ const handleLogin = async () => {
           }}
         />
 
-        {/* ERROR */}
         {error && (
           <div style={{ color: "red", marginBottom: 10 }}>
             {error}
           </div>
         )}
 
-        {/* BOTÓN */}
         <button
           onClick={handleLogin}
           style={{
