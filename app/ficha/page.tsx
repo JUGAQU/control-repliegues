@@ -341,7 +341,7 @@ export default function Ficha() {
             name="tecnico_analisis"
             value={formData.tecnico_analisis || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 120 }}
           />
         </div>
 
@@ -351,7 +351,7 @@ export default function Ficha() {
             name="tecnico_reasignaciones"
             value={formData.tecnico_reasignaciones || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 120 }}
           />
         </div>
 
