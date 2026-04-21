@@ -239,13 +239,47 @@ export default function Ficha() {
 
         <div style={campo}>
           <span>Coordenadas:</span>
-          <input
-            name="coordenadas"
-            value={formData.coordenadas || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 120 }}
-          />
+
+
+        <div style={campo}>
+          <span>Coordenadas:</span>
+
+          <a
+            href={`https://www.google.com/maps?q=${formData.coordenadas}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <input
+              name="coordenadas"
+              value={formData.coordenadas || ""}
+              readOnly
+              style={{
+                ...valor,
+                width: 130,
+                cursor: "pointer",
+                background: "#d0f0ff",
+              }}
+            />
+          </a>
         </div>
+
+
+
+
+          
+
+
+
+
+
+
+
+
+
+
+
+        
 
         <div style={campo}>
           <span>Tipo Edificio:</span>
