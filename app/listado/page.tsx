@@ -104,7 +104,7 @@ const ordenar = (campo: string) => {
         safe(item.tipo_edificio).includes(safe(filtros.tipo_edificio)) &&
         safe(item.tipo_repliegue).includes(safe(filtros.tipo_repliegue)) &&
         safe(item.tipo_senda || "ACELERADA_2026").includes(safe(filtros.tipo_senda)) &&
-        safe(item.central_vendida).includes(safe(filtros.central_vendida)) &&
+        (item.central_vendida ? "si" : "no").includes(safe(filtros.central_vendida)) &&
         safe(item.fecha_abandono).includes(safe(filtros.fecha_abandono)) &&
         (item.prioritario ? "si" : "no").includes(safe(filtros.prioritario))
       );
