@@ -107,7 +107,10 @@ export default function Ficha() {
         lote: formData.lote,
         nombre: formData.nombre,
         provincia: formData.provincia,
-        miga: formData.miga,
+        miga: (formData.miga || "")
+          .replace(/\D/g, "")
+          .slice(0, 7)
+          .padStart(7, "0"),
         coordenadas: formData.coordenadas,
         tipo_edificio: formData.tipo_edificio,
         tipo_repliegue: formData.tipo_repliegue,
