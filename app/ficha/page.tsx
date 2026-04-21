@@ -289,7 +289,7 @@ export default function Ficha() {
             name="proyecto_inversion"
             value={formData.proyecto_inversion || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 50 }}
+            style={{ ...valor, width: 60 }}
           />
         </div>
 
