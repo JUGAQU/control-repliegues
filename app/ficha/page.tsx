@@ -76,6 +76,7 @@ export default function Ficha() {
         tipo_senda: formData.tipo_senda,
         fecha_abandono: formData.fecha_abandono,
         prioritario: formData.prioritario,
+        proyecto_inversion: formData.proyecto_inversion,
         tecnico_analisis: formData.tecnico_analisis,
         tecnico_reasignaciones: formData.tecnico_reasignaciones,
         empresa_pi: formData.empresa_pi,
