@@ -216,7 +216,7 @@ export default function Ficha() {
             name="coordenadas"
             value={formData.coordenadas || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 130 }}
+            style={{ ...valor, width: 120 }}
           />
         </div>
 
@@ -226,7 +226,7 @@ export default function Ficha() {
             name="tipo_edificio"
             value={formData.tipo_edificio || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 80 }}
+            style={{ ...valor, width: 70 }}
           />
         </div>
 
@@ -236,7 +236,7 @@ export default function Ficha() {
             name="tipo_repliegue"
             value={formData.tipo_repliegue || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 70 }}
           />
         </div>
 
@@ -257,7 +257,7 @@ export default function Ficha() {
             name="fecha_abandono"
             value={formData.fecha_abandono || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 120 }}
           />
         </div>
 
