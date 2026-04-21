@@ -176,7 +176,7 @@ export default function Ficha() {
           display: "flex",
           flexWrap: "wrap",
           gap: 15,
-          marginBottom: 20,
+          marginBottom: 5,
         }}
       >
         <div style={campo}>
