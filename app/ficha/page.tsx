@@ -206,7 +206,7 @@ export default function Ficha() {
             name="miga"
             value={formData.miga || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 50 }}
+            style={{ ...valor, width: 60 }}
           />
         </div>
 
@@ -236,7 +236,7 @@ export default function Ficha() {
             name="tipo_repliegue"
             value={formData.tipo_repliegue || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 100 }}
+            style={{ ...valor, width: 80 }}
           />
         </div>
 
