@@ -311,6 +311,18 @@ export default function Ficha() {
             onChange={handleChange}
           />
         </div>
+
+        <div style={campo}>
+          <span>CCVV:</span>
+          <input
+            type="checkbox"
+            name="central_vendida"
+            checked={!!formData.prioritario}
+            onChange={handleChange}
+          />
+        </div>
+
+        
         
         <div style={campo}>
           <span>Proyecto Inversión:</span>
