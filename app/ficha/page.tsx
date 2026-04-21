@@ -240,7 +240,7 @@ export default function Ficha() {
         <div style={campo}>
           <span>Coordenadas:</span>
 
-          ç
+        
 
 
 
