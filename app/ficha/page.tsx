@@ -147,7 +147,7 @@ export default function Ficha() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          marginBottom: 15,
+          marginBottom: 5,
         }}
       >
         <button onClick={guardarCambios}>💾</button>
