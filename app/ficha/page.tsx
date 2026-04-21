@@ -246,7 +246,7 @@ export default function Ficha() {
           <input name="empresa_recicladora" value={formData.empresa_recicladora || ""} onChange={handleChange} style={{ ...valor, width: 100 }} />
         </div>
 
-
+</div>
       
     </div>
   );
