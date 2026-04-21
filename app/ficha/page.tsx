@@ -431,16 +431,33 @@ return (
             style={{ ...valor, width: 150 }}
           />
 
-          <button
-            onClick={() => setMostrarMemoria(true)}
-            style={{
-              marginLeft: 10,
-              padding: "5px 10px",
-              cursor: "pointer",
-            }}
-          >
-          📝 Memoria
-          </button>
+<button
+  type="button"
+  onClick={() => setMostrarMemoria(true)}
+  style={{
+    marginLeft: 10,
+    width: 30,
+    height: 30,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 6,
+    border: "1px solid #ccc",
+    background: "#f5f5f5",
+    cursor: "pointer",
+    padding: 0,
+  }}
+  title="Memoria del repliegue"
+>
+  📝
+</button>
+
+
+
+
+
+
+          
           <button
   onClick={() =>
     window.open(
