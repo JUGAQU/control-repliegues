@@ -1,5 +1,6 @@
 "use client";
 export const dynamic = "force-dynamic";
+
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
@@ -65,6 +66,7 @@ export default function Ficha() {
       if (!id) return;
       const res = await fetch("/api/fichas");
       const data = await res.json();
+
       if (Array.isArray(data)) {
         const registro = data.find((d: any) => String(d.id) === String(id));
         if (registro) {
@@ -74,6 +76,7 @@ export default function Ficha() {
         }
       }
     };
+
     cargarFicha();
   }, [id]);
 
@@ -90,6 +93,7 @@ export default function Ficha() {
       }
       setEmpresasPI(data || []);
     };
+
     cargarEmpresasPI();
   }, []);
 
@@ -106,6 +110,7 @@ export default function Ficha() {
       }
       setProvincias(data || []);
     };
+
     cargarProvincias();
   }, []);
 
@@ -127,8 +132,10 @@ export default function Ficha() {
         setReasignaciones([]);
         return;
       }
+
       setReasignaciones(data || []);
     };
+
     cargarReasignaciones();
   }, [formData?.atlas]);
 
@@ -142,6 +149,7 @@ export default function Ficha() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+
     setCambiosSinGuardar(true);
   };
 
@@ -232,18 +240,23 @@ export default function Ficha() {
     return <div style={{ padding: 20 }}>Cargando ficha...</div>;
   }
 
-  const campo: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    gap: 5,
-    fontSize: 12,
-  };
-
   const valor: React.CSSProperties = {
     background: "#d9eef7",
     padding: "3px 8px",
     borderRadius: 4,
     border: "1px solid #bcd",
+  };
+
+  const bloqueLinea: React.CSSProperties = {
+    border: "1px solid #ccc",
+    padding: 10,
+    background: "#f5f5f5",
+    display: "flex",
+    gap: 10,
+    alignItems: "flex-end",
+    flexWrap: "nowrap",
+    overflowX: "auto",
+    marginBottom: 5,
   };
 
   return (
@@ -265,6 +278,7 @@ export default function Ficha() {
         <div style={{ display: "flex", gap: 10 }}>
           <button onClick={guardarCambios}>💾</button>
         </div>
+
         <button
           onClick={() => {
             if (cambiosSinGuardar) {
@@ -281,51 +295,40 @@ export default function Ficha() {
       </div>
 
       {/* DATOS DE IDENTIFICACION */}
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: 15,
-          background: "#f5f5f5",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 15,
-          marginBottom: 5,
-        }}
-      >
-        <div style={campo}>
-          <span>Atlas:</span>
+      <div style={bloqueLinea}>
+        <CampoInline label="Atlas">
           <input
             name="atlas"
             value={formData.atlas || ""}
             readOnly
             style={{ ...valor, width: 70, background: "#eee", color: "#666" }}
           />
-        </div>
-        <div style={campo}>
-          <span>Lote:</span>
+        </CampoInline>
+
+        <CampoInline label="Lote">
           <input
             name="lote"
             value={formData.lote || ""}
             onChange={handleChange}
             style={{ ...valor, width: 90 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Nombre:</span>
+        </CampoInline>
+
+        <CampoInline label="Nombre">
           <input
             name="nombre"
             value={formData.nombre || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 200 }}
+            style={{ ...valor, width: 220 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Provincia:</span>
+        </CampoInline>
+
+        <CampoInline label="Provincia">
           <select
             name="provincia"
             value={formData.provincia || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 130 }}
+            style={{ ...valor, width: 140 }}
           >
             <option value="">-- Seleccionar --</option>
             {provincias.map((provincia) => (
@@ -334,139 +337,127 @@ export default function Ficha() {
               </option>
             ))}
           </select>
-        </div>
-        <div style={campo}>
-          <span>Miga:</span>
+        </CampoInline>
+
+        <CampoInline label="Miga">
           <input
             name="miga"
             value={formData.miga || ""}
             onChange={handleChange}
             style={{ ...valor, width: 60 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Coordenadas:</span>
-          <input
-            name="coordenadas"
-            value={formData.coordenadas || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 130 }}
-          />
-          {formData.coordenadas && (
-            <a
-              href={`https://www.google.com/maps?q=${encodeURIComponent(
-                formData.coordenadas
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ marginLeft: 6, textDecoration: "none", fontSize: 14 }}
-            >
-              🌍
-            </a>
-          )}
-        </div>
-        <div style={campo}>
-          <span>Tipo Edificio:</span>
+        </CampoInline>
+
+        <CampoInline label="Coordenadas">
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <input
+              name="coordenadas"
+              value={formData.coordenadas || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 135 }}
+            />
+            {formData.coordenadas && (
+              <a
+                href={`https://www.google.com/maps?q=${encodeURIComponent(
+                  formData.coordenadas
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none", fontSize: 14 }}
+              >
+                🌍
+              </a>
+            )}
+          </div>
+        </CampoInline>
+
+        <CampoInline label="Tipo Edificio">
           <input
             name="tipo_edificio"
             value={formData.tipo_edificio || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 90 }}
+            style={{ ...valor, width: 95 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Tipo Repliegue:</span>
+        </CampoInline>
+
+        <CampoInline label="Tipo Repliegue">
           <input
             name="tipo_repliegue"
             value={formData.tipo_repliegue || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 80 }}
+            style={{ ...valor, width: 90 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Senda:</span>
+        </CampoInline>
+
+        <CampoInline label="Senda">
           <input
             name="tipo_senda"
             value={formData.tipo_senda || "ACELERADA_2026"}
             onChange={handleChange}
-            style={{ ...valor, width: 130 }}
+            style={{ ...valor, width: 140 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Fecha Abandono:</span>
+        </CampoInline>
+
+        <CampoInline label="Fecha Abandono">
           <input
             type="date"
             name="fecha_abandono"
             value={formData.fecha_abandono || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 140 }}
+            style={{ ...valor, width: 145 }}
           />
-        </div>
+        </CampoInline>
       </div>
 
       {/* TECNICOS Y EE.CC */}
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: 15,
-          background: "#f5f5f5",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 15,
-        }}
-      >
-        <div style={campo}>
-          <span>Prioritaria:</span>
-          <input
-            type="checkbox"
-            name="prioritario"
-            checked={!!formData.prioritario}
-            onChange={handleChange}
-          />
-        </div>
-        <div style={campo}>
-          <span>CCVV:</span>
-          <input
-            type="checkbox"
-            name="central_vendida"
-            checked={!!formData.central_vendida}
-            onChange={handleChange}
-          />
-        </div>
-        <div style={campo}>
-          <span>Proyecto Inversión:</span>
+      <div style={bloqueLinea}>
+        <CheckInline
+          label="Prioritaria"
+          checked={!!formData.prioritario}
+          name="prioritario"
+          onChange={handleChange}
+        />
+
+        <CheckInline
+          label="CCVV"
+          checked={!!formData.central_vendida}
+          name="central_vendida"
+          onChange={handleChange}
+        />
+
+        <CampoInline label="Proyecto Inversión">
           <input
             name="proyecto_inversion"
             value={formData.proyecto_inversion || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 80 }}
+            style={{ ...valor, width: 85 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Técnico Análisis:</span>
+        </CampoInline>
+
+        <CampoInline label="Técnico Análisis">
           <input
             name="tecnico_analisis"
             value={formData.tecnico_analisis || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 140 }}
+            style={{ ...valor, width: 145 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Técnico Reasignaciones:</span>
+        </CampoInline>
+
+        <CampoInline label="Técnico Reasignaciones">
           <input
             name="tecnico_reasignaciones"
             value={formData.tecnico_reasignaciones || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 140 }}
+            style={{ ...valor, width: 145 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Empresa Planta Int.:</span>
+        </CampoInline>
+
+        <CampoInline label="Empresa Planta Int.">
           <select
             name="empresa_pi"
             value={formData.empresa_pi || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 160 }}
+            style={{ ...valor, width: 170 }}
           >
             <option value="">-- Seleccionar --</option>
             {empresasPI.map((empresa) => (
@@ -475,29 +466,31 @@ export default function Ficha() {
               </option>
             ))}
           </select>
-        </div>
-        <div style={campo}>
-          <span>Empresa Planta Ext.:</span>
+        </CampoInline>
+
+        <CampoInline label="Empresa Planta Ext.">
           <input
             name="empresa_pe"
             value={formData.empresa_pe || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 160 }}
           />
-        </div>
-        <div style={campo}>
-          <span>Empresa Recicladora:</span>
+        </CampoInline>
+
+        <CampoInline label="Empresa Recicladora">
           <input
             name="empresa_recicladora"
             value={formData.empresa_recicladora || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 160 }}
           />
+        </CampoInline>
+
+        <AccionInline label="Memoria">
           <button
             type="button"
             onClick={() => setMostrarMemoria(true)}
             style={{
-              marginLeft: 10,
               width: 30,
               height: 30,
               display: "flex",
@@ -513,6 +506,9 @@ export default function Ficha() {
           >
             📝
           </button>
+        </AccionInline>
+
+        <AccionInline label="Spock">
           <button
             onClick={() =>
               window.open(
@@ -523,7 +519,6 @@ export default function Ficha() {
               )
             }
             style={{
-              marginLeft: 6,
               width: 30,
               height: 30,
               display: "flex",
@@ -539,10 +534,14 @@ export default function Ficha() {
             <img
               src="/spock.png"
               alt="Spock"
-              style={{ width: 18, height: 18, objectFit: "contain" }}
+              style={{
+                width: 18,
+                height: 18,
+                objectFit: "contain",
+              }}
             />
           </button>
-        </div>
+        </AccionInline>
       </div>
 
       {mostrarMemoria && (
@@ -665,7 +664,6 @@ export default function Ficha() {
                       handleReasignacionChange(index, "estado_trabajos", value)
                     }
                   />
-
                   <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
                   <CampoReaAuto label="Servicio" value={r.servicio} minWidth={380} />
                   <CampoReaAuto
@@ -688,7 +686,6 @@ export default function Ficha() {
                     value={r.tipo_diversificado}
                     minWidth={150}
                   />
-
                   <CampoSelectAuto
                     label="Tipo Interface"
                     value={r.tipo_velocidad_interface || ""}
@@ -702,7 +699,6 @@ export default function Ficha() {
                       )
                     }
                   />
-
                   <CampoReaAuto
                     label="Velocidad"
                     value={extraerVelocidad(r.tipo_velocidad_interface)}
@@ -728,25 +724,22 @@ export default function Ficha() {
                     minWidth={320}
                     onChange={(value) =>
                       handleReasignacionChange(
-                      index,
-                      "modo_reasignacion",
-                      value
-                    )
-                  }
-                />
-
+                        index,
+                        "modo_reasignacion",
+                        value
+                      )
+                    }
+                  />
                   <CampoReaAuto
                     label="Indicaciones"
                     value={r.indicaciones_para_el_encaminamiento}
                     minWidth={520}
                   />
-
                   <CampoReaAuto
                     label="Facturable"
                     value={r.facturable}
                     minWidth={100}
                   />
-
                   <div style={{ paddingTop: 18 }}>
                     <button onClick={() => guardarReasignacion(r)}>💾</button>
                   </div>
@@ -762,6 +755,109 @@ export default function Ficha() {
           ))
         )}
       </div>
+    </div>
+  );
+}
+
+function CampoInline({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flex: "0 0 auto",
+      }}
+    >
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: "bold",
+          color: "#0b5394",
+          marginBottom: 3,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {label}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function CheckInline({
+  label,
+  name,
+  checked,
+  onChange,
+}: {
+  label: string;
+  name: string;
+  checked: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flex: "0 0 auto",
+      }}
+    >
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: "bold",
+          color: "#0b5394",
+          marginBottom: 7,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {label}
+      </div>
+      <input
+        type="checkbox"
+        name={name}
+        checked={checked}
+        onChange={onChange}
+        style={{ width: 18, height: 18 }}
+      />
+    </div>
+  );
+}
+
+function AccionInline({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flex: "0 0 auto",
+      }}
+    >
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: "bold",
+          color: "#0b5394",
+          marginBottom: 3,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {label}
+      </div>
+      {children}
     </div>
   );
 }
@@ -794,7 +890,6 @@ function CampoReaAuto({
       >
         {label}
       </div>
-
       <div
         style={{
           background: color,
@@ -830,7 +925,6 @@ function CampoRea({
       >
         {label}
       </div>
-
       <div
         style={{
           background: "#d9ead3",
@@ -860,13 +954,10 @@ function CampoSelectAuto({
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
-
   const valorActual = value || "";
-
-  const opcionesFinales =
-    options.includes(valorActual)
-      ? ["", ...options.filter(x => x !== "")]
-      : [valorActual, "", ...options];
+  const opcionesFinales = options.includes(valorActual)
+    ? ["", ...options.filter((x) => x !== "")]
+    : [valorActual, "", ...options];
 
   return (
     <div
@@ -877,41 +968,36 @@ function CampoSelectAuto({
     >
       <div
         style={{
-          fontSize:11,
-          fontWeight:"bold",
-          color:"#0b5394",
-          marginBottom:3
+          fontSize: 11,
+          fontWeight: "bold",
+          color: "#0b5394",
+          marginBottom: 3,
         }}
       >
         {label}
       </div>
-
       <select
         value={valorActual}
-        onChange={(e)=>onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         style={{
-          minHeight:30,
-          minWidth:"100%",
-          background:"#d9ead3",
-          border:"1px solid #666",
-          padding:"4px 6px",
-          fontSize:12
+          minHeight: 30,
+          minWidth: "100%",
+          background: "#d9ead3",
+          border: "1px solid #666",
+          padding: "4px 6px",
+          fontSize: 12,
         }}
       >
-        {opcionesFinales.map((op)=>(
-          <option
-            key={op}
-            value={op}
-          >
+        {opcionesFinales.map((op) => (
+          <option key={op} value={op}>
             {op}
           </option>
         ))}
-
       </select>
-
     </div>
   );
 }
+
 function CampoSelectEstado({
   label,
   value,
@@ -946,7 +1032,6 @@ function CampoSelectEstado({
       >
         {label}
       </div>
-
       <select
         value={valorActual}
         onChange={(e) => onChange(e.target.value)}
@@ -972,14 +1057,12 @@ function CampoSelectEstado({
 
 function colorEstado(estado?: string | null) {
   const txt = (estado || "").toLowerCase();
-
   if (txt.includes("análisis")) return "#f4cccc";
   if (txt.includes("curso")) return "#ffc000";
   if (txt.includes("incidencia")) return "#ffff00";
   if (txt.includes("ejecut")) return "#00b0f0";
   if (txt.includes("final")) return "#9bbb59";
   if (txt.includes("otras")) return "#d9d2e9";
-
   return "#d9ead3";
 }
 
