@@ -582,7 +582,7 @@ export default function Ficha() {
                 justifyContent: "center",
                 borderRadius: 6,
                 border: "1px solid #ccc",
-                background: "#f5f5f5",
+                background: "#c9e3f2",
                 cursor: "pointer",
                 padding: 0,
               }}
@@ -729,7 +729,7 @@ export default function Ficha() {
           <div
             style={{
               padding: "8px 12px",
-              background: bloqueActivo ? "#9fc5e8" : "#f5f5f5",
+              background: bloqueActivo ? "#9fc5e8" : "#c9e3f2",
               border: bloqueActivo
                 ? "1px solid #6fa8dc"
                 : "1px solid #d0d0d0",
