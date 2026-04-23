@@ -635,6 +635,7 @@ export default function Ficha() {
                 overflow: "hidden",
               }}
             >
+              {/* NUMERO IZQUIERDA */}
               <div
                 style={{
                   width: 42,
@@ -652,6 +653,7 @@ export default function Ficha() {
                 {index + 1}
               </div>
 
+              {/* CONTENIDO */}
               <div style={{ flex: 1, padding: 10 }}>
                 {/* FILA 1 */}
                 <div
@@ -669,6 +671,7 @@ export default function Ficha() {
                     minWidth={140}
                     color={colorEstado(r.estado_trabajos)}
                   />
+
                   <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
                   <CampoReaAuto label="Servicio" value={r.servicio} minWidth={380} />
                   <CampoReaAuto
@@ -849,9 +852,6 @@ function CampoSelectAuto({
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
-  const valorActual = value || "";
-  const existeEnLista = options.includes(valorActual);
-
   return (
     <div
       style={{
@@ -871,7 +871,7 @@ function CampoSelectAuto({
       </div>
 
       <select
-        value={valorActual}
+        value={value}
         onChange={(e) => onChange(e.target.value)}
         style={{
           minHeight: 30,
@@ -882,12 +882,7 @@ function CampoSelectAuto({
           fontSize: 12,
         }}
       >
-        {!existeEnLista && valorActual && (
-          <option value={valorActual}>{valorActual}</option>
-        )}
-
         <option value="">-- Seleccionar --</option>
-
         {options.map((op) => (
           <option key={op} value={op}>
             {op}
