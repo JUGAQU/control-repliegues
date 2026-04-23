@@ -90,6 +90,7 @@ export default function Ficha() {
       const { data, error } = await supabase
         .from("reasignaciones")
         .select("*")
+        .eq("atlas", formData.atlas)
         .order("id", { ascending: true });
 
       if (error) {
@@ -98,18 +99,7 @@ export default function Ficha() {
         return;
       }
 
-      const limpiar = (v: any) =>
-        String(v || "")
-          .replace(/\u00A0/g, "")
-          .trim();
-
-      const atlasFicha = limpiar(formData.atlas);
-
-      const filtradas = (data || []).filter((r: any) => {
-        return limpiar(r.atlas) === atlasFicha;
-      });
-
-      setReasignaciones(filtradas);
+      setReasignaciones(data || []);
     };
 
     cargarReasignaciones();
@@ -608,24 +598,20 @@ export default function Ficha() {
                 marginBottom: 12,
               }}
             >
-              {/* FILA SERVICIO */}
-              <div style={{ marginBottom: 10 }}>
-                <CampoRea label="Servicio" value={r.servicio} />
-              </div>
-
-              {/* FILA 2 */}
+              {/* PRIMERA FILA */}
               <div
                 style={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "30px 120px 110px 1.5fr 2fr 90px 110px",
+                  display: "flex",
                   gap: 10,
-                  alignItems: "start",
+                  alignItems: "flex-start",
+                  flexWrap: "nowrap",
+                  overflowX: "auto",
                   marginBottom: 10,
                 }}
               >
                 <div
                   style={{
+                    minWidth: 30,
                     fontWeight: "bold",
                     fontSize: 20,
                     textAlign: "center",
@@ -635,7 +621,25 @@ export default function Ficha() {
                   {index + 1}
                 </div>
 
-                <CampoRea label="Tipo" value={r.tipo} />
+                <CampoReaAuto label="Tipo" value={r.tipo} minWidth={90} />
+                <CampoReaAuto label="Servicio" value={r.servicio} minWidth={320} />
+                <CampoReaAuto label="Administrativo" value={r.administrativo} minWidth={130} />
+                <CampoReaAuto label="Orden de partida" value={r.ordenes} minWidth={130} />
+                <CampoReaAuto label="Diversificado" value={r.diversificado} minWidth={120} />
+                <CampoReaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150} />
+                <CampoReaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={150} />
+                <CampoReaAuto label="Velocidad" value={extraerVelocidad(r.tipo_velocidad_interface)} minWidth={100} />
+              </div>
+
+              {/* SEGUNDA FILA */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "110px 1.5fr 2fr 90px 110px",
+                  gap: 10,
+                  marginBottom: 10,
+                }}
+              >
                 <CampoRea label="SGIPE" value={r.sgipe} />
                 <CampoRea
                   label="Modo Reasignación"
@@ -653,46 +657,34 @@ export default function Ficha() {
                 />
               </div>
 
-              {/* FILA 3 */}
+              {/* TERCERA FILA */}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns:
-                    "140px 140px 140px 140px 140px 150px 130px",
+                  gridTemplateColumns: "150px 130px 2fr",
                   gap: 10,
                   marginBottom: 10,
                 }}
               >
-                <CampoRea label="Administrativo" value={r.administrativo} />
-                <CampoRea label="Orden de partida" value={r.ordenes} />
-                <CampoRea label="Diversificado" value={r.diversificado} />
-                <CampoRea
-                  label="Tipo Diversif."
-                  value={r.tipo_diversificado}
-                />
-                <CampoRea
-                  label="Tipo Interfaz"
-                  value={r.tipo_velocidad_interface}
-                />
                 <CampoRea
                   label="Ptes Cent/Nº Ptes."
                   value={r.puentes_central_numero_de_puentes}
                 />
                 <CampoRea label="Fecha Ejecución" value={r.fecha_ejecucion} />
-              </div>
-
-              {/* FILA 4 */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "2fr 130px 130px 110px 110px",
-                  gap: 10,
-                }}
-              >
                 <CampoRea
                   label="Observaciones Estudio Reasignación"
                   value={r.observaciones_del_estudio}
                 />
+              </div>
+
+              {/* CUARTA FILA */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "130px 130px 110px 110px",
+                  gap: 10,
+                }}
+              >
                 <CampoRea label="Orden Atlas" value={r.orden_atlas} />
                 <CampoRea
                   label="Estado Ord. Atlas"
@@ -750,6 +742,50 @@ function CampoRea({
   );
 }
 
+function CampoReaAuto({
+  label,
+  value,
+  minWidth = 100,
+  color = "#d9ead3",
+}: {
+  label: string;
+  value?: string | number | null;
+  minWidth?: number;
+  color?: string;
+}) {
+  return (
+    <div
+      style={{
+        minWidth,
+        flex: "0 0 auto",
+      }}
+    >
+      <div
+        style={{
+          fontSize: 11,
+          color: "#0b5394",
+          fontWeight: "bold",
+          marginBottom: 3,
+        }}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          minHeight: 28,
+          background: color,
+          border: "1px solid #666",
+          padding: "4px 6px",
+          fontSize: 12,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {value ?? ""}
+      </div>
+    </div>
+  );
+}
+
 function colorEstado(estado?: string | null) {
   const txt = (estado || "").toLowerCase();
 
@@ -758,4 +794,10 @@ function colorEstado(estado?: string | null) {
   if (txt.includes("pend")) return "#ffd966";
 
   return "#d9ead3";
+}
+
+function extraerVelocidad(texto?: string | null) {
+  if (!texto) return "";
+  const partes = String(texto).split("/");
+  return partes.length > 1 ? partes[1].trim() : "";
 }
