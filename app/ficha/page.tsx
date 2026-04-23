@@ -1,6 +1,5 @@
 "use client";
 export const dynamic = "force-dynamic";
-
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
@@ -42,10 +41,8 @@ export default function Ficha() {
   useEffect(() => {
     const cargarFicha = async () => {
       if (!id) return;
-
       const res = await fetch("/api/fichas");
       const data = await res.json();
-
       if (Array.isArray(data)) {
         const registro = data.find((d: any) => String(d.id) === String(id));
         if (registro) {
@@ -55,7 +52,6 @@ export default function Ficha() {
         }
       }
     };
-
     cargarFicha();
   }, [id]);
 
@@ -70,10 +66,8 @@ export default function Ficha() {
         console.error("Error cargando empresaspi:", error);
         return;
       }
-
       setEmpresasPI(data || []);
     };
-
     cargarEmpresasPI();
   }, []);
 
@@ -88,10 +82,8 @@ export default function Ficha() {
         console.error("Error cargando provincias:", error);
         return;
       }
-
       setProvincias(data || []);
     };
-
     cargarProvincias();
   }, []);
 
@@ -113,10 +105,8 @@ export default function Ficha() {
         setReasignaciones([]);
         return;
       }
-
       setReasignaciones(data || []);
     };
-
     cargarReasignaciones();
   }, [formData?.atlas]);
 
@@ -130,7 +120,6 @@ export default function Ficha() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-
     setCambiosSinGuardar(true);
   };
 
@@ -252,7 +241,6 @@ export default function Ficha() {
         <div style={{ display: "flex", gap: 10 }}>
           <button onClick={guardarCambios}>💾</button>
         </div>
-
         <button
           onClick={() => {
             if (cambiosSinGuardar) {
@@ -289,7 +277,6 @@ export default function Ficha() {
             style={{ ...valor, width: 70, background: "#eee", color: "#666" }}
           />
         </div>
-
         <div style={campo}>
           <span>Lote:</span>
           <input
@@ -299,7 +286,6 @@ export default function Ficha() {
             style={{ ...valor, width: 90 }}
           />
         </div>
-
         <div style={campo}>
           <span>Nombre:</span>
           <input
@@ -309,7 +295,6 @@ export default function Ficha() {
             style={{ ...valor, width: 200 }}
           />
         </div>
-
         <div style={campo}>
           <span>Provincia:</span>
           <select
@@ -326,7 +311,6 @@ export default function Ficha() {
             ))}
           </select>
         </div>
-
         <div style={campo}>
           <span>Miga:</span>
           <input
@@ -336,7 +320,6 @@ export default function Ficha() {
             style={{ ...valor, width: 60 }}
           />
         </div>
-
         <div style={campo}>
           <span>Coordenadas:</span>
           <input
@@ -358,7 +341,6 @@ export default function Ficha() {
             </a>
           )}
         </div>
-
         <div style={campo}>
           <span>Tipo Edificio:</span>
           <input
@@ -368,7 +350,6 @@ export default function Ficha() {
             style={{ ...valor, width: 90 }}
           />
         </div>
-
         <div style={campo}>
           <span>Tipo Repliegue:</span>
           <input
@@ -378,7 +359,6 @@ export default function Ficha() {
             style={{ ...valor, width: 90 }}
           />
         </div>
-
         <div style={campo}>
           <span>Senda:</span>
           <input
@@ -388,7 +368,6 @@ export default function Ficha() {
             style={{ ...valor, width: 130 }}
           />
         </div>
-
         <div style={campo}>
           <span>Fecha Abandono:</span>
           <input
@@ -421,7 +400,6 @@ export default function Ficha() {
             onChange={handleChange}
           />
         </div>
-
         <div style={campo}>
           <span>CCVV:</span>
           <input
@@ -431,7 +409,6 @@ export default function Ficha() {
             onChange={handleChange}
           />
         </div>
-
         <div style={campo}>
           <span>Proyecto Inversión:</span>
           <input
@@ -441,7 +418,6 @@ export default function Ficha() {
             style={{ ...valor, width: 80 }}
           />
         </div>
-
         <div style={campo}>
           <span>Técnico Análisis:</span>
           <input
@@ -451,7 +427,6 @@ export default function Ficha() {
             style={{ ...valor, width: 140 }}
           />
         </div>
-
         <div style={campo}>
           <span>Técnico Reasignaciones:</span>
           <input
@@ -461,7 +436,6 @@ export default function Ficha() {
             style={{ ...valor, width: 140 }}
           />
         </div>
-
         <div style={campo}>
           <span>Empresa Planta Int.:</span>
           <select
@@ -478,7 +452,6 @@ export default function Ficha() {
             ))}
           </select>
         </div>
-
         <div style={campo}>
           <span>Empresa Planta Ext.:</span>
           <input
@@ -488,7 +461,6 @@ export default function Ficha() {
             style={{ ...valor, width: 150 }}
           />
         </div>
-
         <div style={campo}>
           <span>Empresa Recicladora:</span>
           <input
@@ -497,7 +469,6 @@ export default function Ficha() {
             onChange={handleChange}
             style={{ ...valor, width: 150 }}
           />
-
           <button
             type="button"
             onClick={() => setMostrarMemoria(true)}
@@ -518,7 +489,6 @@ export default function Ficha() {
           >
             📝
           </button>
-
           <button
             onClick={() =>
               window.open(
@@ -611,7 +581,6 @@ export default function Ficha() {
         <div style={{ fontWeight: "bold", marginBottom: 10, fontSize: 14 }}>
           Reasignaciones del atlas {formData.atlas}
         </div>
-
         {reasignaciones.length === 0 ? (
           <div
             style={{
@@ -635,7 +604,6 @@ export default function Ficha() {
                 overflow: "hidden",
               }}
             >
-              {/* NUMERO IZQUIERDA */}
               <div
                 style={{
                   width: 42,
@@ -653,9 +621,7 @@ export default function Ficha() {
                 {index + 1}
               </div>
 
-              {/* CONTENIDO */}
               <div style={{ flex: 1, padding: 10 }}>
-                {/* FILA 1 */}
                 <div
                   style={{
                     display: "flex",
@@ -671,7 +637,6 @@ export default function Ficha() {
                     minWidth={140}
                     color={colorEstado(r.estado_trabajos)}
                   />
-
                   <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
                   <CampoReaAuto label="Servicio" value={r.servicio} minWidth={380} />
                   <CampoReaAuto
@@ -706,7 +671,6 @@ export default function Ficha() {
                   />
                 </div>
 
-                {/* FILA 2 */}
                 <div
                   style={{
                     display: "flex",
@@ -726,25 +690,21 @@ export default function Ficha() {
                       handleReasignacionChange(index, "modo_reasignacion", value)
                     }
                   />
-
                   <CampoReaAuto
                     label="Indicaciones"
                     value={r.indicaciones_para_el_encaminamiento}
                     minWidth={520}
                   />
-
                   <CampoReaAuto
                     label="Facturable"
                     value={r.facturable}
                     minWidth={100}
                   />
-
                   <div style={{ paddingTop: 18 }}>
                     <button onClick={() => guardarReasignacion(r)}>💾</button>
                   </div>
                 </div>
 
-                {/* FILA 3 */}
                 <CampoRea
                   label="Observaciones Estudio Reasignación"
                   value={r.observaciones_del_estudio}
@@ -786,7 +746,6 @@ function CampoReaAuto({
       >
         {label}
       </div>
-
       <div
         style={{
           background: color,
@@ -822,7 +781,6 @@ function CampoRea({
       >
         {label}
       </div>
-
       <div
         style={{
           background: "#d9ead3",
@@ -852,6 +810,9 @@ function CampoSelectAuto({
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
+  const valorActual = value || "";
+  const existeEnLista = options.includes(valorActual);
+
   return (
     <div
       style={{
@@ -869,9 +830,8 @@ function CampoSelectAuto({
       >
         {label}
       </div>
-
       <select
-        value={value}
+        value={valorActual}
         onChange={(e) => onChange(e.target.value)}
         style={{
           minHeight: 30,
@@ -882,7 +842,12 @@ function CampoSelectAuto({
           fontSize: 12,
         }}
       >
+        {!existeEnLista && valorActual && (
+          <option value={valorActual}>{valorActual}</option>
+        )}
+
         <option value="">-- Seleccionar --</option>
+
         {options.map((op) => (
           <option key={op} value={op}>
             {op}
@@ -895,11 +860,9 @@ function CampoSelectAuto({
 
 function colorEstado(estado?: string | null) {
   const txt = (estado || "").toLowerCase();
-
   if (txt.includes("ejecut")) return "#00b0f0";
   if (txt.includes("curso")) return "#ffc000";
   if (txt.includes("pend")) return "#ffd966";
-
   return "#d9ead3";
 }
 
