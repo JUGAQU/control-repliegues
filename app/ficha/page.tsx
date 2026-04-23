@@ -165,15 +165,12 @@ export default function Ficha() {
   const guardarReasignacion = async (r: any) => {
     if (!r?.id) return;
 
-    const valorInterface =
-      r.tipo_velocidad_interface === "select" ? null : r.tipo_velocidad_interface;
-
     const { error } = await supabase
       .from("reasignaciones")
       .update({
         modo_reasignacion: r.modo_reasignacion,
         estado_trabajos: r.estado_trabajos,
-        tipo_velocidad_interface: valorInterface,
+        tipo_velocidad_interface: r.tipo_velocidad_interface,
       })
       .eq("id", r.id);
 
@@ -694,7 +691,7 @@ export default function Ficha() {
 
                   <CampoSelectAuto
                     label="Tipo Interface"
-                    value={r.tipo_velocidad_interface ?? "select"}
+                    value={r.tipo_velocidad_interface || ""}
                     options={OPCIONES_TIPO_INTERFACE}
                     minWidth={180}
                     onChange={(value) =>
@@ -859,11 +856,11 @@ function CampoSelectAuto({
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
-  const valorActual = value || "select";
-
-  const opcionesFinales = options.includes(valorActual)
-    ? ["select", ...options.filter((x) => x !== "select")]
-    : [valorActual, "select", ...options];
+  const valorActual = value || "";
+  const opcionesFinales =
+    valorActual && !options.includes(valorActual)
+      ? [valorActual, ...options]
+      : options;
 
   return (
     <div
@@ -977,7 +974,7 @@ function colorEstado(estado?: string | null) {
 }
 
 function extraerVelocidad(texto?: string | null) {
-  if (!texto || texto === "select") return "";
+  if (!texto) return "";
   const p = String(texto).split("/");
   return p.length > 1 ? p[1].trim() : "";
 }
