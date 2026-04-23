@@ -306,12 +306,15 @@ export default function Ficha() {
   }
 
   const campo: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    gap: 4,
-    fontSize: 11,
-    flex: "0 0 auto",
-  };
+  display: "flex",
+  alignItems: "center",
+  gap: 4,
+  fontSize: 12,
+  fontWeight: "bold",
+  color: COLORES.textoAzul,
+  flex: "0 0 auto",
+  fontFamily: "Arial",
+};
 
   const valor: React.CSSProperties = {
     background: COLORES.fondoCampo,
