@@ -201,89 +201,83 @@ export default function Ficha() {
           : item
       )
     );
+    setCambiosSinGuardar(true);
   };
 
-  
   const guardarCambios = async () => {
     if (!formData?.id) {
       alert("Error: no hay ID");
       return;
     }
 
-const guardarCambios = async () => {
-  if (!formData?.id) {
-    alert("Error: no hay ID");
-    return;
-  }
-
-  const { error: errorFicha } = await supabase
-    .from("fichas")
-    .update({
-      lote: formData.lote,
-      nombre: formData.nombre,
-      provincia: formData.provincia,
-      miga: (formData.miga || "")
-        .replace(/\D/g, "")
-        .slice(0, 7)
-        .padStart(7, "0"),
-      coordenadas: formData.coordenadas,
-      tipo_edificio: formData.tipo_edificio,
-      tipo_repliegue: formData.tipo_repliegue,
-      tipo_senda: formData.tipo_senda,
-      fecha_abandono: formData.fecha_abandono,
-      central_vendida: formData.central_vendida,
-      prioritario: formData.prioritario,
-      proyecto_inversion: formData.proyecto_inversion,
-      tecnico_analisis: formData.tecnico_analisis,
-      tecnico_reasignaciones: formData.tecnico_reasignaciones,
-      empresa_pi: formData.empresa_pi,
-      empresa_pe: formData.empresa_pe,
-      empresa_recicladora: formData.empresa_recicladora,
-      memoria,
-    })
-    .eq("id", formData.id);
-
-  if (errorFicha) {
-    console.error("Error guardando ficha:", errorFicha);
-    alert("Error al guardar la ficha");
-    return;
-  }
-
-  const reasignacionesActualizables = reasignaciones.filter((r) => r?.id);
-
-  for (const r of reasignacionesActualizables) {
-    const estadoTrabajosFinal =
-      r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
-        ? r.estado_trabajos
-        : "En Análisis";
-
-    const { error: errorRea } = await supabase
-      .from("reasignaciones")
+    const { error: errorFicha } = await supabase
+      .from("fichas")
       .update({
-        estado_trabajos: estadoTrabajosFinal,
-        modo_reasignacion: r.modo_reasignacion,
-        tipo_velocidad_interface: r.tipo_velocidad_interface,
-        diversificado: r.diversificado,
-        tipo_diversificado: r.tipo_diversificado,
-        indicaciones_para_el_encaminamiento:
-          r.indicaciones_para_el_encaminamiento,
-        facturable: r.facturable,
-        observaciones_del_estudio: r.observaciones_del_estudio,
+        lote: formData.lote,
+        nombre: formData.nombre,
+        provincia: formData.provincia,
+        miga: (formData.miga || "")
+          .replace(/\D/g, "")
+          .slice(0, 7)
+          .padStart(7, "0"),
+        coordenadas: formData.coordenadas,
+        tipo_edificio: formData.tipo_edificio,
+        tipo_repliegue: formData.tipo_repliegue,
+        tipo_senda: formData.tipo_senda,
+        fecha_abandono: formData.fecha_abandono,
+        central_vendida: formData.central_vendida,
+        prioritario: formData.prioritario,
+        proyecto_inversion: formData.proyecto_inversion,
+        tecnico_analisis: formData.tecnico_analisis,
+        tecnico_reasignaciones: formData.tecnico_reasignaciones,
+        empresa_pi: formData.empresa_pi,
+        empresa_pe: formData.empresa_pe,
+        empresa_recicladora: formData.empresa_recicladora,
+        memoria,
       })
-      .eq("id", r.id);
+      .eq("id", formData.id);
 
-    if (errorRea) {
-      console.error("Error guardando reasignación:", errorRea, r);
-      alert(`Error al guardar la reasignación ${r.id}`);
+    if (errorFicha) {
+      console.error("Error guardando ficha:", errorFicha);
+      alert("Error al guardar la ficha");
       return;
     }
-  }
 
-  alert("Guardado completo en Supabase ✅");
-  setCambiosSinGuardar(false);
-  router.replace("/listado");
-  router.refresh();
-};
+    const reasignacionesActualizables = reasignaciones.filter((r) => r?.id);
+
+    for (const r of reasignacionesActualizables) {
+      const estadoTrabajosFinal =
+        r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
+          ? r.estado_trabajos
+          : "En Análisis";
+
+      const { error: errorRea } = await supabase
+        .from("reasignaciones")
+        .update({
+          estado_trabajos: estadoTrabajosFinal,
+          modo_reasignacion: r.modo_reasignacion,
+          tipo_velocidad_interface: r.tipo_velocidad_interface,
+          diversificado: r.diversificado,
+          tipo_diversificado: r.tipo_diversificado,
+          indicaciones_para_el_encaminamiento:
+            r.indicaciones_para_el_encaminamiento,
+          facturable: r.facturable,
+          observaciones_del_estudio: r.observaciones_del_estudio,
+        })
+        .eq("id", r.id);
+
+      if (errorRea) {
+        console.error("Error guardando reasignación:", errorRea, r);
+        alert(`Error al guardar la reasignación ${r.id}`);
+        return;
+      }
+    }
+
+    alert("Guardado completo en Supabase ✅");
+    setCambiosSinGuardar(false);
+    router.replace("/listado");
+    router.refresh();
+  };
 
   const toggleBloque = (bloque: Exclude<BloqueActivo, null>) => {
     setBloqueActivo((prev) => (prev === bloque ? null : bloque));
@@ -311,15 +305,15 @@ const guardarCambios = async () => {
   }
 
   const campo: React.CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  gap: 4,
-  fontSize: 12,
-  fontWeight: "bold",
-  color: COLORES.textoAzul,
-  flex: "0 0 auto",
-  fontFamily: "Arial",
-};
+    display: "flex",
+    alignItems: "center",
+    gap: 4,
+    fontSize: 12,
+    fontWeight: "bold",
+    color: COLORES.textoAzul,
+    flex: "0 0 auto",
+    fontFamily: "Arial",
+  };
 
   const valor: React.CSSProperties = {
     background: COLORES.fondoCampo,
@@ -819,13 +813,17 @@ const guardarCambios = async () => {
                           }}
                         >
                           <CampoSelectEstado
-  label="Estado Trabajos"
-  value={r.estado_trabajos || "En Análisis"}
-  options={OPCIONES_ESTADO_TRABAJOS}
-  onChange={(value) =>
-    handleReasignacionChange(index, "estado_trabajos", value)
-  }
-/>
+                            label="Estado Trabajos"
+                            value={r.estado_trabajos}
+                            options={OPCIONES_ESTADO_TRABAJOS}
+                            onChange={(value) =>
+                              handleReasignacionChange(
+                                index,
+                                "estado_trabajos",
+                                value
+                              )
+                            }
+                          />
 
                           <CampoReaSoloLecturaAuto
                             label="Tipo"
@@ -943,8 +941,7 @@ const guardarCambios = async () => {
                               handleReasignacionChange(index, "facturable", value)
                             }
                           />
-
-
+                        </div>
 
                         <CampoInputAuto
                           label="Observaciones Estudio Reasignación"
@@ -1317,12 +1314,12 @@ function CampoSelectEstado({
 function colorEstado(estado?: string | null) {
   const txt = (estado || "").toLowerCase();
 
+  if (txt.includes("análisis") || txt.includes("analisis")) return "#f4cccc";
   if (txt.includes("curso")) return "#ffc000";
   if (txt.includes("incidencia")) return "#fff200";
   if (txt.includes("ejecut")) return "#00b0f0";
   if (txt.includes("final")) return "#9bbb59";
   if (txt.includes("otras")) return "#d9d2e9";
-  if (txt.includes("análisis") || txt.includes("analisis")) return "#f4cccc";
 
   return "#d9ead3";
 }
