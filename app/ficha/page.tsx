@@ -210,6 +210,7 @@ export default function Ficha() {
       r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
         ? r.estado_trabajos
         : "En Análisis";
+    
 
     const { error } = await supabase
       .from("reasignaciones")
