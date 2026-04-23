@@ -723,7 +723,7 @@ export default function Ficha() {
                 >
                   <CampoSelectAuto
                     label="Modo Reasignación"
-                    value={r.modo_reasignacion ?? "Select"}
+                    value={r.modo_reasignacion ?? ""}
                     options={OPCIONES_MODO_REASIGNACION}
                     minWidth={320}
                     onChange={(value) =>
@@ -861,12 +861,12 @@ function CampoSelectAuto({
   onChange: (value: string) => void;
 }) {
 
-  const valorActual = value || "select";
+  const valorActual = value || "";
 
   const opcionesFinales =
     options.includes(valorActual)
-      ? ["select", ...options.filter(x => x !== "select")]
-      : [valorActual, "select", ...options];
+      ? ["", ...options.filter(x => x !== "")]
+      : [valorActual, "", ...options];
 
   return (
     <div
