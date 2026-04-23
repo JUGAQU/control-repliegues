@@ -1,5 +1,6 @@
 "use client";
 export const dynamic = "force-dynamic";
+
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
@@ -65,6 +66,7 @@ export default function Ficha() {
       if (!id) return;
       const res = await fetch("/api/fichas");
       const data = await res.json();
+
       if (Array.isArray(data)) {
         const registro = data.find((d: any) => String(d.id) === String(id));
         if (registro) {
@@ -127,6 +129,7 @@ export default function Ficha() {
         setReasignaciones([]);
         return;
       }
+
       setReasignaciones(data || []);
     };
     cargarReasignaciones();
@@ -235,15 +238,17 @@ export default function Ficha() {
   const campo: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
-    gap: 5,
+    gap: 4,
     fontSize: 12,
+    flex: "0 0 auto",
   };
 
   const valor: React.CSSProperties = {
     background: "#d9eef7",
-    padding: "3px 8px",
+    padding: "3px 6px",
     borderRadius: 4,
     border: "1px solid #bcd",
+    fontSize: 12,
   };
 
   return (
@@ -265,6 +270,7 @@ export default function Ficha() {
         <div style={{ display: "flex", gap: 10 }}>
           <button onClick={guardarCambios}>💾</button>
         </div>
+
         <button
           onClick={() => {
             if (cambiosSinGuardar) {
@@ -284,12 +290,13 @@ export default function Ficha() {
       <div
         style={{
           border: "1px solid #ccc",
-          padding: 15,
+          padding: 10,
           background: "#f5f5f5",
           display: "flex",
-          flexWrap: "wrap",
-          gap: 15,
+          flexWrap: "nowrap",
+          gap: 8,
           marginBottom: 5,
+          overflowX: "auto",
         }}
       >
         <div style={campo}>
@@ -298,34 +305,37 @@ export default function Ficha() {
             name="atlas"
             value={formData.atlas || ""}
             readOnly
-            style={{ ...valor, width: 70, background: "#eee", color: "#666" }}
+            style={{ ...valor, width: 58, background: "#eee", color: "#666" }}
           />
         </div>
+
         <div style={campo}>
           <span>Lote:</span>
           <input
             name="lote"
             value={formData.lote || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 90 }}
+            style={{ ...valor, width: 70 }}
           />
         </div>
+
         <div style={campo}>
           <span>Nombre:</span>
           <input
             name="nombre"
             value={formData.nombre || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 200 }}
+            style={{ ...valor, width: 150 }}
           />
         </div>
+
         <div style={campo}>
           <span>Provincia:</span>
           <select
             name="provincia"
             value={formData.provincia || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 130 }}
+            style={{ ...valor, width: 105 }}
           >
             <option value="">-- Seleccionar --</option>
             {provincias.map((provincia) => (
@@ -335,22 +345,24 @@ export default function Ficha() {
             ))}
           </select>
         </div>
+
         <div style={campo}>
           <span>Miga:</span>
           <input
             name="miga"
             value={formData.miga || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 60 }}
+            style={{ ...valor, width: 52 }}
           />
         </div>
+
         <div style={campo}>
           <span>Coordenadas:</span>
           <input
             name="coordenadas"
             value={formData.coordenadas || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 130 }}
+            style={{ ...valor, width: 105 }}
           />
           {formData.coordenadas && (
             <a
@@ -359,39 +371,43 @@ export default function Ficha() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ marginLeft: 6, textDecoration: "none", fontSize: 14 }}
+              style={{ marginLeft: 4, textDecoration: "none", fontSize: 14 }}
             >
               🌍
             </a>
           )}
         </div>
+
         <div style={campo}>
           <span>Tipo Edificio:</span>
           <input
             name="tipo_edificio"
             value={formData.tipo_edificio || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 90 }}
+            style={{ ...valor, width: 72 }}
           />
         </div>
+
         <div style={campo}>
           <span>Tipo Repliegue:</span>
           <input
             name="tipo_repliegue"
             value={formData.tipo_repliegue || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 80 }}
+            style={{ ...valor, width: 68 }}
           />
         </div>
+
         <div style={campo}>
           <span>Senda:</span>
           <input
             name="tipo_senda"
             value={formData.tipo_senda || "ACELERADA_2026"}
             onChange={handleChange}
-            style={{ ...valor, width: 130 }}
+            style={{ ...valor, width: 115 }}
           />
         </div>
+
         <div style={campo}>
           <span>Fecha Abandono:</span>
           <input
@@ -399,7 +415,7 @@ export default function Ficha() {
             name="fecha_abandono"
             value={formData.fecha_abandono || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 140 }}
+            style={{ ...valor, width: 125 }}
           />
         </div>
       </div>
@@ -408,11 +424,12 @@ export default function Ficha() {
       <div
         style={{
           border: "1px solid #ccc",
-          padding: 15,
+          padding: 10,
           background: "#f5f5f5",
           display: "flex",
-          flexWrap: "wrap",
-          gap: 15,
+          flexWrap: "nowrap",
+          gap: 8,
+          overflowX: "auto",
         }}
       >
         <div style={campo}>
@@ -424,6 +441,7 @@ export default function Ficha() {
             onChange={handleChange}
           />
         </div>
+
         <div style={campo}>
           <span>CCVV:</span>
           <input
@@ -433,40 +451,44 @@ export default function Ficha() {
             onChange={handleChange}
           />
         </div>
+
         <div style={campo}>
           <span>Proyecto Inversión:</span>
           <input
             name="proyecto_inversion"
             value={formData.proyecto_inversion || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 80 }}
+            style={{ ...valor, width: 62 }}
           />
         </div>
+
         <div style={campo}>
           <span>Técnico Análisis:</span>
           <input
             name="tecnico_analisis"
             value={formData.tecnico_analisis || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 140 }}
+            style={{ ...valor, width: 110 }}
           />
         </div>
+
         <div style={campo}>
           <span>Técnico Reasignaciones:</span>
           <input
             name="tecnico_reasignaciones"
             value={formData.tecnico_reasignaciones || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 140 }}
+            style={{ ...valor, width: 110 }}
           />
         </div>
+
         <div style={campo}>
           <span>Empresa Planta Int.:</span>
           <select
             name="empresa_pi"
             value={formData.empresa_pi || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 160 }}
+            style={{ ...valor, width: 120 }}
           >
             <option value="">-- Seleccionar --</option>
             {empresasPI.map((empresa) => (
@@ -476,30 +498,33 @@ export default function Ficha() {
             ))}
           </select>
         </div>
+
         <div style={campo}>
           <span>Empresa Planta Ext.:</span>
           <input
             name="empresa_pe"
             value={formData.empresa_pe || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 115 }}
           />
         </div>
+
         <div style={campo}>
           <span>Empresa Recicladora:</span>
           <input
             name="empresa_recicladora"
             value={formData.empresa_recicladora || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 150 }}
+            style={{ ...valor, width: 115 }}
           />
+
           <button
             type="button"
             onClick={() => setMostrarMemoria(true)}
             style={{
-              marginLeft: 10,
-              width: 30,
-              height: 30,
+              marginLeft: 6,
+              width: 28,
+              height: 28,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -513,6 +538,7 @@ export default function Ficha() {
           >
             📝
           </button>
+
           <button
             onClick={() =>
               window.open(
@@ -523,9 +549,9 @@ export default function Ficha() {
               )
             }
             style={{
-              marginLeft: 6,
-              width: 30,
-              height: 30,
+              marginLeft: 4,
+              width: 28,
+              height: 28,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -539,7 +565,7 @@ export default function Ficha() {
             <img
               src="/spock.png"
               alt="Spock"
-              style={{ width: 18, height: 18, objectFit: "contain" }}
+              style={{ width: 16, height: 16, objectFit: "contain" }}
             />
           </button>
         </div>
@@ -665,7 +691,6 @@ export default function Ficha() {
                       handleReasignacionChange(index, "estado_trabajos", value)
                     }
                   />
-
                   <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
                   <CampoReaAuto label="Servicio" value={r.servicio} minWidth={380} />
                   <CampoReaAuto
@@ -688,7 +713,6 @@ export default function Ficha() {
                     value={r.tipo_diversificado}
                     minWidth={150}
                   />
-
                   <CampoSelectAuto
                     label="Tipo Interface"
                     value={r.tipo_velocidad_interface || ""}
@@ -702,7 +726,6 @@ export default function Ficha() {
                       )
                     }
                   />
-
                   <CampoReaAuto
                     label="Velocidad"
                     value={extraerVelocidad(r.tipo_velocidad_interface)}
@@ -728,25 +751,22 @@ export default function Ficha() {
                     minWidth={320}
                     onChange={(value) =>
                       handleReasignacionChange(
-                      index,
-                      "modo_reasignacion",
-                      value
-                    )
-                  }
-                />
-
+                        index,
+                        "modo_reasignacion",
+                        value
+                      )
+                    }
+                  />
                   <CampoReaAuto
                     label="Indicaciones"
                     value={r.indicaciones_para_el_encaminamiento}
                     minWidth={520}
                   />
-
                   <CampoReaAuto
                     label="Facturable"
                     value={r.facturable}
                     minWidth={100}
                   />
-
                   <div style={{ paddingTop: 18 }}>
                     <button onClick={() => guardarReasignacion(r)}>💾</button>
                   </div>
@@ -794,7 +814,6 @@ function CampoReaAuto({
       >
         {label}
       </div>
-
       <div
         style={{
           background: color,
@@ -830,7 +849,6 @@ function CampoRea({
       >
         {label}
       </div>
-
       <div
         style={{
           background: "#d9ead3",
@@ -860,13 +878,10 @@ function CampoSelectAuto({
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
-
   const valorActual = value || "";
-
-  const opcionesFinales =
-    options.includes(valorActual)
-      ? ["", ...options.filter(x => x !== "")]
-      : [valorActual, "", ...options];
+  const opcionesFinales = options.includes(valorActual)
+    ? ["", ...options.filter((x) => x !== "")]
+    : [valorActual, "", ...options];
 
   return (
     <div
@@ -877,41 +892,36 @@ function CampoSelectAuto({
     >
       <div
         style={{
-          fontSize:11,
-          fontWeight:"bold",
-          color:"#0b5394",
-          marginBottom:3
+          fontSize: 11,
+          fontWeight: "bold",
+          color: "#0b5394",
+          marginBottom: 3,
         }}
       >
         {label}
       </div>
-
       <select
         value={valorActual}
-        onChange={(e)=>onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         style={{
-          minHeight:30,
-          minWidth:"100%",
-          background:"#d9ead3",
-          border:"1px solid #666",
-          padding:"4px 6px",
-          fontSize:12
+          minHeight: 30,
+          minWidth: "100%",
+          background: "#d9ead3",
+          border: "1px solid #666",
+          padding: "4px 6px",
+          fontSize: 12,
         }}
       >
-        {opcionesFinales.map((op)=>(
-          <option
-            key={op}
-            value={op}
-          >
+        {opcionesFinales.map((op) => (
+          <option key={op} value={op}>
             {op}
           </option>
         ))}
-
       </select>
-
     </div>
   );
 }
+
 function CampoSelectEstado({
   label,
   value,
@@ -946,7 +956,6 @@ function CampoSelectEstado({
       >
         {label}
       </div>
-
       <select
         value={valorActual}
         onChange={(e) => onChange(e.target.value)}
@@ -972,14 +981,12 @@ function CampoSelectEstado({
 
 function colorEstado(estado?: string | null) {
   const txt = (estado || "").toLowerCase();
-
   if (txt.includes("análisis")) return "#f4cccc";
   if (txt.includes("curso")) return "#ffc000";
   if (txt.includes("incidencia")) return "#ffff00";
   if (txt.includes("ejecut")) return "#00b0f0";
   if (txt.includes("final")) return "#9bbb59";
   if (txt.includes("otras")) return "#d9d2e9";
-
   return "#d9ead3";
 }
 
