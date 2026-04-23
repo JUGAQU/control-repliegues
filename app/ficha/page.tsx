@@ -811,7 +811,9 @@ function CampoSelectAuto({
   onChange: (value: string) => void;
 }) {
   const valorActual = value || "";
-  const existeEnLista = options.includes(valorActual);
+  const opcionesFinales = valorActual && !options.includes(valorActual)
+    ? [valorActual, ...options]
+    : options;
 
   return (
     <div
@@ -830,6 +832,7 @@ function CampoSelectAuto({
       >
         {label}
       </div>
+
       <select
         value={valorActual}
         onChange={(e) => onChange(e.target.value)}
@@ -842,13 +845,7 @@ function CampoSelectAuto({
           fontSize: 12,
         }}
       >
-        {!existeEnLista && valorActual && (
-          <option value={valorActual}>{valorActual}</option>
-        )}
-
-        <option value="">-- Seleccionar --</option>
-
-        {options.map((op) => (
+        {opcionesFinales.map((op) => (
           <option key={op} value={op}>
             {op}
           </option>
@@ -857,7 +854,6 @@ function CampoSelectAuto({
     </div>
   );
 }
-
 function colorEstado(estado?: string | null) {
   const txt = (estado || "").toLowerCase();
   if (txt.includes("ejecut")) return "#00b0f0";
