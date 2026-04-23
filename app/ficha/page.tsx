@@ -48,6 +48,7 @@ export default function Ficha() {
   const [empresasPI, setEmpresasPI] = useState<any[]>([]);
   const [provincias, setProvincias] = useState<any[]>([]);
   const [mostrarMemoria, setMostrarMemoria] = useState(false);
+  const [mostrarReasignaciones, setMostrarReasignaciones] = useState(false);
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
 
@@ -445,6 +446,7 @@ export default function Ficha() {
             gap: 8,
             overflowX: "auto",
             boxShadow: "0 2px 4px rgba(0,0,0,.08)",
+            marginBottom: 8,
           }}
         >
           <div style={campo}>
@@ -585,6 +587,24 @@ export default function Ficha() {
             </button>
           </div>
         </div>
+
+        {/* BOTON MOSTRAR TERCER BLOQUE */}
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 4 }}>
+          <button
+            type="button"
+            onClick={() => setMostrarReasignaciones((prev) => !prev)}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 6,
+              border: "1px solid #7f9db9",
+              background: mostrarReasignaciones ? "#d9d2e9" : "#cfe2f3",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            {mostrarReasignaciones ? "Ocultar reasignaciones" : "Mostrar reasignaciones"}
+          </button>
+        </div>
       </div>
 
       {mostrarMemoria && (
@@ -636,165 +656,171 @@ export default function Ficha() {
       )}
 
       {/* REASIGNACIONES */}
-      <div
-        style={{
-          marginTop: 10,
-          border: "1px solid #bfc7ce",
-          background: "#eef2f5",
-          padding: 10,
-        }}
-      >
-        <div style={{ fontWeight: "bold", marginBottom: 10, fontSize: 14 }}>
-          Reasignaciones del atlas {formData.atlas}
-        </div>
-
-        {reasignaciones.length === 0 ? (
-          <div
-            style={{
-              background: "#fff",
-              border: "1px solid #ddd",
-              padding: 10,
-              fontSize: 12,
-            }}
-          >
-            No hay reasignaciones para este atlas.
+      {mostrarReasignaciones && (
+        <div
+          style={{
+            marginTop: 10,
+            border: "1px solid #bfc7ce",
+            background: "#eef2f5",
+            padding: 10,
+          }}
+        >
+          <div style={{ fontWeight: "bold", marginBottom: 10, fontSize: 14 }}>
+            Reasignaciones del atlas {formData.atlas}
           </div>
-        ) : (
-          reasignaciones.map((r: any, index: number) => (
+
+          {reasignaciones.length === 0 ? (
             <div
-              key={r.id || index}
               style={{
-                display: "flex",
-                border: "1px solid #8ea9bf",
-                background: "#c9e3f2",
-                marginBottom: 12,
-                overflow: "hidden",
+                background: "#fff",
+                border: "1px solid #ddd",
+                padding: 10,
+                fontSize: 12,
               }}
             >
+              No hay reasignaciones para este atlas.
+            </div>
+          ) : (
+            reasignaciones.map((r: any, index: number) => (
               <div
+                key={r.id || index}
                 style={{
-                  width: 42,
-                  minWidth: 42,
-                  background: "#bdd7e7",
-                  borderRight: "1px solid #7f9db9",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "#1f1f1f",
+                  border: "1px solid #8ea9bf",
+                  background: "#c9e3f2",
+                  marginBottom: 12,
+                  overflow: "hidden",
                 }}
               >
-                {index + 1}
-              </div>
-
-              <div style={{ flex: 1, padding: 10 }}>
                 <div
                   style={{
+                    width: 42,
+                    minWidth: 42,
+                    background: "#bdd7e7",
+                    borderRight: "1px solid #7f9db9",
                     display: "flex",
-                    gap: 10,
-                    flexWrap: "nowrap",
-                    overflowX: "auto",
-                    marginBottom: 10,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    color: "#1f1f1f",
                   }}
                 >
-                  <CampoSelectEstado
-                    label="Estado Trabajos"
-                    value={r.estado_trabajos || ""}
-                    options={OPCIONES_ESTADO_TRABAJOS}
-                    onChange={(value) =>
-                      handleReasignacionChange(index, "estado_trabajos", value)
-                    }
-                  />
-                  <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
-                  <CampoReaAuto label="Servicio" value={r.servicio} minWidth={380} />
-                  <CampoReaAuto
-                    label="Administrativo"
-                    value={r.administrativo}
-                    minWidth={130}
-                  />
-                  <CampoReaAuto
-                    label="Orden Partida"
-                    value={r.ordenes}
-                    minWidth={130}
-                  />
-                  <CampoReaAuto
-                    label="Diversificado"
-                    value={r.diversificado}
-                    minWidth={120}
-                  />
-                  <CampoReaAuto
-                    label="Tipo Diversificado"
-                    value={r.tipo_diversificado}
-                    minWidth={150}
-                  />
-                  <CampoSelectAuto
-                    label="Tipo Interface"
-                    value={r.tipo_velocidad_interface || ""}
-                    options={OPCIONES_TIPO_INTERFACE}
-                    minWidth={180}
-                    onChange={(value) =>
-                      handleReasignacionChange(
-                        index,
-                        "tipo_velocidad_interface",
-                        value
-                      )
-                    }
-                  />
-                  <CampoReaAuto
-                    label="Velocidad"
-                    value={extraerVelocidad(r.tipo_velocidad_interface)}
-                    minWidth={100}
-                  />
+                  {index + 1}
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    gap: 10,
-                    flexWrap: "nowrap",
-                    overflowX: "auto",
-                    marginBottom: 10,
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <CampoSelectAuto
-                    label="Modo Reasignación"
-                    value={r.modo_reasignacion ?? ""}
-                    options={OPCIONES_MODO_REASIGNACION}
-                    minWidth={320}
-                    onChange={(value) =>
-                      handleReasignacionChange(
-                        index,
-                        "modo_reasignacion",
-                        value
-                      )
-                    }
-                  />
-                  <CampoReaAuto
-                    label="Indicaciones"
-                    value={r.indicaciones_para_el_encaminamiento}
-                    minWidth={520}
-                  />
-                  <CampoReaAuto
-                    label="Facturable"
-                    value={r.facturable}
-                    minWidth={100}
-                  />
-                  <div style={{ paddingTop: 18 }}>
-                    <button onClick={() => guardarReasignacion(r)}>💾</button>
+                <div style={{ flex: 1, padding: 10 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 10,
+                      flexWrap: "nowrap",
+                      overflowX: "auto",
+                      marginBottom: 10,
+                    }}
+                  >
+                    <CampoSelectEstado
+                      label="Estado Trabajos"
+                      value={r.estado_trabajos || ""}
+                      options={OPCIONES_ESTADO_TRABAJOS}
+                      onChange={(value) =>
+                        handleReasignacionChange(index, "estado_trabajos", value)
+                      }
+                    />
+                    <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
+                    <CampoReaAuto
+                      label="Servicio"
+                      value={r.servicio}
+                      minWidth={380}
+                    />
+                    <CampoReaAuto
+                      label="Administrativo"
+                      value={r.administrativo}
+                      minWidth={130}
+                    />
+                    <CampoReaAuto
+                      label="Orden Partida"
+                      value={r.ordenes}
+                      minWidth={130}
+                    />
+                    <CampoReaAuto
+                      label="Diversificado"
+                      value={r.diversificado}
+                      minWidth={120}
+                    />
+                    <CampoReaAuto
+                      label="Tipo Diversificado"
+                      value={r.tipo_diversificado}
+                      minWidth={150}
+                    />
+                    <CampoSelectAuto
+                      label="Tipo Interface"
+                      value={r.tipo_velocidad_interface || ""}
+                      options={OPCIONES_TIPO_INTERFACE}
+                      minWidth={180}
+                      onChange={(value) =>
+                        handleReasignacionChange(
+                          index,
+                          "tipo_velocidad_interface",
+                          value
+                        )
+                      }
+                    />
+                    <CampoReaAuto
+                      label="Velocidad"
+                      value={extraerVelocidad(r.tipo_velocidad_interface)}
+                      minWidth={100}
+                    />
                   </div>
-                </div>
 
-                <CampoRea
-                  label="Observaciones Estudio Reasignación"
-                  value={r.observaciones_del_estudio}
-                />
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 10,
+                      flexWrap: "nowrap",
+                      overflowX: "auto",
+                      marginBottom: 10,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <CampoSelectAuto
+                      label="Modo Reasignación"
+                      value={r.modo_reasignacion ?? ""}
+                      options={OPCIONES_MODO_REASIGNACION}
+                      minWidth={320}
+                      onChange={(value) =>
+                        handleReasignacionChange(
+                          index,
+                          "modo_reasignacion",
+                          value
+                        )
+                      }
+                    />
+                    <CampoReaAuto
+                      label="Indicaciones"
+                      value={r.indicaciones_para_el_encaminamiento}
+                      minWidth={520}
+                    />
+                    <CampoReaAuto
+                      label="Facturable"
+                      value={r.facturable}
+                      minWidth={100}
+                    />
+                    <div style={{ paddingTop: 18 }}>
+                      <button onClick={() => guardarReasignacion(r)}>💾</button>
+                    </div>
+                  </div>
+
+                  <CampoRea
+                    label="Observaciones Estudio Reasignación"
+                    value={r.observaciones_del_estudio}
+                  />
+                </div>
               </div>
-            </div>
-          ))
-        )}
-      </div>
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }
