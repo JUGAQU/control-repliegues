@@ -43,6 +43,7 @@ const OPCIONES_TIPO_INTERFACE = [
 ];
 
 type BloqueActivo =
+  | "equipos"
   | "reasignaciones"
   | "ejecucion_reasignaciones"
   | "visitas"
@@ -100,6 +101,7 @@ export default function Ficha() {
         console.error("Error cargando empresaspi:", error);
         return;
       }
+
       setEmpresasPI(data || []);
     };
 
@@ -117,6 +119,7 @@ export default function Ficha() {
         console.error("Error cargando provincias:", error);
         return;
       }
+
       setProvincias(data || []);
     };
 
@@ -250,6 +253,8 @@ export default function Ficha() {
 
   const getTituloBloque = () => {
     switch (bloqueActivo) {
+      case "equipos":
+        return "Equipos";
       case "reasignaciones":
         return "Estudio Reasignaciones";
       case "ejecucion_reasignaciones":
@@ -276,7 +281,7 @@ export default function Ficha() {
   };
 
   const valor: React.CSSProperties = {
-    background: "#d9eef7",
+    background: "#d9ead3",
     padding: "3px 6px",
     borderRadius: 4,
     border: "1px solid #bcd",
@@ -306,7 +311,7 @@ export default function Ficha() {
         overflow: "hidden",
       }}
     >
-      {/* ZONA FIJA */}
+      {/* ZONA FIJA SUPERIOR */}
       <div
         style={{
           flex: "0 0 auto",
@@ -617,31 +622,7 @@ export default function Ficha() {
           </div>
         </div>
 
-        {/* BLOQUE 3: IDENTIFICADOR DEL BLOQUE ACTIVO */}
-        <div
-          style={{
-            width: "100%",
-            boxSizing: "border-box",
-            marginBottom: 8,
-          }}
-        >
-          <div
-            style={{
-              padding: "8px 12px",
-              background: bloqueActivo ? "#9fc5e8" : "#e6eef5",
-              border: "1px solid #6fa8dc",
-              borderRadius: 6,
-              fontWeight: "bold",
-              fontSize: 14,
-              color: "#073763",
-              minHeight: 20,
-            }}
-          >
-            {bloqueActivo ? getTituloBloque() : ""}
-          </div>
-        </div>
-
-        {/* FILA DE BOTONES */}
+        {/* FILA DE BOTONES ENCIMA DEL BLOQUE 3 */}
         <div
           style={{
             display: "flex",
@@ -652,6 +633,21 @@ export default function Ficha() {
             marginBottom: 8,
           }}
         >
+          <button
+            type="button"
+            onClick={() => toggleBloque("equipos")}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 6,
+              border: "1px solid #7f9db9",
+              background: bloqueActivo === "equipos" ? "#9fc5e8" : "#cfe2f3",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            Equipos
+          </button>
+
           <button
             type="button"
             onClick={() => toggleBloque("reasignaciones")}
@@ -717,9 +713,38 @@ export default function Ficha() {
             Certificación
           </button>
         </div>
+
+        {/* BLOQUE 3: IDENTIFICADOR */}
+        <div
+          style={{
+            width: "100%",
+            boxSizing: "border-box",
+            border: "1px solid #bfc7ce",
+            background: "#eef2f5",
+            padding: 10,
+            marginBottom: 8,
+          }}
+        >
+          <div
+            style={{
+              padding: "8px 12px",
+              background: bloqueActivo ? "#9fc5e8" : "#f5f5f5",
+              border: bloqueActivo
+                ? "1px solid #6fa8dc"
+                : "1px solid #d0d0d0",
+              borderRadius: 6,
+              fontWeight: "bold",
+              fontSize: 14,
+              color: bloqueActivo ? "#073763" : "#666",
+              minHeight: 20,
+            }}
+          >
+            {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
+          </div>
+        </div>
       </div>
 
-      {/* BLOQUE 4: CONTENIDO CON SCROLL */}
+      {/* BLOQUE 4 CON SCROLL */}
       <div
         style={{
           flex: 1,
@@ -738,6 +763,17 @@ export default function Ficha() {
               padding: 10,
             }}
           >
+            {bloqueActivo === "equipos" && (
+              <div
+                style={{
+                  background: "#fff",
+                  border: "1px solid #ddd",
+                  borderRadius: 4,
+                  minHeight: 260,
+                }}
+              />
+            )}
+
             {bloqueActivo === "reasignaciones" && (
               <>
                 {reasignaciones.length === 0 ? (
