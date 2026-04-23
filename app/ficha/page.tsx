@@ -203,20 +203,65 @@ export default function Ficha() {
     );
   };
 
-  const guardarReasignacion = async (r: any) => {
-    if (!r?.id) return;
+  
+  const guardarCambios = async () => {
+    if (!formData?.id) {
+      alert("Error: no hay ID");
+      return;
+    }
 
+const guardarCambios = async () => {
+  if (!formData?.id) {
+    alert("Error: no hay ID");
+    return;
+  }
+
+  const { error: errorFicha } = await supabase
+    .from("fichas")
+    .update({
+      lote: formData.lote,
+      nombre: formData.nombre,
+      provincia: formData.provincia,
+      miga: (formData.miga || "")
+        .replace(/\D/g, "")
+        .slice(0, 7)
+        .padStart(7, "0"),
+      coordenadas: formData.coordenadas,
+      tipo_edificio: formData.tipo_edificio,
+      tipo_repliegue: formData.tipo_repliegue,
+      tipo_senda: formData.tipo_senda,
+      fecha_abandono: formData.fecha_abandono,
+      central_vendida: formData.central_vendida,
+      prioritario: formData.prioritario,
+      proyecto_inversion: formData.proyecto_inversion,
+      tecnico_analisis: formData.tecnico_analisis,
+      tecnico_reasignaciones: formData.tecnico_reasignaciones,
+      empresa_pi: formData.empresa_pi,
+      empresa_pe: formData.empresa_pe,
+      empresa_recicladora: formData.empresa_recicladora,
+      memoria,
+    })
+    .eq("id", formData.id);
+
+  if (errorFicha) {
+    console.error("Error guardando ficha:", errorFicha);
+    alert("Error al guardar la ficha");
+    return;
+  }
+
+  const reasignacionesActualizables = reasignaciones.filter((r) => r?.id);
+
+  for (const r of reasignacionesActualizables) {
     const estadoTrabajosFinal =
       r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
         ? r.estado_trabajos
         : "En Análisis";
-    
 
-    const { error } = await supabase
+    const { error: errorRea } = await supabase
       .from("reasignaciones")
       .update({
-        modo_reasignacion: r.modo_reasignacion,
         estado_trabajos: estadoTrabajosFinal,
+        modo_reasignacion: r.modo_reasignacion,
         tipo_velocidad_interface: r.tipo_velocidad_interface,
         diversificado: r.diversificado,
         tipo_diversificado: r.tipo_diversificado,
@@ -227,59 +272,18 @@ export default function Ficha() {
       })
       .eq("id", r.id);
 
-    if (error) {
-      console.error("Error guardando reasignación:", error);
-      alert("Error al guardar la reasignación");
+    if (errorRea) {
+      console.error("Error guardando reasignación:", errorRea, r);
+      alert(`Error al guardar la reasignación ${r.id}`);
       return;
     }
+  }
 
-    alert("Reasignación guardada ✅");
-  };
-
-  const guardarCambios = async () => {
-    if (!formData?.id) {
-      alert("Error: no hay ID");
-      return;
-    }
-
-    const { error } = await supabase
-      .from("fichas")
-      .update({
-        lote: formData.lote,
-        nombre: formData.nombre,
-        provincia: formData.provincia,
-        miga: (formData.miga || "")
-          .replace(/\D/g, "")
-          .slice(0, 7)
-          .padStart(7, "0"),
-        coordenadas: formData.coordenadas,
-        tipo_edificio: formData.tipo_edificio,
-        tipo_repliegue: formData.tipo_repliegue,
-        tipo_senda: formData.tipo_senda,
-        fecha_abandono: formData.fecha_abandono,
-        central_vendida: formData.central_vendida,
-        prioritario: formData.prioritario,
-        proyecto_inversion: formData.proyecto_inversion,
-        tecnico_analisis: formData.tecnico_analisis,
-        tecnico_reasignaciones: formData.tecnico_reasignaciones,
-        empresa_pi: formData.empresa_pi,
-        empresa_pe: formData.empresa_pe,
-        empresa_recicladora: formData.empresa_recicladora,
-        memoria,
-      })
-      .eq("id", formData.id);
-
-    if (error) {
-      console.error("Error guardando:", error);
-      alert("Error al guardar");
-      return;
-    }
-
-    alert("Guardado en Supabase ✅");
-    setCambiosSinGuardar(false);
-    router.replace("/listado");
-    router.refresh();
-  };
+  alert("Guardado completo en Supabase ✅");
+  setCambiosSinGuardar(false);
+  router.replace("/listado");
+  router.refresh();
+};
 
   const toggleBloque = (bloque: Exclude<BloqueActivo, null>) => {
     setBloqueActivo((prev) => (prev === bloque ? null : bloque));
@@ -940,15 +944,7 @@ export default function Ficha() {
                             }
                           />
 
-                          <div style={{ paddingTop: 16 }}>
-                            <button
-                              onClick={() => guardarReasignacion(r)}
-                              style={{ height: 22, fontSize: 11 }}
-                            >
-                              💾
-                            </button>
-                          </div>
-                        </div>
+
 
                         <CampoInputAuto
                           label="Observaciones Estudio Reasignación"
