@@ -281,11 +281,12 @@ export default function Ficha() {
   };
 
   const valor: React.CSSProperties = {
-    background: "#d9ead3",
+    background: "#d9eef7",
     padding: "3px 6px",
     borderRadius: 4,
     border: "1px solid #bcd",
     fontSize: 12,
+    fontFamily: "Arial",
   };
 
   const bloqueSuperior: React.CSSProperties = {
@@ -293,7 +294,7 @@ export default function Ficha() {
     boxSizing: "border-box",
     border: "1px solid #ccc",
     padding: "12px 10px",
-    background: "#f5f5f5",
+    background: "#eef2f5",
     display: "flex",
     flexWrap: "nowrap",
     overflowX: "auto",
@@ -622,7 +623,7 @@ export default function Ficha() {
           </div>
         </div>
 
-        {/* FILA DE BOTONES ENCIMA DEL BLOQUE 3 */}
+        {/* FILA DE BOTONES */}
         <div
           style={{
             display: "flex",
@@ -714,7 +715,7 @@ export default function Ficha() {
           </button>
         </div>
 
-        {/* BLOQUE 3: IDENTIFICADOR */}
+        {/* BLOQUE 3 IDENTIFICADOR */}
         <div
           style={{
             width: "100%",
@@ -737,6 +738,7 @@ export default function Ficha() {
               fontSize: 14,
               color: bloqueActivo ? "#073763" : "#666",
               minHeight: 20,
+              fontFamily: "Arial",
             }}
           >
             {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
@@ -761,6 +763,8 @@ export default function Ficha() {
               border: "1px solid #bfc7ce",
               background: "#eef2f5",
               padding: 10,
+              fontFamily: "Arial",
+              fontSize: 12,
             }}
           >
             {bloqueActivo === "equipos" && (
@@ -783,6 +787,7 @@ export default function Ficha() {
                       border: "1px solid #ddd",
                       padding: 10,
                       fontSize: 12,
+                      fontFamily: "Arial",
                     }}
                   >
                     No hay reasignaciones para este atlas.
@@ -811,6 +816,7 @@ export default function Ficha() {
                           fontSize: 18,
                           fontWeight: "bold",
                           color: "#1f1f1f",
+                          fontFamily: "Arial",
                         }}
                       >
                         {index + 1}
@@ -838,22 +844,22 @@ export default function Ficha() {
                               )
                             }
                           />
-                          <CampoReaAuto
+                          <CampoReaSoloLecturaAuto
                             label="Tipo"
                             value={r.tipo}
                             minWidth={100}
                           />
-                          <CampoReaAuto
+                          <CampoReaSoloLecturaAuto
                             label="Servicio"
                             value={r.servicio}
                             minWidth={380}
                           />
-                          <CampoReaAuto
+                          <CampoReaSoloLecturaAuto
                             label="Administrativo"
                             value={r.administrativo}
                             minWidth={130}
                           />
-                          <CampoReaAuto
+                          <CampoReaSoloLecturaAuto
                             label="Orden Partida"
                             value={r.ordenes}
                             minWidth={130}
@@ -1038,13 +1044,14 @@ function CampoReaAuto({
   color?: string;
 }) {
   return (
-    <div style={{ minWidth, flex: "0 0 auto" }}>
+    <div style={{ minWidth, flex: "0 0 auto", fontFamily: "Arial" }}>
       <div
         style={{
           fontSize: 11,
           fontWeight: "bold",
           color: "#0b5394",
           marginBottom: 3,
+          fontFamily: "Arial",
         }}
       >
         {label}
@@ -1058,6 +1065,48 @@ function CampoReaAuto({
           minHeight: 28,
           whiteSpace: "nowrap",
           fontSize: 12,
+          fontFamily: "Arial",
+        }}
+      >
+        {value ?? ""}
+      </div>
+    </div>
+  );
+}
+
+function CampoReaSoloLecturaAuto({
+  label,
+  value,
+  minWidth = 100,
+}: {
+  label: string;
+  value?: string | number | null;
+  minWidth?: number;
+}) {
+  return (
+    <div style={{ minWidth, flex: "0 0 auto", fontFamily: "Arial" }}>
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: "bold",
+          color: "#0b5394",
+          marginBottom: 3,
+          fontFamily: "Arial",
+        }}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          background: "#eee",
+          color: "#666",
+          border: "1px solid #666",
+          borderRadius: 4,
+          padding: "4px 6px",
+          minHeight: 28,
+          whiteSpace: "nowrap",
+          fontSize: 12,
+          fontFamily: "Arial",
         }}
       >
         {value ?? ""}
@@ -1074,13 +1123,14 @@ function CampoRea({
   value?: string | number | null;
 }) {
   return (
-    <div>
+    <div style={{ fontFamily: "Arial" }}>
       <div
         style={{
           fontSize: 11,
           fontWeight: "bold",
           color: "#0b5394",
           marginBottom: 3,
+          fontFamily: "Arial",
         }}
       >
         {label}
@@ -1094,6 +1144,7 @@ function CampoRea({
           fontSize: 12,
           whiteSpace: "pre-wrap",
           wordBreak: "break-word",
+          fontFamily: "Arial",
         }}
       >
         {value ?? ""}
@@ -1121,13 +1172,14 @@ function CampoSelectAuto({
     : [valorActual, "", ...options];
 
   return (
-    <div style={{ minWidth, flex: "0 0 auto" }}>
+    <div style={{ minWidth, flex: "0 0 auto", fontFamily: "Arial" }}>
       <div
         style={{
           fontSize: 11,
           fontWeight: "bold",
           color: "#0b5394",
           marginBottom: 3,
+          fontFamily: "Arial",
         }}
       >
         {label}
@@ -1143,6 +1195,7 @@ function CampoSelectAuto({
           borderRadius: 4,
           padding: "4px 6px",
           fontSize: 12,
+          fontFamily: "Arial",
         }}
       >
         {opcionesFinales.map((op) => (
@@ -1173,13 +1226,14 @@ function CampoSelectEstado({
       : options;
 
   return (
-    <div style={{ minWidth: 140, flex: "0 0 auto" }}>
+    <div style={{ minWidth: 140, flex: "0 0 auto", fontFamily: "Arial" }}>
       <div
         style={{
           fontSize: 11,
           fontWeight: "bold",
           color: "#0b5394",
           marginBottom: 3,
+          fontFamily: "Arial",
         }}
       >
         {label}
@@ -1196,6 +1250,7 @@ function CampoSelectEstado({
           padding: "4px 6px",
           fontSize: 12,
           fontWeight: "bold",
+          fontFamily: "Arial",
         }}
       >
         {opcionesFinales.map((op) => (
