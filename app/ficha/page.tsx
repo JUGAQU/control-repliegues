@@ -723,7 +723,7 @@ export default function Ficha() {
                 >
                   <CampoSelectAuto
                     label="Modo Reasignación"
-                    value={r.modo_reasignacion ?? "select"}
+                    value={r.modo_reasignacion ?? "Select"}
                     options={OPCIONES_MODO_REASIGNACION}
                     minWidth={320}
                     onChange={(value) =>
