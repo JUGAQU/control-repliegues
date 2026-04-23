@@ -100,7 +100,6 @@ export default function Ficha() {
         console.error("Error cargando empresaspi:", error);
         return;
       }
-
       setEmpresasPI(data || []);
     };
 
@@ -118,7 +117,6 @@ export default function Ficha() {
         console.error("Error cargando provincias:", error);
         return;
       }
-
       setProvincias(data || []);
     };
 
@@ -619,6 +617,30 @@ export default function Ficha() {
           </div>
         </div>
 
+        {/* BLOQUE 3: IDENTIFICADOR DEL BLOQUE ACTIVO */}
+        <div
+          style={{
+            width: "100%",
+            boxSizing: "border-box",
+            marginBottom: 8,
+          }}
+        >
+          <div
+            style={{
+              padding: "8px 12px",
+              background: bloqueActivo ? "#9fc5e8" : "#e6eef5",
+              border: "1px solid #6fa8dc",
+              borderRadius: 6,
+              fontWeight: "bold",
+              fontSize: 14,
+              color: "#073763",
+              minHeight: 20,
+            }}
+          >
+            {bloqueActivo ? getTituloBloque() : ""}
+          </div>
+        </div>
+
         {/* FILA DE BOTONES */}
         <div
           style={{
@@ -697,7 +719,7 @@ export default function Ficha() {
         </div>
       </div>
 
-      {/* ZONA CON SCROLL */}
+      {/* BLOQUE 4: CONTENIDO CON SCROLL */}
       <div
         style={{
           flex: 1,
@@ -716,26 +738,6 @@ export default function Ficha() {
               padding: 10,
             }}
           >
-            {/* CABECERA DEL BLOQUE ACTIVO FIJA */}
-            <div
-              style={{
-                position: "sticky",
-                top: 0,
-                zIndex: 20,
-                marginBottom: 10,
-                padding: "8px 12px",
-                background: "#9fc5e8",
-                border: "1px solid #6fa8dc",
-                borderRadius: 6,
-                fontWeight: "bold",
-                fontSize: 14,
-                color: "#073763",
-                boxShadow: "0 2px 4px rgba(0,0,0,.08)",
-              }}
-            >
-              {getTituloBloque()}
-            </div>
-
             {bloqueActivo === "reasignaciones" && (
               <>
                 {reasignaciones.length === 0 ? (
