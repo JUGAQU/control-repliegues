@@ -325,7 +325,7 @@ export default function Ficha() {
             name="provincia"
             value={formData.provincia || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 140 }}
+            style={{ ...valor, width: 130 }}
           >
             <option value="">-- Seleccionar --</option>
             {provincias.map((provincia) => (
@@ -350,7 +350,7 @@ export default function Ficha() {
             name="coordenadas"
             value={formData.coordenadas || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 120 }}
+            style={{ ...valor, width: 130 }}
           />
           {formData.coordenadas && (
             <a
@@ -380,7 +380,7 @@ export default function Ficha() {
             name="tipo_repliegue"
             value={formData.tipo_repliegue || ""}
             onChange={handleChange}
-            style={{ ...valor, width: 90 }}
+            style={{ ...valor, width: 80 }}
           />
         </div>
         <div style={campo}>
