@@ -186,136 +186,162 @@ export default function Ficha() {
     setCambiosSinGuardar(true);
   };
 
-const handleReasignacionChange = (
-  index: number,
-  field: string,
-  value: string
-) => {
-  setReasignaciones((prev) => {
-    const nuevo = prev.map((item, i) =>
-      i === index
-        ? {
-            ...item,
-            [field]: value,
-          }
-        : item
+  const handleReasignacionChange = (
+    index: number,
+    field: string,
+    value: string
+  ) => {
+    setReasignaciones((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              [field]: value,
+            }
+          : item
+      )
     );
 
-    console.log("Reasignaciones actualizadas:", nuevo);
-    return nuevo;
-  });
+    setCambiosSinGuardar(true);
+  };
 
-  setCambiosSinGuardar(true);
-};
-
-  try {
-    // 1) Guardar ficha
-    const { error: errorFicha } = await supabase
-      .from("fichas")
-      .update({
-        lote: formData.lote,
-        nombre: formData.nombre,
-        provincia: formData.provincia,
-        miga: (formData.miga || "")
-          .replace(/\D/g, "")
-          .slice(0, 7)
-          .padStart(7, "0"),
-        coordenadas: formData.coordenadas,
-        tipo_edificio: formData.tipo_edificio,
-        tipo_repliegue: formData.tipo_repliegue,
-        tipo_senda: formData.tipo_senda,
-        fecha_abandono: formData.fecha_abandono,
-        central_vendida: formData.central_vendida,
-        prioritario: formData.prioritario,
-        proyecto_inversion: formData.proyecto_inversion,
-        tecnico_analisis: formData.tecnico_analisis,
-        tecnico_reasignaciones: formData.tecnico_reasignaciones,
-        empresa_pi: formData.empresa_pi,
-        empresa_pe: formData.empresa_pe,
-        empresa_recicladora: formData.empresa_recicladora,
-        memoria,
-      })
-      .eq("id", formData.id);
-
-    if (errorFicha) {
-      console.error("Error guardando ficha:", errorFicha);
-      alert("Error al guardar la ficha");
+  const guardarCambios = async () => {
+    if (!formData?.id) {
+      alert("Error: no hay ID");
       return;
     }
 
-    // 2) Guardar reasignaciones
-    const reasignacionesConId = reasignaciones.filter((r) => r?.id);
+    try {
+      const { error: errorFicha } = await supabase
+        .from("fichas")
+        .update({
+          lote: formData.lote,
+          nombre: formData.nombre,
+          provincia: formData.provincia,
+          miga: (formData.miga || "")
+            .replace(/\D/g, "")
+            .slice(0, 7)
+            .padStart(7, "0"),
+          coordenadas: formData.coordenadas,
+          tipo_edificio: formData.tipo_edificio,
+          tipo_repliegue: formData.tipo_repliegue,
+          tipo_senda: formData.tipo_senda,
+          fecha_abandono: formData.fecha_abandono,
+          central_vendida: formData.central_vendida,
+          prioritario: formData.prioritario,
+          proyecto_inversion: formData.proyecto_inversion,
+          tecnico_analisis: formData.tecnico_analisis,
+          tecnico_reasignaciones: formData.tecnico_reasignaciones,
+          empresa_pi: formData.empresa_pi,
+          empresa_pe: formData.empresa_pe,
+          empresa_recicladora: formData.empresa_recicladora,
+          memoria,
+        })
+        .eq("id", formData.id);
 
-    const resultados = await Promise.all(
-      reasignacionesConId.map(async (r) => {
-        const payload = {
-          estado_trabajos:
-            r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
-              ? r.estado_trabajos
-              : "En Análisis",
-          modo_reasignacion:
-            r.modo_reasignacion && String(r.modo_reasignacion).trim() !== ""
-              ? r.modo_reasignacion
-              : null,
-          tipo_velocidad_interface:
-            r.tipo_velocidad_interface &&
-            String(r.tipo_velocidad_interface).trim() !== ""
-              ? r.tipo_velocidad_interface
-              : null,
-          diversificado:
-            r.diversificado && String(r.diversificado).trim() !== ""
-              ? r.diversificado
-              : null,
-          tipo_diversificado:
-            r.tipo_diversificado && String(r.tipo_diversificado).trim() !== ""
-              ? r.tipo_diversificado
-              : null,
-          indicaciones_para_el_encaminamiento:
-            r.indicaciones_para_el_encaminamiento &&
-            String(r.indicaciones_para_el_encaminamiento).trim() !== ""
-              ? r.indicaciones_para_el_encaminamiento
-              : null,
-          facturable:
-            r.facturable && String(r.facturable).trim() !== ""
-              ? r.facturable
-              : null,
-          observaciones_del_estudio:
-            r.observaciones_del_estudio &&
-            String(r.observaciones_del_estudio).trim() !== ""
-              ? r.observaciones_del_estudio
-              : null,
-        };
+      if (errorFicha) {
+        console.error("Error guardando ficha:", errorFicha);
+        alert("Error al guardar la ficha");
+        return;
+      }
 
-        const { error } = await supabase
-          .from("reasignaciones")
-          .update(payload)
-          .eq("id", r.id);
+      const reasignacionesConId = reasignaciones.filter((r) => r?.id);
 
-        return { id: r.id, error, payload };
-      })
-    );
+      const resultados = await Promise.all(
+        reasignacionesConId.map(async (r) => {
+          const payload = {
+            estado_trabajos:
+              r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
+                ? r.estado_trabajos
+                : "En Análisis",
+            modo_reasignacion:
+              r.modo_reasignacion && String(r.modo_reasignacion).trim() !== ""
+                ? r.modo_reasignacion
+                : null,
+            tipo_velocidad_interface:
+              r.tipo_velocidad_interface &&
+              String(r.tipo_velocidad_interface).trim() !== ""
+                ? r.tipo_velocidad_interface
+                : null,
+            diversificado:
+              r.diversificado && String(r.diversificado).trim() !== ""
+                ? r.diversificado
+                : null,
+            tipo_diversificado:
+              r.tipo_diversificado &&
+              String(r.tipo_diversificado).trim() !== ""
+                ? r.tipo_diversificado
+                : null,
+            indicaciones_para_el_encaminamiento:
+              r.indicaciones_para_el_encaminamiento &&
+              String(r.indicaciones_para_el_encaminamiento).trim() !== ""
+                ? r.indicaciones_para_el_encaminamiento
+                : null,
+            facturable:
+              r.facturable && String(r.facturable).trim() !== ""
+                ? r.facturable
+                : null,
+            observaciones_del_estudio:
+              r.observaciones_del_estudio &&
+              String(r.observaciones_del_estudio).trim() !== ""
+                ? r.observaciones_del_estudio
+                : null,
+          };
 
-    const errores = resultados.filter((x) => x.error);
+          const { error } = await supabase
+            .from("reasignaciones")
+            .update(payload)
+            .eq("id", r.id);
 
-    if (errores.length > 0) {
-      console.error("Errores guardando reasignaciones:", errores);
-      alert(
-        `Error al guardar ${errores.length} reasignación(es). Mira la consola.`
+          return { id: r.id, error, payload };
+        })
       );
-      return;
+
+      const errores = resultados.filter((x) => x.error);
+
+      if (errores.length > 0) {
+        console.error("Errores guardando reasignaciones:", errores);
+        alert(
+          `Error al guardar ${errores.length} reasignación(es). Mira la consola.`
+        );
+        return;
+      }
+
+      alert("Guardado completo en Supabase ✅");
+      setCambiosSinGuardar(false);
+      router.replace("/listado");
+      router.refresh();
+    } catch (e) {
+      console.error("Error inesperado al guardar:", e);
+      alert("Error inesperado al guardar");
     }
+  };
 
-    alert("Guardado completo en Supabase ✅");
-    setCambiosSinGuardar(false);
-    router.replace("/listado");
-    router.refresh();
-  } catch (e) {
-    console.error("Error inesperado al guardar:", e);
-    alert("Error inesperado al guardar");
+  const toggleBloque = (bloque: Exclude<BloqueActivo, null>) => {
+    setBloqueActivo((prev) => (prev === bloque ? null : bloque));
+  };
+
+  const getTituloBloque = () => {
+    switch (bloqueActivo) {
+      case "equipos":
+        return "Equipos";
+      case "reasignaciones":
+        return "Estudio Reasignaciones";
+      case "ejecucion_reasignaciones":
+        return "Ejecución Reasignaciones";
+      case "visitas":
+        return "Visitas";
+      case "certificacion":
+        return "Certificación";
+      default:
+        return "";
+    }
+  };
+
+  if (!formData) {
+    return <div style={{ padding: 20 }}>Cargando ficha...</div>;
   }
-};
 
-  
   const campo: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
@@ -418,6 +444,7 @@ const handleReasignacionChange = (
                 width: 58,
                 background: "#eee",
                 color: "#666",
+                border: "1px solid #999",
               }}
             />
           </div>
