@@ -1,515 +1,560 @@
 "use client";
+export const dynamic = "force-dynamic";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { supabase } from "../lib/supabase";
 
-type Ficha = {
-  id: number;
-  atlas: string | null;
-  nombre: string | null;
-  provincia: string | null;
-  lote: string | null;
-  miga: string | null;
-  observaciones: string | null;
-};
+export default function Ficha() {
+  const [formData, setFormData] = useState<any>(null);
+  const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
+  const [empresasPI, setEmpresasPI] = useState<any[]>([]);
+  const [provincias, setProvincias] = useState<any[]>([]);
 
-type Reasignacion = {
-  id: number;
-  atlas: string | null;
-  at: string | null;
-  tipo: string | null;
-  servicio: string | null;
-  administrativo: string | null;
-  ordenes: string | null;
-  diversificado: string | null;
-  tipo_diversificado: string | null;
-  tipo_velocidad_interface: string | null;
-  sgipe: string | null;
-  modo_reasignacion: string | null;
-  indicaciones_para_el_encaminamiento: string | null;
-  puentes_central_numero_de_puentes: string | null;
-  observaciones_del_estudio: string | null;
-  estado_trabajos: string | null;
-  cuestionario: string | null;
-  pba_atenuacion: string | null;
-  autonegociacion: string | null;
-  configuracion_puerto_destino: string | null;
-  supervisa_corte: string | null;
-  observaciones_preparacion_reasignacion: string | null;
-  orden_atlas: string | null;
-  estado_orden_atlas: string | null;
-  uo_atlas: string | null;
-  numero_de_actuaciones: string | null;
-  geco: string | null;
-  cex: string | null;
-  rima: string | null;
-  redes_priv: string | null;
-  dwdm: string | null;
-  ventana_geco: string | null;
-  grupo: string | null;
-  fecha_prevista_actuacion: string | null;
-  fecha_certificacion: string | null;
-  observaciones_certificacion: string | null;
-  facturable: string | null;
-  fecha_ejecucion: string | null;
-};
+  const [mostrarMemoria, setMostrarMemoria] = useState(false);
+  const [memoria, setMemoria] = useState("");
 
-const fichaVacia: Ficha = {
-  id: 0,
-  atlas: "",
-  nombre: "",
-  provincia: "",
-  lote: "",
-  miga: "",
-  observaciones: "",
-};
 
-export default function FichaPage() {
-  const router = useRouter();
+
+  
+
   const searchParams = useSearchParams();
+  const router = useRouter();
   const id = searchParams.get("id");
 
-  const [formData, setFormData] = useState<Ficha>(fichaVacia);
-  const [reasignaciones, setReasignaciones] = useState<Reasignacion[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-  const [mensaje, setMensaje] = useState("");
+  useEffect(() => {
+    if (formData) {
+      setMemoria(formData.memoria || "");
+    }
+  }, [formData]);
 
   useEffect(() => {
-    const cargar = async () => {
-      if (!id) {
-        setError("No se ha recibido el id de la ficha");
-        setLoading(false);
-        return;
-      }
+    const cargarFicha = async () => {
+      if (!id) return;
 
-      setLoading(true);
-      setError("");
+      const res = await fetch("/api/fichas");
+      const data = await res.json();
 
-      const { data, error } = await supabase
-        .from("fichas")
-        .select("*")
-        .eq("id", id)
-        .single();
+      if (Array.isArray(data)) {
+        const registro = data.find((d: any) => String(d.id) === String(id));
 
-      if (error || !data) {
-        console.error("Error cargando ficha:", error);
-        setError("No se ha podido cargar la ficha");
-        setLoading(false);
-        return;
-      }
-
-      const ficha: Ficha = {
-        id: data.id,
-        atlas: data.atlas ?? "",
-        nombre: data.nombre ?? "",
-        provincia: data.provincia ?? "",
-        lote: data.lote ?? "",
-        miga: data.miga ?? "",
-        observaciones: data.observaciones ?? "",
-      };
-
-      setFormData(ficha);
-
-      if (ficha.atlas) {
-        const { data: reasData, error: reasError } = await supabase
-          .from("reasignaciones")
-          .select("*")
-          .eq("atlas", ficha.atlas)
-          .order("id", { ascending: true });
-
-        if (reasError) {
-          console.error("Error cargando reasignaciones:", reasError);
+        if (registro) {
+          setFormData(registro);
         } else {
-          setReasignaciones((reasData as Reasignacion[]) || []);
+          console.error("No se encontró el registro");
         }
       }
-
-      setLoading(false);
     };
 
-    cargar();
+    cargarFicha();
   }, [id]);
 
-  const guardarFicha = async () => {
-    if (!formData.id) return;
+  useEffect(() => {
+    const cargarEmpresasPI = async () => {
+      const { data, error } = await supabase
+        .from("empresaspi")
+        .select("id, nombre")
+        .order("nombre", { ascending: true });
 
-    setSaving(true);
-    setMensaje("");
-    setError("");
+      if (error) {
+        console.error("Error cargando empresaspi:", error);
+        return;
+      }
+
+      setEmpresasPI(data || []);
+    };
+
+    cargarEmpresasPI();
+  }, []);
+
+  useEffect(() => {
+    const cargarProvincias = async () => {
+      const { data, error } = await supabase
+        .from("provincias")
+        .select("id, nombre")
+        .order("nombre", { ascending: true });
+
+      if (error) {
+        console.error("Error cargando provincias:", error);
+        return;
+      }
+
+      setProvincias(data || []);
+    };
+
+    cargarProvincias();
+  }, []);
+
+  const handleChange = (e: any) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+
+    setCambiosSinGuardar(true);
+  };
+
+  const guardarCambios = async () => {
+    if (!formData?.id) {
+      alert("Error: no hay ID");
+      return;
+    }
 
     const { error } = await supabase
       .from("fichas")
       .update({
-        atlas: formData.atlas,
+        lote: formData.lote,
         nombre: formData.nombre,
         provincia: formData.provincia,
-        lote: formData.lote,
-        miga: formData.miga,
-        observaciones: formData.observaciones,
+        miga: (formData.miga || "")
+          .replace(/\D/g, "")
+          .slice(0, 7)
+          .padStart(7, "0"),
+        coordenadas: formData.coordenadas,
+        tipo_edificio: formData.tipo_edificio,
+        tipo_repliegue: formData.tipo_repliegue,
+        tipo_senda: formData.tipo_senda,
+        fecha_abandono: formData.fecha_abandono,
+        central_vendida: formData.central_vendida,
+        prioritario: formData.prioritario,
+        proyecto_inversion: formData.proyecto_inversion,
+        tecnico_analisis: formData.tecnico_analisis,
+        tecnico_reasignaciones: formData.tecnico_reasignaciones,
+        empresa_pi: formData.empresa_pi,
+        empresa_pe: formData.empresa_pe,
+        empresa_recicladora: formData.empresa_recicladora,
+        memoria: formData.memoria,
       })
       .eq("id", formData.id);
 
     if (error) {
-      console.error("Error guardando ficha:", error);
-      setError("No se ha podido guardar la ficha");
-    } else {
-      setMensaje("Ficha guardada correctamente");
+      console.error("Error guardando:", error);
+      alert("Error al guardar");
+      return;
     }
 
-    setSaving(false);
+    alert("Guardado en Supabase ✅");
+    setCambiosSinGuardar(false);
+    router.replace("/listado");
+    router.refresh();
   };
 
-  const handleChange = (field: keyof Ficha, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  if (loading) {
-    return (
-      <div style={{ padding: 20, fontFamily: "Arial" }}>
-        Cargando ficha...
-      </div>
-    );
+  if (!formData) {
+    return <div style={{ padding: 20 }}>Cargando ficha...</div>;
   }
 
-  return (
+  const campo = {
+    display: "flex",
+    alignItems: "center",
+    gap: 5,
+    fontSize: 12,
+  };
+
+  const valor = {
+  background: "#d9eef7",
+  padding: "3px 8px",
+  borderRadius: 4,
+  border: "1px solid #bcd",
+};
+
+return (
+  <div style={{ padding: 20, fontFamily: "Arial" }}>
     <div
       style={{
-        padding: 20,
-        background: "#f4f7fb",
-        minHeight: "100vh",
-        fontFamily: "Arial",
+        display: "flex",
+        justifyContent: "space-between",
+        marginBottom: 5,
       }}
     >
-      <div
-        style={{
-          maxWidth: 1500,
-          margin: "0 auto",
-          background: "#fff",
-          borderRadius: 10,
-          boxShadow: "0 4px 18px rgba(0,0,0,0.12)",
-          padding: 20,
+
+
+  
+<div style={{ display: "flex", gap: 10 }}>
+  <button onClick={guardarCambios}>💾</button>
+</div>
+      
+
+
+
+
+
+
+      
+      <button
+        onClick={() => {
+          if (cambiosSinGuardar) {
+            const confirmar = confirm(
+              "Tienes cambios sin guardar. ¿Salir sin guardar?"
+            );
+            if (!confirmar) return;
+          }
+          router.push("/listado");
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 20,
-            gap: 10,
-            flexWrap: "wrap",
-          }}
+        ✖
+      </button>
+    </div>
+
+    {/* DATOS DE IDENTIFICACION */}
+    <div
+      style={{
+        border: "1px solid #ccc",
+        padding: 15,
+        background: "#f5f5f5",
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 15,
+        marginBottom: 5,
+      }}
+    >
+      <div style={campo}>
+        <span>Atlas:</span>
+        <input
+          name="atlas"
+          value={formData.atlas || ""}
+          readOnly
+          style={{ ...valor, width: 70, background: "#eee", color: "#666" }}
+        />
+      </div>
+
+      <div style={campo}>
+        <span>Lote:</span>
+        <input
+          name="lote"
+          value={formData.lote || ""}
+          onChange={handleChange}
+          style={{ ...valor, width: 90 }}
+        />
+      </div>
+
+      <div style={campo}>
+        <span>Nombre:</span>
+        <input
+          name="nombre"
+          value={formData.nombre || ""}
+          onChange={handleChange}
+          style={{ ...valor, width: 200 }}
+        />
+      </div>
+
+      <div style={campo}>
+        <span>Provincia:</span>
+        <select
+          name="provincia"
+          value={formData.provincia || ""}
+          onChange={handleChange}
+          style={{ ...valor, width: 140 }}
         >
-          <h1 style={{ margin: 0, fontSize: 24 }}>Ficha</h1>
+          <option value="">-- Seleccionar --</option>
+          {provincias.map((provincia) => (
+            <option key={provincia.id} value={provincia.nombre}>
+              {provincia.nombre}
+            </option>
+          ))}
+        </select>
+      </div>
 
-          <div style={{ display: "flex", gap: 10 }}>
-            <button
-              type="button"
-              onClick={() => router.push("/listado")}
-              style={botonGris}
-            >
-              Volver
-            </button>
+      <div style={campo}>
+        <span>Miga:</span>
+        <input
+          name="miga"
+          value={formData.miga || ""}
+          onChange={handleChange}
+          style={{ ...valor, width: 60 }}
+        />
+      </div>
 
-            <button
-              type="button"
-              onClick={guardarFicha}
-              disabled={saving}
-              style={botonAzul}
-            >
-              {saving ? "Guardando..." : "Guardar"}
-            </button>
-          </div>
-        </div>
-
-        {error && (
-          <div
+      <div style={campo}>
+        <span>Coordenadas:</span>
+        <input
+          name="coordenadas"
+          value={formData.coordenadas || ""}
+          onChange={handleChange}
+          style={{ ...valor, width: 120 }}
+        />
+        {formData.coordenadas && (
+          <a
+            href={`https://www.google.com/maps?q=${encodeURIComponent(
+              formData.coordenadas
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              marginBottom: 15,
-              padding: 10,
-              borderRadius: 6,
-              background: "#ffe5e5",
-              color: "#b30000",
-            }}
-          >
-            {error}
-          </div>
-        )}
-
-        {mensaje && (
-          <div
-            style={{
-              marginBottom: 15,
-              padding: 10,
-              borderRadius: 6,
-              background: "#e7f7e7",
-              color: "#1f6b1f",
-            }}
-          >
-            {mensaje}
-          </div>
-        )}
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 15,
-            marginBottom: 25,
-          }}
-        >
-          <InputBox
-            label="ATLAS"
-            value={formData.atlas || ""}
-            onChange={(v) => handleChange("atlas", v)}
-          />
-          <InputBox
-            label="Nombre"
-            value={formData.nombre || ""}
-            onChange={(v) => handleChange("nombre", v)}
-          />
-          <InputBox
-            label="Provincia"
-            value={formData.provincia || ""}
-            onChange={(v) => handleChange("provincia", v)}
-          />
-          <InputBox
-            label="Lote"
-            value={formData.lote || ""}
-            onChange={(v) => handleChange("lote", v)}
-          />
-          <InputBox
-            label="Miga"
-            value={formData.miga || ""}
-            onChange={(v) => handleChange("miga", v)}
-          />
-        </div>
-
-        <div style={{ marginBottom: 30 }}>
-          <div style={labelStyle}>Observaciones</div>
-          <textarea
-            value={formData.observaciones || ""}
-            onChange={(e) => handleChange("observaciones", e.target.value)}
-            style={{
-              width: "100%",
-              minHeight: 100,
-              border: "1px solid #ccc",
-              borderRadius: 6,
-              padding: 10,
+              marginLeft: 6,
+              textDecoration: "none",
               fontSize: 14,
-              resize: "vertical",
             }}
-          />
-        </div>
+          >
+            🌍
+          </a>
+        )}
+      </div>
 
-        <div style={{ marginTop: 30 }}>
-          <h2 style={{ marginBottom: 15 }}>Reasignaciones asociadas</h2>
+      <div style={campo}>
+        <span>Tipo Edificio:</span>
+        <input
+          name="tipo_edificio"
+          value={formData.tipo_edificio || ""}
+          onChange={handleChange}
+          style={{ ...valor, width: 70 }}
+        />
+      </div>
 
-          {reasignaciones.length === 0 ? (
-            <div
-              style={{
-                padding: 12,
-                background: "#f8f8f8",
-                border: "1px solid #ddd",
-                borderRadius: 8,
-                color: "#666",
-              }}
-            >
-              No hay reasignaciones para este atlas.
-            </div>
-          ) : (
-            reasignaciones.map((r, index) => (
-              <div
-                key={r.id || index}
-                style={{
-                  border: "1px solid #7fa1b8",
-                  background: "#cfe6f5",
-                  marginBottom: 14,
-                  padding: 14,
-                }}
-              >
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "40px repeat(6, minmax(120px, 1fr))",
-                    gap: 10,
-                    alignItems: "start",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontWeight: 700,
-                      fontSize: 24,
-                      textAlign: "center",
-                      paddingTop: 20,
-                    }}
-                  >
-                    {index + 1}
-                  </div>
+      <div style={campo}>
+        <span>Tipo Repliegue:</span>
+        <input
+          name="tipo_repliegue"
+          value={formData.tipo_repliegue || ""}
+          onChange={handleChange}
+          style={{ ...valor, width: 70 }}
+        />
+      </div>
 
-                  <Campo label="Tipo" value={r.tipo} />
-                  <Campo label="Servicio" value={r.servicio} />
-                  <Campo label="SGIPE" value={r.sgipe} />
-                  <Campo label="Modo Reasignación" value={r.modo_reasignacion} />
-                  <Campo
-                    label="Indicaciones Para el Encaminamiento"
-                    value={r.indicaciones_para_el_encaminamiento}
-                  />
-                  <Campo label="Facturable" value={r.facturable} />
-                  <Campo
-                    label="Estado Trabajos"
-                    value={r.estado_trabajos}
-                    color={colorEstado(r.estado_trabajos)}
-                  />
-                </div>
+      <div style={campo}>
+        <span>Senda:</span>
+        <input
+          name="tipo_senda"
+          value={formData.tipo_senda || "ACELERADA_2026"}
+          onChange={handleChange}
+          style={{ ...valor, width: 130 }}
+        />
+      </div>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(7, minmax(120px, 1fr))",
-                    gap: 10,
-                    marginTop: 12,
-                  }}
-                >
-                  <Campo label="Administrativo" value={r.administrativo} />
-                  <Campo label="Orden de partida" value={r.ordenes} />
-                  <Campo label="Diversificado" value={r.diversificado} />
-                  <Campo label="Tipo Diversif." value={r.tipo_diversificado} />
-                  <Campo label="Tipo Interfaz" value={r.tipo_velocidad_interface} />
-                  <Campo label="Ptes Cent/Nº Ptes." value={r.puentes_central_numero_de_puentes} />
-                  <Campo label="Fecha Ejecución" value={r.fecha_ejecucion} />
-                </div>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(5, minmax(140px, 1fr))",
-                    gap: 10,
-                    marginTop: 12,
-                  }}
-                >
-                  <Campo
-                    label="Observaciones Estudio Reasignación"
-                    value={r.observaciones_del_estudio}
-                  />
-                  <Campo label="Orden Atlas" value={r.orden_atlas} />
-                  <Campo label="Estado Ord en Atlas" value={r.estado_orden_atlas} />
-                  <Campo label="UO Atlas" value={r.uo_atlas} />
-                  <Campo label="Nº Actuaciones" value={r.numero_de_actuaciones} />
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+      <div style={campo}>
+        <span>Fecha Abandono:</span>
+        <input
+          type="date"
+          name="fecha_abandono"
+          value={formData.fecha_abandono || ""}
+          onChange={handleChange}
+          style={{ ...valor, width: 120 }}
+        />
       </div>
     </div>
-  );
-}
 
-function InputBox({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div>
-      <div style={labelStyle}>{label}</div>
-      <input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+    {/* TECNICOS Y EE.CC */}
+          <div
+        style={{
+          border: "1px solid #ccc",
+          padding: 15,
+          background: "#f5f5f5",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 15,
+        }}
+      >
+        <div style={campo}>
+          <span>Prioritaria:</span>
+          <input
+            type="checkbox"
+            name="prioritario"
+            checked={!!formData.prioritario}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div style={campo}>
+          <span>CCVV:</span>
+          <input
+            type="checkbox"
+            name="central_vendida"
+            checked={!!formData.central_vendida}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div style={campo}>
+          <span>Proyecto Inversión:</span>
+          <input
+            name="proyecto_inversion"
+            value={formData.proyecto_inversion || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 60 }}
+          />
+        </div>
+
+        <div style={campo}>
+          <span>Técnico Análisis:</span>
+          <input
+            name="tecnico_analisis"
+            value={formData.tecnico_analisis || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 120 }}
+          />
+        </div>
+
+        <div style={campo}>
+          <span>Técnico Reasignaciones:</span>
+          <input
+            name="tecnico_reasignaciones"
+            value={formData.tecnico_reasignaciones || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 120 }}
+          />
+        </div>
+
+        <div style={campo}>
+          <span>Empresa Planta Int.:</span>
+          <select
+            name="empresa_pi"
+            value={formData.empresa_pi || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 150 }}
+          >
+            <option value="">-- Seleccionar --</option>
+            {empresasPI.map((empresa) => (
+              <option key={empresa.id} value={empresa.nombre}>
+                {empresa.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div style={campo}>
+          <span>Empresa Planta Ext.:</span>
+          <input
+            name="empresa_pe"
+            value={formData.empresa_pe || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 150 }}
+          />
+        </div>
+
+        <div style={campo}>
+          <span>Empresa Recicladora:</span>
+          <input
+            name="empresa_recicladora"
+            value={formData.empresa_recicladora || ""}
+            onChange={handleChange}
+            style={{ ...valor, width: 150 }}
+          />
+
+<button
+  type="button"
+  onClick={() => setMostrarMemoria(true)}
+  style={{
+    marginLeft: 10,
+    width: 30,
+    height: 30,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 6,
+    border: "1px solid #ccc",
+    background: "#f5f5f5",
+    cursor: "pointer",
+    padding: 0,
+  }}
+  title="Memoria del repliegue"
+>
+  📝
+</button>
+
+
+
+
+
+
+          
+          <button
+  onClick={() =>
+    window.open(
+      `https://spock.es.telefonica/spoc_ec/faro2/faro_detalle_nacional_repliegue.asp?central=${encodeURIComponent(formData.atlas || "")}`,
+      "_blank"
+    )
+  }
+  style={{
+    marginLeft: 6,
+    width: 30,
+    height: 30,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 6,
+    border: "1px solid #ccc",
+    background: "#e8f4ff",
+    cursor: "pointer",
+  }}
+  title="Abrir en Spock"
+>
+  <img
+    src="/spock.png"
+    alt="Spock"
+    style={{
+      width: 18,
+      height: 18,
+      objectFit: "contain",
+    }}
+  />
+</button>
+
+
+          {mostrarMemoria && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      background: "rgba(0,0,0,0.4)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 999,
+    }}
+  >
+    <div
+      style={{
+        background: "white",
+        padding: 20,
+        borderRadius: 8,
+        width: "500px",
+      }}
+    >
+      <h3>Memoria del Repliegue</h3>
+
+      <textarea
+        value={memoria}
+        onChange={(e) => setMemoria(e.target.value)}
         style={{
           width: "100%",
-          border: "1px solid #ccc",
-          borderRadius: 6,
-          padding: 10,
-          fontSize: 14,
+          height: 200,
+          marginBottom: 10,
         }}
       />
-    </div>
-  );
-}
 
-function Campo({
-  label,
-  value,
-  color = "#d9ead3",
-}: {
-  label: string;
-  value?: string | number | null;
-  color?: string;
-}) {
-  return (
-    <div>
-      <div
-        style={{
-          fontSize: 12,
-          color: "#0b5394",
-          fontWeight: 700,
-          marginBottom: 4,
-        }}
-      >
-        {label}
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <button onClick={() => setMostrarMemoria(false)}>
+          ❌ Cerrar
+        </button>
+
+        <button
+          onClick={() => {
+            setFormData((prev: any) => ({
+              ...prev,
+              memoria,
+            }));
+            setMostrarMemoria(false);
+            setCambiosSinGuardar(true);
+          }}
+        >
+          💾 Guardar
+        </button>
       </div>
-      <div
-        style={{
-          minHeight: 34,
-          background: color,
-          border: "1px solid #6f6f6f",
-          padding: "6px 8px",
-          fontSize: 13,
-          whiteSpace: "pre-wrap",
-          wordBreak: "break-word",
-        }}
-      >
-        {value ?? ""}
+    </div>
+  </div>
+)}
+
+          
+
+
+          
+        </div>
       </div>
     </div>
   );
 }
-
-function colorEstado(estado?: string | null) {
-  const txt = (estado || "").toLowerCase();
-
-  if (txt.includes("ejecut")) return "#00b0f0";
-  if (txt.includes("curso")) return "#ffc000";
-  if (txt.includes("pend")) return "#ffd966";
-
-  return "#d9ead3";
-}
-
-const labelStyle: React.CSSProperties = {
-  fontSize: 13,
-  color: "#0b5394",
-  fontWeight: 700,
-  marginBottom: 6,
-};
-
-const botonAzul: React.CSSProperties = {
-  padding: "10px 16px",
-  background: "#0070f3",
-  color: "#fff",
-  border: "none",
-  borderRadius: 6,
-  cursor: "pointer",
-  fontSize: 14,
-};
-
-const botonGris: React.CSSProperties = {
-  padding: "10px 16px",
-  background: "#e9ecef",
-  color: "#222",
-  border: "1px solid #ccc",
-  borderRadius: 6,
-  cursor: "pointer",
-  fontSize: 14,
-};
+   
