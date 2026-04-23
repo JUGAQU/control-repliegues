@@ -715,7 +715,7 @@ export default function Ficha() {
               minHeight: 20,
             }}
           >
-            {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
+            {bloqueActivo ? getTituloBloque() : "Pusla sobre el bloque a visualizar"}
           </div>
         </div>
       </div>
