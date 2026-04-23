@@ -309,20 +309,19 @@ export default function Ficha() {
     display: "flex",
     alignItems: "center",
     gap: 4,
-    fontSize: 12,
+    fontSize: 11,
     flex: "0 0 auto",
   };
 
-  // CAMBIO IMPORTANTE: aquí se iguala el grosor visual
   const valor: React.CSSProperties = {
     background: COLORES.fondoCampo,
-    padding: "4px 6px",
-    height: 30,
+    padding: "1px 5px",
+    height: 20,
     borderRadius: 4,
     border: `1px solid ${COLORES.bordeCampo}`,
-    fontSize: 12,
-    fontFamily: "Arial",
+    fontSize: 11,
     boxSizing: "border-box",
+    fontFamily: "Arial",
   };
 
   const bloqueSuperior: React.CSSProperties = {
@@ -612,8 +611,8 @@ export default function Ficha() {
               onClick={() => setMostrarMemoria(true)}
               style={{
                 marginLeft: 6,
-                width: 28,
-                height: 28,
+                width: 24,
+                height: 24,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -622,6 +621,7 @@ export default function Ficha() {
                 background: "#f5f5f5",
                 cursor: "pointer",
                 padding: 0,
+                fontSize: 11,
               }}
               title="Memoria del repliegue"
             >
@@ -639,8 +639,8 @@ export default function Ficha() {
               }
               style={{
                 marginLeft: 4,
-                width: 28,
-                height: 28,
+                width: 24,
+                height: 24,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -648,13 +648,14 @@ export default function Ficha() {
                 border: "1px solid #ccc",
                 background: "#e8f4ff",
                 cursor: "pointer",
+                padding: 0,
               }}
               title="Abrir en Spock"
             >
               <img
                 src="/spock.png"
                 alt="Spock"
-                style={{ width: 16, height: 16, objectFit: "contain" }}
+                style={{ width: 14, height: 14, objectFit: "contain" }}
               />
             </button>
           </div>
@@ -709,12 +710,12 @@ export default function Ficha() {
         >
           <div
             style={{
-              padding: "10px 12px",
+              padding: "6px 10px",
               background: COLORES.barraTitulo,
               border: `1px solid ${COLORES.bordeBarraTitulo}`,
               borderRadius: 6,
               fontWeight: "bold",
-              fontSize: 14,
+              fontSize: 12,
               color: "#083b73",
               minHeight: 20,
               boxSizing: "border-box",
@@ -743,7 +744,7 @@ export default function Ficha() {
               background: COLORES.fondoBloque,
               padding: 10,
               fontFamily: "Arial",
-              fontSize: 12,
+              fontSize: 11,
             }}
           >
             {bloqueActivo === "equipos" && (
@@ -765,7 +766,7 @@ export default function Ficha() {
                       background: "#fff",
                       border: "1px solid #ddd",
                       padding: 10,
-                      fontSize: 12,
+                      fontSize: 11,
                     }}
                   >
                     No hay reasignaciones para este atlas.
@@ -791,7 +792,7 @@ export default function Ficha() {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: "bold",
                           color: "#1f1f1f",
                         }}
@@ -799,14 +800,14 @@ export default function Ficha() {
                         {index + 1}
                       </div>
 
-                      <div style={{ flex: 1, padding: 10 }}>
+                      <div style={{ flex: 1, padding: 8 }}>
                         <div
                           style={{
                             display: "flex",
                             gap: 10,
                             flexWrap: "nowrap",
                             overflowX: "auto",
-                            marginBottom: 10,
+                            marginBottom: 8,
                           }}
                         >
                           <CampoSelectEstado
@@ -899,7 +900,7 @@ export default function Ficha() {
                             gap: 10,
                             flexWrap: "nowrap",
                             overflowX: "auto",
-                            marginBottom: 10,
+                            marginBottom: 8,
                             alignItems: "flex-start",
                           }}
                         >
@@ -939,17 +940,20 @@ export default function Ficha() {
                             }
                           />
 
-                          <div style={{ paddingTop: 18 }}>
-                            <button onClick={() => guardarReasignacion(r)}>
+                          <div style={{ paddingTop: 16 }}>
+                            <button
+                              onClick={() => guardarReasignacion(r)}
+                              style={{ height: 22, fontSize: 11 }}
+                            >
                               💾
                             </button>
                           </div>
                         </div>
 
-                        <CampoTextAreaAuto
-                           label="Observaciones Estudio Reasignación"
+                        <CampoInputAuto
+                          label="Observaciones Estudio Reasignación"
                           value={r.observaciones_del_estudio || ""}
-                          minWidth={520}
+                          minWidth={700}
                           onChange={(value) =>
                             handleReasignacionChange(
                               index,
@@ -1066,13 +1070,13 @@ function BotonBloque({
       type="button"
       onClick={onClick}
       style={{
-        padding: "8px 16px",
+        padding: "6px 12px",
         borderRadius: 6,
         border: `1px solid ${COLORES.bordeBoton}`,
         background: activo ? COLORES.fondoBotonActivo : COLORES.fondoBoton,
         cursor: "pointer",
         fontWeight: "bold",
-        fontSize: 12,
+        fontSize: 11,
         fontFamily: "Arial",
       }}
     >
@@ -1109,10 +1113,12 @@ function CampoReaAuto({
           background: color,
           border: "1px solid #666",
           borderRadius: 4,
-          padding: "4px 6px",
-          minHeight: 28,
+          padding: "1px 5px",
+          minHeight: 20,
+          fontSize: 11,
+          fontFamily: "Arial",
+          boxSizing: "border-box",
           whiteSpace: "nowrap",
-          fontSize: 12,
         }}
       >
         {value ?? ""}
@@ -1148,10 +1154,12 @@ function CampoReaSoloLecturaAuto({
           color: COLORES.textoSoloLectura,
           border: "1px solid #888",
           borderRadius: 4,
-          padding: "4px 6px",
-          minHeight: 28,
+          padding: "1px 5px",
+          minHeight: 20,
+          fontSize: 11,
+          fontFamily: "Arial",
+          boxSizing: "border-box",
           whiteSpace: "nowrap",
-          fontSize: 12,
         }}
       >
         {value ?? ""}
@@ -1188,53 +1196,14 @@ function CampoInputAuto({
         onChange={(e) => onChange(e.target.value)}
         style={{
           width: "100%",
-          minHeight: 30,
+          height: 20,
+          padding: "1px 5px",
           background: COLORES.fondoCampo,
           border: "1px solid #666",
           borderRadius: 4,
-          padding: "4px 6px",
-          fontSize: 12,
-          boxSizing: "border-box",
-        }}
-      />
-    </div>
-  );
-}
-
-function CampoTextAreaAuto({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div>
-      <div
-        style={{
           fontSize: 11,
-          fontWeight: "bold",
-          color: COLORES.textoAzul,
-          marginBottom: 3,
-        }}
-      >
-        {label}
-      </div>
-      <textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        style={{
-          width: "100%",
-          minHeight: 70,
-          resize: "vertical",
-          background: COLORES.fondoCampo,
-          border: "1px solid #666",
-          borderRadius: 4,
-          padding: "5px 6px",
-          fontSize: 12,
           boxSizing: "border-box",
+          fontFamily: "Arial",
         }}
       />
     </div>
@@ -1275,13 +1244,15 @@ function CampoSelectAuto({
         value={valorActual}
         onChange={(e) => onChange(e.target.value)}
         style={{
-          minHeight: 30,
           minWidth: "100%",
+          height: 20,
+          padding: "1px 5px",
           background: COLORES.fondoCampo,
           border: "1px solid #666",
           borderRadius: 4,
-          padding: "4px 6px",
-          fontSize: 12,
+          fontSize: 11,
+          fontFamily: "Arial",
+          boxSizing: "border-box",
         }}
       >
         {opcionesFinales.map((op) => (
@@ -1306,11 +1277,8 @@ function CampoSelectEstado({
   onChange: (value: string) => void;
 }) {
   const valorActual = value && value.trim() !== "" ? value : "En Análisis";
-
   const opcionesFinales =
-    valorActual && !options.includes(valorActual)
-      ? [valorActual, ...options]
-      : options;
+    options.includes(valorActual) ? options : [valorActual, ...options];
 
   return (
     <div style={{ minWidth: 140, flex: "0 0 auto" }}>
@@ -1328,14 +1296,16 @@ function CampoSelectEstado({
         value={valorActual}
         onChange={(e) => onChange(e.target.value)}
         style={{
-          minHeight: 30,
           width: "100%",
+          height: 20,
+          padding: "1px 5px",
           background: colorEstado(valorActual),
           border: "1px solid #666",
           borderRadius: 4,
-          padding: "4px 6px",
-          fontSize: 12,
+          fontSize: 11,
+          fontFamily: "Arial",
           fontWeight: "bold",
+          boxSizing: "border-box",
         }}
       >
         {opcionesFinales.map((op) => (
@@ -1351,14 +1321,14 @@ function CampoSelectEstado({
 function colorEstado(estado?: string | null) {
   const txt = (estado || "").toLowerCase();
 
-  if (txt.includes("análisis") || txt.includes("analisis")) return "#dce6d1";
   if (txt.includes("curso")) return "#ffc000";
   if (txt.includes("incidencia")) return "#fff200";
   if (txt.includes("ejecut")) return "#00b0f0";
   if (txt.includes("final")) return "#9bbb59";
   if (txt.includes("otras")) return "#d9d2e9";
+  if (txt.includes("análisis") || txt.includes("analisis")) return "#d9ead3";
 
-  return "#dce6d1";
+  return "#d9ead3";
 }
 
 function extraerVelocidad(texto?: string | null) {
