@@ -276,16 +276,16 @@ export default function Ficha() {
     display: "flex",
     alignItems: "center",
     gap: 4,
-    fontSize: 12,
+    fontSize: 11,
     flex: "0 0 auto",
   };
 
   const valor: React.CSSProperties = {
     background: "#d9ead3",
-    padding: "3px 6px",
+    padding: "3px 8px",
     borderRadius: 4,
-    border: "1px solid #bcd",
-    fontSize: 12,
+    border: "1px solid #93c47d",
+    fontSize: 11,
     fontFamily: "Arial",
   };
 
@@ -764,7 +764,7 @@ export default function Ficha() {
               background: "#eef2f5",
               padding: 10,
               fontFamily: "Arial",
-              fontSize: 12,
+              fontSize: 11,
             }}
           >
             {bloqueActivo === "equipos" && (
@@ -786,7 +786,7 @@ export default function Ficha() {
                       background: "#fff",
                       border: "1px solid #ddd",
                       padding: 10,
-                      fontSize: 12,
+                      fontSize: 11,
                       fontFamily: "Arial",
                     }}
                   >
@@ -1064,7 +1064,7 @@ function CampoReaAuto({
           padding: "4px 6px",
           minHeight: 28,
           whiteSpace: "nowrap",
-          fontSize: 12,
+          fontSize: 11,
           fontFamily: "Arial",
         }}
       >
@@ -1105,7 +1105,7 @@ function CampoReaSoloLecturaAuto({
           padding: "4px 6px",
           minHeight: 28,
           whiteSpace: "nowrap",
-          fontSize: 12,
+          fontSize: 11,
           fontFamily: "Arial",
         }}
       >
@@ -1141,7 +1141,7 @@ function CampoRea({
           border: "1px solid #666",
           borderRadius: 4,
           padding: "5px 6px",
-          fontSize: 12,
+          fontSize: 11,
           whiteSpace: "pre-wrap",
           wordBreak: "break-word",
           fontFamily: "Arial",
@@ -1194,7 +1194,7 @@ function CampoSelectAuto({
           border: "1px solid #666",
           borderRadius: 4,
           padding: "4px 6px",
-          fontSize: 12,
+          fontSize: 11,
           fontFamily: "Arial",
         }}
       >
@@ -1248,7 +1248,7 @@ function CampoSelectEstado({
           border: "1px solid #666",
           borderRadius: 4,
           padding: "4px 6px",
-          fontSize: 12,
+          fontSize: 11,
           fontWeight: "bold",
           fontFamily: "Arial",
         }}
