@@ -20,6 +20,7 @@ const OPCIONES_MODO_REASIGNACION = [
   "Pte Otras Areas",
 ];
 
+
 const OPCIONES_ESTADO_TRABAJOS = [
   "En Análisis",
   "En Curso",
