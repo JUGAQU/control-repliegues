@@ -616,11 +616,18 @@ export default function Ficha() {
                     fontSize: 20,
                     textAlign: "center",
                     paddingTop: 20,
+                    flex: "0 0 auto",
                   }}
                 >
                   {index + 1}
                 </div>
 
+                <CampoReaAuto
+                  label="Estado Trabajos"
+                  value={r.estado_trabajos}
+                  minWidth={130}
+                  color={colorEstado(r.estado_trabajos)}
+                />
                 <CampoReaAuto label="Tipo" value={r.tipo} minWidth={90} />
                 <CampoReaAuto label="Servicio" value={r.servicio} minWidth={320} />
                 <CampoReaAuto label="Administrativo" value={r.administrativo} minWidth={130} />
@@ -634,66 +641,36 @@ export default function Ficha() {
               {/* SEGUNDA FILA */}
               <div
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "110px 1.5fr 2fr 90px 110px",
+                  display: "flex",
                   gap: 10,
+                  alignItems: "flex-start",
+                  flexWrap: "nowrap",
+                  overflowX: "auto",
                   marginBottom: 10,
                 }}
               >
-                <CampoRea label="SGIPE" value={r.sgipe} />
-                <CampoRea
+                <CampoReaAuto
                   label="Modo Reasignación"
                   value={r.modo_reasignacion}
+                  minWidth={220}
                 />
-                <CampoRea
+                <CampoReaAuto
                   label="Indicaciones"
                   value={r.indicaciones_para_el_encaminamiento}
+                  minWidth={420}
                 />
-                <CampoRea label="Facturable" value={r.facturable} />
-                <CampoRea
-                  label="Estado Trabajos"
-                  value={r.estado_trabajos}
-                  color={colorEstado(r.estado_trabajos)}
+                <CampoReaAuto
+                  label="Facturable"
+                  value={r.facturable}
+                  minWidth={100}
                 />
               </div>
 
               {/* TERCERA FILA */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "150px 130px 2fr",
-                  gap: 10,
-                  marginBottom: 10,
-                }}
-              >
-                <CampoRea
-                  label="Ptes Cent/Nº Ptes."
-                  value={r.puentes_central_numero_de_puentes}
-                />
-                <CampoRea label="Fecha Ejecución" value={r.fecha_ejecucion} />
+              <div>
                 <CampoRea
                   label="Observaciones Estudio Reasignación"
                   value={r.observaciones_del_estudio}
-                />
-              </div>
-
-              {/* CUARTA FILA */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "130px 130px 110px 110px",
-                  gap: 10,
-                }}
-              >
-                <CampoRea label="Orden Atlas" value={r.orden_atlas} />
-                <CampoRea
-                  label="Estado Ord. Atlas"
-                  value={r.estado_orden_atlas}
-                />
-                <CampoRea label="UO Atlas" value={r.uo_atlas} />
-                <CampoRea
-                  label="Nº Actuaciones"
-                  value={r.numero_de_actuaciones}
                 />
               </div>
             </div>
