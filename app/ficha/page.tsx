@@ -155,7 +155,7 @@ export default function Ficha() {
         empresa_pi: formData.empresa_pi,
         empresa_pe: formData.empresa_pe,
         empresa_recicladora: formData.empresa_recicladora,
-        memoria: formData.memoria,
+        memoria: memoria,
       })
       .eq("id", formData.id);
 
@@ -608,11 +608,17 @@ export default function Ficha() {
                 marginBottom: 12,
               }}
             >
+              {/* FILA SERVICIO */}
+              <div style={{ marginBottom: 10 }}>
+                <CampoRea label="Servicio" value={r.servicio} />
+              </div>
+
+              {/* FILA 2 */}
               <div
                 style={{
                   display: "grid",
                   gridTemplateColumns:
-                    "30px 120px 1.4fr 110px 1.5fr 2fr 90px 110px",
+                    "30px 120px 110px 1.5fr 2fr 90px 110px",
                   gap: 10,
                   alignItems: "start",
                   marginBottom: 10,
@@ -630,14 +636,13 @@ export default function Ficha() {
                 </div>
 
                 <CampoRea label="Tipo" value={r.tipo} />
-                <CampoRea label="Servicio" value={r.servicio} />
                 <CampoRea label="SGIPE" value={r.sgipe} />
                 <CampoRea
                   label="Modo Reasignación"
                   value={r.modo_reasignacion}
                 />
                 <CampoRea
-                  label="Indicaciones Para el Encaminamiento"
+                  label="Indicaciones"
                   value={r.indicaciones_para_el_encaminamiento}
                 />
                 <CampoRea label="Facturable" value={r.facturable} />
@@ -648,6 +653,7 @@ export default function Ficha() {
                 />
               </div>
 
+              {/* FILA 3 */}
               <div
                 style={{
                   display: "grid",
@@ -675,6 +681,7 @@ export default function Ficha() {
                 <CampoRea label="Fecha Ejecución" value={r.fecha_ejecucion} />
               </div>
 
+              {/* FILA 4 */}
               <div
                 style={{
                   display: "grid",
