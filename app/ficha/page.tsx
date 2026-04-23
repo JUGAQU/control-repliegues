@@ -1326,7 +1326,7 @@ function colorEstado(estado?: string | null) {
   if (txt.includes("ejecut")) return "#00b0f0";
   if (txt.includes("final")) return "#9bbb59";
   if (txt.includes("otras")) return "#d9d2e9";
-  if (txt.includes("análisis") || txt.includes("analisis")) return "#d9ead3";
+  if (txt.includes("análisis") || txt.includes("analisis")) return "#f4cccc";
 
   return "#d9ead3";
 }
