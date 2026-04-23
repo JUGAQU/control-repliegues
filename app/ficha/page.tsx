@@ -90,7 +90,6 @@ export default function Ficha() {
       const { data, error } = await supabase
         .from("reasignaciones")
         .select("*")
-        .eq("atlas", formData.atlas)
         .order("id", { ascending: true });
 
       if (error) {
@@ -99,7 +98,18 @@ export default function Ficha() {
         return;
       }
 
-      setReasignaciones(data || []);
+      const limpiar = (v: any) =>
+        String(v || "")
+          .replace(/\u00A0/g, "")
+          .trim();
+
+      const atlasFicha = limpiar(formData.atlas);
+
+      const filtradas = (data || []).filter((r: any) => {
+        return limpiar(r.atlas) === atlasFicha;
+      });
+
+      setReasignaciones(filtradas);
     };
 
     cargarReasignaciones();
@@ -165,14 +175,14 @@ export default function Ficha() {
     return <div style={{ padding: 20 }}>Cargando ficha...</div>;
   }
 
-  const campo = {
+  const campo: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
     gap: 5,
     fontSize: 12,
   };
 
-  const valor = {
+  const valor: React.CSSProperties = {
     background: "#d9eef7",
     padding: "3px 8px",
     borderRadius: 4,
@@ -180,7 +190,14 @@ export default function Ficha() {
   };
 
   return (
-    <div style={{ padding: 20, fontFamily: "Arial", background: "#dfe3e6", minHeight: "100vh" }}>
+    <div
+      style={{
+        padding: 20,
+        fontFamily: "Arial",
+        background: "#dfe3e6",
+        minHeight: "100vh",
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -495,62 +512,60 @@ export default function Ficha() {
               }}
             />
           </button>
-
-          {mostrarMemoria && (
-            <div
-              style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                background: "rgba(0,0,0,0.4)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 999,
-              }}
-            >
-              <div
-                style={{
-                  background: "white",
-                  padding: 20,
-                  borderRadius: 8,
-                  width: "500px",
-                }}
-              >
-                <h3>Memoria del Repliegue</h3>
-                <textarea
-                  value={memoria}
-                  onChange={(e) => setMemoria(e.target.value)}
-                  style={{
-                    width: "100%",
-                    height: 200,
-                    marginBottom: 10,
-                  }}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <button onClick={() => setMostrarMemoria(false)}>
-                    ❌ Cerrar
-                  </button>
-                  <button
-                    onClick={() => {
-                      setFormData((prev: any) => ({
-                        ...prev,
-                        memoria,
-                      }));
-                      setMostrarMemoria(false);
-                      setCambiosSinGuardar(true);
-                    }}
-                  >
-                    💾 Guardar
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
+
+      {mostrarMemoria && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.4)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 999,
+          }}
+        >
+          <div
+            style={{
+              background: "white",
+              padding: 20,
+              borderRadius: 8,
+              width: "500px",
+            }}
+          >
+            <h3>Memoria del Repliegue</h3>
+            <textarea
+              value={memoria}
+              onChange={(e) => setMemoria(e.target.value)}
+              style={{
+                width: "100%",
+                height: 200,
+                marginBottom: 10,
+              }}
+            />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <button onClick={() => setMostrarMemoria(false)}>❌ Cerrar</button>
+              <button
+                onClick={() => {
+                  setFormData((prev: any) => ({
+                    ...prev,
+                    memoria,
+                  }));
+                  setMostrarMemoria(false);
+                  setCambiosSinGuardar(true);
+                }}
+              >
+                💾 Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* REASIGNACIONES */}
       <div
@@ -568,7 +583,7 @@ export default function Ficha() {
             fontSize: 14,
           }}
         >
-          Estudio Reasignaciones
+          Reasignaciones del atlas {formData.atlas}
         </div>
 
         {reasignaciones.length === 0 ? (
@@ -596,73 +611,48 @@ export default function Ficha() {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "30px 120px 1.4fr 110px 1.5fr 2fr 90px 110px",
+                  gridTemplateColumns:
+                    "30px 120px 1.4fr 110px 1.5fr 2fr 90px 110px",
                   gap: 10,
                   alignItems: "start",
                   marginBottom: 10,
                 }}
               >
-                
-              {/* FILA 1 - Servicio ancho completo */}
-<div style={{ marginBottom:10 }}>
-  <CampoRea
-    label="Servicio"
-    value={r.servicio}
-  />
-</div>
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 20,
+                    textAlign: "center",
+                    paddingTop: 20,
+                  }}
+                >
+                  {index + 1}
+                </div>
 
-{/* FILA 2 */}
-<div
- style={{
-   display:"grid",
-   gridTemplateColumns:
-   "30px 120px 110px 1.5fr 2fr 90px 110px",
-   gap:10,
-   marginBottom:10
- }}
->
+                <CampoRea label="Tipo" value={r.tipo} />
+                <CampoRea label="Servicio" value={r.servicio} />
+                <CampoRea label="SGIPE" value={r.sgipe} />
+                <CampoRea
+                  label="Modo Reasignación"
+                  value={r.modo_reasignacion}
+                />
+                <CampoRea
+                  label="Indicaciones Para el Encaminamiento"
+                  value={r.indicaciones_para_el_encaminamiento}
+                />
+                <CampoRea label="Facturable" value={r.facturable} />
+                <CampoRea
+                  label="Estado Trabajos"
+                  value={r.estado_trabajos}
+                  color={colorEstado(r.estado_trabajos)}
+                />
+              </div>
 
-  <div
-    style={{
-      fontWeight:"bold",
-      fontSize:20,
-      textAlign:"center",
-      paddingTop:20
-    }}
-  >
-    {index+1}
-  </div>
-
-  <CampoRea label="Tipo" value={r.tipo}/>
-
-  <CampoRea label="SGIPE" value={r.sgipe}/>
-
-  <CampoRea
-    label="Modo Reasignación"
-    value={r.modo_reasignacion}
-  />
-
-  <CampoRea
-    label="Indicaciones"
-    value={r.indicaciones_para_el_encaminamiento}
-  />
-
-  <CampoRea
-    label="Facturable"
-    value={r.facturable}
-  />
-
-  <CampoRea
-    label="Estado Trabajos"
-    value={r.estado_trabajos}
-    color={colorEstado(r.estado_trabajos)}
-  />
-
-</div>
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "140px 140px 140px 140px 140px 150px 130px",
+                  gridTemplateColumns:
+                    "140px 140px 140px 140px 140px 150px 130px",
                   gap: 10,
                   marginBottom: 10,
                 }}
@@ -670,8 +660,14 @@ export default function Ficha() {
                 <CampoRea label="Administrativo" value={r.administrativo} />
                 <CampoRea label="Orden de partida" value={r.ordenes} />
                 <CampoRea label="Diversificado" value={r.diversificado} />
-                <CampoRea label="Tipo Diversif." value={r.tipo_diversificado} />
-                <CampoRea label="Tipo Interfaz" value={r.tipo_velocidad_interface} />
+                <CampoRea
+                  label="Tipo Diversif."
+                  value={r.tipo_diversificado}
+                />
+                <CampoRea
+                  label="Tipo Interfaz"
+                  value={r.tipo_velocidad_interface}
+                />
                 <CampoRea
                   label="Ptes Cent/Nº Ptes."
                   value={r.puentes_central_numero_de_puentes}
@@ -691,9 +687,15 @@ export default function Ficha() {
                   value={r.observaciones_del_estudio}
                 />
                 <CampoRea label="Orden Atlas" value={r.orden_atlas} />
-                <CampoRea label="Estado Ord. Atlas" value={r.estado_orden_atlas} />
+                <CampoRea
+                  label="Estado Ord. Atlas"
+                  value={r.estado_orden_atlas}
+                />
                 <CampoRea label="UO Atlas" value={r.uo_atlas} />
-                <CampoRea label="Nº Actuaciones" value={r.numero_de_actuaciones} />
+                <CampoRea
+                  label="Nº Actuaciones"
+                  value={r.numero_de_actuaciones}
+                />
               </div>
             </div>
           ))
