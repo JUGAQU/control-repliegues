@@ -160,7 +160,6 @@ export default function Ficha() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-
     setCambiosSinGuardar(true);
   };
 
@@ -286,7 +285,7 @@ export default function Ficha() {
     fontSize: 12,
   };
 
-  const panelSuperior: React.CSSProperties = {
+  const bloqueSuperior: React.CSSProperties = {
     width: "100%",
     boxSizing: "border-box",
     border: "1px solid #ccc",
@@ -318,33 +317,28 @@ export default function Ficha() {
           boxSizing: "border-box",
         }}
       >
-        {/* BARRA SUPERIOR */}
+        {/* CABECERA SUPERIOR */}
         <div
           style={{
-            width: "100%",
             display: "grid",
             gridTemplateColumns: "1fr auto 1fr",
             alignItems: "center",
             marginBottom: 6,
           }}
         >
-          <div style={{ justifySelf: "start", display: "flex", gap: 10 }}>
+          <div style={{ display: "flex", justifyContent: "flex-start", gap: 10 }}>
             <button onClick={guardarCambios}>💾</button>
           </div>
 
-          <div style={{ justifySelf: "center" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <img
-              src="/logo.png"
+              src="/logogris.png"
               alt="Logo"
-              style={{
-                height: 28,
-                objectFit: "contain",
-                display: "block",
-              }}
+              style={{ height: 28, objectFit: "contain" }}
             />
           </div>
 
-          <div style={{ justifySelf: "end" }}>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <button
               onClick={() => {
                 if (cambiosSinGuardar) {
@@ -362,7 +356,7 @@ export default function Ficha() {
         </div>
 
         {/* BLOQUE 1 */}
-        <div style={{ ...panelSuperior, marginBottom: 5 }}>
+        <div style={{ ...bloqueSuperior, marginBottom: 5 }}>
           <div style={campo}>
             <span>Atlas:</span>
             <input
@@ -485,7 +479,7 @@ export default function Ficha() {
         </div>
 
         {/* BLOQUE 2 */}
-        <div style={{ ...panelSuperior, marginBottom: 8 }}>
+        <div style={{ ...bloqueSuperior, marginBottom: 8 }}>
           <div style={campo}>
             <span>Prioritaria:</span>
             <input
@@ -628,11 +622,11 @@ export default function Ficha() {
         {/* FILA DE BOTONES */}
         <div
           style={{
-            width: "100%",
-            boxSizing: "border-box",
             display: "flex",
             justifyContent: "flex-start",
             gap: 8,
+            width: "100%",
+            boxSizing: "border-box",
             marginBottom: 8,
           }}
         >
@@ -708,7 +702,8 @@ export default function Ficha() {
         style={{
           flex: 1,
           overflowY: "auto",
-          padding: "10px 20px 20px 20px",
+          padding: "0 20px 20px 20px",
+          boxSizing: "border-box",
         }}
       >
         {bloqueActivo && (
@@ -721,8 +716,12 @@ export default function Ficha() {
               padding: 10,
             }}
           >
+            {/* CABECERA DEL BLOQUE ACTIVO FIJA */}
             <div
               style={{
+                position: "sticky",
+                top: 0,
+                zIndex: 20,
                 marginBottom: 10,
                 padding: "8px 12px",
                 background: "#9fc5e8",
@@ -731,6 +730,7 @@ export default function Ficha() {
                 fontWeight: "bold",
                 fontSize: 14,
                 color: "#073763",
+                boxShadow: "0 2px 4px rgba(0,0,0,.08)",
               }}
             >
               {getTituloBloque()}
@@ -800,7 +800,11 @@ export default function Ficha() {
                               )
                             }
                           />
-                          <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
+                          <CampoReaAuto
+                            label="Tipo"
+                            value={r.tipo}
+                            minWidth={100}
+                          />
                           <CampoReaAuto
                             label="Servicio"
                             value={r.servicio}
