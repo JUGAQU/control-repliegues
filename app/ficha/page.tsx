@@ -186,30 +186,30 @@ export default function Ficha() {
     setCambiosSinGuardar(true);
   };
 
-  const handleReasignacionChange = (
-    index: number,
-    field: string,
-    value: string
-  ) => {
-    setReasignaciones((prev) =>
-      prev.map((item, i) =>
-        i === index
-          ? {
-              ...item,
-              [field]: value,
-            }
-          : item
-      )
+const handleReasignacionChange = (
+  index: number,
+  field: string,
+  value: string
+) => {
+  setReasignaciones((prev) => {
+    const nuevo = prev.map((item, i) =>
+      i === index
+        ? {
+            ...item,
+            [field]: value,
+          }
+        : item
     );
-    setCambiosSinGuardar(true);
-  };
 
-  const guardarCambios = async () => {
-    if (!formData?.id) {
-      alert("Error: no hay ID");
-      return;
-    }
+    console.log("Reasignaciones actualizadas:", nuevo);
+    return nuevo;
+  });
 
+  setCambiosSinGuardar(true);
+};
+
+  try {
+    // 1) Guardar ficha
     const { error: errorFicha } = await supabase
       .from("fichas")
       .update({
@@ -243,67 +243,79 @@ export default function Ficha() {
       return;
     }
 
-    const reasignacionesActualizables = reasignaciones.filter((r) => r?.id);
+    // 2) Guardar reasignaciones
+    const reasignacionesConId = reasignaciones.filter((r) => r?.id);
 
-    for (const r of reasignacionesActualizables) {
-      const estadoTrabajosFinal =
-        r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
-          ? r.estado_trabajos
-          : "En Análisis";
-
-      const { error: errorRea } = await supabase
-        .from("reasignaciones")
-        .update({
-          estado_trabajos: estadoTrabajosFinal,
-          modo_reasignacion: r.modo_reasignacion,
-          tipo_velocidad_interface: r.tipo_velocidad_interface,
-          diversificado: r.diversificado,
-          tipo_diversificado: r.tipo_diversificado,
+    const resultados = await Promise.all(
+      reasignacionesConId.map(async (r) => {
+        const payload = {
+          estado_trabajos:
+            r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
+              ? r.estado_trabajos
+              : "En Análisis",
+          modo_reasignacion:
+            r.modo_reasignacion && String(r.modo_reasignacion).trim() !== ""
+              ? r.modo_reasignacion
+              : null,
+          tipo_velocidad_interface:
+            r.tipo_velocidad_interface &&
+            String(r.tipo_velocidad_interface).trim() !== ""
+              ? r.tipo_velocidad_interface
+              : null,
+          diversificado:
+            r.diversificado && String(r.diversificado).trim() !== ""
+              ? r.diversificado
+              : null,
+          tipo_diversificado:
+            r.tipo_diversificado && String(r.tipo_diversificado).trim() !== ""
+              ? r.tipo_diversificado
+              : null,
           indicaciones_para_el_encaminamiento:
-            r.indicaciones_para_el_encaminamiento,
-          facturable: r.facturable,
-          observaciones_del_estudio: r.observaciones_del_estudio,
-        })
-        .eq("id", r.id);
+            r.indicaciones_para_el_encaminamiento &&
+            String(r.indicaciones_para_el_encaminamiento).trim() !== ""
+              ? r.indicaciones_para_el_encaminamiento
+              : null,
+          facturable:
+            r.facturable && String(r.facturable).trim() !== ""
+              ? r.facturable
+              : null,
+          observaciones_del_estudio:
+            r.observaciones_del_estudio &&
+            String(r.observaciones_del_estudio).trim() !== ""
+              ? r.observaciones_del_estudio
+              : null,
+        };
 
-      if (errorRea) {
-        console.error("Error guardando reasignación:", errorRea, r);
-        alert(`Error al guardar la reasignación ${r.id}`);
-        return;
-      }
+        const { error } = await supabase
+          .from("reasignaciones")
+          .update(payload)
+          .eq("id", r.id);
+
+        return { id: r.id, error, payload };
+      })
+    );
+
+    const errores = resultados.filter((x) => x.error);
+
+    if (errores.length > 0) {
+      console.error("Errores guardando reasignaciones:", errores);
+      alert(
+        `Error al guardar ${errores.length} reasignación(es). Mira la consola.`
+      );
+      return;
     }
 
     alert("Guardado completo en Supabase ✅");
     setCambiosSinGuardar(false);
     router.replace("/listado");
     router.refresh();
-  };
-
-  const toggleBloque = (bloque: Exclude<BloqueActivo, null>) => {
-    setBloqueActivo((prev) => (prev === bloque ? null : bloque));
-  };
-
-  const getTituloBloque = () => {
-    switch (bloqueActivo) {
-      case "equipos":
-        return "Equipos";
-      case "reasignaciones":
-        return "Estudio Reasignaciones";
-      case "ejecucion_reasignaciones":
-        return "Ejecución Reasignaciones";
-      case "visitas":
-        return "Visitas";
-      case "certificacion":
-        return "Certificación";
-      default:
-        return "";
-    }
-  };
-
-  if (!formData) {
-    return <div style={{ padding: 20 }}>Cargando ficha...</div>;
+  } catch (e) {
+    console.error("Error inesperado al guardar:", e);
+    alert("Error inesperado al guardar");
   }
+};
 
+  
   const campo: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
