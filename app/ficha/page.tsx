@@ -49,6 +49,7 @@ export default function Ficha() {
   const [provincias, setProvincias] = useState<any[]>([]);
   const [mostrarMemoria, setMostrarMemoria] = useState(false);
   const [mostrarReasignaciones, setMostrarReasignaciones] = useState(false);
+  const [mostrarPruebas, setMostrarPruebas] = useState(false);
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
 
@@ -240,9 +241,17 @@ export default function Ficha() {
     router.refresh();
   };
 
-  const alturaCabecera = useMemo(() => {
-    return 205;
-  }, []);
+  const abrirEstudioReasignaciones = () => {
+    setMostrarPruebas(false);
+    setMostrarReasignaciones((prev) => !prev);
+  };
+
+  const abrirPruebas = () => {
+    setMostrarReasignaciones(false);
+    setMostrarPruebas((prev) => !prev);
+  };
+
+  const alturaCabecera = useMemo(() => 205, []);
 
   if (!formData) {
     return <div style={{ padding: 20 }}>Cargando ficha...</div>;
@@ -608,7 +617,7 @@ export default function Ficha() {
         >
           <button
             type="button"
-            onClick={() => setMostrarReasignaciones((prev) => !prev)}
+            onClick={abrirEstudioReasignaciones}
             style={{
               padding: "8px 16px",
               borderRadius: 6,
@@ -619,6 +628,21 @@ export default function Ficha() {
             }}
           >
             Estudio Reasignaciones
+          </button>
+
+          <button
+            type="button"
+            onClick={abrirPruebas}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 6,
+              border: "1px solid #7f9db9",
+              background: mostrarPruebas ? "#d9d2e9" : "#cfe2f3",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            Pruebas
           </button>
         </div>
       </div>
@@ -643,10 +667,6 @@ export default function Ficha() {
               padding: 10,
             }}
           >
-            <div style={{ fontWeight: "bold", marginBottom: 10, fontSize: 14 }}>
-              Reasignaciones del atlas {formData.atlas}
-            </div>
-
             {reasignaciones.length === 0 ? (
               <div
                 style={{
@@ -798,6 +818,17 @@ export default function Ficha() {
               ))
             )}
           </div>
+        )}
+
+        {mostrarPruebas && (
+          <div
+            style={{
+              border: "1px solid #bfc7ce",
+              background: "#eef2f5",
+              padding: 10,
+              minHeight: 300,
+            }}
+          />
         )}
       </div>
 
