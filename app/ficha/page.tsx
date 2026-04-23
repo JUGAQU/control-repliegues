@@ -51,18 +51,18 @@ type BloqueActivo =
   | null;
 
 const COLORES = {
-  fondoPantalla: "#d9dde1",
-  fondoBloqueCeleste: "#b7cfdf",
-  fondoBloqueIdentificador: "#95b8d8",
-  bordeBloque: "#7ea1be",
-  fondoCampoVerde: "#c7d5c0",
-  bordeCampoVerde: "#809b73",
-  fondoSoloLectura: "#e6e3e3",
-  bordeSoloLectura: "#7d7d7d",
-  botonInactivo: "#c7d8e8",
-  botonActivo: "#9ebee0",
-  bordeBoton: "#6f93b5",
-  textoAzul: "#004c9c",
+  fondoPantalla: "#dfe3e6",
+  fondoBloque: "#c9e3f2",
+  fondoCampo: "#d9ead3",
+  bordeCampo: "#93c47d",
+  fondoSoloLectura: "#e6e6e6",
+  textoSoloLectura: "#666666",
+  fondoBoton: "#cfe2f3",
+  fondoBotonActivo: "#9fc5e8",
+  bordeBoton: "#6d9eeb",
+  barraTitulo: "#8fb3d9",
+  bordeBarraTitulo: "#6d9eeb",
+  textoAzul: "#0b5394",
 };
 
 export default function Ficha() {
@@ -88,6 +88,7 @@ export default function Ficha() {
   useEffect(() => {
     const cargarFicha = async () => {
       if (!id) return;
+
       const res = await fetch("/api/fichas");
       const data = await res.json();
 
@@ -160,7 +161,7 @@ export default function Ficha() {
       const normalizadas = (data || []).map((r: any) => ({
         ...r,
         estado_trabajos:
-          r?.estado_trabajos && String(r.estado_trabajos).trim() !== ""
+          r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
             ? r.estado_trabajos
             : "En Análisis",
       }));
@@ -181,6 +182,7 @@ export default function Ficha() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+
     setCambiosSinGuardar(true);
   };
 
@@ -215,6 +217,12 @@ export default function Ficha() {
         modo_reasignacion: r.modo_reasignacion,
         estado_trabajos: estadoTrabajosFinal,
         tipo_velocidad_interface: r.tipo_velocidad_interface,
+        diversificado: r.diversificado,
+        tipo_diversificado: r.tipo_diversificado,
+        indicaciones_para_el_encaminamiento:
+          r.indicaciones_para_el_encaminamiento,
+        facturable: r.facturable,
+        observaciones_del_estudio: r.observaciones_del_estudio,
       })
       .eq("id", r.id);
 
@@ -305,21 +313,24 @@ export default function Ficha() {
     flex: "0 0 auto",
   };
 
+  // CAMBIO IMPORTANTE: aquí se iguala el grosor visual
   const valor: React.CSSProperties = {
-    background: COLORES.fondoCampoVerde,
-    padding: "3px 6px",
+    background: COLORES.fondoCampo,
+    padding: "4px 6px",
+    height: 30,
     borderRadius: 4,
-    border: `1px solid ${COLORES.bordeCampoVerde}`,
+    border: `1px solid ${COLORES.bordeCampo}`,
     fontSize: 12,
     fontFamily: "Arial",
+    boxSizing: "border-box",
   };
 
   const bloqueSuperior: React.CSSProperties = {
     width: "100%",
     boxSizing: "border-box",
-    border: `1px solid ${COLORES.bordeBloque}`,
+    border: "1px solid #b7c6d0",
     padding: "12px 10px",
-    background: COLORES.fondoBloqueCeleste,
+    background: COLORES.fondoBloque,
     display: "flex",
     flexWrap: "nowrap",
     overflowX: "auto",
@@ -382,7 +393,6 @@ export default function Ficha() {
           </div>
         </div>
 
-        {/* BLOQUE 1 */}
         <div style={{ ...bloqueSuperior, marginBottom: 5 }}>
           <div style={campo}>
             <span>Atlas:</span>
@@ -395,7 +405,6 @@ export default function Ficha() {
                 width: 58,
                 background: "#eee",
                 color: "#666",
-                border: `1px solid ${COLORES.bordeSoloLectura}`,
               }}
             />
           </div>
@@ -426,7 +435,7 @@ export default function Ficha() {
               name="provincia"
               value={formData.provincia || ""}
               onChange={handleChange}
-              style={{ ...valor, width: 105 }}
+              style={{ ...valor, width: 115 }}
             >
               <option value="">-- Seleccionar --</option>
               {provincias.map((provincia) => (
@@ -485,7 +494,7 @@ export default function Ficha() {
               name="tipo_repliegue"
               value={formData.tipo_repliegue || ""}
               onChange={handleChange}
-              style={{ ...valor, width: 68 }}
+              style={{ ...valor, width: 80 }}
             />
           </div>
 
@@ -511,7 +520,6 @@ export default function Ficha() {
           </div>
         </div>
 
-        {/* BLOQUE 2 */}
         <div style={{ ...bloqueSuperior, marginBottom: 8 }}>
           <div style={campo}>
             <span>Prioritaria:</span>
@@ -638,7 +646,7 @@ export default function Ficha() {
                 justifyContent: "center",
                 borderRadius: 6,
                 border: "1px solid #ccc",
-                background: "#f5f5f5",
+                background: "#e8f4ff",
                 cursor: "pointer",
               }}
               title="Abrir en Spock"
@@ -652,7 +660,6 @@ export default function Ficha() {
           </div>
         </div>
 
-        {/* BOTONERA */}
         <div
           style={{
             display: "flex",
@@ -663,71 +670,68 @@ export default function Ficha() {
             marginBottom: 8,
           }}
         >
-          {[
-            ["equipos", "Equipos"],
-            ["reasignaciones", "Estudio Reasignaciones"],
-            ["ejecucion_reasignaciones", "Ejecución Reasignaciones"],
-            ["visitas", "Visitas"],
-            ["certificacion", "Certificación"],
-          ].map(([key, label]) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => toggleBloque(key as Exclude<BloqueActivo, null>)}
-              style={{
-                padding: "8px 16px",
-                borderRadius: 6,
-                border: `1px solid ${COLORES.bordeBoton}`,
-                background:
-                  bloqueActivo === key
-                    ? COLORES.botonActivo
-                    : COLORES.botonInactivo,
-                cursor: "pointer",
-                fontWeight: "bold",
-                fontSize: 12,
-              }}
-            >
-              {label}
-            </button>
-          ))}
+          <BotonBloque
+            texto="Equipos"
+            activo={bloqueActivo === "equipos"}
+            onClick={() => toggleBloque("equipos")}
+          />
+          <BotonBloque
+            texto="Estudio Reasignaciones"
+            activo={bloqueActivo === "reasignaciones"}
+            onClick={() => toggleBloque("reasignaciones")}
+          />
+          <BotonBloque
+            texto="Ejecución Reasignaciones"
+            activo={bloqueActivo === "ejecucion_reasignaciones"}
+            onClick={() => toggleBloque("ejecucion_reasignaciones")}
+          />
+          <BotonBloque
+            texto="Visitas"
+            activo={bloqueActivo === "visitas"}
+            onClick={() => toggleBloque("visitas")}
+          />
+          <BotonBloque
+            texto="Certificación"
+            activo={bloqueActivo === "certificacion"}
+            onClick={() => toggleBloque("certificacion")}
+          />
         </div>
 
-        {/* BLOQUE 3 IDENTIFICADOR */}
         <div
           style={{
             width: "100%",
             boxSizing: "border-box",
-            border: `1px solid ${COLORES.bordeBloque}`,
-            background: COLORES.fondoBloqueCeleste,
+            border: "1px solid #b7c6d0",
+            background: COLORES.fondoBloque,
             padding: 10,
             marginBottom: 8,
           }}
         >
           <div
             style={{
-              padding: "8px 12px",
-              background: COLORES.fondoBloqueIdentificador,
-              border: `1px solid ${COLORES.bordeBloque}`,
+              padding: "10px 12px",
+              background: COLORES.barraTitulo,
+              border: `1px solid ${COLORES.bordeBarraTitulo}`,
               borderRadius: 6,
               fontWeight: "bold",
               fontSize: 14,
-              color: COLORES.textoAzul,
+              color: "#083b73",
               minHeight: 20,
+              boxSizing: "border-box",
             }}
           >
-            {bloqueActivo ? getTituloBloque() : "Pusla sobre el bloque a visualizar"}
+            {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
           </div>
         </div>
       </div>
 
-      {/* BLOQUE 4 CON SCROLL */}
       <div
         style={{
           flex: 1,
           overflowY: "auto",
+          minHeight: 0,
           padding: "0 20px 20px 20px",
           boxSizing: "border-box",
-          minHeight: 0,
         }}
       >
         {bloqueActivo && (
@@ -735,9 +739,11 @@ export default function Ficha() {
             style={{
               width: "100%",
               boxSizing: "border-box",
-              border: `1px solid ${COLORES.bordeBloque}`,
-              background: COLORES.fondoBloqueCeleste,
+              border: "1px solid #b7c6d0",
+              background: COLORES.fondoBloque,
               padding: 10,
+              fontFamily: "Arial",
+              fontSize: 12,
             }}
           >
             {bloqueActivo === "equipos" && (
@@ -770,8 +776,8 @@ export default function Ficha() {
                       key={r.id || index}
                       style={{
                         display: "flex",
-                        border: `1px solid ${COLORES.bordeBloque}`,
-                        background: COLORES.fondoBloqueCeleste,
+                        border: "1px solid #8ea9bf",
+                        background: COLORES.fondoBloque,
                         marginBottom: 12,
                         overflow: "hidden",
                       }}
@@ -780,8 +786,8 @@ export default function Ficha() {
                         style={{
                           width: 42,
                           minWidth: 42,
-                          background: COLORES.fondoBloqueCeleste,
-                          borderRight: `1px solid ${COLORES.bordeBloque}`,
+                          background: "#bdd7e7",
+                          borderRight: "1px solid #7f9db9",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -816,48 +822,54 @@ export default function Ficha() {
                             }
                           />
 
-                          <CampoReaAuto
+                          <CampoReaSoloLecturaAuto
                             label="Tipo"
                             value={r.tipo}
                             minWidth={100}
-                            color={COLORES.fondoSoloLectura}
-                            readonly
                           />
 
-                          <CampoReaAuto
+                          <CampoReaSoloLecturaAuto
                             label="Servicio"
                             value={r.servicio}
                             minWidth={380}
-                            color={COLORES.fondoSoloLectura}
-                            readonly
                           />
 
-                          <CampoReaAuto
+                          <CampoReaSoloLecturaAuto
                             label="Administrativo"
                             value={r.administrativo}
                             minWidth={130}
-                            color={COLORES.fondoSoloLectura}
-                            readonly
                           />
 
-                          <CampoReaAuto
+                          <CampoReaSoloLecturaAuto
                             label="Orden Partida"
                             value={r.ordenes}
                             minWidth={130}
-                            color={COLORES.fondoSoloLectura}
-                            readonly
                           />
 
-                          <CampoReaAuto
+                          <CampoInputAuto
                             label="Diversificado"
-                            value={r.diversificado}
+                            value={r.diversificado || ""}
                             minWidth={120}
+                            onChange={(value) =>
+                              handleReasignacionChange(
+                                index,
+                                "diversificado",
+                                value
+                              )
+                            }
                           />
 
-                          <CampoReaAuto
+                          <CampoInputAuto
                             label="Tipo Diversificado"
-                            value={r.tipo_diversificado}
+                            value={r.tipo_diversificado || ""}
                             minWidth={150}
+                            onChange={(value) =>
+                              handleReasignacionChange(
+                                index,
+                                "tipo_diversificado",
+                                value
+                              )
+                            }
                           />
 
                           <CampoSelectAuto
@@ -905,16 +917,26 @@ export default function Ficha() {
                             }
                           />
 
-                          <CampoReaAuto
+                          <CampoInputAuto
                             label="Indicaciones"
-                            value={r.indicaciones_para_el_encaminamiento}
+                            value={r.indicaciones_para_el_encaminamiento || ""}
                             minWidth={520}
+                            onChange={(value) =>
+                              handleReasignacionChange(
+                                index,
+                                "indicaciones_para_el_encaminamiento",
+                                value
+                              )
+                            }
                           />
 
-                          <CampoReaAuto
+                          <CampoInputAuto
                             label="Facturable"
-                            value={r.facturable}
+                            value={r.facturable || ""}
                             minWidth={100}
+                            onChange={(value) =>
+                              handleReasignacionChange(index, "facturable", value)
+                            }
                           />
 
                           <div style={{ paddingTop: 18 }}>
@@ -924,9 +946,16 @@ export default function Ficha() {
                           </div>
                         </div>
 
-                        <CampoRea
+                        <CampoTextAreaAuto
                           label="Observaciones Estudio Reasignación"
-                          value={r.observaciones_del_estudio}
+                          value={r.observaciones_del_estudio || ""}
+                          onChange={(value) =>
+                            handleReasignacionChange(
+                              index,
+                              "observaciones_del_estudio",
+                              value
+                            )
+                          }
                         />
                       </div>
                     </div>
@@ -1022,18 +1051,45 @@ export default function Ficha() {
   );
 }
 
+function BotonBloque({
+  texto,
+  activo,
+  onClick,
+}: {
+  texto: string;
+  activo: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      style={{
+        padding: "8px 16px",
+        borderRadius: 6,
+        border: `1px solid ${COLORES.bordeBoton}`,
+        background: activo ? COLORES.fondoBotonActivo : COLORES.fondoBoton,
+        cursor: "pointer",
+        fontWeight: "bold",
+        fontSize: 12,
+        fontFamily: "Arial",
+      }}
+    >
+      {texto}
+    </button>
+  );
+}
+
 function CampoReaAuto({
   label,
   value,
   minWidth = 100,
-  color = COLORES.fondoCampoVerde,
-  readonly = false,
+  color = COLORES.fondoCampo,
 }: {
   label: string;
   value?: string | number | null;
   minWidth?: number;
   color?: string;
-  readonly?: boolean;
 }) {
   return (
     <div style={{ minWidth, flex: "0 0 auto" }}>
@@ -1050,15 +1106,12 @@ function CampoReaAuto({
       <div
         style={{
           background: color,
-          border: `1px solid ${
-            readonly ? COLORES.bordeSoloLectura : COLORES.bordeCampoVerde
-          }`,
+          border: "1px solid #666",
           borderRadius: 4,
           padding: "4px 6px",
           minHeight: 28,
           whiteSpace: "nowrap",
           fontSize: 12,
-          color: readonly ? "#666" : "#000",
         }}
       >
         {value ?? ""}
@@ -1067,12 +1120,94 @@ function CampoReaAuto({
   );
 }
 
-function CampoRea({
+function CampoReaSoloLecturaAuto({
   label,
   value,
+  minWidth = 100,
 }: {
   label: string;
   value?: string | number | null;
+  minWidth?: number;
+}) {
+  return (
+    <div style={{ minWidth, flex: "0 0 auto" }}>
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: "bold",
+          color: COLORES.textoAzul,
+          marginBottom: 3,
+        }}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          background: COLORES.fondoSoloLectura,
+          color: COLORES.textoSoloLectura,
+          border: "1px solid #888",
+          borderRadius: 4,
+          padding: "4px 6px",
+          minHeight: 28,
+          whiteSpace: "nowrap",
+          fontSize: 12,
+        }}
+      >
+        {value ?? ""}
+      </div>
+    </div>
+  );
+}
+
+function CampoInputAuto({
+  label,
+  value,
+  minWidth = 100,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  minWidth?: number;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div style={{ minWidth, flex: "0 0 auto" }}>
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: "bold",
+          color: COLORES.textoAzul,
+          marginBottom: 3,
+        }}
+      >
+        {label}
+      </div>
+      <input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={{
+          width: "100%",
+          minHeight: 30,
+          background: COLORES.fondoCampo,
+          border: "1px solid #666",
+          borderRadius: 4,
+          padding: "4px 6px",
+          fontSize: 12,
+          boxSizing: "border-box",
+        }}
+      />
+    </div>
+  );
+}
+
+function CampoTextAreaAuto({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
 }) {
   return (
     <div>
@@ -1086,19 +1221,21 @@ function CampoRea({
       >
         {label}
       </div>
-      <div
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         style={{
-          background: COLORES.fondoCampoVerde,
-          border: `1px solid ${COLORES.bordeCampoVerde}`,
+          width: "100%",
+          minHeight: 70,
+          resize: "vertical",
+          background: COLORES.fondoCampo,
+          border: "1px solid #666",
           borderRadius: 4,
           padding: "5px 6px",
           fontSize: 12,
-          whiteSpace: "pre-wrap",
-          wordBreak: "break-word",
+          boxSizing: "border-box",
         }}
-      >
-        {value ?? ""}
-      </div>
+      />
     </div>
   );
 }
@@ -1139,8 +1276,8 @@ function CampoSelectAuto({
         style={{
           minHeight: 30,
           minWidth: "100%",
-          background: COLORES.fondoCampoVerde,
-          border: `1px solid ${COLORES.bordeCampoVerde}`,
+          background: COLORES.fondoCampo,
+          border: "1px solid #666",
           borderRadius: 4,
           padding: "4px 6px",
           fontSize: 12,
@@ -1213,14 +1350,14 @@ function CampoSelectEstado({
 function colorEstado(estado?: string | null) {
   const txt = (estado || "").toLowerCase();
 
-  if (txt.includes("análisis")) return "#dfe8d2";
+  if (txt.includes("análisis") || txt.includes("analisis")) return "#dce6d1";
   if (txt.includes("curso")) return "#ffc000";
   if (txt.includes("incidencia")) return "#fff200";
-  if (txt.includes("ejecut")) return "#6fa8dc";
-  if (txt.includes("final")) return "#93c47d";
+  if (txt.includes("ejecut")) return "#00b0f0";
+  if (txt.includes("final")) return "#9bbb59";
   if (txt.includes("otras")) return "#d9d2e9";
 
-  return "#dfe8d2";
+  return "#dce6d1";
 }
 
 function extraerVelocidad(texto?: string | null) {
