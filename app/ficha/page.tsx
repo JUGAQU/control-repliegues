@@ -23,7 +23,7 @@ const OPCIONES_MODO_REASIGNACION = [
 const OPCIONES_ESTADO_TRABAJOS = [
   "En Análisis",
   "En Curso",
-  "Incidencia en Td",
+  "Incidencia en TdE",
   "Ejecutada",
   "Finalizada",
   "Pte Otras Áreas",
@@ -50,6 +50,21 @@ type BloqueActivo =
   | "certificacion"
   | null;
 
+const COLORES = {
+  fondoPantalla: "#d9dde1",
+  fondoBloqueCeleste: "#b7cfdf",
+  fondoBloqueIdentificador: "#95b8d8",
+  bordeBloque: "#7ea1be",
+  fondoCampoVerde: "#c7d5c0",
+  bordeCampoVerde: "#809b73",
+  fondoSoloLectura: "#e6e3e3",
+  bordeSoloLectura: "#7d7d7d",
+  botonInactivo: "#c7d8e8",
+  botonActivo: "#9ebee0",
+  bordeBoton: "#6f93b5",
+  textoAzul: "#004c9c",
+};
+
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
@@ -73,7 +88,6 @@ export default function Ficha() {
   useEffect(() => {
     const cargarFicha = async () => {
       if (!id) return;
-
       const res = await fetch("/api/fichas");
       const data = await res.json();
 
@@ -101,7 +115,6 @@ export default function Ficha() {
         console.error("Error cargando empresaspi:", error);
         return;
       }
-
       setEmpresasPI(data || []);
     };
 
@@ -119,7 +132,6 @@ export default function Ficha() {
         console.error("Error cargando provincias:", error);
         return;
       }
-
       setProvincias(data || []);
     };
 
@@ -145,7 +157,15 @@ export default function Ficha() {
         return;
       }
 
-      setReasignaciones(data || []);
+      const normalizadas = (data || []).map((r: any) => ({
+        ...r,
+        estado_trabajos:
+          r?.estado_trabajos && String(r.estado_trabajos).trim() !== ""
+            ? r.estado_trabajos
+            : "En Análisis",
+      }));
+
+      setReasignaciones(normalizadas);
     };
 
     cargarReasignaciones();
@@ -184,11 +204,16 @@ export default function Ficha() {
   const guardarReasignacion = async (r: any) => {
     if (!r?.id) return;
 
+    const estadoTrabajosFinal =
+      r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
+        ? r.estado_trabajos
+        : "En Análisis";
+
     const { error } = await supabase
       .from("reasignaciones")
       .update({
         modo_reasignacion: r.modo_reasignacion,
-        estado_trabajos: r.estado_trabajos,
+        estado_trabajos: estadoTrabajosFinal,
         tipo_velocidad_interface: r.tipo_velocidad_interface,
       })
       .eq("id", r.id);
@@ -276,26 +301,25 @@ export default function Ficha() {
     display: "flex",
     alignItems: "center",
     gap: 4,
-    fontSize: 11,
+    fontSize: 12,
     flex: "0 0 auto",
   };
 
-  
   const valor: React.CSSProperties = {
-    background: "#d9ead3",
-    padding: "3px 8px",
+    background: COLORES.fondoCampoVerde,
+    padding: "3px 6px",
     borderRadius: 4,
-    border: "1px solid #93c47d",
-    fontSize: 11,
+    border: `1px solid ${COLORES.bordeCampoVerde}`,
+    fontSize: 12,
     fontFamily: "Arial",
   };
 
   const bloqueSuperior: React.CSSProperties = {
     width: "100%",
     boxSizing: "border-box",
-    border: "1px solid #ccc",
+    border: `1px solid ${COLORES.bordeBloque}`,
     padding: "12px 10px",
-    background: "#eef2f5",
+    background: COLORES.fondoBloqueCeleste,
     display: "flex",
     flexWrap: "nowrap",
     overflowX: "auto",
@@ -306,23 +330,21 @@ export default function Ficha() {
     <div
       style={{
         height: "100vh",
-        background: "#dfe3e6",
+        background: COLORES.fondoPantalla,
         fontFamily: "Arial",
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
       }}
     >
-      {/* ZONA FIJA SUPERIOR */}
       <div
         style={{
           flex: "0 0 auto",
           padding: "10px 20px 0 20px",
-          background: "#dfe3e6",
+          background: COLORES.fondoPantalla,
           boxSizing: "border-box",
         }}
       >
-        {/* CABECERA SUPERIOR */}
         <div
           style={{
             display: "grid",
@@ -368,7 +390,13 @@ export default function Ficha() {
               name="atlas"
               value={formData.atlas || ""}
               readOnly
-              style={{ ...valor, width: 58, background: "#eee", color: "#666" }}
+              style={{
+                ...valor,
+                width: 58,
+                background: "#eee",
+                color: "#666",
+                border: `1px solid ${COLORES.bordeSoloLectura}`,
+              }}
             />
           </div>
 
@@ -583,7 +611,7 @@ export default function Ficha() {
                 justifyContent: "center",
                 borderRadius: 6,
                 border: "1px solid #ccc",
-                background: "#c9e3f2",
+                background: "#f5f5f5",
                 cursor: "pointer",
                 padding: 0,
               }}
@@ -610,7 +638,7 @@ export default function Ficha() {
                 justifyContent: "center",
                 borderRadius: 6,
                 border: "1px solid #ccc",
-                background: "#e8f4ff",
+                background: "#f5f5f5",
                 cursor: "pointer",
               }}
               title="Abrir en Spock"
@@ -624,7 +652,7 @@ export default function Ficha() {
           </div>
         </div>
 
-        {/* FILA DE BOTONES */}
+        {/* BOTONERA */}
         <div
           style={{
             display: "flex",
@@ -635,85 +663,33 @@ export default function Ficha() {
             marginBottom: 8,
           }}
         >
-          <button
-            type="button"
-            onClick={() => toggleBloque("equipos")}
-            style={{
-              padding: "8px 16px",
-              borderRadius: 6,
-              border: "1px solid #7f9db9",
-              background: bloqueActivo === "equipos" ? "#9fc5e8" : "#cfe2f3",
-              cursor: "pointer",
-              fontWeight: "bold",
-            }}
-          >
-            Equipos
-          </button>
-
-          <button
-            type="button"
-            onClick={() => toggleBloque("reasignaciones")}
-            style={{
-              padding: "8px 16px",
-              borderRadius: 6,
-              border: "1px solid #7f9db9",
-              background:
-                bloqueActivo === "reasignaciones" ? "#9fc5e8" : "#cfe2f3",
-              cursor: "pointer",
-              fontWeight: "bold",
-            }}
-          >
-            Estudio Reasignaciones
-          </button>
-
-          <button
-            type="button"
-            onClick={() => toggleBloque("ejecucion_reasignaciones")}
-            style={{
-              padding: "8px 16px",
-              borderRadius: 6,
-              border: "1px solid #7f9db9",
-              background:
-                bloqueActivo === "ejecucion_reasignaciones"
-                  ? "#9fc5e8"
-                  : "#cfe2f3",
-              cursor: "pointer",
-              fontWeight: "bold",
-            }}
-          >
-            Ejecución Reasignaciones
-          </button>
-
-          <button
-            type="button"
-            onClick={() => toggleBloque("visitas")}
-            style={{
-              padding: "8px 16px",
-              borderRadius: 6,
-              border: "1px solid #7f9db9",
-              background: bloqueActivo === "visitas" ? "#9fc5e8" : "#cfe2f3",
-              cursor: "pointer",
-              fontWeight: "bold",
-            }}
-          >
-            Visitas
-          </button>
-
-          <button
-            type="button"
-            onClick={() => toggleBloque("certificacion")}
-            style={{
-              padding: "8px 16px",
-              borderRadius: 6,
-              border: "1px solid #7f9db9",
-              background:
-                bloqueActivo === "certificacion" ? "#9fc5e8" : "#cfe2f3",
-              cursor: "pointer",
-              fontWeight: "bold",
-            }}
-          >
-            Certificación
-          </button>
+          {[
+            ["equipos", "Equipos"],
+            ["reasignaciones", "Estudio Reasignaciones"],
+            ["ejecucion_reasignaciones", "Ejecución Reasignaciones"],
+            ["visitas", "Visitas"],
+            ["certificacion", "Certificación"],
+          ].map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => toggleBloque(key as Exclude<BloqueActivo, null>)}
+              style={{
+                padding: "8px 16px",
+                borderRadius: 6,
+                border: `1px solid ${COLORES.bordeBoton}`,
+                background:
+                  bloqueActivo === key
+                    ? COLORES.botonActivo
+                    : COLORES.botonInactivo,
+                cursor: "pointer",
+                fontWeight: "bold",
+                fontSize: 12,
+              }}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         {/* BLOQUE 3 IDENTIFICADOR */}
@@ -721,8 +697,8 @@ export default function Ficha() {
           style={{
             width: "100%",
             boxSizing: "border-box",
-            border: "1px solid #bfc7ce",
-            background: "#eef2f5",
+            border: `1px solid ${COLORES.bordeBloque}`,
+            background: COLORES.fondoBloqueCeleste,
             padding: 10,
             marginBottom: 8,
           }}
@@ -730,16 +706,13 @@ export default function Ficha() {
           <div
             style={{
               padding: "8px 12px",
-              background: bloqueActivo ? "#9fc5e8" : "#c9e3f2",
-              border: bloqueActivo
-                ? "1px solid #6fa8dc"
-                : "1px solid #d0d0d0",
+              background: COLORES.fondoBloqueIdentificador,
+              border: `1px solid ${COLORES.bordeBloque}`,
               borderRadius: 6,
               fontWeight: "bold",
               fontSize: 14,
-              color: bloqueActivo ? "#073763" : "#666",
+              color: COLORES.textoAzul,
               minHeight: 20,
-              fontFamily: "Arial",
             }}
           >
             {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
@@ -754,6 +727,7 @@ export default function Ficha() {
           overflowY: "auto",
           padding: "0 20px 20px 20px",
           boxSizing: "border-box",
+          minHeight: 0,
         }}
       >
         {bloqueActivo && (
@@ -761,11 +735,9 @@ export default function Ficha() {
             style={{
               width: "100%",
               boxSizing: "border-box",
-              border: "1px solid #bfc7ce",
-              background: "#eef2f5",
+              border: `1px solid ${COLORES.bordeBloque}`,
+              background: COLORES.fondoBloqueCeleste,
               padding: 10,
-              fontFamily: "Arial",
-              fontSize: 11,
             }}
           >
             {bloqueActivo === "equipos" && (
@@ -787,8 +759,7 @@ export default function Ficha() {
                       background: "#fff",
                       border: "1px solid #ddd",
                       padding: 10,
-                      fontSize: 11,
-                      fontFamily: "Arial",
+                      fontSize: 12,
                     }}
                   >
                     No hay reasignaciones para este atlas.
@@ -799,8 +770,8 @@ export default function Ficha() {
                       key={r.id || index}
                       style={{
                         display: "flex",
-                        border: "1px solid #8ea9bf",
-                        background: "#c9e3f2",
+                        border: `1px solid ${COLORES.bordeBloque}`,
+                        background: COLORES.fondoBloqueCeleste,
                         marginBottom: 12,
                         overflow: "hidden",
                       }}
@@ -809,15 +780,14 @@ export default function Ficha() {
                         style={{
                           width: 42,
                           minWidth: 42,
-                          background: "#bdd7e7",
-                          borderRight: "1px solid #7f9db9",
+                          background: COLORES.fondoBloqueCeleste,
+                          borderRight: `1px solid ${COLORES.bordeBloque}`,
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                           fontSize: 18,
                           fontWeight: "bold",
                           color: "#1f1f1f",
-                          fontFamily: "Arial",
                         }}
                       >
                         {index + 1}
@@ -835,7 +805,7 @@ export default function Ficha() {
                         >
                           <CampoSelectEstado
                             label="Estado Trabajos"
-                            value={r.estado_trabajos || ""}
+                            value={r.estado_trabajos}
                             options={OPCIONES_ESTADO_TRABAJOS}
                             onChange={(value) =>
                               handleReasignacionChange(
@@ -845,36 +815,51 @@ export default function Ficha() {
                               )
                             }
                           />
-                          <CampoReaSoloLecturaAuto
+
+                          <CampoReaAuto
                             label="Tipo"
                             value={r.tipo}
                             minWidth={100}
+                            color={COLORES.fondoSoloLectura}
+                            readonly
                           />
-                          <CampoReaSoloLecturaAuto
+
+                          <CampoReaAuto
                             label="Servicio"
                             value={r.servicio}
                             minWidth={380}
+                            color={COLORES.fondoSoloLectura}
+                            readonly
                           />
-                          <CampoReaSoloLecturaAuto
+
+                          <CampoReaAuto
                             label="Administrativo"
                             value={r.administrativo}
                             minWidth={130}
+                            color={COLORES.fondoSoloLectura}
+                            readonly
                           />
-                          <CampoReaSoloLecturaAuto
+
+                          <CampoReaAuto
                             label="Orden Partida"
                             value={r.ordenes}
                             minWidth={130}
+                            color={COLORES.fondoSoloLectura}
+                            readonly
                           />
+
                           <CampoReaAuto
                             label="Diversificado"
                             value={r.diversificado}
                             minWidth={120}
                           />
+
                           <CampoReaAuto
                             label="Tipo Diversificado"
                             value={r.tipo_diversificado}
                             minWidth={150}
                           />
+
                           <CampoSelectAuto
                             label="Tipo Interface"
                             value={r.tipo_velocidad_interface || ""}
@@ -888,6 +873,7 @@ export default function Ficha() {
                               )
                             }
                           />
+
                           <CampoReaAuto
                             label="Velocidad"
                             value={extraerVelocidad(r.tipo_velocidad_interface)}
@@ -918,16 +904,19 @@ export default function Ficha() {
                               )
                             }
                           />
+
                           <CampoReaAuto
                             label="Indicaciones"
                             value={r.indicaciones_para_el_encaminamiento}
                             minWidth={520}
                           />
+
                           <CampoReaAuto
                             label="Facturable"
                             value={r.facturable}
                             minWidth={100}
                           />
+
                           <div style={{ paddingTop: 18 }}>
                             <button onClick={() => guardarReasignacion(r)}>
                               💾
@@ -1037,22 +1026,23 @@ function CampoReaAuto({
   label,
   value,
   minWidth = 100,
-  color = "#d9ead3",
+  color = COLORES.fondoCampoVerde,
+  readonly = false,
 }: {
   label: string;
   value?: string | number | null;
   minWidth?: number;
   color?: string;
+  readonly?: boolean;
 }) {
   return (
-    <div style={{ minWidth, flex: "0 0 auto", fontFamily: "Arial" }}>
+    <div style={{ minWidth, flex: "0 0 auto" }}>
       <div
         style={{
           fontSize: 11,
           fontWeight: "bold",
-          color: "#0b5394",
+          color: COLORES.textoAzul,
           marginBottom: 3,
-          fontFamily: "Arial",
         }}
       >
         {label}
@@ -1060,54 +1050,15 @@ function CampoReaAuto({
       <div
         style={{
           background: color,
-          border: "1px solid #666",
+          border: `1px solid ${
+            readonly ? COLORES.bordeSoloLectura : COLORES.bordeCampoVerde
+          }`,
           borderRadius: 4,
           padding: "4px 6px",
           minHeight: 28,
           whiteSpace: "nowrap",
-          fontSize: 11,
-          fontFamily: "Arial",
-        }}
-      >
-        {value ?? ""}
-      </div>
-    </div>
-  );
-}
-
-function CampoReaSoloLecturaAuto({
-  label,
-  value,
-  minWidth = 100,
-}: {
-  label: string;
-  value?: string | number | null;
-  minWidth?: number;
-}) {
-  return (
-    <div style={{ minWidth, flex: "0 0 auto", fontFamily: "Arial" }}>
-      <div
-        style={{
-          fontSize: 11,
-          fontWeight: "bold",
-          color: "#0b5394",
-          marginBottom: 3,
-          fontFamily: "Arial",
-        }}
-      >
-        {label}
-      </div>
-      <div
-        style={{
-          background: "#eee",
-          color: "#666",
-          border: "1px solid #666",
-          borderRadius: 4,
-          padding: "4px 6px",
-          minHeight: 28,
-          whiteSpace: "nowrap",
-          fontSize: 11,
-          fontFamily: "Arial",
+          fontSize: 12,
+          color: readonly ? "#666" : "#000",
         }}
       >
         {value ?? ""}
@@ -1124,28 +1075,26 @@ function CampoRea({
   value?: string | number | null;
 }) {
   return (
-    <div style={{ fontFamily: "Arial" }}>
+    <div>
       <div
         style={{
           fontSize: 11,
           fontWeight: "bold",
-          color: "#0b5394",
+          color: COLORES.textoAzul,
           marginBottom: 3,
-          fontFamily: "Arial",
         }}
       >
         {label}
       </div>
       <div
         style={{
-          background: "#d9ead3",
-          border: "1px solid #666",
+          background: COLORES.fondoCampoVerde,
+          border: `1px solid ${COLORES.bordeCampoVerde}`,
           borderRadius: 4,
           padding: "5px 6px",
-          fontSize: 11,
+          fontSize: 12,
           whiteSpace: "pre-wrap",
           wordBreak: "break-word",
-          fontFamily: "Arial",
         }}
       >
         {value ?? ""}
@@ -1173,14 +1122,13 @@ function CampoSelectAuto({
     : [valorActual, "", ...options];
 
   return (
-    <div style={{ minWidth, flex: "0 0 auto", fontFamily: "Arial" }}>
+    <div style={{ minWidth, flex: "0 0 auto" }}>
       <div
         style={{
           fontSize: 11,
           fontWeight: "bold",
-          color: "#0b5394",
+          color: COLORES.textoAzul,
           marginBottom: 3,
-          fontFamily: "Arial",
         }}
       >
         {label}
@@ -1191,12 +1139,11 @@ function CampoSelectAuto({
         style={{
           minHeight: 30,
           minWidth: "100%",
-          background: "#d9ead3",
-          border: "1px solid #666",
+          background: COLORES.fondoCampoVerde,
+          border: `1px solid ${COLORES.bordeCampoVerde}`,
           borderRadius: 4,
           padding: "4px 6px",
-          fontSize: 11,
-          fontFamily: "Arial",
+          fontSize: 12,
         }}
       >
         {opcionesFinales.map((op) => (
@@ -1220,21 +1167,21 @@ function CampoSelectEstado({
   options: string[];
   onChange: (value: string) => void;
 }) {
-  const valorActual = value || "";
+  const valorActual = value && value.trim() !== "" ? value : "En Análisis";
+
   const opcionesFinales =
     valorActual && !options.includes(valorActual)
       ? [valorActual, ...options]
       : options;
 
   return (
-    <div style={{ minWidth: 140, flex: "0 0 auto", fontFamily: "Arial" }}>
+    <div style={{ minWidth: 140, flex: "0 0 auto" }}>
       <div
         style={{
           fontSize: 11,
           fontWeight: "bold",
-          color: "#0b5394",
+          color: COLORES.textoAzul,
           marginBottom: 3,
-          fontFamily: "Arial",
         }}
       >
         {label}
@@ -1249,9 +1196,8 @@ function CampoSelectEstado({
           border: "1px solid #666",
           borderRadius: 4,
           padding: "4px 6px",
-          fontSize: 11,
+          fontSize: 12,
           fontWeight: "bold",
-          fontFamily: "Arial",
         }}
       >
         {opcionesFinales.map((op) => (
@@ -1266,13 +1212,15 @@ function CampoSelectEstado({
 
 function colorEstado(estado?: string | null) {
   const txt = (estado || "").toLowerCase();
-  if (txt.includes("análisis")) return "#f4cccc";
+
+  if (txt.includes("análisis")) return "#dfe8d2";
   if (txt.includes("curso")) return "#ffc000";
-  if (txt.includes("incidencia")) return "#ffff00";
-  if (txt.includes("ejecut")) return "#00b0f0";
-  if (txt.includes("final")) return "#9bbb59";
+  if (txt.includes("incidencia")) return "#fff200";
+  if (txt.includes("ejecut")) return "#6fa8dc";
+  if (txt.includes("final")) return "#93c47d";
   if (txt.includes("otras")) return "#d9d2e9";
-  return "#d9ead3";
+
+  return "#dfe8d2";
 }
 
 function extraerVelocidad(texto?: string | null) {
