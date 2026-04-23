@@ -568,7 +568,7 @@ export default function Ficha() {
             fontSize: 14,
           }}
         >
-          Reasignaciones del atlas {formData.atlas}
+          Estudio Reasignaciones
         </div>
 
         {reasignaciones.length === 0 ? (
@@ -602,33 +602,63 @@ export default function Ficha() {
                   marginBottom: 10,
                 }}
               >
-                <div
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: 20,
-                    textAlign: "center",
-                    paddingTop: 20,
-                  }}
-                >
-                  {index + 1}
-                </div>
+                
+              {/* FILA 1 - Servicio ancho completo */}
+<div style={{ marginBottom:10 }}>
+  <CampoRea
+    label="Servicio"
+    value={r.servicio}
+  />
+</div>
 
-                <CampoRea label="Tipo" value={r.tipo} />
-                <CampoRea label="Servicio" value={r.servicio} />
-                <CampoRea label="SGIPE" value={r.sgipe} />
-                <CampoRea label="Modo Reasignación" value={r.modo_reasignacion} />
-                <CampoRea
-                  label="Indicaciones Para el Encaminamiento"
-                  value={r.indicaciones_para_el_encaminamiento}
-                />
-                <CampoRea label="Facturable" value={r.facturable} />
-                <CampoRea
-                  label="Estado Trabajos"
-                  value={r.estado_trabajos}
-                  color={colorEstado(r.estado_trabajos)}
-                />
-              </div>
+{/* FILA 2 */}
+<div
+ style={{
+   display:"grid",
+   gridTemplateColumns:
+   "30px 120px 110px 1.5fr 2fr 90px 110px",
+   gap:10,
+   marginBottom:10
+ }}
+>
 
+  <div
+    style={{
+      fontWeight:"bold",
+      fontSize:20,
+      textAlign:"center",
+      paddingTop:20
+    }}
+  >
+    {index+1}
+  </div>
+
+  <CampoRea label="Tipo" value={r.tipo}/>
+
+  <CampoRea label="SGIPE" value={r.sgipe}/>
+
+  <CampoRea
+    label="Modo Reasignación"
+    value={r.modo_reasignacion}
+  />
+
+  <CampoRea
+    label="Indicaciones"
+    value={r.indicaciones_para_el_encaminamiento}
+  />
+
+  <CampoRea
+    label="Facturable"
+    value={r.facturable}
+  />
+
+  <CampoRea
+    label="Estado Trabajos"
+    value={r.estado_trabajos}
+    color={colorEstado(r.estado_trabajos)}
+  />
+
+</div>
               <div
                 style={{
                   display: "grid",
