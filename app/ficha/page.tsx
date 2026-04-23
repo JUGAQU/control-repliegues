@@ -814,17 +814,13 @@ export default function Ficha() {
                           }}
                         >
                           <CampoSelectEstado
-                            label="Estado Trabajos"
-                            value={r.estado_trabajos}
-                            options={OPCIONES_ESTADO_TRABAJOS}
-                            onChange={(value) =>
-                              handleReasignacionChange(
-                                index,
-                                "estado_trabajos",
-                                value
-                              )
-                            }
-                          />
+  label="Estado Trabajos"
+  value={r.estado_trabajos || "En Análisis"}
+  options={OPCIONES_ESTADO_TRABAJOS}
+  onChange={(value) =>
+    handleReasignacionChange(index, "estado_trabajos", value)
+  }
+/>
 
                           <CampoReaSoloLecturaAuto
                             label="Tipo"
