@@ -165,12 +165,15 @@ export default function Ficha() {
   const guardarReasignacion = async (r: any) => {
     if (!r?.id) return;
 
+    const valorInterface =
+      r.tipo_velocidad_interface === "select" ? null : r.tipo_velocidad_interface;
+
     const { error } = await supabase
       .from("reasignaciones")
       .update({
         modo_reasignacion: r.modo_reasignacion,
         estado_trabajos: r.estado_trabajos,
-        tipo_velocidad_interface: r.tipo_velocidad_interface,
+        tipo_velocidad_interface: valorInterface,
       })
       .eq("id", r.id);
 
@@ -691,7 +694,7 @@ export default function Ficha() {
 
                   <CampoSelectAuto
                     label="Tipo Interface"
-                    value={r.tipo_velocidad_interface || ""}
+                    value={r.tipo_velocidad_interface ?? "select"}
                     options={OPCIONES_TIPO_INTERFACE}
                     minWidth={180}
                     onChange={(value) =>
@@ -707,12 +710,6 @@ export default function Ficha() {
                     label="Velocidad"
                     value={extraerVelocidad(r.tipo_velocidad_interface)}
                     minWidth={100}
-                  />
-
-                    <CampoReaAuto
-                    label="Ptes Cent /Nº Ptes."
-                    value={r.puentes_central_numero_de_puentes}
-                    minWidth={150}
                   />
                 </div>
 
@@ -862,11 +859,11 @@ function CampoSelectAuto({
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
-  const valorActual = value || "";
-  const opcionesFinales =
-    valorActual && !options.includes(valorActual)
-      ? [valorActual, ...options]
-      : options;
+  const valorActual = value || "select";
+
+  const opcionesFinales = options.includes(valorActual)
+    ? ["select", ...options.filter((x) => x !== "select")]
+    : [valorActual, "select", ...options];
 
   return (
     <div
@@ -980,7 +977,7 @@ function colorEstado(estado?: string | null) {
 }
 
 function extraerVelocidad(texto?: string | null) {
-  if (!texto) return "";
+  if (!texto || texto === "select") return "";
   const p = String(texto).split("/");
   return p.length > 1 ? p[1].trim() : "";
 }
