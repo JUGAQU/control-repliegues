@@ -1,7 +1,7 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 
@@ -42,16 +42,22 @@ const OPCIONES_TIPO_INTERFACE = [
   "2 FO",
 ];
 
+type BloqueActivo =
+  | "reasignaciones"
+  | "ejecucion_reasignaciones"
+  | "visitas"
+  | "certificacion"
+  | null;
+
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
   const [empresasPI, setEmpresasPI] = useState<any[]>([]);
   const [provincias, setProvincias] = useState<any[]>([]);
   const [mostrarMemoria, setMostrarMemoria] = useState(false);
-  const [mostrarReasignaciones, setMostrarReasignaciones] = useState(false);
-  const [mostrarPruebas, setMostrarPruebas] = useState(false);
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
+  const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -241,17 +247,24 @@ export default function Ficha() {
     router.refresh();
   };
 
-  const abrirEstudioReasignaciones = () => {
-    setMostrarPruebas(false);
-    setMostrarReasignaciones((prev) => !prev);
+  const toggleBloque = (bloque: Exclude<BloqueActivo, null>) => {
+    setBloqueActivo((prev) => (prev === bloque ? null : bloque));
   };
 
-  const abrirPruebas = () => {
-    setMostrarReasignaciones(false);
-    setMostrarPruebas((prev) => !prev);
+  const getTituloBloque = () => {
+    switch (bloqueActivo) {
+      case "reasignaciones":
+        return "Estudio Reasignaciones";
+      case "ejecucion_reasignaciones":
+        return "Ejecución Reasignaciones";
+      case "visitas":
+        return "Visitas";
+      case "certificacion":
+        return "Certificación";
+      default:
+        return "";
+    }
   };
-
-  const alturaCabecera = useMemo(() => 205, []);
 
   if (!formData) {
     return <div style={{ padding: 20 }}>Cargando ficha...</div>;
@@ -273,67 +286,83 @@ export default function Ficha() {
     fontSize: 12,
   };
 
+  const panelSuperior: React.CSSProperties = {
+    width: "100%",
+    boxSizing: "border-box",
+    border: "1px solid #ccc",
+    padding: "12px 10px",
+    background: "#f5f5f5",
+    display: "flex",
+    flexWrap: "nowrap",
+    overflowX: "auto",
+    gap: 8,
+  };
+
   return (
     <div
       style={{
         height: "100vh",
         background: "#dfe3e6",
         fontFamily: "Arial",
+        display: "flex",
+        flexDirection: "column",
         overflow: "hidden",
-        position: "relative",
       }}
     >
-      {/* ZONA FIJA SUPERIOR */}
+      {/* ZONA FIJA */}
       <div
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
+          flex: "0 0 auto",
+          padding: "10px 20px 0 20px",
           background: "#dfe3e6",
-          padding: "20px 20px 8px 20px",
+          boxSizing: "border-box",
         }}
       >
+        {/* BARRA SUPERIOR */}
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: 5,
+            width: "100%",
+            display: "grid",
+            gridTemplateColumns: "1fr auto 1fr",
+            alignItems: "center",
+            marginBottom: 6,
           }}
         >
-          <div style={{ display: "flex", gap: 10 }}>
+          <div style={{ justifySelf: "start", display: "flex", gap: 10 }}>
             <button onClick={guardarCambios}>💾</button>
           </div>
 
-          <button
-            onClick={() => {
-              if (cambiosSinGuardar) {
-                const confirmar = confirm(
-                  "Tienes cambios sin guardar. ¿Salir sin guardar?"
-                );
-                if (!confirmar) return;
-              }
-              router.push("/listado");
-            }}
-          >
-            ✖
-          </button>
+          <div style={{ justifySelf: "center" }}>
+            <img
+              src="/logo.png"
+              alt="Logo"
+              style={{
+                height: 28,
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
+          </div>
+
+          <div style={{ justifySelf: "end" }}>
+            <button
+              onClick={() => {
+                if (cambiosSinGuardar) {
+                  const confirmar = confirm(
+                    "Tienes cambios sin guardar. ¿Salir sin guardar?"
+                  );
+                  if (!confirmar) return;
+                }
+                router.push("/listado");
+              }}
+            >
+              ✖
+            </button>
+          </div>
         </div>
 
-        {/* DATOS DE IDENTIFICACION */}
-        <div
-          style={{
-            border: "1px solid #ccc",
-            padding: 10,
-            background: "#f5f5f5",
-            display: "flex",
-            flexWrap: "nowrap",
-            gap: 8,
-            marginBottom: 5,
-            overflowX: "auto",
-          }}
-        >
+        {/* BLOQUE 1 */}
+        <div style={{ ...panelSuperior, marginBottom: 5 }}>
           <div style={campo}>
             <span>Atlas:</span>
             <input
@@ -387,7 +416,7 @@ export default function Ficha() {
               name="miga"
               value={formData.miga || ""}
               onChange={handleChange}
-              style={{ ...valor, width: 60 }}
+              style={{ ...valor, width: 52 }}
             />
           </div>
 
@@ -455,19 +484,8 @@ export default function Ficha() {
           </div>
         </div>
 
-        {/* TECNICOS Y EE.CC */}
-        <div
-          style={{
-            border: "1px solid #ccc",
-            padding: 10,
-            background: "#f5f5f5",
-            display: "flex",
-            flexWrap: "nowrap",
-            gap: 8,
-            overflowX: "auto",
-            marginBottom: 8,
-          }}
-        >
+        {/* BLOQUE 2 */}
+        <div style={{ ...panelSuperior, marginBottom: 8 }}>
           <div style={campo}>
             <span>Prioritaria:</span>
             <input
@@ -610,19 +628,23 @@ export default function Ficha() {
         {/* FILA DE BOTONES */}
         <div
           style={{
+            width: "100%",
+            boxSizing: "border-box",
             display: "flex",
             justifyContent: "flex-start",
             gap: 8,
+            marginBottom: 8,
           }}
         >
           <button
             type="button"
-            onClick={abrirEstudioReasignaciones}
+            onClick={() => toggleBloque("reasignaciones")}
             style={{
               padding: "8px 16px",
               borderRadius: 6,
               border: "1px solid #7f9db9",
-              background: mostrarReasignaciones ? "#d9d2e9" : "#cfe2f3",
+              background:
+                bloqueActivo === "reasignaciones" ? "#9fc5e8" : "#cfe2f3",
               cursor: "pointer",
               fontWeight: "bold",
             }}
@@ -632,203 +654,282 @@ export default function Ficha() {
 
           <button
             type="button"
-            onClick={abrirPruebas}
+            onClick={() => toggleBloque("ejecucion_reasignaciones")}
             style={{
               padding: "8px 16px",
               borderRadius: 6,
               border: "1px solid #7f9db9",
-              background: mostrarPruebas ? "#d9d2e9" : "#cfe2f3",
+              background:
+                bloqueActivo === "ejecucion_reasignaciones"
+                  ? "#9fc5e8"
+                  : "#cfe2f3",
               cursor: "pointer",
               fontWeight: "bold",
             }}
           >
-            Pruebas
+            Ejecución Reasignaciones
+          </button>
+
+          <button
+            type="button"
+            onClick={() => toggleBloque("visitas")}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 6,
+              border: "1px solid #7f9db9",
+              background: bloqueActivo === "visitas" ? "#9fc5e8" : "#cfe2f3",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            Visitas
+          </button>
+
+          <button
+            type="button"
+            onClick={() => toggleBloque("certificacion")}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 6,
+              border: "1px solid #7f9db9",
+              background:
+                bloqueActivo === "certificacion" ? "#9fc5e8" : "#cfe2f3",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+          >
+            Certificación
           </button>
         </div>
       </div>
 
-      {/* ZONA INFERIOR CON SCROLL */}
+      {/* ZONA CON SCROLL */}
       <div
         style={{
-          position: "absolute",
-          top: alturaCabecera,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          flex: 1,
           overflowY: "auto",
           padding: "10px 20px 20px 20px",
         }}
       >
-        {mostrarReasignaciones && (
+        {bloqueActivo && (
           <div
             style={{
+              width: "100%",
+              boxSizing: "border-box",
               border: "1px solid #bfc7ce",
               background: "#eef2f5",
               padding: 10,
             }}
           >
-            {reasignaciones.length === 0 ? (
+            <div
+              style={{
+                marginBottom: 10,
+                padding: "8px 12px",
+                background: "#9fc5e8",
+                border: "1px solid #6fa8dc",
+                borderRadius: 6,
+                fontWeight: "bold",
+                fontSize: 14,
+                color: "#073763",
+              }}
+            >
+              {getTituloBloque()}
+            </div>
+
+            {bloqueActivo === "reasignaciones" && (
+              <>
+                {reasignaciones.length === 0 ? (
+                  <div
+                    style={{
+                      background: "#fff",
+                      border: "1px solid #ddd",
+                      padding: 10,
+                      fontSize: 12,
+                    }}
+                  >
+                    No hay reasignaciones para este atlas.
+                  </div>
+                ) : (
+                  reasignaciones.map((r: any, index: number) => (
+                    <div
+                      key={r.id || index}
+                      style={{
+                        display: "flex",
+                        border: "1px solid #8ea9bf",
+                        background: "#c9e3f2",
+                        marginBottom: 12,
+                        overflow: "hidden",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 42,
+                          minWidth: 42,
+                          background: "#bdd7e7",
+                          borderRight: "1px solid #7f9db9",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: 18,
+                          fontWeight: "bold",
+                          color: "#1f1f1f",
+                        }}
+                      >
+                        {index + 1}
+                      </div>
+
+                      <div style={{ flex: 1, padding: 10 }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: 10,
+                            flexWrap: "nowrap",
+                            overflowX: "auto",
+                            marginBottom: 10,
+                          }}
+                        >
+                          <CampoSelectEstado
+                            label="Estado Trabajos"
+                            value={r.estado_trabajos || ""}
+                            options={OPCIONES_ESTADO_TRABAJOS}
+                            onChange={(value) =>
+                              handleReasignacionChange(
+                                index,
+                                "estado_trabajos",
+                                value
+                              )
+                            }
+                          />
+                          <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
+                          <CampoReaAuto
+                            label="Servicio"
+                            value={r.servicio}
+                            minWidth={380}
+                          />
+                          <CampoReaAuto
+                            label="Administrativo"
+                            value={r.administrativo}
+                            minWidth={130}
+                          />
+                          <CampoReaAuto
+                            label="Orden Partida"
+                            value={r.ordenes}
+                            minWidth={130}
+                          />
+                          <CampoReaAuto
+                            label="Diversificado"
+                            value={r.diversificado}
+                            minWidth={120}
+                          />
+                          <CampoReaAuto
+                            label="Tipo Diversificado"
+                            value={r.tipo_diversificado}
+                            minWidth={150}
+                          />
+                          <CampoSelectAuto
+                            label="Tipo Interface"
+                            value={r.tipo_velocidad_interface || ""}
+                            options={OPCIONES_TIPO_INTERFACE}
+                            minWidth={180}
+                            onChange={(value) =>
+                              handleReasignacionChange(
+                                index,
+                                "tipo_velocidad_interface",
+                                value
+                              )
+                            }
+                          />
+                          <CampoReaAuto
+                            label="Velocidad"
+                            value={extraerVelocidad(r.tipo_velocidad_interface)}
+                            minWidth={100}
+                          />
+                        </div>
+
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: 10,
+                            flexWrap: "nowrap",
+                            overflowX: "auto",
+                            marginBottom: 10,
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          <CampoSelectAuto
+                            label="Modo Reasignación"
+                            value={r.modo_reasignacion ?? ""}
+                            options={OPCIONES_MODO_REASIGNACION}
+                            minWidth={320}
+                            onChange={(value) =>
+                              handleReasignacionChange(
+                                index,
+                                "modo_reasignacion",
+                                value
+                              )
+                            }
+                          />
+                          <CampoReaAuto
+                            label="Indicaciones"
+                            value={r.indicaciones_para_el_encaminamiento}
+                            minWidth={520}
+                          />
+                          <CampoReaAuto
+                            label="Facturable"
+                            value={r.facturable}
+                            minWidth={100}
+                          />
+                          <div style={{ paddingTop: 18 }}>
+                            <button onClick={() => guardarReasignacion(r)}>
+                              💾
+                            </button>
+                          </div>
+                        </div>
+
+                        <CampoRea
+                          label="Observaciones Estudio Reasignación"
+                          value={r.observaciones_del_estudio}
+                        />
+                      </div>
+                    </div>
+                  ))
+                )}
+              </>
+            )}
+
+            {bloqueActivo === "ejecucion_reasignaciones" && (
               <div
                 style={{
                   background: "#fff",
                   border: "1px solid #ddd",
-                  padding: 10,
-                  fontSize: 12,
+                  borderRadius: 4,
+                  minHeight: 260,
                 }}
-              >
-                No hay reasignaciones para este atlas.
-              </div>
-            ) : (
-              reasignaciones.map((r: any, index: number) => (
-                <div
-                  key={r.id || index}
-                  style={{
-                    display: "flex",
-                    border: "1px solid #8ea9bf",
-                    background: "#c9e3f2",
-                    marginBottom: 12,
-                    overflow: "hidden",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 42,
-                      minWidth: 42,
-                      background: "#bdd7e7",
-                      borderRight: "1px solid #7f9db9",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      color: "#1f1f1f",
-                    }}
-                  >
-                    {index + 1}
-                  </div>
+              />
+            )}
 
-                  <div style={{ flex: 1, padding: 10 }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: 10,
-                        flexWrap: "nowrap",
-                        overflowX: "auto",
-                        marginBottom: 10,
-                      }}
-                    >
-                      <CampoSelectEstado
-                        label="Estado Trabajos"
-                        value={r.estado_trabajos || ""}
-                        options={OPCIONES_ESTADO_TRABAJOS}
-                        onChange={(value) =>
-                          handleReasignacionChange(index, "estado_trabajos", value)
-                        }
-                      />
-                      <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
-                      <CampoReaAuto
-                        label="Servicio"
-                        value={r.servicio}
-                        minWidth={380}
-                      />
-                      <CampoReaAuto
-                        label="Administrativo"
-                        value={r.administrativo}
-                        minWidth={130}
-                      />
-                      <CampoReaAuto
-                        label="Orden Partida"
-                        value={r.ordenes}
-                        minWidth={130}
-                      />
-                      <CampoReaAuto
-                        label="Diversificado"
-                        value={r.diversificado}
-                        minWidth={120}
-                      />
-                      <CampoReaAuto
-                        label="Tipo Diversificado"
-                        value={r.tipo_diversificado}
-                        minWidth={150}
-                      />
-                      <CampoSelectAuto
-                        label="Tipo Interface"
-                        value={r.tipo_velocidad_interface || ""}
-                        options={OPCIONES_TIPO_INTERFACE}
-                        minWidth={180}
-                        onChange={(value) =>
-                          handleReasignacionChange(
-                            index,
-                            "tipo_velocidad_interface",
-                            value
-                          )
-                        }
-                      />
-                      <CampoReaAuto
-                        label="Velocidad"
-                        value={extraerVelocidad(r.tipo_velocidad_interface)}
-                        minWidth={100}
-                      />
-                    </div>
+            {bloqueActivo === "visitas" && (
+              <div
+                style={{
+                  background: "#fff",
+                  border: "1px solid #ddd",
+                  borderRadius: 4,
+                  minHeight: 260,
+                }}
+              />
+            )}
 
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: 10,
-                        flexWrap: "nowrap",
-                        overflowX: "auto",
-                        marginBottom: 10,
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <CampoSelectAuto
-                        label="Modo Reasignación"
-                        value={r.modo_reasignacion ?? ""}
-                        options={OPCIONES_MODO_REASIGNACION}
-                        minWidth={320}
-                        onChange={(value) =>
-                          handleReasignacionChange(
-                            index,
-                            "modo_reasignacion",
-                            value
-                          )
-                        }
-                      />
-                      <CampoReaAuto
-                        label="Indicaciones"
-                        value={r.indicaciones_para_el_encaminamiento}
-                        minWidth={520}
-                      />
-                      <CampoReaAuto
-                        label="Facturable"
-                        value={r.facturable}
-                        minWidth={100}
-                      />
-                      <div style={{ paddingTop: 18 }}>
-                        <button onClick={() => guardarReasignacion(r)}>💾</button>
-                      </div>
-                    </div>
-
-                    <CampoRea
-                      label="Observaciones Estudio Reasignación"
-                      value={r.observaciones_del_estudio}
-                    />
-                  </div>
-                </div>
-              ))
+            {bloqueActivo === "certificacion" && (
+              <div
+                style={{
+                  background: "#fff",
+                  border: "1px solid #ddd",
+                  borderRadius: 4,
+                  minHeight: 260,
+                }}
+              />
             )}
           </div>
-        )}
-
-        {mostrarPruebas && (
-          <div
-            style={{
-              border: "1px solid #bfc7ce",
-              background: "#eef2f5",
-              padding: 10,
-              minHeight: 300,
-            }}
-          />
         )}
       </div>
 
