@@ -947,8 +947,9 @@ export default function Ficha() {
                         </div>
 
                         <CampoTextAreaAuto
-                          label="Observaciones Estudio Reasignación"
+                           label="Observaciones Estudio Reasignación"
                           value={r.observaciones_del_estudio || ""}
+                          minWidth={520}
                           onChange={(value) =>
                             handleReasignacionChange(
                               index,
