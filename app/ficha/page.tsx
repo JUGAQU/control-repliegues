@@ -723,13 +723,17 @@ export default function Ficha() {
                 >
                   <CampoSelectAuto
                     label="Modo Reasignación"
-                    value={r.modo_reasignacion || ""}
+                    value={r.modo_reasignacion ?? "select"}
                     options={OPCIONES_MODO_REASIGNACION}
                     minWidth={320}
                     onChange={(value) =>
-                      handleReasignacionChange(index, "modo_reasignacion", value)
-                    }
-                  />
+                      handleReasignacionChange(
+                      index,
+                      "modo_reasignacion",
+                      value
+                    )
+                  }
+                />
 
                   <CampoReaAuto
                     label="Indicaciones"
@@ -856,11 +860,13 @@ function CampoSelectAuto({
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
-  const valorActual = value || "";
+
+  const valorActual = value || "select";
+
   const opcionesFinales =
-    valorActual && !options.includes(valorActual)
-      ? [valorActual, ...options]
-      : options;
+    options.includes(valorActual)
+      ? ["select", ...options.filter(x => x !== "select")]
+      : [valorActual, "select", ...options];
 
   return (
     <div
@@ -871,10 +877,10 @@ function CampoSelectAuto({
     >
       <div
         style={{
-          fontSize: 11,
-          fontWeight: "bold",
-          color: "#0b5394",
-          marginBottom: 3,
+          fontSize:11,
+          fontWeight:"bold",
+          color:"#0b5394",
+          marginBottom:3
         }}
       >
         {label}
@@ -882,26 +888,30 @@ function CampoSelectAuto({
 
       <select
         value={valorActual}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e)=>onChange(e.target.value)}
         style={{
-          minHeight: 30,
-          minWidth: "100%",
-          background: "#d9ead3",
-          border: "1px solid #666",
-          padding: "4px 6px",
-          fontSize: 12,
+          minHeight:30,
+          minWidth:"100%",
+          background:"#d9ead3",
+          border:"1px solid #666",
+          padding:"4px 6px",
+          fontSize:12
         }}
       >
-        {opcionesFinales.map((op) => (
-          <option key={op} value={op}>
+        {opcionesFinales.map((op)=>(
+          <option
+            key={op}
+            value={op}
+          >
             {op}
           </option>
         ))}
+
       </select>
+
     </div>
   );
 }
-
 function CampoSelectEstado({
   label,
   value,
