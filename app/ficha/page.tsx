@@ -28,6 +28,7 @@ export default function Ficha() {
   const [mostrarMemoria, setMostrarMemoria] = useState(false);
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
+  const [editandoModo, setEditandoModo] = useState<Record<number, boolean>>({});
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -151,7 +152,7 @@ export default function Ficha() {
     );
   };
 
-  const guardarReasignacion = async (r: any) => {
+  const guardarReasignacion = async (r: any, index: number) => {
     if (!r?.id) return;
 
     const { error } = await supabase
@@ -166,6 +167,11 @@ export default function Ficha() {
       alert("Error al guardar la reasignación");
       return;
     }
+
+    setEditandoModo((prev) => ({
+      ...prev,
+      [index]: false,
+    }));
 
     alert("Reasignación guardada ✅");
   };
@@ -635,17 +641,16 @@ export default function Ficha() {
                 overflow: "hidden",
               }}
             >
-              {/* NUMERO IZQUIERDA */}
               <div
                 style={{
-                  width: 42,
-                  minWidth: 42,
+                  width: 36,
+                  minWidth: 36,
                   background: "#bdd7e7",
                   borderRight: "1px solid #7f9db9",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: "bold",
                   color: "#1f1f1f",
                 }}
@@ -653,7 +658,6 @@ export default function Ficha() {
                 {index + 1}
               </div>
 
-              {/* CONTENIDO */}
               <div style={{ flex: 1, padding: 10 }}>
                 {/* FILA 1 */}
                 <div
@@ -671,7 +675,6 @@ export default function Ficha() {
                     minWidth={140}
                     color={colorEstado(r.estado_trabajos)}
                   />
-
                   <CampoReaAuto label="Tipo" value={r.tipo} minWidth={100} />
                   <CampoReaAuto label="Servicio" value={r.servicio} minWidth={380} />
                   <CampoReaAuto
@@ -717,11 +720,16 @@ export default function Ficha() {
                     alignItems: "flex-start",
                   }}
                 >
-                  <CampoSelectAuto
-                    label="Modo Reasignación"
+                  <CampoModoReasignacion
+                    editando={!!editandoModo[index]}
                     value={r.modo_reasignacion || ""}
                     options={OPCIONES_MODO_REASIGNACION}
-                    minWidth={320}
+                    onEditar={() =>
+                      setEditandoModo((prev) => ({ ...prev, [index]: true }))
+                    }
+                    onCancelar={() =>
+                      setEditandoModo((prev) => ({ ...prev, [index]: false }))
+                    }
                     onChange={(value) =>
                       handleReasignacionChange(index, "modo_reasignacion", value)
                     }
@@ -739,9 +747,11 @@ export default function Ficha() {
                     minWidth={100}
                   />
 
-                  <div style={{ paddingTop: 18 }}>
-                    <button onClick={() => guardarReasignacion(r)}>💾</button>
-                  </div>
+                  {editandoModo[index] && (
+                    <div style={{ paddingTop: 18 }}>
+                      <button onClick={() => guardarReasignacion(r, index)}>💾</button>
+                    </div>
+                  )}
                 </div>
 
                 {/* FILA 3 */}
@@ -839,23 +849,25 @@ function CampoRea({
   );
 }
 
-function CampoSelectAuto({
-  label,
+function CampoModoReasignacion({
+  editando,
   value,
   options,
-  minWidth = 180,
+  onEditar,
+  onCancelar,
   onChange,
 }: {
-  label: string;
+  editando: boolean;
   value: string;
   options: string[];
-  minWidth?: number;
+  onEditar: () => void;
+  onCancelar: () => void;
   onChange: (value: string) => void;
 }) {
   return (
     <div
       style={{
-        minWidth,
+        minWidth: 320,
         flex: "0 0 auto",
       }}
     >
@@ -867,28 +879,55 @@ function CampoSelectAuto({
           marginBottom: 3,
         }}
       >
-        {label}
+        Modo Reasignación
       </div>
 
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        style={{
-          minHeight: 30,
-          minWidth: "100%",
-          background: "#d9ead3",
-          border: "1px solid #666",
-          padding: "4px 6px",
-          fontSize: 12,
-        }}
-      >
-        <option value="">-- Seleccionar --</option>
-        {options.map((op) => (
-          <option key={op} value={op}>
-            {op}
-          </option>
-        ))}
-      </select>
+      {!editando ? (
+        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+          <div
+            style={{
+              background: "#d9ead3",
+              border: "1px solid #666",
+              padding: "4px 6px",
+              minHeight: 28,
+              whiteSpace: "nowrap",
+              fontSize: 12,
+              minWidth: 260,
+            }}
+          >
+            {value || ""}
+          </div>
+          <button type="button" onClick={onEditar} title="Editar">
+            ✏️
+          </button>
+        </div>
+      ) : (
+        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+          <select
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            style={{
+              minHeight: 30,
+              minWidth: 260,
+              background: "#d9ead3",
+              border: "1px solid #666",
+              padding: "4px 6px",
+              fontSize: 12,
+            }}
+          >
+            <option value="">-- Seleccionar --</option>
+            {options.map((op) => (
+              <option key={op} value={op}>
+                {op}
+              </option>
+            ))}
+          </select>
+
+          <button type="button" onClick={onCancelar} title="Cancelar">
+            ✖
+          </button>
+        </div>
+      )}
     </div>
   );
 }
