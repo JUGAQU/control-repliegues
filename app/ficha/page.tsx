@@ -280,6 +280,7 @@ export default function Ficha() {
     flex: "0 0 auto",
   };
 
+  
   const valor: React.CSSProperties = {
     background: "#d9ead3",
     padding: "3px 8px",
