@@ -5,6 +5,21 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 
+const OPCIONES_MODO_REASIGNACION = [
+  "NUEVO CABLE DE FIBRA A EEBB",
+  "POR RADIONLACE",
+  "REASIGNA TRANSPORTE",
+  "REASIGNACION EN RETRANQUEO FINAL",
+  "REASIGNACION EN RETRANQUEO FINAL SUPERVISADO",
+  "REASIGNACION POR FTTH EN CALIENTE",
+  "REASIGNACION POR FTTH EN FRIO",
+  "REASIGNACION POR PUENTES ANTES DE RETRANQUEO FINAL",
+  "SE MANTIENE EL RADIOENLACE APAGADO INCOMPLETO",
+  "VER INDICACIONES (REQUIERE TRABAJOS EC)",
+  "VER INDICACIONES (NO REQUIERE TRABAJOS EC)",
+  "Pte Otras Areas",
+];
+
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
@@ -105,7 +120,9 @@ export default function Ficha() {
     cargarReasignaciones();
   }, [formData?.atlas]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
@@ -115,6 +132,42 @@ export default function Ficha() {
     }));
 
     setCambiosSinGuardar(true);
+  };
+
+  const handleReasignacionChange = (
+    index: number,
+    field: string,
+    value: string
+  ) => {
+    setReasignaciones((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              [field]: value,
+            }
+          : item
+      )
+    );
+  };
+
+  const guardarReasignacion = async (r: any) => {
+    if (!r?.id) return;
+
+    const { error } = await supabase
+      .from("reasignaciones")
+      .update({
+        modo_reasignacion: r.modo_reasignacion,
+      })
+      .eq("id", r.id);
+
+    if (error) {
+      console.error("Error guardando reasignación:", error);
+      alert("Error al guardar la reasignación");
+      return;
+    }
+
+    alert("Reasignación guardada ✅");
   };
 
   const guardarCambios = async () => {
@@ -203,7 +256,9 @@ export default function Ficha() {
         <button
           onClick={() => {
             if (cambiosSinGuardar) {
-              const confirmar = confirm("Tienes cambios sin guardar. ¿Salir sin guardar?");
+              const confirmar = confirm(
+                "Tienes cambios sin guardar. ¿Salir sin guardar?"
+              );
               if (!confirmar) return;
             }
             router.push("/listado");
@@ -213,6 +268,7 @@ export default function Ficha() {
         </button>
       </div>
 
+      {/* DATOS DE IDENTIFICACION */}
       <div
         style={{
           border: "1px solid #ccc",
@@ -291,7 +347,9 @@ export default function Ficha() {
           />
           {formData.coordenadas && (
             <a
-              href={`https://www.google.com/maps?q=${encodeURIComponent(formData.coordenadas)}`}
+              href={`https://www.google.com/maps?q=${encodeURIComponent(
+                formData.coordenadas
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ marginLeft: 6, textDecoration: "none", fontSize: 14 }}
@@ -343,6 +401,7 @@ export default function Ficha() {
         </div>
       </div>
 
+      {/* TECNICOS Y EE.CC */}
       <div
         style={{
           border: "1px solid #ccc",
@@ -540,6 +599,7 @@ export default function Ficha() {
         </div>
       )}
 
+      {/* REASIGNACIONES */}
       <div
         style={{
           marginTop: 10,
@@ -575,17 +635,17 @@ export default function Ficha() {
                 overflow: "hidden",
               }}
             >
+              {/* NUMERO IZQUIERDA */}
               <div
                 style={{
-                  width: 70,
-                  minWidth: 70,
+                  width: 42,
+                  minWidth: 42,
                   background: "#bdd7e7",
                   borderRight: "1px solid #7f9db9",
                   display: "flex",
-                  alignItems: "flex-start",
+                  alignItems: "center",
                   justifyContent: "center",
-                  paddingTop: 12,
-                  fontSize: 28,
+                  fontSize: 18,
                   fontWeight: "bold",
                   color: "#1f1f1f",
                 }}
@@ -593,7 +653,9 @@ export default function Ficha() {
                 {index + 1}
               </div>
 
+              {/* CONTENIDO */}
               <div style={{ flex: 1, padding: 10 }}>
+                {/* FILA 1 */}
                 <div
                   style={{
                     display: "flex",
@@ -644,6 +706,7 @@ export default function Ficha() {
                   />
                 </div>
 
+                {/* FILA 2 */}
                 <div
                   style={{
                     display: "flex",
@@ -651,12 +714,17 @@ export default function Ficha() {
                     flexWrap: "nowrap",
                     overflowX: "auto",
                     marginBottom: 10,
+                    alignItems: "flex-start",
                   }}
                 >
-                  <CampoReaAuto
+                  <CampoSelectAuto
                     label="Modo Reasignación"
-                    value={r.modo_reasignacion}
-                    minWidth={280}
+                    value={r.modo_reasignacion || ""}
+                    options={OPCIONES_MODO_REASIGNACION}
+                    minWidth={320}
+                    onChange={(value) =>
+                      handleReasignacionChange(index, "modo_reasignacion", value)
+                    }
                   />
 
                   <CampoReaAuto
@@ -670,8 +738,13 @@ export default function Ficha() {
                     value={r.facturable}
                     minWidth={100}
                   />
+
+                  <div style={{ paddingTop: 18 }}>
+                    <button onClick={() => guardarReasignacion(r)}>💾</button>
+                  </div>
                 </div>
 
+                {/* FILA 3 */}
                 <CampoRea
                   label="Observaciones Estudio Reasignación"
                   value={r.observaciones_del_estudio}
@@ -762,6 +835,60 @@ function CampoRea({
       >
         {value ?? ""}
       </div>
+    </div>
+  );
+}
+
+function CampoSelectAuto({
+  label,
+  value,
+  options,
+  minWidth = 180,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: string[];
+  minWidth?: number;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div
+      style={{
+        minWidth,
+        flex: "0 0 auto",
+      }}
+    >
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: "bold",
+          color: "#0b5394",
+          marginBottom: 3,
+        }}
+      >
+        {label}
+      </div>
+
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={{
+          minHeight: 30,
+          minWidth: "100%",
+          background: "#d9ead3",
+          border: "1px solid #666",
+          padding: "4px 6px",
+          fontSize: 12,
+        }}
+      >
+        <option value="">-- Seleccionar --</option>
+        {options.map((op) => (
+          <option key={op} value={op}>
+            {op}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
