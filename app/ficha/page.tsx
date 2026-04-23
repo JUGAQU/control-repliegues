@@ -818,6 +818,7 @@ function CampoReaAuto({
         style={{
           background: color,
           border: "1px solid #666",
+          borderRadius: 4,
           padding: "4px 6px",
           minHeight: 28,
           whiteSpace: "nowrap",
@@ -853,6 +854,7 @@ function CampoRea({
         style={{
           background: "#d9ead3",
           border: "1px solid #666",
+          borderRadius: 4,
           padding: "5px 6px",
           fontSize: 12,
           whiteSpace: "pre-wrap",
@@ -908,6 +910,7 @@ function CampoSelectAuto({
           minWidth: "100%",
           background: "#d9ead3",
           border: "1px solid #666",
+          borderRadius: 4,
           padding: "4px 6px",
           fontSize: 12,
         }}
@@ -964,6 +967,7 @@ function CampoSelectEstado({
           width: "100%",
           background: colorEstado(valorActual),
           border: "1px solid #666",
+          borderRadius: 4,
           padding: "4px 6px",
           fontSize: 12,
           fontWeight: "bold",
