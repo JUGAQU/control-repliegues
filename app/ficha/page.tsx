@@ -132,6 +132,7 @@ export default function Ficha() {
 
       setReasignaciones(data || []);
     };
+
     cargarReasignaciones();
   }, [formData?.atlas]);
 
@@ -257,7 +258,8 @@ export default function Ficha() {
         padding: 20,
         fontFamily: "Arial",
         background: "#dfe3e6",
-        minHeight: "100vh",
+        height: "100vh",
+        overflowY: "auto",
       }}
     >
       <div
@@ -286,288 +288,302 @@ export default function Ficha() {
         </button>
       </div>
 
-      {/* DATOS DE IDENTIFICACION */}
+      {/* CABECERA FIJA */}
       <div
         style={{
-          border: "1px solid #ccc",
-          padding: 10,
-          background: "#f5f5f5",
-          display: "flex",
-          flexWrap: "nowrap",
-          gap: 8,
-          marginBottom: 5,
-          overflowX: "auto",
+          position: "sticky",
+          top: 0,
+          zIndex: 1000,
+          background: "#dfe3e6",
+          paddingTop: 5,
+          paddingBottom: 6,
         }}
       >
-        <div style={campo}>
-          <span>Atlas:</span>
-          <input
-            name="atlas"
-            value={formData.atlas || ""}
-            readOnly
-            style={{ ...valor, width: 58, background: "#eee", color: "#666" }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Lote:</span>
-          <input
-            name="lote"
-            value={formData.lote || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 70 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Nombre:</span>
-          <input
-            name="nombre"
-            value={formData.nombre || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 150 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Provincia:</span>
-          <select
-            name="provincia"
-            value={formData.provincia || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 105 }}
-          >
-            <option value="">-- Seleccionar --</option>
-            {provincias.map((provincia) => (
-              <option key={provincia.id} value={provincia.nombre}>
-                {provincia.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div style={campo}>
-          <span>Miga:</span>
-          <input
-            name="miga"
-            value={formData.miga || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 52 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Coordenadas:</span>
-          <input
-            name="coordenadas"
-            value={formData.coordenadas || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 105 }}
-          />
-          {formData.coordenadas && (
-            <a
-              href={`https://www.google.com/maps?q=${encodeURIComponent(
-                formData.coordenadas
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ marginLeft: 4, textDecoration: "none", fontSize: 14 }}
-            >
-              🌍
-            </a>
-          )}
-        </div>
-
-        <div style={campo}>
-          <span>Tipo Edificio:</span>
-          <input
-            name="tipo_edificio"
-            value={formData.tipo_edificio || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 72 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Tipo Repliegue:</span>
-          <input
-            name="tipo_repliegue"
-            value={formData.tipo_repliegue || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 68 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Senda:</span>
-          <input
-            name="tipo_senda"
-            value={formData.tipo_senda || "ACELERADA_2026"}
-            onChange={handleChange}
-            style={{ ...valor, width: 115 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Fecha Abandono:</span>
-          <input
-            type="date"
-            name="fecha_abandono"
-            value={formData.fecha_abandono || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 125 }}
-          />
-        </div>
-      </div>
-
-      {/* TECNICOS Y EE.CC */}
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: 10,
-          background: "#f5f5f5",
-          display: "flex",
-          flexWrap: "nowrap",
-          gap: 8,
-          overflowX: "auto",
-        }}
-      >
-        <div style={campo}>
-          <span>Prioritaria:</span>
-          <input
-            type="checkbox"
-            name="prioritario"
-            checked={!!formData.prioritario}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>CCVV:</span>
-          <input
-            type="checkbox"
-            name="central_vendida"
-            checked={!!formData.central_vendida}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Proyecto Inversión:</span>
-          <input
-            name="proyecto_inversion"
-            value={formData.proyecto_inversion || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 62 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Técnico Análisis:</span>
-          <input
-            name="tecnico_analisis"
-            value={formData.tecnico_analisis || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 110 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Técnico Reasignaciones:</span>
-          <input
-            name="tecnico_reasignaciones"
-            value={formData.tecnico_reasignaciones || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 110 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Empresa Planta Int.:</span>
-          <select
-            name="empresa_pi"
-            value={formData.empresa_pi || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 120 }}
-          >
-            <option value="">-- Seleccionar --</option>
-            {empresasPI.map((empresa) => (
-              <option key={empresa.id} value={empresa.nombre}>
-                {empresa.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div style={campo}>
-          <span>Empresa Planta Ext.:</span>
-          <input
-            name="empresa_pe"
-            value={formData.empresa_pe || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 115 }}
-          />
-        </div>
-
-        <div style={campo}>
-          <span>Empresa Recicladora:</span>
-          <input
-            name="empresa_recicladora"
-            value={formData.empresa_recicladora || ""}
-            onChange={handleChange}
-            style={{ ...valor, width: 115 }}
-          />
-
-          <button
-            type="button"
-            onClick={() => setMostrarMemoria(true)}
-            style={{
-              marginLeft: 6,
-              width: 28,
-              height: 28,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 6,
-              border: "1px solid #ccc",
-              background: "#f5f5f5",
-              cursor: "pointer",
-              padding: 0,
-            }}
-            title="Memoria del repliegue"
-          >
-            📝
-          </button>
-
-          <button
-            onClick={() =>
-              window.open(
-                `https://spock.es.telefonica/spoc_ec/faro2/faro_detalle_nacional_repliegue.asp?central=${encodeURIComponent(
-                  formData.atlas || ""
-                )}`,
-                "_blank"
-              )
-            }
-            style={{
-              marginLeft: 4,
-              width: 28,
-              height: 28,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 6,
-              border: "1px solid #ccc",
-              background: "#e8f4ff",
-              cursor: "pointer",
-            }}
-            title="Abrir en Spock"
-          >
-            <img
-              src="/spock.png"
-              alt="Spock"
-              style={{ width: 16, height: 16, objectFit: "contain" }}
+        {/* DATOS DE IDENTIFICACION */}
+        <div
+          style={{
+            border: "1px solid #ccc",
+            padding: 10,
+            background: "#f5f5f5",
+            display: "flex",
+            flexWrap: "nowrap",
+            gap: 8,
+            marginBottom: 5,
+            overflowX: "auto",
+            boxShadow: "0 2px 4px rgba(0,0,0,.08)",
+          }}
+        >
+          <div style={campo}>
+            <span>Atlas:</span>
+            <input
+              name="atlas"
+              value={formData.atlas || ""}
+              readOnly
+              style={{ ...valor, width: 58, background: "#eee", color: "#666" }}
             />
-          </button>
+          </div>
+
+          <div style={campo}>
+            <span>Lote:</span>
+            <input
+              name="lote"
+              value={formData.lote || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 70 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Nombre:</span>
+            <input
+              name="nombre"
+              value={formData.nombre || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 150 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Provincia:</span>
+            <select
+              name="provincia"
+              value={formData.provincia || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 105 }}
+            >
+              <option value="">-- Seleccionar --</option>
+              {provincias.map((provincia) => (
+                <option key={provincia.id} value={provincia.nombre}>
+                  {provincia.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={campo}>
+            <span>Miga:</span>
+            <input
+              name="miga"
+              value={formData.miga || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 52 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Coordenadas:</span>
+            <input
+              name="coordenadas"
+              value={formData.coordenadas || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 105 }}
+            />
+            {formData.coordenadas && (
+              <a
+                href={`https://www.google.com/maps?q=${encodeURIComponent(
+                  formData.coordenadas
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ marginLeft: 4, textDecoration: "none", fontSize: 14 }}
+              >
+                🌍
+              </a>
+            )}
+          </div>
+
+          <div style={campo}>
+            <span>Tipo Edificio:</span>
+            <input
+              name="tipo_edificio"
+              value={formData.tipo_edificio || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 72 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Tipo Repliegue:</span>
+            <input
+              name="tipo_repliegue"
+              value={formData.tipo_repliegue || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 68 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Senda:</span>
+            <input
+              name="tipo_senda"
+              value={formData.tipo_senda || "ACELERADA_2026"}
+              onChange={handleChange}
+              style={{ ...valor, width: 115 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Fecha Abandono:</span>
+            <input
+              type="date"
+              name="fecha_abandono"
+              value={formData.fecha_abandono || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 125 }}
+            />
+          </div>
+        </div>
+
+        {/* TECNICOS Y EE.CC */}
+        <div
+          style={{
+            border: "1px solid #ccc",
+            padding: 10,
+            background: "#f5f5f5",
+            display: "flex",
+            flexWrap: "nowrap",
+            gap: 8,
+            overflowX: "auto",
+            boxShadow: "0 2px 4px rgba(0,0,0,.08)",
+          }}
+        >
+          <div style={campo}>
+            <span>Prioritaria:</span>
+            <input
+              type="checkbox"
+              name="prioritario"
+              checked={!!formData.prioritario}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>CCVV:</span>
+            <input
+              type="checkbox"
+              name="central_vendida"
+              checked={!!formData.central_vendida}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Proyecto Inversión:</span>
+            <input
+              name="proyecto_inversion"
+              value={formData.proyecto_inversion || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 62 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Técnico Análisis:</span>
+            <input
+              name="tecnico_analisis"
+              value={formData.tecnico_analisis || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 110 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Técnico Reasignaciones:</span>
+            <input
+              name="tecnico_reasignaciones"
+              value={formData.tecnico_reasignaciones || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 110 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Empresa Planta Int.:</span>
+            <select
+              name="empresa_pi"
+              value={formData.empresa_pi || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 120 }}
+            >
+              <option value="">-- Seleccionar --</option>
+              {empresasPI.map((empresa) => (
+                <option key={empresa.id} value={empresa.nombre}>
+                  {empresa.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={campo}>
+            <span>Empresa Planta Ext.:</span>
+            <input
+              name="empresa_pe"
+              value={formData.empresa_pe || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 115 }}
+            />
+          </div>
+
+          <div style={campo}>
+            <span>Empresa Recicladora:</span>
+            <input
+              name="empresa_recicladora"
+              value={formData.empresa_recicladora || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 115 }}
+            />
+
+            <button
+              type="button"
+              onClick={() => setMostrarMemoria(true)}
+              style={{
+                marginLeft: 6,
+                width: 28,
+                height: 28,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 6,
+                border: "1px solid #ccc",
+                background: "#f5f5f5",
+                cursor: "pointer",
+                padding: 0,
+              }}
+              title="Memoria del repliegue"
+            >
+              📝
+            </button>
+
+            <button
+              onClick={() =>
+                window.open(
+                  `https://spock.es.telefonica/spoc_ec/faro2/faro_detalle_nacional_repliegue.asp?central=${encodeURIComponent(
+                    formData.atlas || ""
+                  )}`,
+                  "_blank"
+                )
+              }
+              style={{
+                marginLeft: 4,
+                width: 28,
+                height: 28,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 6,
+                border: "1px solid #ccc",
+                background: "#e8f4ff",
+                cursor: "pointer",
+              }}
+              title="Abrir en Spock"
+            >
+              <img
+                src="/spock.png"
+                alt="Spock"
+                style={{ width: 16, height: 16, objectFit: "contain" }}
+              />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -673,7 +689,6 @@ export default function Ficha() {
               </div>
 
               <div style={{ flex: 1, padding: 10 }}>
-                {/* FILA 1 */}
                 <div
                   style={{
                     display: "flex",
@@ -733,7 +748,6 @@ export default function Ficha() {
                   />
                 </div>
 
-                {/* FILA 2 */}
                 <div
                   style={{
                     display: "flex",
@@ -772,7 +786,6 @@ export default function Ficha() {
                   </div>
                 </div>
 
-                {/* FILA 3 */}
                 <CampoRea
                   label="Observaciones Estudio Reasignación"
                   value={r.observaciones_del_estudio}
@@ -798,12 +811,7 @@ function CampoReaAuto({
   color?: string;
 }) {
   return (
-    <div
-      style={{
-        minWidth,
-        flex: "0 0 auto",
-      }}
-    >
+    <div style={{ minWidth, flex: "0 0 auto" }}>
       <div
         style={{
           fontSize: 11,
@@ -886,12 +894,7 @@ function CampoSelectAuto({
     : [valorActual, "", ...options];
 
   return (
-    <div
-      style={{
-        minWidth,
-        flex: "0 0 auto",
-      }}
-    >
+    <div style={{ minWidth, flex: "0 0 auto" }}>
       <div
         style={{
           fontSize: 11,
@@ -943,12 +946,7 @@ function CampoSelectEstado({
       : options;
 
   return (
-    <div
-      style={{
-        minWidth: 140,
-        flex: "0 0 auto",
-      }}
-    >
+    <div style={{ minWidth: 140, flex: "0 0 auto" }}>
       <div
         style={{
           fontSize: 11,
