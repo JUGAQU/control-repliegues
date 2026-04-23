@@ -281,7 +281,7 @@ export default function Ficha() {
   };
 
   const valor: React.CSSProperties = {
-    background: "#d9eef7",
+    background: "#d9ead3",
     padding: "3px 6px",
     borderRadius: 4,
     border: "1px solid #bcd",
