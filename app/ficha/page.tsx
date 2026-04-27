@@ -840,9 +840,11 @@ const errores = resultados.filter((x) => x.error);
         </div>
 
 
-        {/* BLOQUE 3 */}
+       
 
         {/* BLOQUE 3 */}
+
+        
         <div
           style={{
             width: "100%",
@@ -874,6 +876,32 @@ const errores = resultados.filter((x) => x.error);
               >
                 Ejecución Reasignaciones
               </div>
+              <div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: 5,
+    background: "#d9ead3",
+    border: "1px solid #6aa84f",
+    padding: "4px 8px",
+    fontSize: 11,
+    fontWeight: "bold",
+    whiteSpace: "nowrap",
+  }}
+>
+  <span
+    style={{
+      background: "#38761d",
+      color: "white",
+      padding: "2px 6px",
+      borderRadius: 3,
+    }}
+  >
+    {reasignaciones.length}
+  </span>
+
+  <span>TOTAL REASIGNACIONES</span>
+</div>
 
               {GRUPOS_EJECUCION.map((grupo) => (
                 <label
