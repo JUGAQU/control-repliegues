@@ -1332,6 +1332,15 @@ v
   <input
     type="date"
     value={r.fecha_ejecucion || ""}
+
+    disabled={
+      !(
+        r.estado_trabajos === "Ejecutada" ||
+        r.estado_trabajos === "Finalizada"
+      )
+    }
+
+    
     onChange={(e)=>
       handleReasignacionChange(
         reasignaciones.findIndex(x=>x.id===r.id),
