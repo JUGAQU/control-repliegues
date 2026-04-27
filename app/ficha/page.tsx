@@ -66,6 +66,35 @@ const COLORES = {
   textoAzul: "#0b5394",
 };
 
+type GrupoEjecucion =
+  | "nuevo_cable"
+  | "ftth_caliente"
+  | "ftth_frio"
+  | "puentes"
+  | "ver_indicaciones"
+  | "resto";
+
+const GRUPOS_EJECUCION: { key: GrupoEjecucion; label: string }[] = [
+  { key: "nuevo_cable", label: "Nuevo cable fibra a EEBB" },
+  { key: "ftth_caliente", label: "FTTH caliente" },
+  { key: "ftth_frio", label: "FTTH frío" },
+  { key: "puentes", label: "Puentes antes retranqueo" },
+  { key: "ver_indicaciones", label: "Ver indicaciones" },
+  { key: "resto", label: "Resto" },
+];
+
+function grupoModoReasignacion(modo?: string | null): GrupoEjecucion {
+  const txt = (modo || "").toUpperCase();
+
+  if (txt.includes("NUEVO CABLE")) return "nuevo_cable";
+  if (txt.includes("FTTH EN CALIENTE")) return "ftth_caliente";
+  if (txt.includes("FTTH EN FRIO")) return "ftth_frio";
+  if (txt.includes("PUENTES")) return "puentes";
+  if (txt.includes("VER INDICACIONES")) return "ver_indicaciones";
+
+  return "resto";
+}
+
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
@@ -75,6 +104,15 @@ export default function Ficha() {
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
+  const [filtrosEjecucion, setFiltrosEjecucion] =
+  useState<Record<GrupoEjecucion, boolean>>({
+    nuevo_cable: true,
+    ftth_caliente: true,
+    ftth_frio: true,
+    puentes: true,
+    ver_indicaciones: true,
+    resto: true,
+  });
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -246,6 +284,20 @@ export default function Ficha() {
         return;
       }
 
+      const sinFechaObligatoria = reasignaciones.filter(
+  (r: any) =>
+    (r.estado_trabajos === "Ejecutada" ||
+      r.estado_trabajos === "Finalizada") &&
+    (!r.fecha_ejecucion || String(r.fecha_ejecucion).trim() === "")
+);
+
+if (sinFechaObligatoria.length > 0) {
+  alert(
+    "No puedes guardar: hay servicios en estado Ejecutada/Finalizada sin Fecha de Ejecución"
+  );
+  return;
+}
+
       const reasignacionesConId = reasignaciones.filter((r) => r?.id);
 
       const resultados = await Promise.all(
@@ -287,7 +339,33 @@ export default function Ficha() {
               String(r.observaciones_del_estudio).trim() !== ""
                 ? r.observaciones_del_estudio
                 : null,
+            fecha_ejecucion: r.fecha_ejecucion || null,
+numero_de_actuaciones: r.numero_de_actuaciones || null,
+geco: !!r.geco,
+cex: !!r.cex,
+rima: !!r.rima,
+redes_priv: !!r.redes_priv,
+dwdm: !!r.dwdm,
+ventana_geco: r.ventana_geco || null,
+cuestionario: r.cuestionario || null,
+pba_atenuacion: r.pba_atenuacion || null,
+autonegociacion: r.autonegociacion || null,
+configuracion_puerto_destino: r.configuracion_puerto_destino || null,
+supervisa_corte: r.supervisa_corte || null,
+sgipe: r.sgipe || null,
+grupo: r.grupo || null,
+orden_atlas: r.orden_atlas || null,
+estado_orden_atlas: r.estado_orden_atlas || null,
+uo_atlas: r.uo_atlas || null,
+observaciones_preparacion_reasignacion:
+  r.observaciones_preparacion_reasignacion || null,
+
+
+            
           };
+
+
+          
 
           const { error } = await supabase
             .from("reasignaciones")
@@ -1003,15 +1081,146 @@ export default function Ficha() {
             )}
 
             {bloqueActivo === "ejecucion_reasignaciones" && (
-              <div
-                style={{
-                  background: "#fff",
-                  border: "1px solid #ddd",
-                  borderRadius: 4,
-                  minHeight: 260,
-                }}
+  <>
+    {reasignaciones.length === 0 ? (
+      <div style={{ background:"#fff", border:"1px solid #ddd", padding:10 }}>
+        No hay reasignaciones para este atlas.
+      </div>
+    ) : (
+      reasignaciones.map((r:any,index:number)=>(
+        <div
+          key={r.id || index}
+          style={{
+            display:"flex",
+            border:"1px solid #8ea9bf",
+            background:"#d9edf7",
+            marginBottom:12
+          }}
+        >
+          <div
+            style={{
+              width:35,
+              background:"#bdd7e7",
+              display:"flex",
+              alignItems:"center",
+              justifyContent:"center",
+              fontWeight:"bold",
+              fontSize:18
+            }}
+          >
+            {index+1}
+          </div>
+
+          <div style={{flex:1,padding:6}}>
+
+            {/* FILA 1 */}
+            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+              <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
+              <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
+              <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
+              <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={260}/>
+              <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={420}/>
+
+              <CampoInputAuto
+                label="SGIPE"
+                value={r.sgipe || ""}
+                minWidth={90}
+                onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}
               />
-            )}
+
+              <CampoInputAuto
+                label="Grupo"
+                value={r.grupo || ""}
+                minWidth={70}
+                onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
+              />
+            </div>
+
+            {/* FILA 2 */}
+            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+              <CampoInputAuto
+                label="Cuestionario"
+                value={r.cuestionario || ""}
+                minWidth={100}
+                onChange={(v)=>handleReasignacionChange(index,"cuestionario",v)}
+              />
+
+              <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={130}/>
+              <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={120}/>
+              <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150}/>
+              <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={180}/>
+              <CampoReaSoloLecturaAuto label="Velocidad Interface" value={r.velocidad_interface} minWidth={140}/>
+            </div>
+
+            {/* FILA 3 */}
+            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+              <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"orden_atlas",v)}/>
+              <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChange(index,"estado_orden_atlas",v)}/>
+              <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"uo_atlas",v)}/>
+
+              <div style={{flex:1,minWidth:600}}>
+                <CampoInputAuto
+                  label="Obs Preparación"
+                  value={r.observaciones_preparacion_reasignacion || ""}
+                  minWidth={600}
+                  onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
+                />
+              </div>
+            </div>
+
+            {/* FILA 4 */}
+            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+              <CampoInputAuto label="Pba Atenuación" value={r.pba_atenuacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
+              <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
+              <CampoInputAuto label="Config Puerto" value={r.configuracion_puerto_destino || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
+              <CampoReaSoloLecturaAuto label="Velocidad Puerto" value={r.velocidad_interface} minWidth={140}/>
+            </div>
+
+            {/* FILA 5 */}
+            <div style={{display:"flex",gap:8,overflowX:"auto",alignItems:"flex-end"}}>
+              <CampoSelectEstado
+                label="Estado Trabajo"
+                value={r.estado_trabajos}
+                options={OPCIONES_ESTADO_TRABAJOS}
+                onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
+              />
+
+              <div style={{ minWidth:130, flex:"0 0 auto" }}>
+                <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
+                  F. Ejecución
+                </div>
+
+                <input
+                  type="date"
+                  value={r.fecha_ejecucion || ""}
+                  disabled={!(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")}
+                  onChange={(e)=>handleReasignacionChange(index,"fecha_ejecucion",e.target.value)}
+                  style={{
+                    width:"100%",
+                    height:20,
+                    padding:"1px 5px",
+                    background:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
+                      ? COLORES.fondoCampo
+                      : COLORES.fondoSoloLectura,
+                    color:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
+                      ? "#000"
+                      : COLORES.textoSoloLectura,
+                    border:"1px solid #888",
+                    borderRadius:4,
+                    fontSize:11,
+                    fontFamily:"Arial",
+                    boxSizing:"border-box"
+                  }}
+                />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      ))
+    )}
+  </>
+)}
 
             {bloqueActivo === "visitas" && (
               <div
