@@ -289,16 +289,26 @@ export default function Ficha() {
                 : null,
           };
 
-          const { error } = await supabase
-            .from("reasignaciones")
-            .update(payload)
-            .eq("id", r.id);
+const { data, error } = await supabase
+  .from("reasignaciones")
+  .update(payload)
+  .eq("id", r.id)
+  .select("id");
 
-          return { id: r.id, error, payload };
+console.log("Guardando reasignación:", {
+  id: r.id,
+  payload,
+  data,
+  error,
+});
+
+return { id: r.id, data, error, payload };
         })
       );
 
-      const errores = resultados.filter((x) => x.error);
+      const errores = resultados.filter(
+  (x) => x.error || !x.data || x.data.length === 0
+);
 
       if (errores.length > 0) {
         console.error("Errores guardando reasignaciones:", errores);
