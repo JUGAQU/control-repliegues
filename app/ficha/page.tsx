@@ -318,6 +318,23 @@ const [filtrosEjecucion, setFiltrosEjecucion] = useState<
         return;
       }
 
+      const sinFechaObligatoria = reasignaciones.filter(
+      (r:any)=>
+      (
+      r.estado_trabajos==="Ejecutada" ||
+      r.estado_trabajos==="Finalizada"
+      )
+      &&
+      (!r.fecha_ejecucion || String(r.fecha_ejecucion).trim()==="")
+      );
+
+      if(sinFechaObligatoria.length>0){
+      alert(
+      "No puedes guardar: hay servicios en estado Ejecutada/Finalizada sin Fecha de Ejecución"
+      );
+      return;
+      }
+
       const reasignacionesConId = reasignaciones.filter((r) => r?.id);
 
       const resultados = await Promise.all(
