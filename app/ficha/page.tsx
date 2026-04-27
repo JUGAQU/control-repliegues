@@ -1354,6 +1354,30 @@ value={r.indicaciones_para_el_encaminamiento}
 minWidth={420}
 />
 
+<CampoInputAuto
+label="SGIPE"
+value={r.sgipe || ""}
+minWidth={90}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"sgipe",
+v
+)}
+/>
+
+<CampoInputAuto
+label="Grupo"
+value={r.grupo || ""}
+minWidth={70}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"grupo",
+v
+)}
+/>
+
 </div>
 
 {/* FILA 2 */}
@@ -1415,29 +1439,9 @@ v
 )}
 />
 
-<CampoInputAuto
-label="SGIPE"
-value={r.sgipe || ""}
-minWidth={90}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"sgipe",
-v
-)}
-/>
 
-<CampoInputAuto
-label="Grupo"
-value={r.grupo || ""}
-minWidth={70}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"grupo",
-v
-)}
-/>
+
+
 
 </div>
 
