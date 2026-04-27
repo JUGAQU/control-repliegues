@@ -886,8 +886,9 @@ whiteSpace:"nowrap"
 Ejecución Reasignaciones
 </div>
 
+</div>
 
-{GRUPOS_EJECUCION.map((grupo:any)=>(
+{GRUPOS_EJECUCION.map((grupo) => (
 
 <label
 key={grupo.key}
@@ -912,19 +913,16 @@ padding:"2px 6px",
 borderRadius:3
 }}
 >
-{resumenEjecucion[grupo.key]}
+{resumenEjecucion[grupo.key] || 0}
 </span>
 
 <input
 type="checkbox"
-checked={
-filtrosEjecucion[grupo.key]
-}
+checked={filtrosEjecucion[grupo.key]}
 onChange={(e)=>
 setFiltrosEjecucion(prev=>({
 ...prev,
-[grupo.key]:
-e.target.checked
+[grupo.key]:e.target.checked
 }))
 }
 />
@@ -936,6 +934,9 @@ e.target.checked
 </label>
 
 ))}
+
+</div>
+
 
 </div>
 
