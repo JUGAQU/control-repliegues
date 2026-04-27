@@ -1299,6 +1299,12 @@ value={r.servicio}
 minWidth={420}
 />
 
+<CampoReaSoloLecturaAuto
+label="Administrativo"
+value={r.administrativo}
+minWidth={130}
+/>
+
 <CampoSelectEstado
 label="Estado Trabajo"
 value={r.estado_trabajos}
