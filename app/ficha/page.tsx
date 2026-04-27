@@ -844,7 +844,108 @@ const reasignacionesEjecucionFiltradas = reasignaciones.filter((r) => {
               boxSizing: "border-box",
             }}
           >
-            {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
+            {bloqueActivo==="ejecucion_reasignaciones"
+? (
+
+<div
+style={{
+display:"flex",
+gap:8,
+overflowX:"auto",
+alignItems:"center"
+}}
+>
+
+<div
+style={{
+background:"#0070c0",
+color:"white",
+fontWeight:"bold",
+padding:"4px 12px",
+borderRadius:4,
+whiteSpace:"nowrap"
+}}
+>
+Ejecución Reasignaciones
+</div>
+
+
+{GRUPOS_EJECUCION.map((grupo:any)=>(
+
+<label
+key={grupo.key}
+style={{
+display:"flex",
+alignItems:"center",
+gap:5,
+background:"#eaf4ff",
+border:"1px solid #7ea1be",
+padding:"4px 8px",
+fontSize:11,
+fontWeight:"bold",
+whiteSpace:"nowrap"
+}}
+>
+
+<span
+style={{
+background:"#0070c0",
+color:"white",
+padding:"2px 6px",
+borderRadius:3
+}}
+>
+{resumenEjecucion[grupo.key]}
+</span>
+
+<input
+type="checkbox"
+checked={
+filtrosEjecucion[grupo.key]
+}
+onChange={(e)=>
+setFiltrosEjecucion(prev=>({
+...prev,
+[grupo.key]:
+e.target.checked
+}))
+}
+/>
+
+<span>
+{grupo.label}
+</span>
+
+</label>
+
+))}
+
+</div>
+
+)
+
+:
+
+(
+
+<div
+style={{
+padding:"6px 10px",
+background:COLORES.barraTitulo,
+border:
+`1px solid ${COLORES.bordeBarraTitulo}`,
+borderRadius:6,
+fontWeight:"bold",
+fontSize:12,
+color:"#083b73"
+}}
+>
+{bloqueActivo
+? getTituloBloque()
+: "Ningún bloque seleccionado"}
+</div>
+
+)}
           </div>
         </div>
       </div>
