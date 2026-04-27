@@ -1336,11 +1336,6 @@ value={r.servicio}
 minWidth={420}
 />
 
-<CampoReaSoloLecturaAuto
-label="Administrativo"
-value={r.administrativo}
-minWidth={130}
-/>
 
 <CampoReaSoloLecturaAuto
 label="Modo Reasignación"
