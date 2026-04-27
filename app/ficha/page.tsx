@@ -1540,11 +1540,7 @@ minWidth={140}
 
 </div> {/* FIN FILA 4 */}
 
-
 {/* FILA 5 */}
-
-
-
 <div
 style={{
 display:"flex",
@@ -1553,8 +1549,6 @@ overflowX:"auto",
 marginTop:6,
 alignItems:"flex-end"
 }}
->
-
 >
 
 <CampoSelectEstado
@@ -1570,79 +1564,16 @@ v
 />
 
 <div style={{ minWidth:130, flex:"0 0 auto" }}>
-<div
-style={{
-fontSize:11,
-fontWeight:"bold",
-color:COLORES.textoAzul,
-marginBottom:3
-}}
->
-F. Ejecución
+...
 </div>
 
-<input
-type="date"
-value={r.fecha_ejecucion || ""}
-
-disabled={
-!(
-r.estado_trabajos==="Ejecutada" ||
-r.estado_trabajos==="Finalizada"
-)
-}
-
-onChange={(e)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"fecha_ejecucion",
-e.target.value
-)
-}
-
-style={{
-width:"100%",
-height:20,
-padding:"1px 5px",
-
-background:
-(
-r.estado_trabajos==="Ejecutada" ||
-r.estado_trabajos==="Finalizada"
-)
-? COLORES.fondoCampo
-: COLORES.fondoSoloLectura,
-
-color:
-(
-r.estado_trabajos==="Ejecutada" ||
-r.estado_trabajos==="Finalizada"
-)
-? "#000"
-: COLORES.textoSoloLectura,
-
-border:"1px solid #888",
-borderRadius:4,
-fontSize:11,
-fontFamily:"Arial",
-boxSizing:"border-box"
-}}
-/>
+</div> {/* FIN FILA 5 */}
 
 </div>
-
-</div> {/* FIN FILA5 */}
-
-
-  
-
 </div>
-
-</div>
-
-))
+))}
 )}
-  
+
 </>
 )}
 
