@@ -398,6 +398,7 @@ const errores = resultados.filter((x) => x.error);
     }
   };
 
+  
   const toggleBloque = (bloque: Exclude<BloqueActivo, null>) => {
     setBloqueActivo((prev) => (prev === bloque ? null : bloque));
   };
@@ -456,18 +457,21 @@ const errores = resultados.filter((x) => x.error);
     overflowX: "auto",
     gap: 8,
   };
-const resumenEjecucion = GRUPOS_EJECUCION.reduce((acc, grupo) => {
-  acc[grupo.key] = reasignaciones.filter(
-    (r) => grupoModoReasignacion(r.modo_reasignacion) === grupo.key
-  ).length;
-  return acc;
-}, {} as Record<GrupoEjecucion, number>);
 
-const reasignacionesEjecucionFiltradas = reasignaciones.filter((r) => {
-  const grupo = grupoModoReasignacion(r.modo_reasignacion);
-  return filtrosEjecucion[grupo];
-});
+  const resumenEjecucion = GRUPOS_EJECUCION.reduce(
+    (acc, grupo) => {
+      acc[grupo.key] = reasignaciones.filter(
+        (r: any) => grupoModoReasignacion(r.modo_reasignacion) === grupo.key
+      ).length;
+      return acc;
+    },
+    {} as Record<GrupoEjecucion, number>
+  );
 
+  const reasignacionesEjecucionFiltradas = reasignaciones.filter((r: any) => {
+    const grupo = grupoModoReasignacion(r.modo_reasignacion);
+    return filtrosEjecucion[grupo];
+  });
 
 
   
