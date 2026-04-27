@@ -359,6 +359,34 @@ const [filtrosEjecucion, setFiltrosEjecucion] = useState<
               String(r.observaciones_del_estudio).trim() !== ""
                 ? r.observaciones_del_estudio
                 : null,
+
+            fecha_ejecucion: r.fecha_ejecucion || null,
+numero_de_actuaciones: r.numero_de_actuaciones || null,
+
+geco: !!r.geco,
+cex: !!r.cex,
+rima: !!r.rima,
+redes_priv: !!r.redes_priv,
+dwdm: !!r.dwdm,
+
+ventana_geco: r.ventana_geco || null,
+
+cuestionario: r.cuestionario || null,
+pba_atenuacion: r.pba_atenuacion || null,
+autonegociacion: r.autonegociacion || null,
+configuracion_puerto_destino:
+  r.configuracion_puerto_destino || null,
+supervisa_corte: r.supervisa_corte || null,
+
+sgipe: r.sgipe || null,
+grupo: r.grupo || null,
+
+orden_atlas: r.orden_atlas || null,
+estado_orden_atlas: r.estado_orden_atlas || null,
+uo_atlas: r.uo_atlas || null,
+
+observaciones_preparacion_reasignacion:
+  r.observaciones_preparacion_reasignacion || null,
           };
 
 const { data, error } = await supabase
@@ -1227,42 +1255,35 @@ key={r.id || index}
 style={{
 display:"flex",
 border:"1px solid #8ea9bf",
-background:COLORES.fondoBloque,
-marginBottom:12,
-overflow:"hidden"
+background:"#d9edf7",
+marginBottom:12
 }}
 >
 
 <div
 style={{
-width:42,
-minWidth:42,
+width:35,
 background:"#bdd7e7",
-borderRight:"1px solid #7f9db9",
 display:"flex",
 alignItems:"center",
 justifyContent:"center",
-fontSize:16,
-fontWeight:"bold"
+fontWeight:"bold",
+fontSize:18
 }}
 >
 {index+1}
 </div>
 
+<div style={{flex:1,padding:6}}>
 
-<div
-style={{
-flex:1,
-padding:8
-}}
->
+{/* FILA 1 */}
 
 <div
 style={{
 display:"flex",
-gap:10,
+gap:8,
 overflowX:"auto",
-flexWrap:"nowrap"
+marginBottom:6
 }}
 >
 
@@ -1275,31 +1296,192 @@ minWidth={100}
 <CampoReaSoloLecturaAuto
 label="Servicio"
 value={r.servicio}
-minWidth={380}
+minWidth={420}
 />
 
-<CampoReaSoloLecturaAuto
-label="Administrativo"
-value={r.administrativo}
-minWidth={130}
+<CampoSelectEstado
+label="Estado Trabajo"
+value={r.estado_trabajos}
+options={OPCIONES_ESTADO_TRABAJOS}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"estado_trabajos",
+v
+)}
 />
 
-<CampoReaSoloLecturaAuto
-label="Orden Partida"
-value={r.ordenes}
-minWidth={130}
+<CampoInputAuto
+label="F. Ejecución"
+value={r.fecha_ejecucion || ""}
+minWidth={110}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"fecha_ejecucion",
+v
+)}
 />
 
-<CampoReaAuto
-label="Modo Reasignación"
-value={r.modo_reasignacion}
-minWidth={320}
+<CampoInputAuto
+label="Nº Act."
+value={r.numero_de_actuaciones || ""}
+minWidth={70}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"numero_de_actuaciones",
+v
+)}
 />
 
-<CampoReaAuto
-label="Indicaciones"
-value={r.indicaciones_para_el_encaminamiento}
-minWidth={520}
+</div>
+
+
+{/* FILA 2 */}
+
+<div
+style={{
+display:"flex",
+gap:8,
+overflowX:"auto",
+marginBottom:6
+}}
+>
+
+<CampoInputAuto
+label="Cuestionario"
+value={r.cuestionario || ""}
+minWidth={100}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"cuestionario",
+v
+)}
+/>
+
+<CampoInputAuto
+label="Pba Atenuación"
+value={r.pba_atenuacion || ""}
+minWidth={110}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"pba_atenuacion",
+v
+)}
+/>
+
+<CampoInputAuto
+label="Autonegociación"
+value={r.autonegociacion || ""}
+minWidth={120}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"autonegociacion",
+v
+)}
+/>
+
+<CampoInputAuto
+label="Config Puerto"
+value={r.configuracion_puerto_destino || ""}
+minWidth={150}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"configuracion_puerto_destino",
+v
+)}
+/>
+
+<CampoInputAuto
+label="SGIPE"
+value={r.sgipe || ""}
+minWidth={90}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"sgipe",
+v
+)}
+/>
+
+<CampoInputAuto
+label="Grupo"
+value={r.grupo || ""}
+minWidth={70}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"grupo",
+v
+)}
+/>
+
+</div>
+
+
+{/* FILA 3 */}
+
+<div
+style={{
+display:"flex",
+gap:8,
+overflowX:"auto"
+}}
+>
+
+<CampoInputAuto
+label="Orden Atlas"
+value={r.orden_atlas || ""}
+minWidth={120}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"orden_atlas",
+v
+)}
+/>
+
+<CampoInputAuto
+label="Estado Orden"
+value={r.estado_orden_atlas || ""}
+minWidth={150}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"estado_orden_atlas",
+v
+)}
+/>
+
+<CampoInputAuto
+label="UO Atlas"
+value={r.uo_atlas || ""}
+minWidth={100}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"uo_atlas",
+v
+)}
+/>
+
+<CampoInputAuto
+label="Obs Preparación"
+value={
+r.observaciones_preparacion_reasignacion || ""
+}
+minWidth={420}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"observaciones_preparacion_reasignacion",
+v
+)}
 />
 
 </div>
@@ -1309,11 +1491,10 @@ minWidth={520}
 </div>
 
 ))
+}
 
-)}
 
-</>
-)}
+  
 
             {bloqueActivo === "visitas" && (
               <div
