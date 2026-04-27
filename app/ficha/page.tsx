@@ -66,6 +66,39 @@ const COLORES = {
   textoAzul: "#0b5394",
 };
 
+const OPCIONES_TIPO_INTERFACE = [
+  "MBX10D",
+  "FETHEX",
+  "FETHLX",
+  "MBX40D",
+  "MXG10D",
+  "1 G",
+  "PETH-1 FO",
+  "PETH-2 FO",
+  "1 FO",
+  "2 FO",
+];
+
+type BloqueActivo =
+  | "equipos"
+  | "reasignaciones"
+  | "ejecucion_reasignaciones"
+  | "visitas"
+  | "certificacion"
+  | null;
+
+type GrupoEjecucion =
+  | "nuevo_cable"
+  | "ftth_caliente"
+  | "ftth_frio"
+  | "puentes"
+  | "ver_indicaciones"
+  | "resto";
+
+
+
+
+
 type GrupoEjecucion =
   | "nuevo_cable"
   | "ftth_caliente"
