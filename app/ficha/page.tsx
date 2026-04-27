@@ -324,6 +324,19 @@ const [filtrosEjecucion, setFiltrosEjecucion] = useState<
       r.estado_trabajos==="Ejecutada" ||
       r.estado_trabajos==="Finalizada"
       )
+      ? COLORES.fondoCampo
+      : COLORES.fondoSoloLectura,
+
+      color:
+      (
+        r.estado_trabajos==="Ejecutada" ||
+        r.estado_trabajos==="Finalizada"
+      )
+      ? "#000"
+      : COLORES.textoSoloLectura,
+
+
+        
       &&
       (!r.fecha_ejecucion || String(r.fecha_ejecucion).trim()==="")
       );
