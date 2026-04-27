@@ -66,18 +66,7 @@ const COLORES = {
   textoAzul: "#0b5394",
 };
 
-const OPCIONES_TIPO_INTERFACE = [
-  "MBX10D",
-  "FETHEX",
-  "FETHLX",
-  "MBX40D",
-  "MXG10D",
-  "1 G",
-  "PETH-1 FO",
-  "PETH-2 FO",
-  "1 FO",
-  "2 FO",
-];
+
 
 type BloqueActivo =
   | "equipos"
