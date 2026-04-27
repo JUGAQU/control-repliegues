@@ -66,6 +66,54 @@ const COLORES = {
   textoAzul: "#0b5394",
 };
 
+type GrupoEjecucion =
+  | "nuevo_cable"
+  | "ftth_caliente"
+  | "ftth_frio"
+  | "puentes"
+  | "ver_indicaciones"
+  | "resto";
+
+const GRUPOS_EJECUCION: {
+  key: GrupoEjecucion;
+  label: string;
+}[] = [
+  { key: "nuevo_cable", label: "NUEVO CABLE FIBRA A EEBB" },
+  { key: "puentes", label: "PUENTES ANTES RETRANQUEO FINAL" },
+  { key: "ftth_caliente", label: "FTTH EN CALIENTE" },
+  { key: "ftth_frio", label: "FTTH EN FRÍO" },
+  { key: "ver_indicaciones", label: "VER INDICACIONES" },
+  { key: "resto", label: "RESTO" },
+];
+
+function grupoModoReasignacion(modo?: string | null): GrupoEjecucion {
+  const txt = (modo || "").toLowerCase();
+
+  if (txt.includes("nuevo cable de fibra")) return "nuevo_cable";
+  if (txt.includes("ftth en caliente")) return "ftth_caliente";
+  if (txt.includes("ftth en frio") || txt.includes("ftth en frío"))
+    return "ftth_frio";
+  if (txt.includes("puentes antes")) return "puentes";
+  if (txt.includes("ver indicaciones")) return "ver_indicaciones";
+
+  return "resto";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
@@ -75,6 +123,16 @@ export default function Ficha() {
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
+const [filtrosEjecucion, setFiltrosEjecucion] = useState<
+  Record<GrupoEjecucion, boolean>
+>({
+  nuevo_cable: true,
+  ftth_caliente: true,
+  ftth_frio: true,
+  puentes: true,
+  ver_indicaciones: true,
+  resto: true,
+});
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -384,6 +442,21 @@ const errores = resultados.filter((x) => x.error);
     overflowX: "auto",
     gap: 8,
   };
+const resumenEjecucion = GRUPOS_EJECUCION.reduce((acc, grupo) => {
+  acc[grupo.key] = reasignaciones.filter(
+    (r) => grupoModoReasignacion(r.modo_reasignacion) === grupo.key
+  ).length;
+  return acc;
+}, {} as Record<GrupoEjecucion, number>);
+
+const reasignacionesEjecucionFiltradas = reasignaciones.filter((r) => {
+  const grupo = grupoModoReasignacion(r.modo_reasignacion);
+  return filtrosEjecucion[grupo];
+});
+
+
+
+  
 
   return (
     <div
