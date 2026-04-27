@@ -1606,7 +1606,23 @@ value={r.velocidad_interface}
 minWidth={140}
 />
 
-</div>
+</div> {/* FIN FILA 4 */}
+
+
+{/* FILA 5 */}
+
+
+
+<div
+style={{
+display:"flex",
+gap:8,
+overflowX:"auto",
+marginTop:6,
+alignItems:"flex-end"
+}}
+>
+
 >
 
 <CampoSelectEstado
@@ -1683,7 +1699,7 @@ boxSizing:"border-box"
 
 </div>
 
-</div> {/* FIN FILA 4 */}
+</div> {/* FIN FILA5 */}
 
 
   
