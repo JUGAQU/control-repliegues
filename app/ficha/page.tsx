@@ -88,14 +88,6 @@ type GrupoEjecucion =
 
 
 
-type GrupoEjecucion =
-  | "nuevo_cable"
-  | "ftth_caliente"
-  | "ftth_frio"
-  | "puentes"
-  | "ver_indicaciones"
-  | "resto";
-
 const GRUPOS_EJECUCION: {
   key: GrupoEjecucion;
   label: string;
