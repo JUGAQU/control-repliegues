@@ -43,7 +43,7 @@ const OPCIONES_TIPO_INTERFACE = [
   "2 FO",
 ];
 
-type Activo =
+type BloqueActivo =
   | "equipos"
   | "reasignaciones"
   | "ejecucion_reasignaciones"
@@ -66,68 +66,6 @@ const COLORES = {
   textoAzul: "#0b5394",
 };
 
-
-
-type BloqueActivo =
-  | "equipos"
-  | "reasignaciones"
-  | "ejecucion_reasignaciones"
-  | "visitas"
-  | "certificacion"
-  | null;
-
-type GrupoEjecucion =
-  | "nuevo_cable"
-  | "ftth_caliente"
-  | "ftth_frio"
-  | "puentes"
-  | "ver_indicaciones"
-  | "resto";
-
-
-
-
-
-const GRUPOS_EJECUCION: {
-  key: GrupoEjecucion;
-  label: string;
-}[] = [
-  { key: "nuevo_cable", label: "NUEVO CABLE FIBRA A EEBB" },
-  { key: "puentes", label: "PUENTES ANTES RETRANQUEO FINAL" },
-  { key: "ftth_caliente", label: "FTTH EN CALIENTE" },
-  { key: "ftth_frio", label: "FTTH EN FRÍO" },
-  { key: "ver_indicaciones", label: "VER INDICACIONES" },
-  { key: "resto", label: "RESTO" },
-];
-
-function grupoModoReasignacion(modo?: string | null): GrupoEjecucion {
-  const txt = (modo || "").toLowerCase();
-
-  if (txt.includes("nuevo cable de fibra")) return "nuevo_cable";
-  if (txt.includes("ftth en caliente")) return "ftth_caliente";
-  if (txt.includes("ftth en frio") || txt.includes("ftth en frío"))
-    return "ftth_frio";
-  if (txt.includes("puentes antes")) return "puentes";
-  if (txt.includes("ver indicaciones")) return "ver_indicaciones";
-
-  return "resto";
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
@@ -137,16 +75,6 @@ export default function Ficha() {
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
-const [filtrosEjecucion, setFiltrosEjecucion] = useState<
-  Record<GrupoEjecucion, boolean>
->({
-  nuevo_cable: true,
-  ftth_caliente: true,
-  ftth_frio: true,
-  puentes: true,
-  ver_indicaciones: true,
-  resto: true,
-});
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -318,27 +246,6 @@ const [filtrosEjecucion, setFiltrosEjecucion] = useState<
         return;
       }
 
-      const sinFechaObligatoria = reasignaciones.filter(
-      (r:any)=>
-      (
-      r.estado_trabajos==="Ejecutada" ||
-      r.estado_trabajos==="Finalizada"
-      )
-     
-
-
-        
-      &&
-      (!r.fecha_ejecucion || String(r.fecha_ejecucion).trim()==="")
-      );
-
-      if(sinFechaObligatoria.length>0){
-      alert(
-      "No puedes guardar: hay servicios en estado Ejecutada/Finalizada sin Fecha de Ejecución"
-      );
-      return;
-      }
-
       const reasignacionesConId = reasignaciones.filter((r) => r?.id);
 
       const resultados = await Promise.all(
@@ -380,54 +287,18 @@ const [filtrosEjecucion, setFiltrosEjecucion] = useState<
               String(r.observaciones_del_estudio).trim() !== ""
                 ? r.observaciones_del_estudio
                 : null,
-
-            fecha_ejecucion: r.fecha_ejecucion || null,
-numero_de_actuaciones: r.numero_de_actuaciones || null,
-
-geco: !!r.geco,
-cex: !!r.cex,
-rima: !!r.rima,
-redes_priv: !!r.redes_priv,
-dwdm: !!r.dwdm,
-
-ventana_geco: r.ventana_geco || null,
-
-cuestionario: r.cuestionario || null,
-pba_atenuacion: r.pba_atenuacion || null,
-autonegociacion: r.autonegociacion || null,
-configuracion_puerto_destino:
-  r.configuracion_puerto_destino || null,
-supervisa_corte: r.supervisa_corte || null,
-
-sgipe: r.sgipe || null,
-grupo: r.grupo || null,
-
-orden_atlas: r.orden_atlas || null,
-estado_orden_atlas: r.estado_orden_atlas || null,
-uo_atlas: r.uo_atlas || null,
-
-observaciones_preparacion_reasignacion:
-  r.observaciones_preparacion_reasignacion || null,
           };
 
-const { data, error } = await supabase
-  .from("reasignaciones")
-  .update(payload)
-  .eq("id", r.id)
-  .select("id");
+          const { error } = await supabase
+            .from("reasignaciones")
+            .update(payload)
+            .eq("id", r.id);
 
-console.log("Resultado Guardando reasignación:", {
-  id: r.id,
-  payload,
-  data,
-  error,
-});
-
-return { id: r.id, data, error, payload };
+          return { id: r.id, error, payload };
         })
       );
 
-const errores = resultados.filter((x) => x.error);
+      const errores = resultados.filter((x) => x.error);
 
       if (errores.length > 0) {
         console.error("Errores guardando reasignaciones:", errores);
@@ -447,7 +318,6 @@ const errores = resultados.filter((x) => x.error);
     }
   };
 
-  
   const toggleBloque = (bloque: Exclude<BloqueActivo, null>) => {
     setBloqueActivo((prev) => (prev === bloque ? null : bloque));
   };
@@ -506,24 +376,6 @@ const errores = resultados.filter((x) => x.error);
     overflowX: "auto",
     gap: 8,
   };
-
-  const resumenEjecucion = GRUPOS_EJECUCION.reduce(
-    (acc, grupo) => {
-      acc[grupo.key] = reasignaciones.filter(
-        (r: any) => grupoModoReasignacion(r.modo_reasignacion) === grupo.key
-      ).length;
-      return acc;
-    },
-    {} as Record<GrupoEjecucion, number>
-  );
-
-  const reasignacionesEjecucionFiltradas = reasignaciones.filter((r: any) => {
-    const grupo = grupoModoReasignacion(r.modo_reasignacion);
-    return filtrosEjecucion[grupo];
-  });
-
-
-  
 
   return (
     <div
@@ -888,12 +740,6 @@ const errores = resultados.filter((x) => x.error);
           />
         </div>
 
-
-       
-
-        {/* BLOQUE 3 */}
-
-        
         <div
           style={{
             width: "100%",
@@ -904,119 +750,24 @@ const errores = resultados.filter((x) => x.error);
             marginBottom: 8,
           }}
         >
-          {bloqueActivo === "ejecucion_reasignaciones" ? (
-            <div
-              style={{
-                display: "flex",
-                gap: 8,
-                overflowX: "auto",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  background: "#0070c0",
-                  color: "white",
-                  fontWeight: "bold",
-                  padding: "4px 12px",
-                  borderRadius: 4,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                Ejecución Reasignaciones
-              </div>
-              <div
-  style={{
-    display: "flex",
-    alignItems: "center",
-    gap: 5,
-    background: "#d9ead3",
-    border: "1px solid #6aa84f",
-    padding: "4px 8px",
-    fontSize: 11,
-    fontWeight: "bold",
-    whiteSpace: "nowrap",
-  }}
->
-  <span
-    style={{
-      background: "#38761d",
-      color: "white",
-      padding: "2px 6px",
-      borderRadius: 3,
-    }}
-  >
-    {reasignaciones.length}
-  </span>
-
-  <span>TOTAL REASIGNACIONES</span>
-</div>
-
-              {GRUPOS_EJECUCION.map((grupo) => (
-                <label
-                  key={grupo.key}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 5,
-                    background: "#eaf4ff",
-                    border: "1px solid #7ea1be",
-                    padding: "4px 8px",
-                    fontSize: 11,
-                    fontWeight: "bold",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  <span
-                    style={{
-                      background: "#0070c0",
-                      color: "white",
-                      padding: "2px 6px",
-                      borderRadius: 3,
-                    }}
-                  >
-                    {resumenEjecucion[grupo.key] || 0}
-                  </span>
-
-                  <input
-                    type="checkbox"
-                    checked={filtrosEjecucion[grupo.key]}
-                    onChange={(e) =>
-                      setFiltrosEjecucion((prev) => ({
-                        ...prev,
-                        [grupo.key]: e.target.checked,
-                      }))
-                    }
-                  />
-
-                  <span>{grupo.label}</span>
-                </label>
-              ))}
-            </div>
-          ) : (
-            <div
-              style={{
-                padding: "6px 10px",
-                background: COLORES.barraTitulo,
-                border: `1px solid ${COLORES.bordeBarraTitulo}`,
-                borderRadius: 6,
-                fontWeight: "bold",
-                fontSize: 12,
-                color: "#083b73",
-                minHeight: 20,
-                boxSizing: "border-box",
-              }}
-            >
-              {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
-            </div>
-          )}
+          <div
+            style={{
+              padding: "6px 10px",
+              background: COLORES.barraTitulo,
+              border: `1px solid ${COLORES.bordeBarraTitulo}`,
+              borderRadius: 6,
+              fontWeight: "bold",
+              fontSize: 12,
+              color: "#083b73",
+              minHeight: 20,
+              boxSizing: "border-box",
+            }}
+          >
+            {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
+          </div>
         </div>
       </div>
 
-
-{/* BLOQUE 4 */}
-
-      
       <div
         style={{
           flex: 1,
@@ -1131,23 +882,6 @@ const errores = resultados.filter((x) => x.error);
                             value={r.administrativo}
                             minWidth={130}
                           />
-
-                          <CampoReaSoloLecturaAuto
-                          label="Modo Reasignación"
-                          value={r.modo_reasignacion}
-                          minWidth={320}
-                          />
-
-                          <CampoReaSoloLecturaAuto
-                          label="Indicaciones Encaminamiento"
-                          value={r.indicaciones_para_el_encaminamiento}
-                          minWidth={520}
-                          />
-
-
-
-
-                          
 
                           <CampoReaSoloLecturaAuto
                             label="Orden Partida"
@@ -1268,354 +1002,16 @@ const errores = resultados.filter((x) => x.error);
               </>
             )}
 
-{bloqueActivo === "ejecucion_reasignaciones" && (
-<>
-{reasignacionesEjecucionFiltradas.length===0 ? (
-
-<div
-style={{
-background:"#fff",
-border:"1px solid #ddd",
-padding:10,
-fontSize:11
-}}
->
-No hay servicios para los filtros activos
-</div>
-
-) : (
-
-reasignacionesEjecucionFiltradas.map(
-(r:any,index:number)=>(
-
-<div
-key={r.id || index}
-style={{
-display:"flex",
-border:"1px solid #8ea9bf",
-background:"#d9edf7",
-marginBottom:12
-}}
->
-
-<div
-style={{
-width:35,
-background:"#bdd7e7",
-display:"flex",
-alignItems:"center",
-justifyContent:"center",
-fontWeight:"bold",
-fontSize:18
-}}
->
-{index+1}
-</div>
-
-<div style={{flex:1,padding:6}}>
-
-{/* FILA 1 */}
-<div
-style={{
-display:"flex",
-gap:8,
-overflowX:"auto",
-marginBottom:6
-}}
->
-
-<CampoReaSoloLecturaAuto
-label="Tipo"
-value={r.tipo}
-minWidth={100}
-/>
-
-<CampoReaSoloLecturaAuto
-label="Servicio"
-value={r.servicio}
-minWidth={420}
-/>
-
-
-<CampoReaSoloLecturaAuto
-label="Modo Reasignación"
-value={r.modo_reasignacion}
-minWidth={260}
-/>
-
-<CampoReaSoloLecturaAuto
-label="Indicaciones Encaminamiento"
-value={r.indicaciones_para_el_encaminamiento}
-minWidth={420}
-/>
-
-<CampoInputAuto
-label="SGIPE"
-value={r.sgipe || ""}
-minWidth={90}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"sgipe",
-v
-)}
-/>
-
-<CampoInputAuto
-label="Grupo"
-value={r.grupo || ""}
-minWidth={70}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"grupo",
-v
-)}
-/>
-
-</div>
-
-{/* FILA 2 */}
-
-<div
-style={{
-display:"flex",
-gap:8,
-overflowX:"auto",
-marginBottom:6
-}}
->
-
-<CampoInputAuto
-label="Cuestionario"
-value={r.cuestionario || ""}
-minWidth={100}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"cuestionario",
-v
-)}
-/>
-
-
-
-
-
-
-
-
-
-</div>
-
-
-{/* FILA 3 */}
-
-<div
-style={{
-display:"flex",
-gap:8,
-overflowX:"auto"
-}}
->
-
-<CampoReaSoloLecturaAuto
-label="Administrativo"
-value={r.administrativo}
-minWidth={130}
-/>
-
-<CampoInputAuto
-label="Orden Atlas"
-value={r.orden_atlas || ""}
-minWidth={120}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"orden_atlas",
-v
-)}
-/>
-
-<CampoInputAuto
-label="Estado Orden"
-value={r.estado_orden_atlas || ""}
-minWidth={150}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"estado_orden_atlas",
-v
-)}
-/>
-
-<div
-style={{
-flex:1,
-minWidth:600
-}}
->
-<CampoInputAuto
-label="Obs Preparación"
-value={
-r.observaciones_preparacion_reasignacion || ""
-}
-minWidth={600}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"observaciones_preparacion_reasignacion",
-v
-)}
-/>
-</div>
-</div> {/* FIN FILA 3 */}
-
-{/* FILA 4 */}
-
-
-
-<div
-style={{
-display:"flex",
-gap:8,
-overflowX:"auto",
-marginTop:6,
-alignItems:"flex-end"
-}}
->
-
-<CampoInputAuto
-label="Pba Atenuación"
-value={r.pba_atenuacion || ""}
-minWidth={170}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"pba_atenuacion",
-v
-)}
-/>
-
-<CampoInputAuto
-label="Autonegociación"
-value={r.autonegociacion || ""}
-minWidth={170}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"autonegociacion",
-v
-)}
-/>
-
-<CampoInputAuto
-label="Config Puerto"
-value={r.configuracion_puerto_destino || ""}
-minWidth={200}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"configuracion_puerto_destino",
-v
-)}
-/>
-
-<CampoReaSoloLecturaAuto
-label="Velocidad Puerto"
-value={r.velocidad_interface}
-minWidth={140}
-/>
-
-</div> {/* FIN FILA 4 */}
-
-{/* FILA 5 */}
-<div
-style={{
-display:"flex",
-gap:8,
-overflowX:"auto",
-marginTop:6,
-alignItems:"flex-end"
-}}
->
-<CampoSelectEstado
-label="Estado Trabajo"
-value={r.estado_trabajos}
-options={OPCIONES_ESTADO_TRABAJOS}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"estado_trabajos",
-v
-)}
-/>
-
-<div style={{ minWidth:130, flex:"0 0 auto" }}>
-<div
-style={{
-fontSize:11,
-fontWeight:"bold",
-color:COLORES.textoAzul,
-marginBottom:3
-}}
->
-F. Ejecución
-</div>
-
-<input
-type="date"
-value={r.fecha_ejecucion || ""}
-disabled={
-!(
-r.estado_trabajos==="Ejecutada" ||
-r.estado_trabajos==="Finalizada"
-)
-}
-onChange={(e)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"fecha_ejecucion",
-e.target.value
-)
-}
-style={{
-width:"100%",
-height:20,
-padding:"1px 5px",
-background:
-(
-r.estado_trabajos==="Ejecutada" ||
-r.estado_trabajos==="Finalizada"
-)
-? COLORES.fondoCampo
-: COLORES.fondoSoloLectura,
-color:
-(
-r.estado_trabajos==="Ejecutada" ||
-r.estado_trabajos==="Finalizada"
-)
-? "#000"
-: COLORES.textoSoloLectura,
-border:"1px solid #888",
-borderRadius:4,
-fontSize:11,
-fontFamily:"Arial",
-boxSizing:"border-box"
-}}
-/>
-</div>
-</div> {/* FIN FILA 5 */}
-
-</div>
-</div>
-))
-)}
-</>
-)}
-
-
-  
+            {bloqueActivo === "ejecucion_reasignaciones" && (
+              <div
+                style={{
+                  background: "#fff",
+                  border: "1px solid #ddd",
+                  borderRadius: 4,
+                  minHeight: 260,
+                }}
+              />
+            )}
 
             {bloqueActivo === "visitas" && (
               <div
