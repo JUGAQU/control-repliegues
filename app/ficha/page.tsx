@@ -1449,25 +1449,18 @@ v
 )}
 />
 
-<CampoInputAuto
-label="UO Atlas"
-value={r.uo_atlas || ""}
-minWidth={100}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"uo_atlas",
-v
-)}
-/>
-
-<div style={{ flex:1, minWidth:500 }}>
+<div
+style={{
+flex:1,
+minWidth:600
+}}
+>
 <CampoInputAuto
 label="Obs Preparación"
 value={
 r.observaciones_preparacion_reasignacion || ""
 }
-minWidth={500}
+minWidth={600}
 onChange={(v)=>
 handleReasignacionChange(
 reasignaciones.findIndex(x=>x.id===r.id),
@@ -1476,7 +1469,6 @@ v
 )}
 />
 </div>
-
 </div> {/* FIN FILA 3 */}
 
 {/* FILA 4 */}
