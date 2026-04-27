@@ -1424,6 +1424,12 @@ overflowX:"auto"
 }}
 >
 
+<CampoReaSoloLecturaAuto
+label="Administrativo"
+value={r.administrativo}
+minWidth={130}
+/>
+
 <CampoInputAuto
 label="Orden Atlas"
 value={r.orden_atlas || ""}
@@ -1477,6 +1483,14 @@ v
 </div> {/* FIN FILA 3 */}
 
 {/* FILA 4 */}
+
+<div
+style={{
+display:"flex",
+gap:8,
+overflowX:"auto"
+}}
+>
 
 <CampoInputAuto
 label="Pba Atenuación"
