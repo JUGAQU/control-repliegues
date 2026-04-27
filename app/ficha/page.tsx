@@ -1486,10 +1486,88 @@ v
 
 
 
+<div
+style={{
+display:"flex",
+gap:8,
+overflowX:"auto",
+marginTop:6,
+alignItems:"flex-end"
+}}
+>
+
+<CampoSelectEstado
+label="Estado Trabajo"
+value={r.estado_trabajos}
+options={OPCIONES_ESTADO_TRABAJOS}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"estado_trabajos",
+v
+)}
+/>
+
+<div style={{ minWidth:130, flex:"0 0 auto" }}>
+<div
+style={{
+fontSize:11,
+fontWeight:"bold",
+color:COLORES.textoAzul,
+marginBottom:3
+}}
+>
+F. Ejecución
+</div>
+
+<input
+type="date"
+value={r.fecha_ejecucion || ""}
+disabled={
+!(
+r.estado_trabajos==="Ejecutada" ||
+r.estado_trabajos==="Finalizada"
+)
+}
+onChange={(e)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"fecha_ejecucion",
+e.target.value
+)
+}
+style={{
+width:"100%",
+height:20,
+padding:"1px 5px",
+background:
+(
+r.estado_trabajos==="Ejecutada" ||
+r.estado_trabajos==="Finalizada"
+)
+? COLORES.fondoCampo
+: COLORES.fondoSoloLectura,
+color:
+(
+r.estado_trabajos==="Ejecutada" ||
+r.estado_trabajos==="Finalizada"
+)
+? "#000"
+: COLORES.textoSoloLectura,
+border:"1px solid #888",
+borderRadius:4,
+fontSize:11,
+fontFamily:"Arial",
+boxSizing:"border-box"
+}}
+/>
+</div>
+
+
 <CampoInputAuto
 label="Pba Atenuación"
 value={r.pba_atenuacion || ""}
-minWidth={110}
+minWidth={170}
 onChange={(v)=>
 handleReasignacionChange(
 reasignaciones.findIndex(x=>x.id===r.id),
@@ -1501,7 +1579,7 @@ v
 <CampoInputAuto
 label="Autonegociación"
 value={r.autonegociacion || ""}
-minWidth={120}
+minWidth={170}
 onChange={(v)=>
 handleReasignacionChange(
 reasignaciones.findIndex(x=>x.id===r.id),
@@ -1513,7 +1591,7 @@ v
 <CampoInputAuto
 label="Config Puerto"
 value={r.configuracion_puerto_destino || ""}
-minWidth={150}
+minWidth={200}
 onChange={(v)=>
 handleReasignacionChange(
 reasignaciones.findIndex(x=>x.id===r.id),
@@ -1522,13 +1600,13 @@ v
 )}
 />
 
-<div
-style={{
-display:"flex",
-gap:8,
-overflowX:"auto",
-marginTop:6
-}}
+<CampoReaSoloLecturaAuto
+label="Velocidad Puerto"
+value={r.velocidad_interface}
+minWidth={140}
+/>
+
+</div>
 >
 
 <CampoSelectEstado
