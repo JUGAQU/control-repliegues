@@ -1403,41 +1403,9 @@ v
 )}
 />
 
-<CampoInputAuto
-label="Pba Atenuación"
-value={r.pba_atenuacion || ""}
-minWidth={110}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"pba_atenuacion",
-v
-)}
-/>
 
-<CampoInputAuto
-label="Autonegociación"
-value={r.autonegociacion || ""}
-minWidth={120}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"autonegociacion",
-v
-)}
-/>
 
-<CampoInputAuto
-label="Config Puerto"
-value={r.configuracion_puerto_destino || ""}
-minWidth={150}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"configuracion_puerto_destino",
-v
-)}
-/>
+
 
 
 
@@ -1509,6 +1477,42 @@ v
 </div> {/* FIN FILA 3 */}
 
 {/* FILA 4 */}
+
+<CampoInputAuto
+label="Pba Atenuación"
+value={r.pba_atenuacion || ""}
+minWidth={110}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"pba_atenuacion",
+v
+)}
+/>
+
+<CampoInputAuto
+label="Autonegociación"
+value={r.autonegociacion || ""}
+minWidth={120}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"autonegociacion",
+v
+)}
+/>
+
+<CampoInputAuto
+label="Config Puerto"
+value={r.configuracion_puerto_destino || ""}
+minWidth={150}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"configuracion_puerto_destino",
+v
+)}
+/>
 
 <div
 style={{
