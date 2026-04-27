@@ -1317,18 +1317,44 @@ v
 )}
 />
 
-<CampoInputAuto
-label="F. Ejecución"
-value={r.fecha_ejecucion || ""}
-minWidth={110}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"fecha_ejecucion",
-v
-)}
-/>
+<div style={{ minWidth:130, flex:"0 0 auto" }}>
+  <div
+    style={{
+      fontSize:11,
+      fontWeight:"bold",
+      color:COLORES.textoAzul,
+      marginBottom:3
+    }}
+  >
+    F. Ejecución
+  </div>
 
+  <input
+    type="date"
+    value={r.fecha_ejecucion || ""}
+    onChange={(e)=>
+      handleReasignacionChange(
+        reasignaciones.findIndex(x=>x.id===r.id),
+        "fecha_ejecucion",
+        e.target.value
+      )
+    }
+    style={{
+      width:"100%",
+      height:20,
+      padding:"1px 5px",
+      background:COLORES.fondoCampo,
+      border:"1px solid #666",
+      borderRadius:4,
+      fontSize:11,
+      fontFamily:"Arial",
+      boxSizing:"border-box"
+    }}
+  />
+</div>
+
+
+  
 <CampoInputAuto
 label="Nº Act."
 value={r.numero_de_actuaciones || ""}
