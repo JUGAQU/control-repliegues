@@ -1369,17 +1369,40 @@ v
         e.target.value
       )
     }
-    style={{
-      width:"100%",
-      height:20,
-      padding:"1px 5px",
-      background:COLORES.fondoCampo,
-      border:"1px solid #666",
-      borderRadius:4,
-      fontSize:11,
-      fontFamily:"Arial",
-      boxSizing:"border-box"
-    }}
+style={{
+  width:"100%",
+  height:20,
+  padding:"1px 5px",
+
+  background:
+    (
+      r.estado_trabajos==="Ejecutada" ||
+      r.estado_trabajos==="Finalizada"
+    )
+    ? COLORES.fondoCampo
+    : COLORES.fondoSoloLectura,
+
+  color:
+    (
+      r.estado_trabajos==="Ejecutada" ||
+      r.estado_trabajos==="Finalizada"
+    )
+    ? "#000"
+    : COLORES.textoSoloLectura,
+
+  border:
+    (
+      r.estado_trabajos==="Ejecutada" ||
+      r.estado_trabajos==="Finalizada"
+    )
+    ? "1px solid #666"
+    : "1px solid #888",
+
+  borderRadius:4,
+  fontSize:11,
+  fontFamily:"Arial",
+  boxSizing:"border-box"
+}}
   />
 </div>
 
