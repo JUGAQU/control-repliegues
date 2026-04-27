@@ -295,7 +295,7 @@ const { data, error } = await supabase
   .eq("id", r.id)
   .select("id");
 
-console.log("Guardando reasignación:", {
+console.log("Resultado Guardando reasignación:", {
   id: r.id,
   payload,
   data,
@@ -306,9 +306,7 @@ return { id: r.id, data, error, payload };
         })
       );
 
-      const errores = resultados.filter(
-  (x) => x.error || !x.data || x.data.length === 0
-);
+const errores = resultados.filter((x) => x.error);
 
       if (errores.length > 0) {
         console.error("Errores guardando reasignaciones:", errores);
