@@ -43,7 +43,7 @@ const OPCIONES_TIPO_INTERFACE = [
   "2 FO",
 ];
 
-type BloqueActivo =
+type Activo =
   | "equipos"
   | "reasignaciones"
   | "ejecucion_reasignaciones"
@@ -821,6 +821,9 @@ const reasignacionesEjecucionFiltradas = reasignaciones.filter((r) => {
           />
         </div>
 
+
+        {/* BLOQUE 3 */}
+
         <div
           style={{
             width: "100%",
@@ -945,11 +948,20 @@ color:"#083b73"
 : "Ningún bloque seleccionado"}
 </div>
 
+
+
+
+
+  
 )}
           </div>
         </div>
       </div>
 
+
+{/* BLOQUE 4 */}
+
+      
       <div
         style={{
           flex: 1,
@@ -1184,16 +1196,118 @@ color:"#083b73"
               </>
             )}
 
-            {bloqueActivo === "ejecucion_reasignaciones" && (
-              <div
-                style={{
-                  background: "#fff",
-                  border: "1px solid #ddd",
-                  borderRadius: 4,
-                  minHeight: 260,
-                }}
-              />
-            )}
+{bloqueActivo === "ejecucion_reasignaciones" && (
+<>
+{reasignacionesEjecucionFiltradas.length===0 ? (
+
+<div
+style={{
+background:"#fff",
+border:"1px solid #ddd",
+padding:10,
+fontSize:11
+}}
+>
+No hay servicios para los filtros activos
+</div>
+
+) : (
+
+reasignacionesEjecucionFiltradas.map(
+(r:any,index:number)=>(
+
+<div
+key={r.id || index}
+style={{
+display:"flex",
+border:"1px solid #8ea9bf",
+background:COLORES.fondoBloque,
+marginBottom:12,
+overflow:"hidden"
+}}
+>
+
+<div
+style={{
+width:42,
+minWidth:42,
+background:"#bdd7e7",
+borderRight:"1px solid #7f9db9",
+display:"flex",
+alignItems:"center",
+justifyContent:"center",
+fontSize:16,
+fontWeight:"bold"
+}}
+>
+{index+1}
+</div>
+
+
+<div
+style={{
+flex:1,
+padding:8
+}}
+>
+
+<div
+style={{
+display:"flex",
+gap:10,
+overflowX:"auto",
+flexWrap:"nowrap"
+}}
+>
+
+<CampoReaSoloLecturaAuto
+label="Tipo"
+value={r.tipo}
+minWidth={100}
+/>
+
+<CampoReaSoloLecturaAuto
+label="Servicio"
+value={r.servicio}
+minWidth={380}
+/>
+
+<CampoReaSoloLecturaAuto
+label="Administrativo"
+value={r.administrativo}
+minWidth={130}
+/>
+
+<CampoReaSoloLecturaAuto
+label="Orden Partida"
+value={r.ordenes}
+minWidth={130}
+/>
+
+<CampoReaAuto
+label="Modo Reasignación"
+value={r.modo_reasignacion}
+minWidth={320}
+/>
+
+<CampoReaAuto
+label="Indicaciones"
+value={r.indicaciones_para_el_encaminamiento}
+minWidth={520}
+/>
+
+</div>
+
+</div>
+
+</div>
+
+))
+
+)}
+
+</>
+)}
 
             {bloqueActivo === "visitas" && (
               <div
