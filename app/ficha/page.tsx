@@ -1133,6 +1133,23 @@ const errores = resultados.filter((x) => x.error);
                           />
 
                           <CampoReaSoloLecturaAuto
+                          label="Modo Reasignación"
+                          value={r.modo_reasignacion}
+                          minWidth={320}
+                          />
+
+                          <CampoReaSoloLecturaAuto
+                          label="Indicaciones Encaminamiento"
+                          value={r.indicaciones_para_el_encaminamiento}
+                          minWidth={520}
+                          />
+
+
+
+
+                          
+
+                          <CampoReaSoloLecturaAuto
                             label="Orden Partida"
                             value={r.ordenes}
                             minWidth={130}
