@@ -1343,102 +1343,6 @@ value={r.administrativo}
 minWidth={130}
 />
 
-<CampoSelectEstado
-label="Estado Trabajo"
-value={r.estado_trabajos}
-options={OPCIONES_ESTADO_TRABAJOS}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"estado_trabajos",
-v
-)}
-/>
-
-<div style={{ minWidth:130, flex:"0 0 auto" }}>
-  <div
-    style={{
-      fontSize:11,
-      fontWeight:"bold",
-      color:COLORES.textoAzul,
-      marginBottom:3
-    }}
-  >
-    F. Ejecución
-  </div>
-
-  <input
-    type="date"
-    value={r.fecha_ejecucion || ""}
-
-    disabled={
-      !(
-        r.estado_trabajos === "Ejecutada" ||
-        r.estado_trabajos === "Finalizada"
-      )
-    }
-
-    
-    onChange={(e)=>
-      handleReasignacionChange(
-        reasignaciones.findIndex(x=>x.id===r.id),
-        "fecha_ejecucion",
-        e.target.value
-      )
-    }
-style={{
-  width:"100%",
-  height:20,
-  padding:"1px 5px",
-
-  background:
-    (
-      r.estado_trabajos==="Ejecutada" ||
-      r.estado_trabajos==="Finalizada"
-    )
-    ? COLORES.fondoCampo
-    : COLORES.fondoSoloLectura,
-
-  color:
-    (
-      r.estado_trabajos==="Ejecutada" ||
-      r.estado_trabajos==="Finalizada"
-    )
-    ? "#000"
-    : COLORES.textoSoloLectura,
-
-  border:
-    (
-      r.estado_trabajos==="Ejecutada" ||
-      r.estado_trabajos==="Finalizada"
-    )
-    ? "1px solid #666"
-    : "1px solid #888",
-
-  borderRadius:4,
-  fontSize:11,
-  fontFamily:"Arial",
-  boxSizing:"border-box"
-}}
-  />
-</div>
-
-
-  
-<CampoInputAuto
-label="Nº Act."
-value={r.numero_de_actuaciones || ""}
-minWidth={70}
-onChange={(v)=>
-handleReasignacionChange(
-reasignaciones.findIndex(x=>x.id===r.id),
-"numero_de_actuaciones",
-v
-)}
-/>
-
-</div>
-
 
 {/* FILA 2 */}
 
@@ -1587,6 +1491,96 @@ v
 />
 
 </div>
+
+{/* FILA 4 */}
+
+<div
+style={{
+display:"flex",
+gap:8,
+overflowX:"auto",
+marginTop:6
+}}
+>
+
+<CampoSelectEstado
+label="Estado Trabajo"
+value={r.estado_trabajos}
+options={OPCIONES_ESTADO_TRABAJOS}
+onChange={(v)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"estado_trabajos",
+v
+)}
+/>
+
+<div style={{ minWidth:130, flex:"0 0 auto" }}>
+<div
+style={{
+fontSize:11,
+fontWeight:"bold",
+color:COLORES.textoAzul,
+marginBottom:3
+}}
+>
+F. Ejecución
+</div>
+
+<input
+type="date"
+value={r.fecha_ejecucion || ""}
+
+disabled={
+!(
+r.estado_trabajos==="Ejecutada" ||
+r.estado_trabajos==="Finalizada"
+)
+}
+
+onChange={(e)=>
+handleReasignacionChange(
+reasignaciones.findIndex(x=>x.id===r.id),
+"fecha_ejecucion",
+e.target.value
+)
+}
+
+style={{
+width:"100%",
+height:20,
+padding:"1px 5px",
+
+background:
+(
+r.estado_trabajos==="Ejecutada" ||
+r.estado_trabajos==="Finalizada"
+)
+? COLORES.fondoCampo
+: COLORES.fondoSoloLectura,
+
+color:
+(
+r.estado_trabajos==="Ejecutada" ||
+r.estado_trabajos==="Finalizada"
+)
+? "#000"
+: COLORES.textoSoloLectura,
+
+border:"1px solid #888",
+borderRadius:4,
+fontSize:11,
+fontFamily:"Arial",
+boxSizing:"border-box"
+}}
+/>
+
+</div>
+
+</div>
+
+
+  
 
 </div>
 
