@@ -1461,12 +1461,13 @@ v
 )}
 />
 
+<div style={{ flex:1, minWidth:500 }}>
 <CampoInputAuto
 label="Obs Preparación"
 value={
 r.observaciones_preparacion_reasignacion || ""
 }
-minWidth={420}
+minWidth={500}
 onChange={(v)=>
 handleReasignacionChange(
 reasignaciones.findIndex(x=>x.id===r.id),
@@ -1474,6 +1475,7 @@ reasignaciones.findIndex(x=>x.id===r.id),
 v
 )}
 />
+</div>
 
 </div> {/* FIN FILA 3 */}
 
