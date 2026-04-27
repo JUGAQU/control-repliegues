@@ -1315,7 +1315,6 @@ fontSize:18
 <div style={{flex:1,padding:6}}>
 
 {/* FILA 1 */}
-
 <div
 style={{
 display:"flex",
@@ -1343,6 +1342,19 @@ value={r.administrativo}
 minWidth={130}
 />
 
+<CampoReaSoloLecturaAuto
+label="Modo Reasignación"
+value={r.modo_reasignacion}
+minWidth={260}
+/>
+
+<CampoReaSoloLecturaAuto
+label="Indicaciones Encaminamiento"
+value={r.indicaciones_para_el_encaminamiento}
+minWidth={420}
+/>
+
+</div>
 
 {/* FILA 2 */}
 
@@ -1490,7 +1502,7 @@ v
 )}
 />
 
-</div>
+</div> {/* FIN FILA 3 */}
 
 {/* FILA 4 */}
 
@@ -1577,7 +1589,7 @@ boxSizing:"border-box"
 
 </div>
 
-</div>
+</div> {/* FIN FILA 4 */}
 
 
   
