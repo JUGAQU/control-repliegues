@@ -1484,13 +1484,7 @@ v
 
 {/* FILA 4 */}
 
-<div
-style={{
-display:"flex",
-gap:8,
-overflowX:"auto"
-}}
->
+
 
 <CampoInputAuto
 label="Pba Atenuación"
