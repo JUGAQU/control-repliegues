@@ -347,7 +347,7 @@ rima: !!r.rima,
 redes_priv: !!r.redes_priv,
 dwdm: !!r.dwdm,
 ventana_geco: r.ventana_geco || null,
-cuestionario: r.cuestionario || null,
+
 pba_atenuacion: r.pba_atenuacion || null,
 autonegociacion: r.autonegociacion || null,
 configuracion_puerto_destino: r.configuracion_puerto_destino || null,
