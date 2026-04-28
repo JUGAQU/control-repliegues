@@ -1197,19 +1197,25 @@ observaciones_preparacion_reasignacion:
     />
     
     {/* FILTRO GRUPO */}
-    <input
-      placeholder="Grupo"
+    <select
       value={filtroGrupo}
       onChange={(e)=>setFiltroGrupo(e.target.value)}
       style={{
-        width:80,
+        width:90,
         height:22,
         fontSize:11,
         padding:"1px 5px",
         border:"1px solid #7fa7c7",
         borderRadius:3
       }}
-    />
+    >
+      <option value="">Grupo</option>
+      {OPCIONES_GRUPO.map((g)=>(
+        <option key={g} value={g}>
+          {g}
+        </option>
+      ))}
+    </select>
 
 
 
