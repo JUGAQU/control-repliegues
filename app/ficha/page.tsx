@@ -1124,7 +1124,7 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={420}/>
 
 
-              <div style={{ width:55, flex:"0 0 auto" }}>
+              <div style={{ width:75, flex:"0 0 auto" }}>
                 <div style={{
                   fontSize:11,
                   fontWeight:"bold",
@@ -1137,7 +1137,7 @@ observaciones_preparacion_reasignacion:
                   value={r.sgipe || ""}
                   onChange={(e)=>handleReasignacionChange(index,"sgipe",e.target.value)}
                   style={{
-                    width:55,
+                    width:75,
                     height:20,
                     padding:"1px 5px",
                     background:COLORES.fondoCampo,
