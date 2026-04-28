@@ -1340,7 +1340,7 @@ observaciones_preparacion_reasignacion:
             
             </div> {/* BLOQUE CHECKS */}
               
-            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={320} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={350} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
 
 
 
@@ -1355,15 +1355,7 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChange(index,"estado_orden_atlas",v)}/>
               <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"uo_atlas",v)}/>
 
-              <div style={{flex:1,minWidth:600}}>
-                <CampoInputAuto
-                  label="Observaciones Preparación"
-                  value={r.observaciones_preparacion_reasignacion || ""}
-                  minWidth={550}
-                  onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
-                />
-              </div>
-            </div>
+
 
             {/* FILA 4 */}
             <div
@@ -1375,6 +1367,16 @@ observaciones_preparacion_reasignacion:
                 alignItems:"flex-end"
               }}
             >
+
+                            <div style={{flex:1,minWidth:600}}>
+                <CampoInputAuto
+                  label="Observaciones Preparación"
+                  value={r.observaciones_preparacion_reasignacion || ""}
+                  minWidth={550}
+                  onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
+                />
+              </div>
+            </div>
             
 
             
