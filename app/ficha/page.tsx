@@ -1122,7 +1122,7 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
               <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
               <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={420}/>
-            
+
               <div style={{width:35, flex:"0 0 auto"}}>
                 <CampoInputAuto
                   label="SGIPE"
@@ -1131,20 +1131,31 @@ observaciones_preparacion_reasignacion:
                 />
               </div>
               
-              <div style={{width:35, flex:"0 0 auto"}}>
+              <div
+                style={{
+                  width:35,
+                  flex:"0 0 auto",
+                  marginLeft:10   // espacio entre SGIPE y Grupo
+                }}
+              >
                 <CampoInputAuto
                   label="Grupo"
                   value={r.grupo || ""}
                   onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
                 />
               </div>
-            
-              <CampoSelectEstado
-                label="Estado Trabajo"
-                value={r.estado_trabajos}
-                options={OPCIONES_ESTADO_TRABAJOS}
-                onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
-              />
+              
+              <div style={{ marginLeft:18 }}> {/* espacio antes Estado Trabajo */}
+                <CampoSelectEstado
+                  label="Estado Trabajo"
+                  value={r.estado_trabajos}
+                  options={OPCIONES_ESTADO_TRABAJOS}
+                  onChange={(v)=>
+                    handleReasignacionChange(index,"estado_trabajos",v)
+                  }
+                />
+              </div>
+
             
               <div style={{ minWidth:130, flex:"0 0 auto" }}>
                 <div style={{
