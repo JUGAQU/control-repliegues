@@ -347,7 +347,6 @@ rima: !!r.rima,
 redes_priv: !!r.redes_priv,
 dwdm: !!r.dwdm,
 ventana_geco: r.ventana_geco || null,
-cuestionario: r.cuestionario || null,
 pba_atenuacion: r.pba_atenuacion || null,
 autonegociacion: r.autonegociacion || null,
 configuracion_puerto_destino: r.configuracion_puerto_destino || null,
@@ -1209,17 +1208,7 @@ observaciones_preparacion_reasignacion:
           </div>
           
           {/* FILA 2 */}
-            
-
-            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
-              <CampoInputAuto
-                label="Cuestionario"
-                value={r.cuestionario || ""}
-                minWidth={100}
-                onChange={(v)=>handleReasignacionChange(index,"cuestionario",v)}
-              />
-
-              
+                      
               <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={100}/>
