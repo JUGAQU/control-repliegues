@@ -1214,7 +1214,7 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={100}/>
-              <CampoReaSoloLecturaAuto label="Veloc. Interface" value={r.velocidad_interface} minWidth={50}/>
+              <CampoReaSoloLecturaAuto label="Veloc. Interface" value={r.velocidad_interface} minWidth={60}/>
               <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
               <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={70} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
               <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={50} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
@@ -1384,7 +1384,7 @@ observaciones_preparacion_reasignacion:
             
             </div> {/* BLOQUE CHECKS */}
               
-            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={220} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
 
 
 
