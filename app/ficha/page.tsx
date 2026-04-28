@@ -1123,19 +1123,21 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
               <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={420}/>
             
-              <CampoInputAuto
-                label="SGIPE"
-                value={r.sgipe || ""}
-                minWidth={20}
-                onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}
-              />
-            
-              <CampoInputAuto
-                label="Grupo"
-                value={r.grupo || ""}
-                minWidth={20}
-                onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
-              />
+              <div style={{width:35, flex:"0 0 auto"}}>
+                <CampoInputAuto
+                  label="SGIPE"
+                  value={r.sgipe || ""}
+                  onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}
+                />
+              </div>
+              
+              <div style={{width:35, flex:"0 0 auto"}}>
+                <CampoInputAuto
+                  label="Grupo"
+                  value={r.grupo || ""}
+                  onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
+                />
+              </div>
             
               <CampoSelectEstado
                 label="Estado Trabajo"
