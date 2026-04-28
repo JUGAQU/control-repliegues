@@ -1227,7 +1227,7 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto
                 label="Autonegociación"
                 value={r.autonegociacion || ""}
-                minWidth={50}
+                minWidth={25}
                 onChange={(v)=>
                   handleReasignacionChange(index,"autonegociacion",v)
                 }
@@ -1236,13 +1236,22 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto
                 label="Configuracion Puerto Destino"
                 value={r.configuracion_puerto_destino || ""}
-                minWidth={50}
+                minWidth={25}
                 onChange={(v)=>
                   handleReasignacionChange(
                     index,
                     "configuracion_puerto_destino",
                     v
                   )
+                }
+              />
+
+             <CampoInputAuto
+                label="Ventana GECO"
+                value={r.ventana_geco || ""}
+                minWidth={100}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"ventana_geco",v)
                 }
               />
 
@@ -1282,14 +1291,7 @@ observaciones_preparacion_reasignacion:
             
 
             
-              <CampoInputAuto
-                label="Ventana GECO"
-                value={r.ventana_geco || ""}
-                minWidth={200}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"ventana_geco",v)
-                }
-              />
+
             
               <CampoInputAuto
                 label="Supervisa el Corte"
