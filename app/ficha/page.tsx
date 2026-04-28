@@ -1220,15 +1220,15 @@ observaciones_preparacion_reasignacion:
               />
 
               
-              <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={130}/>
-              <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={120}/>
-              <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150}/>
-              <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={180}/>
-              <CampoReaSoloLecturaAuto label="Velocidad Interface" value={r.velocidad_interface} minWidth={140}/>
+              <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={100}/>
+              <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={100}/>
+              <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={100}/>
+              <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={100}/>
+              <CampoReaSoloLecturaAuto label="Velocidad Interface" value={r.velocidad_interface} minWidth={50}/>
                             <CampoInputAuto
                 label="Prueba de Atenuación"
                 value={r.pba_atenuacion || ""}
-                minWidth={170}
+                minWidth={100}
                 onChange={(v)=>
                   handleReasignacionChange(index,"pba_atenuacion",v)
                 }
@@ -1237,7 +1237,7 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto
                 label="Autonegociación"
                 value={r.autonegociacion || ""}
-                minWidth={170}
+                minWidth={50}
                 onChange={(v)=>
                   handleReasignacionChange(index,"autonegociacion",v)
                 }
@@ -1246,7 +1246,7 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto
                 label="Configuracion Puerto Destino"
                 value={r.configuracion_puerto_destino || ""}
-                minWidth={200}
+                minWidth={100}
                 onChange={(v)=>
                   handleReasignacionChange(
                     index,
