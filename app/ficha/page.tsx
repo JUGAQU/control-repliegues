@@ -1114,127 +1114,103 @@ observaciones_preparacion_reasignacion:
           <div style={{flex:1,padding:6}}>
 
 
-            
-            {/* FILA 1 */}
-
-              <div
+          {/* FILA 1 */}
+          <div
+            style={{
+              display:"flex",
+              gap:8,
+              overflowX:"auto",
+              marginBottom:6,
+              alignItems:"flex-end"
+            }}
+          >
+          
+            <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
+            <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
+            <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
+            <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={470}/>
+          
+            <div style={{ width:75, flex:"0 0 auto" }}>
+              <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
+                SGIPE
+              </div>
+              <input
+                value={r.sgipe || ""}
+                onChange={(e)=>handleReasignacionChange(index,"sgipe",e.target.value)}
                 style={{
-                  display:"flex",
-                  gap:8,          // <-- separación única para todos
-                  overflowX:"auto",
-                  marginBottom:6,
-                  alignItems:"flex-end"
+                  width:"100%",
+                  height:20,
+                  padding:"1px 5px",
+                  background:COLORES.fondoCampo,
+                  border:"1px solid #666",
+                  borderRadius:4,
+                  fontSize:11,
+                  boxSizing:"border-box"
                 }}
-              >
-            
-           
-            
-              <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
-              <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
-              <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
-              <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={470}/>
-
-
-              <div style={{ width:75, flex:"0 0 auto" }}>
-                <div style={{
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul,
-                  marginBottom:3
-                }}>
-                  SGIPE
-                </div>
-                <input
-                  value={r.sgipe || ""}
-                  onChange={(e)=>handleReasignacionChange(index,"sgipe",e.target.value)}
-                  style={{
-                    width:75,
-                    height:20,
-                    padding:"1px 5px",
-                    background:COLORES.fondoCampo,
-                    border:"1px solid #666",
-                    borderRadius:4,
-                    fontSize:11,
-                    boxSizing:"border-box"
-                  }}
-                />
-              </div>
-              
-              <div style={{ width:55, flex:"0 0 auto", marginLeft:12 }}>
-                <div style={{
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul,
-                  marginBottom:3
-                }}>
-                  Grupo
-                </div>
-                <input
-                  value={r.grupo || ""}
-                  onChange={(e)=>handleReasignacionChange(index,"grupo",e.target.value)}
-                  style={{
-                    width:55,
-                    height:20,
-                    padding:"1px 5px",
-                    background:COLORES.fondoCampo,
-                    border:"1px solid #666",
-                    borderRadius:4,
-                    fontSize:11,
-                    boxSizing:"border-box"
-                  }}
-                />
-              </div>
-              
-              <div style={{ marginLeft:12, flex:"0 0 auto" }}>
-                <CampoSelectEstado
-                  label="Estado Trabajo"
-                  value={r.estado_trabajos}
-                  options={OPCIONES_ESTADO_TRABAJOS}
-                  onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
-                />
-              </div>
-             
-            
-              <div style={{ minWidth:130, flex:"0 0 auto" }}>
-                <div style={{
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul,
-                  marginBottom:3
-                }}>
-                  Fecha Ejecución
-                </div>
-            
-                <input
-                  type="date"
-                  value={r.fecha_ejecucion || ""}
-                  disabled={!(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")}
-                  onChange={(e)=>handleReasignacionChange(index,"fecha_ejecucion",e.target.value)}
-                  style={{
-                    width:"100%",
-                    height:20,
-                    padding:"1px 5px",
-                    background:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
-                      ? COLORES.fondoCampo
-                      : COLORES.fondoSoloLectura,
-                    color:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
-                      ? "#000"
-                      : COLORES.textoSoloLectura,
-                    border:"1px solid #888",
-                    borderRadius:4,
-                    fontSize:11,
-                    fontFamily:"Arial",
-                    boxSizing:"border-box"
-                  }}
-                />
-              </div>
-            
+              />
             </div>
-
-
+          
+            <div style={{ width:55, flex:"0 0 auto" }}>
+              <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
+                Grupo
+              </div>
+              <input
+                value={r.grupo || ""}
+                onChange={(e)=>handleReasignacionChange(index,"grupo",e.target.value)}
+                style={{
+                  width:"100%",
+                  height:20,
+                  padding:"1px 5px",
+                  background:COLORES.fondoCampo,
+                  border:"1px solid #666",
+                  borderRadius:4,
+                  fontSize:11,
+                  boxSizing:"border-box"
+                }}
+              />
+            </div>
+          
+            <CampoSelectEstado
+              label="Estado Trabajo"
+              value={r.estado_trabajos}
+              options={OPCIONES_ESTADO_TRABAJOS}
+              onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
+            />
+          
+            <div style={{ minWidth:130, flex:"0 0 auto" }}>
+              <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
+                Fecha Ejecución
+              </div>
+          
+              <input
+                type="date"
+                value={r.fecha_ejecucion || ""}
+                disabled={!(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")}
+                onChange={(e)=>handleReasignacionChange(index,"fecha_ejecucion",e.target.value)}
+                style={{
+                  width:"100%",
+                  height:20,
+                  padding:"1px 5px",
+                  background:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
+                    ? COLORES.fondoCampo
+                    : COLORES.fondoSoloLectura,
+                  color:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
+                    ? "#000"
+                    : COLORES.textoSoloLectura,
+                  border:"1px solid #888",
+                  borderRadius:4,
+                  fontSize:11,
+                  fontFamily:"Arial",
+                  boxSizing:"border-box"
+                }}
+              />
+            </div>
+          
+          </div>
+          
+          {/* FILA 2 */}
             
-            
-            {/* FILA 2 */}
+
             <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
               <CampoInputAuto
                 label="Cuestionario"
