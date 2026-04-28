@@ -1175,13 +1175,18 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
               <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
               <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
+              <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={400} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
               <div
                 style={{
-                display:"flex",
-                gap:10,
-                alignItems:"flex-end",
-                marginLeft:10,
-                flex:"0 0 auto"
+                  display:"flex",
+                  gap:18,
+                  alignItems:"center",
+                  background:"#fff2cc",
+                  border:"1px solid #b7a84b",
+                  borderRadius:4,
+                  padding:"4px 10px",
+                  width:"fit-content",
+                  marginBottom:6
                 }}
               >
 
@@ -1306,7 +1311,7 @@ observaciones_preparacion_reasignacion:
               
               
                             
-              <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={400} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+              
              
             </div>
 
