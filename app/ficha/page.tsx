@@ -1243,7 +1243,7 @@ observaciones_preparacion_reasignacion:
                   gap:10,
                   alignItems:"center",
                   background:"#d9ead3",
-                  border:"1px solid #93c47d",
+                  border:"1px solid #888",
                   borderRadius:4,
                   padding:"0px 8px",
                   height:20
