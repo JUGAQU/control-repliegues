@@ -1179,17 +1179,23 @@ observaciones_preparacion_reasignacion:
 
               {/* BLOQUE CHECKS */}
               <div
-                style={{
-                  display:"flex",
-                  gap:14,
-                  alignItems:"center",
-                  background:"#d9ead3",
-                  border:"1px solid #93c47d",
-                  borderRadius:4,
-                  padding:"4px 10px",
-                  flex:"0 0 auto"
-                }}
-              >
+              style={{
+                display:"flex",
+                gap:12,
+                alignItems:"center",
+                background:"#d9ead3",
+                border:"1px solid #93c47d",
+                borderRadius:4,
+            
+                /* AJUSTES NUEVOS */
+                padding:"1px 8px",
+                minHeight:20,
+                height:20,
+            
+                flex:"0 0 auto"
+              }}
+            >
+              
               
                 <label style={{
                   display:"flex",
