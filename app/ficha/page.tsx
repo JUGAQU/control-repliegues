@@ -1126,14 +1126,14 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto
                 label="SGIPE"
                 value={r.sgipe || ""}
-                minWidth={70}
+                minWidth={20}
                 onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}
               />
             
               <CampoInputAuto
                 label="Grupo"
                 value={r.grupo || ""}
-                minWidth={70}
+                minWidth={20}
                 onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
               />
             
