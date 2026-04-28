@@ -1225,6 +1225,26 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150}/>
               <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={180}/>
               <CampoReaSoloLecturaAuto label="Velocidad Interface" value={r.velocidad_interface} minWidth={140}/>
+                            <CampoInputAuto
+                label="Prueba de Atenuación"
+                value={r.pba_atenuacion || ""}
+                minWidth={170}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"pba_atenuacion",v)
+                }
+              />
+            
+              <CampoInputAuto
+                label="Autonegociación"
+                value={r.autonegociacion || ""}
+                minWidth={170}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"autonegociacion",v)
+                }
+              />
+
+
+              
             </div>
 
             {/* FILA 3 */}
@@ -1255,23 +1275,7 @@ observaciones_preparacion_reasignacion:
               }}
             >
             
-              <CampoInputAuto
-                label="Prueba de Atenuación"
-                value={r.pba_atenuacion || ""}
-                minWidth={170}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"pba_atenuacion",v)
-                }
-              />
-            
-              <CampoInputAuto
-                label="Autonegociación"
-                value={r.autonegociacion || ""}
-                minWidth={170}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"autonegociacion",v)
-                }
-              />
+
             
               <CampoInputAuto
                 label="Configuracion Puerto Destino"
