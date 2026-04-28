@@ -1208,246 +1208,68 @@ observaciones_preparacion_reasignacion:
           
           </div>
           
+
           {/* FILA 2 */}
-            
-
-            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
-                           
-              <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={130}/>
-              <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={120}/>
-              <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150}/>
-              <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={180}/>
-              <CampoReaSoloLecturaAuto label="Velocidad Interface" value={r.velocidad_interface} minWidth={140}/>
-
-              style={{
-                display:"flex",
-                gap:8,
-                overflowX:"auto",
-                marginBottom:6,
-                alignItems:"flex-end"
-              }}
-            >
-            
-              <CampoInputAuto
-                label="Prueba de Atenuación"
-                value={r.pba_atenuacion || ""}
-                minWidth={170}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"pba_atenuacion",v)
-                }
-              />
-            
-              <CampoInputAuto
-                label="Autonegociación"
-                value={r.autonegociacion || ""}
-                minWidth={170}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"autonegociacion",v)
-                }
-              />
-            
-              <CampoInputAuto
-                label="Configuracion Puerto Destino"
-                value={r.configuracion_puerto_destino || ""}
-                minWidth={200}
-                onChange={(v)=>
-                  handleReasignacionChange(
-                    index,
-                    "configuracion_puerto_destino",
-                    v
-                  )
-                }
-              />
-            
-              <CampoInputAuto
-                label="Ventana GECO"
-                value={r.ventana_geco || ""}
-                minWidth={200}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"ventana_geco",v)
-                }
-              />
-            
-              <CampoInputAuto
-                label="Supervisa el Corte"
-                value={r.supervisa_corte || ""}
-                minWidth={400}
-                onChange={(v)=>
-                  handleReasignacionChange(
-                    index,
-                    "supervisa_corte",
-                    v
-                  )
-                }
-              />
+          <div
+            style={{
+              display:"flex",
+              gap:8,
+              overflowX:"auto",
+              marginBottom:6,
+              alignItems:"flex-end"
+            }}
+          >
+            <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={130}/>
+            <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={120}/>
+            <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150}/>
+            <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={180}/>
+            <CampoReaSoloLecturaAuto label="Velocidad Interface" value={r.velocidad_interface} minWidth={140}/>
+          
+            <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
+            <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
+            <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
+            <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
+            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={400} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+          
             {/* BLOQUE CHECKS */}
             <div style={{ minWidth:330, flex:"0 0 auto" }}>
-            
-              {/* Etiqueta como el resto de campos */}
-              <div
-                style={{
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul,
-                  marginBottom:3
-                }}
-              >
+              <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
                 Coordinado trabajos
               </div>
-            
-              {/* Caja de checks */}
-              <div
-                style={{
-                  display:"flex",
-                  gap:10,
-                  alignItems:"center",
-                  background:"#d9ead3",
-                  border:"1px solid #93c47d",
-                  borderRadius:4,
-                  padding:"0px 8px",
-                  height:20
-                }}
-              >
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  GECO
-                  <input
-                    type="checkbox"
-                    checked={!!r.geco}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "geco",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  CEX
-                  <input
-                    type="checkbox"
-                    checked={!!r.cex}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "cex",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  RIMA
-                  <input
-                    type="checkbox"
-                    checked={!!r.rima}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "rima",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  REDES PRIV
-                  <input
-                    type="checkbox"
-                    checked={!!r.redes_priv}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "redes_priv",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  DWDM
-                  <input
-                    type="checkbox"
-                    checked={!!r.dwdm}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "dwdm",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-              </div> {/* Caja de checks */}
-
-
-
-              
-              
+          
+              <div style={{
+                display:"flex",
+                gap:10,
+                alignItems:"center",
+                background:"#d9ead3",
+                border:"1px solid #93c47d",
+                borderRadius:4,
+                padding:"0px 8px",
+                height:20
+              }}>
+                {[
+                  ["GECO","geco"],
+                  ["CEX","cex"],
+                  ["RIMA","rima"],
+                  ["REDES PRIV","redes_priv"],
+                  ["DWDM","dwdm"],
+                ].map(([label, field])=>(
+                  <label key={field} style={{display:"flex",alignItems:"center",gap:4,fontSize:11,fontWeight:"bold",color:COLORES.textoAzul}}>
+                    {label}
+                    <input
+                      type="checkbox"
+                      checked={!!r[field]}
+                      onChange={(e)=>handleReasignacionChange(index,field,String(e.target.checked))}
+                      style={{transform:"scale(0.85)",margin:0}}
+                    />
+                  </label>
+                ))}
+              </div>
             </div>
+          </div>
+          
+          {/* FILA 3 */}
 
-            {/* FILA 3 */}
             <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
               <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
               <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"orden_atlas",v)}/>
@@ -1464,231 +1286,7 @@ observaciones_preparacion_reasignacion:
               </div>
             </div>
 
-            {/* FILA 4 */}
-            <div
-              style={{
-                display:"flex",
-                gap:8,
-                overflowX:"auto",
-                marginBottom:6,
-                alignItems:"flex-end"
-              }}
-            >
-            
-              <CampoInputAuto
-                label="Prueba de Atenuación"
-                value={r.pba_atenuacion || ""}
-                minWidth={170}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"pba_atenuacion",v)
-                }
-              />
-            
-              <CampoInputAuto
-                label="Autonegociación"
-                value={r.autonegociacion || ""}
-                minWidth={170}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"autonegociacion",v)
-                }
-              />
-            
-              <CampoInputAuto
-                label="Configuracion Puerto Destino"
-                value={r.configuracion_puerto_destino || ""}
-                minWidth={200}
-                onChange={(v)=>
-                  handleReasignacionChange(
-                    index,
-                    "configuracion_puerto_destino",
-                    v
-                  )
-                }
-              />
-            
-              <CampoInputAuto
-                label="Ventana GECO"
-                value={r.ventana_geco || ""}
-                minWidth={200}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"ventana_geco",v)
-                }
-              />
-            
-              <CampoInputAuto
-                label="Supervisa el Corte"
-                value={r.supervisa_corte || ""}
-                minWidth={400}
-                onChange={(v)=>
-                  handleReasignacionChange(
-                    index,
-                    "supervisa_corte",
-                    v
-                  )
-                }
-              />
-            {/* BLOQUE CHECKS */}
-            <div style={{ minWidth:330, flex:"0 0 auto" }}>
-            
-              {/* Etiqueta como el resto de campos */}
-              <div
-                style={{
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul,
-                  marginBottom:3
-                }}
-              >
-                Coordinado trabajos
-              </div>
-            
-              {/* Caja de checks */}
-              <div
-                style={{
-                  display:"flex",
-                  gap:10,
-                  alignItems:"center",
-                  background:"#d9ead3",
-                  border:"1px solid #93c47d",
-                  borderRadius:4,
-                  padding:"0px 8px",
-                  height:20
-                }}
-              >
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  GECO
-                  <input
-                    type="checkbox"
-                    checked={!!r.geco}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "geco",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  CEX
-                  <input
-                    type="checkbox"
-                    checked={!!r.cex}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "cex",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  RIMA
-                  <input
-                    type="checkbox"
-                    checked={!!r.rima}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "rima",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  REDES PRIV
-                  <input
-                    type="checkbox"
-                    checked={!!r.redes_priv}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "redes_priv",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
-                  DWDM
-                  <input
-                    type="checkbox"
-                    checked={!!r.dwdm}
-                    onChange={(e)=>
-                      handleReasignacionChange(
-                        index,
-                        "dwdm",
-                        String(e.target.checked)
-                      )
-                    }
-                    style={{
-                      transform:"scale(0.85)",
-                      margin:0
-                    }}
-                  />
-                </label>
-            
-              </div> {/* Caja de checks */}
-            
-            </div> {/* FILA 4 */}
+           
              
             </div>
             
