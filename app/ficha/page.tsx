@@ -1225,57 +1225,6 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150}/>
               <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={180}/>
               <CampoReaSoloLecturaAuto label="Velocidad Interface" value={r.velocidad_interface} minWidth={140}/>
-               <CampoInputAuto
-                label="Prueba de Atenuación"
-                value={r.pba_atenuacion || ""}
-                minWidth={170}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"pba_atenuacion",v)
-                }
-              />
-
-              <CampoInputAuto
-                label="Configuracion Puerto Destino"
-                value={r.configuracion_puerto_destino || ""}
-                minWidth={200}
-                onChange={(v)=>
-                  handleReasignacionChange(
-                    index,
-                    "configuracion_puerto_destino",
-                    v
-                  )
-                }
-              />
-            
-              <CampoInputAuto
-                label="Ventana GECO"
-                value={r.ventana_geco || ""}
-                minWidth={200}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"ventana_geco",v)
-                }
-              />
-            
-              <CampoInputAuto
-                label="Supervisa el Corte"
-                value={r.supervisa_corte || ""}
-                minWidth={400}
-                onChange={(v)=>
-                  handleReasignacionChange(
-                    index,
-                    "supervisa_corte",
-                    <CampoInputAuto
-                label="Autonegociación"
-                value={r.autonegociacion || ""}
-                minWidth={170}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"autonegociacion",v)
-                }
-              />
-
-
-
-              
             </div>
 
             {/* FILA 3 */}
@@ -1306,12 +1255,55 @@ observaciones_preparacion_reasignacion:
               }}
             >
             
-             
+              <CampoInputAuto
+                label="Prueba de Atenuación"
+                value={r.pba_atenuacion || ""}
+                minWidth={170}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"pba_atenuacion",v)
+                }
+              />
             
-              
+              <CampoInputAuto
+                label="Autonegociación"
+                value={r.autonegociacion || ""}
+                minWidth={170}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"autonegociacion",v)
+                }
+              />
             
-
-                    
+              <CampoInputAuto
+                label="Configuracion Puerto Destino"
+                value={r.configuracion_puerto_destino || ""}
+                minWidth={200}
+                onChange={(v)=>
+                  handleReasignacionChange(
+                    index,
+                    "configuracion_puerto_destino",
+                    v
+                  )
+                }
+              />
+            
+              <CampoInputAuto
+                label="Ventana GECO"
+                value={r.ventana_geco || ""}
+                minWidth={200}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"ventana_geco",v)
+                }
+              />
+            
+              <CampoInputAuto
+                label="Supervisa el Corte"
+                value={r.supervisa_corte || ""}
+                minWidth={400}
+                onChange={(v)=>
+                  handleReasignacionChange(
+                    index,
+                    "supervisa_corte",
+                    v
                   )
                 }
               />
