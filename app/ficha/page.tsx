@@ -1114,15 +1114,7 @@ observaciones_preparacion_reasignacion:
 
 
           {/* FILA 1 */}
-          <div
-            style={{
-              display:"flex",
-              gap:8,
-              overflowX:"auto",
-              marginBottom:6,
-              alignItems:"flex-end"
-            }}
-          >
+          <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
           
             <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
             <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
