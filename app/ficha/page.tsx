@@ -1284,16 +1284,17 @@ observaciones_preparacion_reasignacion:
                   onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
                 />
               </div>
-            </div>
+            </div> {/* FILA 3 */}
 
            
              
-            </div>
+            </div> {/* FIN CONTENIDO TARJETA */}
+
             
 
 
-          </div>
-        </div>
+          </div> {/* FIN TARJETA */}
+
       ))
     )}
   </>
