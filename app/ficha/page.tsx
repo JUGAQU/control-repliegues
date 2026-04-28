@@ -1207,7 +1207,7 @@ observaciones_preparacion_reasignacion:
 
           
             
-          />
+         
 
           {g.label.toUpperCase()}
         </label>
