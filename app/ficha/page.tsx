@@ -1212,14 +1212,7 @@ observaciones_preparacion_reasignacion:
             
 
             <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
-              <CampoInputAuto
-                label="Cuestionario"
-                value={r.cuestionario || ""}
-                minWidth={100}
-                onChange={(v)=>handleReasignacionChange(index,"cuestionario",v)}
-              />
-
-              
+                           
               <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={130}/>
               <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={120}/>
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150}/>
