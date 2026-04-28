@@ -1120,7 +1120,7 @@ observaciones_preparacion_reasignacion:
             <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
             <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
             <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={470}/>
-            <CampoInputAuto label="SGIPE" value={r.sgipe || ""} minWidth={50} onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}/>
+            <CampoInputAuto label="SGIPE" value={r.sgipe || ""} minWidth={70} onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}/>
             <CampoInputAuto label="Grupo" value={r.grupo || ""} minWidth={50} onChange={(v)=>handleReasignacionChange(index,"grupo",v)}/>
             
           
@@ -1357,25 +1357,10 @@ observaciones_preparacion_reasignacion:
 
 
 
-            {/* FILA 4 */}
-            <div
-              style={{
-                display:"flex",
-                gap:8,
-                overflowX:"auto",
-                marginBottom:6,
-                alignItems:"flex-end"
-              }}
-            >
+           
 
-             <div style={{flex:1,minWidth:600}}>
-                <CampoInputAuto
-                  label="Observaciones Preparación"
-                  value={r.observaciones_preparacion_reasignacion || ""}
-                  minWidth={550}
-                  onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
-                />
-              </div>
+
+            
             </div>
             
 
