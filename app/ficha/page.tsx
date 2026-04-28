@@ -1219,6 +1219,11 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
               <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
               <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
+              <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+
+
+
+       
                 
             </div>
 
@@ -1256,18 +1261,7 @@ observaciones_preparacion_reasignacion:
             
 
             
-              <CampoInputAuto
-                label="Supervisa el Corte"
-                value={r.supervisa_corte || ""}
-                minWidth={400}
-                onChange={(v)=>
-                  handleReasignacionChange(
-                    index,
-                    "supervisa_corte",
-                    v
-                  )
-                }
-              />
+              
             {/* BLOQUE CHECKS */}
             <div style={{ minWidth:330, flex:"0 0 auto" }}>
             
