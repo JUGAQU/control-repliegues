@@ -1144,7 +1144,7 @@ observaciones_preparacion_reasignacion:
                 onChange={(v)=>handleReasignacionChange(index,"cuestionario",v)}
               />
 
-              <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
+              
               <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={130}/>
               <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={120}/>
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150}/>
@@ -1154,6 +1154,7 @@ observaciones_preparacion_reasignacion:
 
             {/* FILA 3 */}
             <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+              <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
               <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"orden_atlas",v)}/>
               <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChange(index,"estado_orden_atlas",v)}/>
               <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"uo_atlas",v)}/>
