@@ -1208,13 +1208,14 @@ observaciones_preparacion_reasignacion:
           </div>
           
           {/* FILA 2 */}
+            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
                       
               <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Veloc. Interface" value={r.velocidad_interface} minWidth={50}/>
-                            <CampoInputAuto
+              <CampoInputAuto
                 label="Prueba de Atenuación"
                 value={r.pba_atenuacion || ""}
                 minWidth={100}
