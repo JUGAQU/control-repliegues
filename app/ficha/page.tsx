@@ -1299,6 +1299,7 @@ observaciones_preparacion_reasignacion:
     )}
   </>
 )}
+            
 
             {bloqueActivo === "visitas" && (
               <div
