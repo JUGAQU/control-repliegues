@@ -1395,6 +1395,7 @@ observaciones_preparacion_reasignacion:
             
             </div>
              
+            </div>
             
             {/* FILA 5 */}           
             <div style={{display:"flex",gap:8,overflowX:"auto",alignItems:"flex-end"}}>
