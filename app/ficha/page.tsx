@@ -1596,7 +1596,12 @@ function CampoInputAuto({
   onChange: (value: string) => void;
 }) {
   return (
-    <div style={{ minWidth, flex: "0 0 auto" }}>
+    <div
+      style={{
+        width: minWidth,      // <- antes minWidth
+        flex: "0 0 auto"
+      }}
+    >
       <div
         style={{
           fontSize: 11,
@@ -1607,11 +1612,13 @@ function CampoInputAuto({
       >
         {label}
       </div>
+
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         style={{
           width: "100%",
+          maxWidth: "100%",
           height: 20,
           padding: "1px 5px",
           background: COLORES.fondoCampo,
