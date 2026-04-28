@@ -1232,8 +1232,22 @@ observaciones_preparacion_reasignacion:
                   )
                 }
               />
+            {/* BLOQUE CHECKS */}
+            <div style={{ minWidth:330, flex:"0 0 auto" }}>
             
-              {/* BLOQUE CHECKS */}
+              {/* Etiqueta como el resto de campos */}
+              <div
+                style={{
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul,
+                  marginBottom:3
+                }}
+              >
+                Coordinado trabajos
+              </div>
+            
+              {/* Caja de checks */}
               <div
                 style={{
                   display:"flex",
@@ -1243,21 +1257,18 @@ observaciones_preparacion_reasignacion:
                   border:"1px solid #93c47d",
                   borderRadius:4,
                   padding:"0px 8px",
-                  height:20,
-                  flex:"0 0 auto"
+                  height:20
                 }}
               >
             
-                <label
-                  style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}
-                >
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
                   GECO
                   <input
                     type="checkbox"
@@ -1276,16 +1287,14 @@ observaciones_preparacion_reasignacion:
                   />
                 </label>
             
-                <label
-                  style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}
-                >
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
                   CEX
                   <input
                     type="checkbox"
@@ -1304,16 +1313,14 @@ observaciones_preparacion_reasignacion:
                   />
                 </label>
             
-                <label
-                  style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}
-                >
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
                   RIMA
                   <input
                     type="checkbox"
@@ -1332,16 +1339,14 @@ observaciones_preparacion_reasignacion:
                   />
                 </label>
             
-                <label
-                  style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}
-                >
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
                   REDES PRIV
                   <input
                     type="checkbox"
@@ -1360,16 +1365,14 @@ observaciones_preparacion_reasignacion:
                   />
                 </label>
             
-                <label
-                  style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}
-                >
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
                   DWDM
                   <input
                     type="checkbox"
@@ -1391,6 +1394,7 @@ observaciones_preparacion_reasignacion:
               </div>
             
             </div>
+             
             
             {/* FILA 5 */}           
             <div style={{display:"flex",gap:8,overflowX:"auto",alignItems:"flex-end"}}>
