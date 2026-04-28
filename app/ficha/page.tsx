@@ -1117,7 +1117,6 @@ observaciones_preparacion_reasignacion:
             <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
               <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
-              <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
               <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={260}/>
               <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={420}/>
 
@@ -1145,6 +1144,7 @@ observaciones_preparacion_reasignacion:
                 onChange={(v)=>handleReasignacionChange(index,"cuestionario",v)}
               />
 
+              <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
               <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={130}/>
               <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={120}/>
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={150}/>
