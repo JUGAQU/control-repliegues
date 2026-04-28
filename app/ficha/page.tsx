@@ -1264,6 +1264,14 @@ observaciones_preparacion_reasignacion:
                   handleReasignacionChange(
                     index,
                     "supervisa_corte",
+                    <CampoInputAuto
+                label="Autonegociación"
+                value={r.autonegociacion || ""}
+                minWidth={170}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"autonegociacion",v)
+                }
+              />
 
 
 
@@ -1300,17 +1308,10 @@ observaciones_preparacion_reasignacion:
             
              
             
-              <CampoInputAuto
-                label="Autonegociación"
-                value={r.autonegociacion || ""}
-                minWidth={170}
-                onChange={(v)=>
-                  handleReasignacionChange(index,"autonegociacion",v)
-                }
-              />
+              
             
 
-                    v
+                    
                   )
                 }
               />
