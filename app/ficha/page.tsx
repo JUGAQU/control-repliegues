@@ -1218,7 +1218,7 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto
                 label="Prueba de Atenuación"
                 value={r.pba_atenuacion || ""}
-                minWidth={100}
+                minWidth={50}
                 onChange={(v)=>
                   handleReasignacionChange(index,"pba_atenuacion",v)
                 }
