@@ -105,8 +105,9 @@ export default function Ficha() {
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
-  const [filtrosEjecucion, setFiltrosEjecucion] =
-  useState<Record<GrupoEjecucion, boolean>>({
+  const [filtroSgipe, setFiltroSgipe] = useState("");
+  const [filtroGrupo, setFiltroGrupo] = useState("");
+  const [filtrosEjecucion, setFiltrosEjecucion] =  useState<Record<GrupoEjecucion, boolean>>({
     nuevo_cable: true,
     ftth_caliente: true,
     ftth_frio: true,
@@ -455,9 +456,24 @@ observaciones_preparacion_reasignacion:
     gap: 8,
   };
 
-  const reasignacionesEjecucionFiltradas = reasignaciones.filter(
-    (r:any) => filtrosEjecucion[grupoModoReasignacion(r.modo_reasignacion)]
-  );
+  const reasignacionesEjecucionFiltradas = reasignaciones.filter((r:any) => {
+  const cumpleTipo =
+    filtrosEjecucion[grupoModoReasignacion(r.modo_reasignacion)];
+
+  const cumpleSgipe =
+    filtroSgipe.trim() === "" ||
+    String(r.sgipe || "")
+      .toLowerCase()
+      .includes(filtroSgipe.toLowerCase());
+
+  const cumpleGrupo =
+    filtroGrupo.trim() === "" ||
+    String(r.grupo || "")
+      .toLowerCase()
+      .includes(filtroGrupo.toLowerCase());
+
+  return cumpleTipo && cumpleSgipe && cumpleGrupo;
+});
 
   const totalPorGrupo = (grupo: GrupoEjecucion) =>
     reasignaciones.filter(
@@ -1153,6 +1169,44 @@ observaciones_preparacion_reasignacion:
                 [g.key]: e.target.checked
               }))
             }
+
+
+
+          <input
+            placeholder="SGIPE"
+            value={filtroSgipe}
+            onChange={(e)=>setFiltroSgipe(e.target.value)}
+            style={{
+              width:80,
+              height:22,
+              fontSize:11,
+              padding:"1px 5px",
+              border:"1px solid #7fa7c7",
+              borderRadius:3
+            }}
+          />
+          
+          <input
+            placeholder="Grupo"
+            value={filtroGrupo}
+            onChange={(e)=>setFiltroGrupo(e.target.value)}
+            style={{
+              width:80,
+              height:22,
+              fontSize:11,
+              padding:"1px 5px",
+              border:"1px solid #7fa7c7",
+              borderRadius:3
+            }}
+          />
+
+
+
+
+
+
+          
+            
           />
 
           {g.label.toUpperCase()}
