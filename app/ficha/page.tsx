@@ -1123,39 +1123,66 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
               <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={420}/>
 
-              <div style={{width:35, flex:"0 0 auto"}}>
-                <CampoInputAuto
-                  label="SGIPE"
+
+              <div style={{ width:55, flex:"0 0 auto" }}>
+                <div style={{
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul,
+                  marginBottom:3
+                }}>
+                  SGIPE
+                </div>
+                <input
                   value={r.sgipe || ""}
-                  onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}
+                  onChange={(e)=>handleReasignacionChange(index,"sgipe",e.target.value)}
+                  style={{
+                    width:55,
+                    height:20,
+                    padding:"1px 5px",
+                    background:COLORES.fondoCampo,
+                    border:"1px solid #666",
+                    borderRadius:4,
+                    fontSize:11,
+                    boxSizing:"border-box"
+                  }}
                 />
               </div>
               
-              <div
-                style={{
-                  width:35,
-                  flex:"0 0 auto",
-                  marginLeft:10   // espacio entre SGIPE y Grupo
-                }}
-              >
-                <CampoInputAuto
-                  label="Grupo"
+              <div style={{ width:55, flex:"0 0 auto", marginLeft:12 }}>
+                <div style={{
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul,
+                  marginBottom:3
+                }}>
+                  Grupo
+                </div>
+                <input
                   value={r.grupo || ""}
-                  onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
+                  onChange={(e)=>handleReasignacionChange(index,"grupo",e.target.value)}
+                  style={{
+                    width:55,
+                    height:20,
+                    padding:"1px 5px",
+                    background:COLORES.fondoCampo,
+                    border:"1px solid #666",
+                    borderRadius:4,
+                    fontSize:11,
+                    boxSizing:"border-box"
+                  }}
                 />
               </div>
               
-              <div style={{ marginLeft:18 }}> {/* espacio antes Estado Trabajo */}
+              <div style={{ marginLeft:12, flex:"0 0 auto" }}>
                 <CampoSelectEstado
                   label="Estado Trabajo"
                   value={r.estado_trabajos}
                   options={OPCIONES_ESTADO_TRABAJOS}
-                  onChange={(v)=>
-                    handleReasignacionChange(index,"estado_trabajos",v)
-                  }
+                  onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
                 />
               </div>
-
+             
             
               <div style={{ minWidth:130, flex:"0 0 auto" }}>
                 <div style={{
