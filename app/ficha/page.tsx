@@ -1174,7 +1174,9 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
               <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
               <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
-             {/*  <CampoReaSoloLecturaAuto label="Velocidad Puerto" value={r.velocidad_interface} minWidth={140}/> onChange={(v)=>handleReasignacionChange(index,"velocidad_interface",v)}/> */}
+              <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
+              <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={400} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+             
             </div>
 
             {/* FILA 5 */}
