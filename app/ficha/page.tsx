@@ -1321,7 +1321,40 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={130} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
               <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
               <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
-              <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
+              <div style={{ minWidth:150, flex:"0 0 auto" }}>
+              <div
+                style={{
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul,
+                  marginBottom:3
+                }}
+              >
+                Ventana GECO
+              </div>
+            
+              <input
+                type="datetime-local"
+                value={r.ventana_geco || ""}
+                onChange={(e)=>
+                  handleReasignacionChange(
+                    index,
+                    "ventana_geco",
+                    e.target.value
+                  )
+                }
+                style={{
+                  width:"100%",
+                  height:20,
+                  padding:"1px 5px",
+                  background:COLORES.fondoCampo,
+                  border:"1px solid #666",
+                  borderRadius:4,
+                  fontSize:11,
+                  boxSizing:"border-box"
+                }}
+              />
+            </div>
               
 
             {/* BLOQUE CHECKS */}
