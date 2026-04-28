@@ -1384,7 +1384,7 @@ observaciones_preparacion_reasignacion:
             
             </div> {/* BLOQUE CHECKS */}
               
-            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={250} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={270} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
 
 
 
@@ -1403,7 +1403,7 @@ observaciones_preparacion_reasignacion:
                 <CampoInputAuto
                   label="Observaciones Preparación"
                   value={r.observaciones_preparacion_reasignacion || ""}
-                  minWidth={600}
+                  minWidth={550}
                   onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
                 />
               </div>
