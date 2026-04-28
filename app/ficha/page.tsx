@@ -1121,7 +1121,7 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
               <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
-              <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={420}/>
+              <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={470}/>
 
 
               <div style={{ width:75, flex:"0 0 auto" }}>
