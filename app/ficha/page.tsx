@@ -457,9 +457,24 @@ observaciones_preparacion_reasignacion:
     gap: 8,
   };
 
-  const reasignacionesEjecucionFiltradas = reasignaciones.filter(
-    (r:any) => filtrosEjecucion[grupoModoReasignacion(r.modo_reasignacion)]
-  );
+  const reasignacionesEjecucionFiltradas = reasignaciones.filter((r:any) => {
+  const cumpleTipo =
+    filtrosEjecucion[grupoModoReasignacion(r.modo_reasignacion)];
+
+  const cumpleSgipe =
+    filtroSgipe.trim() === "" ||
+    String(r.sgipe || "")
+      .toLowerCase()
+      .includes(filtroSgipe.toLowerCase());
+
+  const cumpleGrupo =
+    filtroGrupo.trim() === "" ||
+    String(r.grupo || "")
+      .toLowerCase()
+      .includes(filtroGrupo.toLowerCase());
+
+  return cumpleTipo && cumpleSgipe && cumpleGrupo;
+});
 
   const totalPorGrupo = (grupo: GrupoEjecucion) =>
     reasignaciones.filter(
