@@ -21,6 +21,7 @@ const OPCIONES_MODO_REASIGNACION = [
 ];
 
 
+
 const OPCIONES_ESTADO_TRABAJOS = [
   "En Análisis",
   "En Curso",
