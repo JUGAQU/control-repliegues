@@ -1176,6 +1176,136 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
               <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
               <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={400} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+
+              {/* BLOQUE CHECKS */}
+              <div
+                style={{
+                  display:"flex",
+                  gap:14,
+                  alignItems:"center",
+                  background:"#d9ead3",
+                  border:"1px solid #93c47d",
+                  borderRadius:4,
+                  padding:"4px 10px",
+                  flex:"0 0 auto"
+                }}
+              >
+              
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  GECO
+                  <input
+                    type="checkbox"
+                    checked={!!r.geco}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "geco",
+                        String(e.target.checked)
+                      )
+                    }
+                  />
+                </label>
+              
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  CEX
+                  <input
+                    type="checkbox"
+                    checked={!!r.cex}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "cex",
+                        String(e.target.checked)
+                      )
+                    }
+                  />
+                </label>
+              
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  RIMA
+                  <input
+                    type="checkbox"
+                    checked={!!r.rima}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "rima",
+                        String(e.target.checked)
+                      )
+                    }
+                  />
+                </label>
+              
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  REDES PRIV
+                  <input
+                    type="checkbox"
+                    checked={!!r.redes_priv}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "redes_priv",
+                        String(e.target.checked)
+                      )
+                    }
+                  />
+                </label>
+              
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  DWDM
+                  <input
+                    type="checkbox"
+                    checked={!!r.dwdm}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "dwdm",
+                        String(e.target.checked)
+                      )
+                    }
+                  />
+                </label>
+              
+              </div>
+
+
+
+              
             </div>
               
             {/* FILA 5 */}
