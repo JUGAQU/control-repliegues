@@ -105,6 +105,8 @@ export default function Ficha() {
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
+  const [filtroSgipe, setFiltroSgipe] = useState("");
+const [filtroGrupo, setFiltroGrupo] = useState("");
   const [filtrosEjecucion, setFiltrosEjecucion] =
   useState<Record<GrupoEjecucion, boolean>>({
     nuevo_cable: true,
