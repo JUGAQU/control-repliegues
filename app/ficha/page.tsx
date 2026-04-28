@@ -1221,48 +1221,7 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
               <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
 
-
-
-       
-                
-            </div>
-
-            {/* FILA 3 */}
-            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
-              <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
-              <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"orden_atlas",v)}/>
-              <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChange(index,"estado_orden_atlas",v)}/>
-              <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"uo_atlas",v)}/>
-
-              <div style={{flex:1,minWidth:600}}>
-                <CampoInputAuto
-                  label="Observaciones Preparación"
-                  value={r.observaciones_preparacion_reasignacion || ""}
-                  minWidth={600}
-                  onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
-                />
-              </div>
-            </div>
-
-            {/* FILA 4 */}
-            <div
-              style={{
-                display:"flex",
-                gap:8,
-                overflowX:"auto",
-                marginBottom:6,
-                alignItems:"flex-end"
-              }}
-            >
-            
-
-            
-
-            
-
-            
-              
-            {/* BLOQUE CHECKS */}
+                          {/* BLOQUE CHECKS */}
             <div style={{ minWidth:330, flex:"0 0 auto" }}>
             
               {/* Etiqueta como el resto de campos */}
@@ -1275,7 +1234,7 @@ observaciones_preparacion_reasignacion:
                 }}
               >
                 Coordinado trabajos
-              </div>
+              </div> {/* Etiqueta como el resto de campos */}
             
               {/* Caja de checks */}
               <div
@@ -1421,9 +1380,52 @@ observaciones_preparacion_reasignacion:
                   />
                 </label>
             
-              </div>
+              </div>  {/* Caja de checks */}
             
+            </div> {/* BLOQUE CHECKS */}
+
+
+
+       
+                
             </div>
+
+            {/* FILA 3 */}
+            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+              <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
+              <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"orden_atlas",v)}/>
+              <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChange(index,"estado_orden_atlas",v)}/>
+              <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"uo_atlas",v)}/>
+
+              <div style={{flex:1,minWidth:600}}>
+                <CampoInputAuto
+                  label="Observaciones Preparación"
+                  value={r.observaciones_preparacion_reasignacion || ""}
+                  minWidth={600}
+                  onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
+                />
+              </div>
+            </div>
+
+            {/* FILA 4 */}
+            <div
+              style={{
+                display:"flex",
+                gap:8,
+                overflowX:"auto",
+                marginBottom:6,
+                alignItems:"flex-end"
+              }}
+            >
+            
+
+            
+
+            
+
+            
+              
+
              
             </div>
             
