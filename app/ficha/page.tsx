@@ -1343,7 +1343,7 @@ observaciones_preparacion_reasignacion:
             <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={350} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
 
 
-
+            </div> {/* FILA 2 */}
        
                 
           
