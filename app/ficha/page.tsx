@@ -1213,7 +1213,7 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={100}/>
-              <CampoReaSoloLecturaAuto label="Velocidad Interface" value={r.velocidad_interface} minWidth={50}/>
+              <CampoReaSoloLecturaAuto label="Veloc. Interface" value={r.velocidad_interface} minWidth={50}/>
                             <CampoInputAuto
                 label="Prueba de Atenuación"
                 value={r.pba_atenuacion || ""}
@@ -1235,7 +1235,7 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto
                 label="Configuracion Puerto Destino"
                 value={r.configuracion_puerto_destino || ""}
-                minWidth={100}
+                minWidth={50}
                 onChange={(v)=>
                   handleReasignacionChange(
                     index,
