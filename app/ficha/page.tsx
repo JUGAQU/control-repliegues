@@ -1121,7 +1121,7 @@ observaciones_preparacion_reasignacion:
             <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
             <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={470}/>
             <CampoInputAuto label="SGIPE" value={r.sgipe || ""} minWidth={50} onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}/>
-            <CampoInputAuto label="Grupo" value={r.grupo || ""} minWidth={25} onChange={(v)=>handleReasignacionChange(index,"grupo",v)}/>
+            <CampoInputAuto label="Grupo" value={r.grupo || ""} minWidth={50} onChange={(v)=>handleReasignacionChange(index,"grupo",v)}/>
             
           
       
@@ -1340,7 +1340,7 @@ observaciones_preparacion_reasignacion:
             
             </div> {/* BLOQUE CHECKS */}
               
-            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={300} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={320} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
 
 
 
