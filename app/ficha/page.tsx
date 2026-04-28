@@ -1170,41 +1170,94 @@ observaciones_preparacion_reasignacion:
             </div>
 
             {/* FILA 4 */}
-            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
-              <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
-              <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
-              <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
-              <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
-              <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={400} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
-
-              {/* BLOQUE CHECKS */}
-              <div
+            <div
               style={{
                 display:"flex",
-                gap:12,
-                alignItems:"center",
-                background:"#d9ead3",
-                border:"1px solid #93c47d",
-                borderRadius:4,
-            
-                /* AJUSTES NUEVOS */
-                padding:"1px 8px",
-                minHeight:20,
-                height:20,
-            
-                flex:"0 0 auto"
+                gap:8,
+                overflowX:"auto",
+                marginBottom:6,
+                alignItems:"flex-end"
               }}
             >
-              
-              
-                <label style={{
+            
+              <CampoInputAuto
+                label="Prueba de Atenuación"
+                value={r.pba_atenuacion || ""}
+                minWidth={170}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"pba_atenuacion",v)
+                }
+              />
+            
+              <CampoInputAuto
+                label="Autonegociación"
+                value={r.autonegociacion || ""}
+                minWidth={170}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"autonegociacion",v)
+                }
+              />
+            
+              <CampoInputAuto
+                label="Configuracion Puerto Destino"
+                value={r.configuracion_puerto_destino || ""}
+                minWidth={200}
+                onChange={(v)=>
+                  handleReasignacionChange(
+                    index,
+                    "configuracion_puerto_destino",
+                    v
+                  )
+                }
+              />
+            
+              <CampoInputAuto
+                label="Ventana GECO"
+                value={r.ventana_geco || ""}
+                minWidth={200}
+                onChange={(v)=>
+                  handleReasignacionChange(index,"ventana_geco",v)
+                }
+              />
+            
+              <CampoInputAuto
+                label="Supervisa el Corte"
+                value={r.supervisa_corte || ""}
+                minWidth={400}
+                onChange={(v)=>
+                  handleReasignacionChange(
+                    index,
+                    "supervisa_corte",
+                    v
+                  )
+                }
+              />
+            
+              {/* BLOQUE CHECKS */}
+              <div
+                style={{
                   display:"flex",
+                  gap:10,
                   alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
+                  background:"#d9ead3",
+                  border:"1px solid #93c47d",
+                  borderRadius:4,
+                  padding:"0px 8px",
+                  height:20,
+                  flex:"0 0 auto"
+                }}
+              >
+            
+                <label
+                  style={{
+                    display:"flex",
+                    alignItems:"center",
+                    gap:4,
+                    fontSize:11,
+                    fontWeight:"bold",
+                    color:COLORES.textoAzul
+                  }}
+                >
                   GECO
                   <input
                     type="checkbox"
@@ -1216,17 +1269,23 @@ observaciones_preparacion_reasignacion:
                         String(e.target.checked)
                       )
                     }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
                   />
                 </label>
-              
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
+            
+                <label
+                  style={{
+                    display:"flex",
+                    alignItems:"center",
+                    gap:4,
+                    fontSize:11,
+                    fontWeight:"bold",
+                    color:COLORES.textoAzul
+                  }}
+                >
                   CEX
                   <input
                     type="checkbox"
@@ -1238,17 +1297,23 @@ observaciones_preparacion_reasignacion:
                         String(e.target.checked)
                       )
                     }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
                   />
                 </label>
-              
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
+            
+                <label
+                  style={{
+                    display:"flex",
+                    alignItems:"center",
+                    gap:4,
+                    fontSize:11,
+                    fontWeight:"bold",
+                    color:COLORES.textoAzul
+                  }}
+                >
                   RIMA
                   <input
                     type="checkbox"
@@ -1260,17 +1325,23 @@ observaciones_preparacion_reasignacion:
                         String(e.target.checked)
                       )
                     }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
                   />
                 </label>
-              
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
+            
+                <label
+                  style={{
+                    display:"flex",
+                    alignItems:"center",
+                    gap:4,
+                    fontSize:11,
+                    fontWeight:"bold",
+                    color:COLORES.textoAzul
+                  }}
+                >
                   REDES PRIV
                   <input
                     type="checkbox"
@@ -1282,17 +1353,23 @@ observaciones_preparacion_reasignacion:
                         String(e.target.checked)
                       )
                     }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
                   />
                 </label>
-              
-                <label style={{
-                  display:"flex",
-                  alignItems:"center",
-                  gap:4,
-                  fontSize:11,
-                  fontWeight:"bold",
-                  color:COLORES.textoAzul
-                }}>
+            
+                <label
+                  style={{
+                    display:"flex",
+                    alignItems:"center",
+                    gap:4,
+                    fontSize:11,
+                    fontWeight:"bold",
+                    color:COLORES.textoAzul
+                  }}
+                >
                   DWDM
                   <input
                     type="checkbox"
@@ -1304,17 +1381,18 @@ observaciones_preparacion_reasignacion:
                         String(e.target.checked)
                       )
                     }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
                   />
                 </label>
-              
+            
               </div>
-
-
-
-              
+            
             </div>
-              
-            {/* FILA 5 */}
+            
+            {/* FILA 5 */}           
             <div style={{display:"flex",gap:8,overflowX:"auto",alignItems:"flex-end"}}>
               <CampoSelectEstado
                 label="Estado Trabajo"
