@@ -1358,7 +1358,7 @@ observaciones_preparacion_reasignacion:
                 <CampoInputAuto
                   label="Observaciones Preparación"
                   value={r.observaciones_preparacion_reasignacion || ""}
-                  minWidth={1200}
+                  minWidth={1220}
                   onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
                 />
               </div>
