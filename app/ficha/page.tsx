@@ -1215,11 +1215,11 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Veloc. Interface" value={r.velocidad_interface} minWidth={50}/>
-              <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
-              <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
-              <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
-              <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
-              <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+              <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
+              <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={70} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
+              <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={50} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
+              <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
+              
 
                           {/* BLOQUE CHECKS */}
             <div style={{ minWidth:330, flex:"0 0 auto" }}>
@@ -1383,6 +1383,8 @@ observaciones_preparacion_reasignacion:
               </div>  {/* Caja de checks */}
             
             </div> {/* BLOQUE CHECKS */}
+              
+            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
 
 
 
