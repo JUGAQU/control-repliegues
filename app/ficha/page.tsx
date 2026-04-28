@@ -1133,6 +1133,70 @@ observaciones_preparacion_reasignacion:
                 minWidth={70}
                 onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
               />
+
+              <CampoSelectEstado
+                label="Estado Trabajo"
+                value={r.estado_trabajos}
+                options={OPCIONES_ESTADO_TRABAJOS}
+                onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
+              />
+              
+              <div style={{ minWidth:130, flex:"0 0 auto" }}>
+                <div
+                  style={{
+                    fontSize:11,
+                    fontWeight:"bold",
+                    color:COLORES.textoAzul,
+                    marginBottom:3
+                  }}
+                >
+                  Fecha Ejecución
+                </div>
+              
+                <input
+                  type="date"
+                  value={r.fecha_ejecucion || ""}
+                  disabled={
+                    !(
+                      r.estado_trabajos==="Ejecutada" ||
+                      r.estado_trabajos==="Finalizada"
+                    )
+                  }
+                  onChange={(e)=>
+                    handleReasignacionChange(index,"fecha_ejecucion",e.target.value)
+                  }
+                  style={{
+                    width:"100%",
+                    height:20,
+                    padding:"1px 5px",
+                    background:
+                      (
+                        r.estado_trabajos==="Ejecutada" ||
+                        r.estado_trabajos==="Finalizada"
+                      )
+                        ? COLORES.fondoCampo
+                        : COLORES.fondoSoloLectura,
+                    color:
+                      (
+                        r.estado_trabajos==="Ejecutada" ||
+                        r.estado_trabajos==="Finalizada"
+                      )
+                        ? "#000"
+                        : COLORES.textoSoloLectura,
+                    border:"1px solid #888",
+                    borderRadius:4,
+                    fontSize:11,
+                    fontFamily:"Arial",
+                    boxSizing:"border-box"
+                  }}
+                />
+              </div>
+
+
+
+
+
+              
             </div>
 
             {/* FILA 2 */}
@@ -1397,44 +1461,7 @@ observaciones_preparacion_reasignacion:
              
             </div>
             
-            {/* FILA 5 */}           
-            <div style={{display:"flex",gap:8,overflowX:"auto",alignItems:"flex-end"}}>
-              <CampoSelectEstado
-                label="Estado Trabajo"
-                value={r.estado_trabajos}
-                options={OPCIONES_ESTADO_TRABAJOS}
-                onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
-              />
 
-              <div style={{ minWidth:130, flex:"0 0 auto" }}>
-                <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
-                  Fecha Ejecución
-                </div>
-
-                <input
-                  type="date"
-                  value={r.fecha_ejecucion || ""}
-                  disabled={!(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")}
-                  onChange={(e)=>handleReasignacionChange(index,"fecha_ejecucion",e.target.value)}
-                  style={{
-                    width:"100%",
-                    height:20,
-                    padding:"1px 5px",
-                    background:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
-                      ? COLORES.fondoCampo
-                      : COLORES.fondoSoloLectura,
-                    color:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
-                      ? "#000"
-                      : COLORES.textoSoloLectura,
-                    border:"1px solid #888",
-                    borderRadius:4,
-                    fontSize:11,
-                    fontFamily:"Arial",
-                    boxSizing:"border-box"
-                  }}
-                />
-              </div>
-            </div>
 
           </div>
         </div>
