@@ -1243,6 +1243,19 @@ observaciones_preparacion_reasignacion:
                 }
               />
 
+              <CampoInputAuto
+                label="Configuracion Puerto Destino"
+                value={r.configuracion_puerto_destino || ""}
+                minWidth={200}
+                onChange={(v)=>
+                  handleReasignacionChange(
+                    index,
+                    "configuracion_puerto_destino",
+                    v
+                  )
+                }
+              />
+
 
               
             </div>
@@ -1277,18 +1290,7 @@ observaciones_preparacion_reasignacion:
             
 
             
-              <CampoInputAuto
-                label="Configuracion Puerto Destino"
-                value={r.configuracion_puerto_destino || ""}
-                minWidth={200}
-                onChange={(v)=>
-                  handleReasignacionChange(
-                    index,
-                    "configuracion_puerto_destino",
-                    v
-                  )
-                }
-              />
+
             
               <CampoInputAuto
                 label="Ventana GECO"
