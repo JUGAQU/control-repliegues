@@ -1175,6 +1175,137 @@ observaciones_preparacion_reasignacion:
               <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
               <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
               <CampoInputAuto label="Ventana GECO" value={r.ventana_geco || ""} minWidth={200} onChange={(v)=>handleReasignacionChange(index,"ventana_geco",v)}/>
+              <div
+                style={{
+                display:"flex",
+                gap:10,
+                alignItems:"flex-end",
+                marginLeft:10,
+                flex:"0 0 auto"
+                }}
+              >
+
+              {/* GECO */}
+              <div style={{textAlign:"center"}}>
+              <div style={{
+              fontSize:11,
+              fontWeight:"bold",
+              color:COLORES.textoAzul,
+              marginBottom:3
+              }}>
+              GECO
+              </div>
+              <input
+              type="checkbox"
+              checked={!!r.geco}
+              onChange={(e)=>
+              handleReasignacionChange(
+              index,
+              "geco",
+              String(e.target.checked)
+              )
+              }
+              />
+              </div>
+              
+              {/* CEX */}
+              <div style={{textAlign:"center"}}>
+              <div style={{
+              fontSize:11,
+              fontWeight:"bold",
+              color:COLORES.textoAzul,
+              marginBottom:3
+              }}>
+              CEX
+              </div>
+              <input
+              type="checkbox"
+              checked={!!r.cex}
+              onChange={(e)=>
+              handleReasignacionChange(
+              index,
+              "cex",
+              String(e.target.checked)
+              )
+              }
+              />
+              </div>
+              
+              {/* RIMA */}
+              <div style={{textAlign:"center"}}>
+              <div style={{
+              fontSize:11,
+              fontWeight:"bold",
+              color:COLORES.textoAzul,
+              marginBottom:3
+              }}>
+              RIMA
+              </div>
+              <input
+              type="checkbox"
+              checked={!!r.rima}
+              onChange={(e)=>
+              handleReasignacionChange(
+              index,
+              "rima",
+              String(e.target.checked)
+              )
+              }
+              />
+              </div>
+              
+              {/* REDES PRIV */}
+              <div style={{textAlign:"center"}}>
+              <div style={{
+              fontSize:11,
+              fontWeight:"bold",
+              color:COLORES.textoAzul,
+              marginBottom:3
+              }}>
+              REDES PRIV
+              </div>
+              <input
+              type="checkbox"
+              checked={!!r.redes_priv}
+              onChange={(e)=>
+              handleReasignacionChange(
+              index,
+              "redes_priv",
+              String(e.target.checked)
+              )
+              }
+              />
+              </div>
+              
+              {/* DWDM */}
+              <div style={{textAlign:"center"}}>
+              <div style={{
+              fontSize:11,
+              fontWeight:"bold",
+              color:COLORES.textoAzul,
+              marginBottom:3
+              }}>
+              DWDM
+              </div>
+              <input
+              type="checkbox"
+              checked={!!r.dwdm}
+              onChange={(e)=>
+              handleReasignacionChange(
+              index,
+              "dwdm",
+              String(e.target.checked)
+              )
+              }
+              />
+              </div>
+              
+              </div>
+              
+              
+              
+              
+                            
               <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={400} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
              
             </div>
