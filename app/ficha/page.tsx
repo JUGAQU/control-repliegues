@@ -1128,26 +1128,9 @@ observaciones_preparacion_reasignacion:
             <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
             <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
             <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={470}/>
+            <CampoInputAuto label="SGIPE" value={r.sgipe || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}/>
           
-            <div style={{ width:75, flex:"0 0 auto" }}>
-              <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
-                SGIPE
-              </div>
-              <input
-                value={r.sgipe || ""}
-                onChange={(e)=>handleReasignacionChange(index,"sgipe",e.target.value)}
-                style={{
-                  width:"100%",
-                  height:20,
-                  padding:"1px 5px",
-                  background:COLORES.fondoCampo,
-                  border:"1px solid #666",
-                  borderRadius:4,
-                  fontSize:11,
-                  boxSizing:"border-box"
-                }}
-              />
-            </div>
+            
           
             <div style={{ width:55, flex:"0 0 auto" }}>
               <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
