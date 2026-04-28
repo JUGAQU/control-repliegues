@@ -1368,7 +1368,7 @@ observaciones_preparacion_reasignacion:
               }}
             >
 
-                            <div style={{flex:1,minWidth:600}}>
+             <div style={{flex:1,minWidth:600}}>
                 <CampoInputAuto
                   label="Observaciones Preparación"
                   value={r.observaciones_preparacion_reasignacion || ""}
