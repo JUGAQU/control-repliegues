@@ -1261,8 +1261,7 @@ observaciones_preparacion_reasignacion:
                   {tituloGrupo} — {(items as any[]).length} servicio(s)
                 </div>
 
-                {items.map((r:any,index:number)=>(
-                  
+                {(items as any[]).map((r:any,index:number)=>(
                   <div 
                         key={r.id || index}
                         style={{
