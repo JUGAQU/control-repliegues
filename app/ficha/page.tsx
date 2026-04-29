@@ -501,7 +501,6 @@ observaciones_preparacion_reasignacion:
   },
   {}
 );
-
  
   return (
     <div
