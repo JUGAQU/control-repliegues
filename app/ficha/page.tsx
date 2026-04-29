@@ -367,6 +367,21 @@ if (sinFechaObligatoria.length > 0) {
                 : null,
             fecha_ejecucion: r.fecha_ejecucion || null,
 numero_de_actuaciones: r.numero_de_actuaciones || null,
+
+ec_planta_interior: r.ec_planta_interior || null,
+numero_tecnico: r.numero_tecnico || null,
+tecnico_responsable: r.tecnico_responsable || null,
+telefono_responsable: r.telefono_responsable || null,
+tecnico_planta_exterior: r.tecnico_planta_exterior || null,
+telefono_planta_exterior: r.telefono_planta_exterior || null,
+gestor_atelco: r.gestor_atelco || null,
+fecha_btp: r.fecha_btp || null,
+nocturno: !!r.nocturno,
+
+
+
+
+            
 geco: !!r.geco,
 cex: !!r.cex,
 rima: !!r.rima,
