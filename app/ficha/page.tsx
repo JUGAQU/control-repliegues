@@ -502,7 +502,8 @@ observaciones_preparacion_reasignacion:
     serviciosAgrupados[clave].push(r);
   });
 
-
+  console.log(serviciosAgrupados);
+  
   return (
     <div
       style={{
