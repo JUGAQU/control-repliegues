@@ -1286,7 +1286,7 @@ observaciones_preparacion_reasignacion:
               value={r.grupo || ""}
               options={OPCIONES_GRUPO}
               minWidth={25}
-              onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
+              onChange={(v)=>handleReasignacionChangeById(r.id,"grupo",v)}
             />
             
           
@@ -1295,7 +1295,7 @@ observaciones_preparacion_reasignacion:
               label="Estado Trabajo"
               value={r.estado_trabajos}
               options={OPCIONES_ESTADO_TRABAJOS}
-              onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
+              onChange={(v)=>handleReasignacionChangeById(r.id,"estado_trabajos",v)}
             />
           
             <div style={{ minWidth:130, flex:"0 0 auto" }}>
@@ -1337,9 +1337,9 @@ observaciones_preparacion_reasignacion:
               <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Veloc. Interface" value={r.velocidad_interface} minWidth={60}/>
-              <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={130} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
-              <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
-              <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
+              <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={130} onChange={(v)=>handleReasignacionChangeById(r.id,"pba_atenuacion",v)}/>
+              <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={100} onChange={(v)=>handleReasignacionChangeById(r.id,"autonegociacion",v)}/>
+              <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={170} onChange={(v)=>handleReasignacionChangeById(r.id,"configuracion_puerto_destino",v)}/>
               <div style={{ minWidth:150, flex:"0 0 auto" }}>
               <div
                 style={{
@@ -1539,7 +1539,7 @@ observaciones_preparacion_reasignacion:
             
             </div> {/* BLOQUE CHECKS */}
               
-            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={300} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={300} onChange={(v)=>handleReasignacionChangeById(r.id,"supervisa_corte",v)}/>
 
 
             </div> {/* FILA 2 */}
@@ -1550,15 +1550,15 @@ observaciones_preparacion_reasignacion:
             {/* FILA 3 */}
             <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
               <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
-              <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"orden_atlas",v)}/>
-              <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChange(index,"estado_orden_atlas",v)}/>
-              <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"uo_atlas",v)}/>
+              <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChangeById(r.id,"orden_atlas",v)}/>
+              <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChangeById(r.id,"estado_orden_atlas",v)}/>
+              <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChangeById(r.id,"uo_atlas",v)}/>
               <div style={{flex:1,minWidth:600}}>
                 <CampoInputAuto
                   label="Observaciones Preparación"
                   value={r.observaciones_preparacion_reasignacion || ""}
                   minWidth={1220}
-                  onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
+                  onChange={(v)=>handleReasignacionChangeById(r.id,"observaciones_preparacion_reasignacion",v)}
                 />
               </div>
 
