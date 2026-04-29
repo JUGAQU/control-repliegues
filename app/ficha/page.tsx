@@ -1,5 +1,4 @@
 "use client";
-
 export const dynamic = "force-dynamic";
 
 import React, { useEffect, useState } from "react";
@@ -348,24 +347,27 @@ if (sinFechaObligatoria.length > 0) {
                 ? r.observaciones_del_estudio
                 : null,
             fecha_ejecucion: r.fecha_ejecucion || null,
-            numero_de_actuaciones: r.numero_de_actuaciones || null,
-            geco: !!r.geco,
-            cex: !!r.cex,
-            rima: !!r.rima,
-            redes_priv: !!r.redes_priv,
-            dwdm: !!r.dwdm,
-            ventana_geco: r.ventana_geco || null,
-            pba_atenuacion: r.pba_atenuacion || null,
-            autonegociacion: r.autonegociacion || null,
-            configuracion_puerto_destino: r.configuracion_puerto_destino || null,
-            supervisa_corte: r.supervisa_corte || null,
-            sgipe: r.sgipe || null,
-            grupo: r.grupo || null,
-            orden_atlas: r.orden_atlas || null,
-            estado_orden_atlas: r.estado_orden_atlas || null,
-            uo_atlas: r.uo_atlas || null,
-            observaciones_preparacion_reasignacion:
-            r.observaciones_preparacion_reasignacion || null,            
+numero_de_actuaciones: r.numero_de_actuaciones || null,
+geco: !!r.geco,
+cex: !!r.cex,
+rima: !!r.rima,
+redes_priv: !!r.redes_priv,
+dwdm: !!r.dwdm,
+ventana_geco: r.ventana_geco || null,
+pba_atenuacion: r.pba_atenuacion || null,
+autonegociacion: r.autonegociacion || null,
+configuracion_puerto_destino: r.configuracion_puerto_destino || null,
+supervisa_corte: r.supervisa_corte || null,
+sgipe: r.sgipe || null,
+grupo: r.grupo || null,
+orden_atlas: r.orden_atlas || null,
+estado_orden_atlas: r.estado_orden_atlas || null,
+uo_atlas: r.uo_atlas || null,
+observaciones_preparacion_reasignacion:
+  r.observaciones_preparacion_reasignacion || null,
+
+
+            
           };
 
 
@@ -482,25 +484,6 @@ if (sinFechaObligatoria.length > 0) {
     reasignaciones.filter(
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
-
-
-  const serviciosAgrupados: Record<string, any[]> = {};
-
-  reasignacionesEjecucionFiltradas.forEach((r:any) => {
-    const clave =
-      r.sgipe && String(r.sgipe).trim() !== ""
-        ? `SGIPE ${r.sgipe}`
-        : r.grupo && String(r.grupo).trim() !== ""
-          ? `Grupo ${r.grupo}`
-          : "Sin asignar";
-  
-    if (!serviciosAgrupados[clave]) {
-      serviciosAgrupados[clave] = [];
-    }
-
-    serviciosAgrupados[clave].push(r);
-  });
-  
 
   return (
     <div
@@ -1244,24 +1227,7 @@ if (sinFechaObligatoria.length > 0) {
         No hay reasignaciones para este atlas.
       </div>
     ) : (
-      Object.entries(serviciosAgrupados).map(([tituloGrupo, items]) => (
-        <div key={tituloGrupo}>
-      
-          <div
-            style={{
-              background:"#0070c0",
-              color:"#fff",
-              fontWeight:"bold",
-              padding:"5px 10px",
-              margin:"8px 0 6px 0",
-              borderRadius:4,
-              fontSize:12
-            }}
-          >
-            {tituloGrupo} — {(items as any[]).length} servicio(s)
-          </div>
-
-          {(items as any[]).map((r:any,index:number)=>(
+      reasignacionesEjecucionFiltradas.map((r:any,index:number)=>(
         <div
           key={r.id || index}
           style={{
@@ -1356,38 +1322,38 @@ if (sinFechaObligatoria.length > 0) {
               <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
               <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
               <div style={{ minWidth:150, flex:"0 0 auto" }}>
-                <div
-                  style={{
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul,
-                    marginBottom:3
-                  }}
-                >
-                  Ventana GECO
-                </div>
+              <div
+                style={{
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul,
+                  marginBottom:3
+                }}
+              >
+                Ventana GECO
+              </div>
             
-                <input
-                  type="datetime-local"
-                  value={r.ventana_geco || ""}
-                  onChange={(e)=>
-                    handleReasignacionChange(
-                      index,
-                      "ventana_geco",
-                      e.target.value
-                    )
-                  }
-                  style={{
-                    width:"100%",
-                    height:20,
-                    padding:"1px 5px",
-                    background:COLORES.fondoCampo,
-                    border:"1px solid #666",
-                    borderRadius:4,
-                    fontSize:11,
-                    boxSizing:"border-box"
-                  }}
-                />
+              <input
+                type="datetime-local"
+                value={r.ventana_geco || ""}
+                onChange={(e)=>
+                  handleReasignacionChange(
+                    index,
+                    "ventana_geco",
+                    e.target.value
+                  )
+                }
+                style={{
+                  width:"100%",
+                  height:20,
+                  padding:"1px 5px",
+                  background:COLORES.fondoCampo,
+                  border:"1px solid #666",
+                  borderRadius:4,
+                  fontSize:11,
+                  boxSizing:"border-box"
+                }}
+              />
             </div>
               
 
@@ -1402,154 +1368,154 @@ if (sinFechaObligatoria.length > 0) {
                   color:COLORES.textoAzul,
                   marginBottom:3
                 }}
-                >
+              >
                 Coordinado trabajos
               </div> {/* Etiqueta como el resto de campos */}
             
-                {/* Caja de checks */}
-                <div
-                  style={{
-                    display:"flex",
-                    gap:10,
-                    alignItems:"center",
-                    background:"#d9ead3",
-                    border:"1px solid #888",
-                    borderRadius:4,
-                    padding:"0px 8px",
-                    height:20
-                  }}
-                >
-              
-                  <label style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}>
-                    GECO
-                    <input
-                      type="checkbox"
-                      checked={!!r.geco}
-                      onChange={(e)=>
-                        handleReasignacionChange(
-                          index,
-                          "geco",
-                          String(e.target.checked)
-                        )
-                      }
-                      style={{
-                        transform:"scale(0.85)",
-                        margin:0
-                      }}
-                    />
-                  </label>
-              
-                  <label style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}>
-                    CEX
-                    <input
-                      type="checkbox"
-                      checked={!!r.cex}
-                      onChange={(e)=>
-                        handleReasignacionChange(
-                          index,
-                          "cex",
-                          String(e.target.checked)
-                        )
-                      }
-                      style={{
-                        transform:"scale(0.85)",
-                        margin:0
-                      }}
-                    />
-                  </label>
-              
-                  <label style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}>
-                    RIMA
-                    <input
-                      type="checkbox"
-                      checked={!!r.rima}
-                      onChange={(e)=>
-                        handleReasignacionChange(
-                          index,
-                          "rima",
-                          String(e.target.checked)
-                        )
-                      }
-                      style={{
-                        transform:"scale(0.85)",
-                        margin:0
-                      }}
-                    />
-                  </label>
-              
-                  <label style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}>
-                    REDES PRIV
-                    <input
-                      type="checkbox"
-                      checked={!!r.redes_priv}
-                      onChange={(e)=>
-                        handleReasignacionChange(
-                          index,
-                          "redes_priv",
-                          String(e.target.checked)
-                        )
-                      }
-                      style={{
-                        transform:"scale(0.85)",
-                        margin:0
-                      }}
-                    />
-                  </label>
-              
-                  <label style={{
-                    display:"flex",
-                    alignItems:"center",
-                    gap:4,
-                    fontSize:11,
-                    fontWeight:"bold",
-                    color:COLORES.textoAzul
-                  }}>
-                    DWDM
-                    <input
-                      type="checkbox"
-                      checked={!!r.dwdm}
-                      onChange={(e)=>
-                        handleReasignacionChange(
-                          index,
-                          "dwdm",
-                          String(e.target.checked)
-                        )
-                      }
-                      style={{
-                        transform:"scale(0.85)",
-                        margin:0
-                      }}
-                    />
-                  </label>
-              
+              {/* Caja de checks */}
+              <div
+                style={{
+                  display:"flex",
+                  gap:10,
+                  alignItems:"center",
+                  background:"#d9ead3",
+                  border:"1px solid #888",
+                  borderRadius:4,
+                  padding:"0px 8px",
+                  height:20
+                }}
+              >
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  GECO
+                  <input
+                    type="checkbox"
+                    checked={!!r.geco}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "geco",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  CEX
+                  <input
+                    type="checkbox"
+                    checked={!!r.cex}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "cex",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  RIMA
+                  <input
+                    type="checkbox"
+                    checked={!!r.rima}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "rima",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  REDES PRIV
+                  <input
+                    type="checkbox"
+                    checked={!!r.redes_priv}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "redes_priv",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  DWDM
+                  <input
+                    type="checkbox"
+                    checked={!!r.dwdm}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "dwdm",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
               </div>  {/* Caja de checks */}
             
             </div> {/* BLOQUE CHECKS */}
@@ -1575,21 +1541,30 @@ if (sinFechaObligatoria.length > 0) {
                   minWidth={1220}
                   onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
                 />
-              </div> {/* FILA 3 */}
+              </div>
 
 
 
               
-            </div> {/* FILA 3 */}
-          
+            </div>
+            
 
-        </div> {/* FIN TARJETA */}
+            
 
-      ))}
-    </div>
-  ))
-)}
+            
 
+            
+              
+
+             
+            
+            
+
+
+          </div>
+        </div>
+      ))
+    )}
   </>
 )}
 
