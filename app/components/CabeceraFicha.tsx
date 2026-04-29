@@ -43,8 +43,9 @@ export default function CabeceraFicha({ formData, handleChange }: Props) {
   <div style={{ fontSize:12, fontWeight:"bold", color:"#0b5394" }}>
     Lote:
     <input
+      name="lote"
       value={formData?.lote || ""}
-      readOnly
+      onChange={handleChange}
       style={{
         marginLeft:4,
         width:70,
