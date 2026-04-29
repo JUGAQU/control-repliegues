@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
+import CabeceraFicha from "../components/CabeceraFicha";
 
 const OPCIONES_MODO_REASIGNACION = [
   "NUEVO CABLE DE FIBRA A EEBB",
@@ -611,6 +612,7 @@ observaciones_preparacion_reasignacion:
           </div>
         </div>
 
+        <CabeceraFicha />
         <div style={{ ...bloqueSuperior, marginBottom: 5 }}>
           <div style={campo}>
             <span>Atlas:</span>
