@@ -461,35 +461,28 @@ observaciones_preparacion_reasignacion:
     gap: 8,
   };
 
-  const reasignacionesEjecucionFiltradas = reasignaciones.filter((r:any) => {
+    const reasignacionesEjecucionFiltradas = reasignaciones.filter((r:any) => {
   const cumpleTipo =
     filtrosEjecucion[grupoModoReasignacion(r.modo_reasignacion)];
 
   const cumpleSgipe =
     filtroSgipe.trim() === "" ||
-    String(r.sgipe || "")
-      .toLowerCase()
-      .includes(filtroSgipe.toLowerCase());
+    String(r.sgipe || "").toLowerCase().includes(filtroSgipe.toLowerCase());
 
   const cumpleGrupo =
     filtroGrupo.trim() === "" ||
-    String(r.grupo || "")
-      .toLowerCase()
-      .includes(filtroGrupo.toLowerCase());
+    String(r.grupo || "").toLowerCase().includes(filtroGrupo.toLowerCase());
 
   return cumpleTipo && cumpleSgipe && cumpleGrupo;
 });
-
 
 const totalPorGrupo = (grupo: GrupoEjecucion) =>
   reasignaciones.filter(
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
-
 const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
   (acc: Record<string, any[]>, r: any) => {
-
     const clave =
       r.sgipe && String(r.sgipe).trim() !== ""
         ? `SGIPE ${r.sgipe}`
@@ -498,14 +491,12 @@ const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
           : "Sin asignar";
 
     if (!acc[clave]) acc[clave] = [];
-
     acc[clave].push(r);
 
     return acc;
   },
   {}
 );
-
 
 return (
     <div
