@@ -1,7 +1,13 @@
-export default function CabeceraFicha() {
+import React from "react";
+
+type Props = {
+  formData: any;
+};
+
+export default function CabeceraFicha({ formData }: Props) {
   return (
     <div>
-      Cabecera ficha
+      Atlas: {formData?.atlas || ""}
     </div>
   );
 }
