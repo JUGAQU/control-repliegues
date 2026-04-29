@@ -485,13 +485,7 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
- 
-const totalPorGrupo = (grupo: GrupoEjecucion) =>
-  reasignaciones.filter(
-    (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
-  ).length;
-
-return (
+  return (
     <div
       style={{
         height: "100vh",
@@ -1233,24 +1227,7 @@ return (
         No hay reasignaciones para este atlas.
       </div>
     ) : (
-      Object.entries(serviciosAgrupados).map(([tituloGrupo, items]) => (
-        <div key={tituloGrupo}>
-      
-          <div
-            style={{
-              background:"#0070c0",
-              color:"#fff",
-              fontWeight:"bold",
-              padding:"5px 10px",
-              margin:"8px 0 6px 0",
-              borderRadius:4,
-              fontSize:12
-            }}
-          >
-            {tituloGrupo} — {items.length} servicio(s)
-          </div>
-      
-          {items.map((r:any,index:number)=>(
+      reasignacionesEjecucionFiltradas.map((r:any,index:number)=>(
         <div
           key={r.id || index}
           style={{
@@ -1564,7 +1541,7 @@ return (
                   minWidth={1220}
                   onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
                 />
-              </div>  {/* FILA 3 */}
+              </div>
 
 
 
@@ -1585,12 +1562,9 @@ return (
 
 
           </div>
-        </div> {/* FIN TARJETA */}
-
-      ))}
-  </div>
-))
-)}
+        </div>
+      ))
+    )}
   </>
 )}
 
