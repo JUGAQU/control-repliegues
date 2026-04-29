@@ -1323,7 +1323,23 @@ observaciones_preparacion_reasignacion:
           borderRadius:4
         }}
       >
-        {tituloGrupo} ({items.length})
+        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+          <span>{tituloGrupo} ({items.length})</span>
+        
+          <button
+            type="button"
+            onClick={() => {
+              window.open(`/actuaciones?grupo=${encodeURIComponent(tituloGrupo)}`, "_blank");
+            }}
+            style={{
+              fontSize:11,
+              fontWeight:"bold",
+              cursor:"pointer"
+            }}
+          >
+            Actuaciones
+          </button>
+        </div>
       </div>
       
       {items.map((r:any,index:number)=>(
