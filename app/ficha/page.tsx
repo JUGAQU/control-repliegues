@@ -1596,6 +1596,8 @@ observaciones_preparacion_reasignacion:
       
   ))
 )}  {/* <- cierra:reasignacionesEjecucionFiltradas.length===0 ? ... : (...) */}
+      </>
+)}
 
             {bloqueActivo === "visitas" && (
               <div
