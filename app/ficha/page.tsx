@@ -931,12 +931,6 @@ observaciones_preparacion_reasignacion:
         </div>
       </div>
 
-      {bloqueActivo === "ejecucion_reasignaciones" && (
-        <div style={{ padding: "0 20px 8px 20px" }}>
-          {/* AQUÍ PEGAS LA BARRA FILTROS EJECUCIÓN */}
-        </div>
-      )}
-
       <div
         style={{
           flex: 1,
@@ -1174,7 +1168,20 @@ observaciones_preparacion_reasignacion:
             {bloqueActivo === "ejecucion_reasignaciones" && (
   <>
 
-    
+    {/* BARRA FILTROS EJECUCIÓN */}
+    <div
+      style={{
+        display:"flex",
+        gap:8,
+        alignItems:"center",
+        marginBottom:10,
+        padding:8,
+        background:"#cfe8f6",
+        border:"1px solid #9fc5e8",
+        overflowX:"auto"
+      }}
+    >
+      <div
         style={{
           background:"#0070c0",
           color:"#fff",
