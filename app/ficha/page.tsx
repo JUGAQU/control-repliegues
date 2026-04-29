@@ -485,26 +485,13 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
-  const serviciosAgrupados: Record<string, any[]> = {};
+ 
+const totalPorGrupo = (grupo: GrupoEjecucion) =>
+  reasignaciones.filter(
+    (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
+  ).length;
 
-  reasignacionesEjecucionFiltradas.forEach((r:any) => {
-    const clave =
-      r.sgipe && String(r.sgipe).trim() !== ""
-        ? `SGIPE ${r.sgipe}`
-        : r.grupo && String(r.grupo).trim() !== ""
-          ? `Grupo ${r.grupo}`
-          : "Sin asignar";
-  
-    if (!serviciosAgrupados[clave]) {
-      serviciosAgrupados[clave] = [];
-    }
-  
-    serviciosAgrupados[clave].push(r);
-  });
-
-    
-
-  return (
+return (
     <div
       style={{
         height: "100vh",
