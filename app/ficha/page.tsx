@@ -480,28 +480,32 @@ observaciones_preparacion_reasignacion:
   return cumpleTipo && cumpleSgipe && cumpleGrupo;
 });
 
-  const totalPorGrupo = (grupo: GrupoEjecucion) =>
-    reasignaciones.filter(
+
+const totalPorGrupo = (grupo: GrupoEjecucion) =>
+  reasignaciones.filter(
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
 
-  const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
-    (acc: Record<string, any[]>, r: any) => {
-      const clave =
-        r.sgipe && String(r.sgipe).trim() !== ""
-          ? `SGIPE ${r.sgipe}`
-          : r.grupo && String(r.grupo).trim() !== ""
-            ? `Grupo ${r.grupo}`
-            : "Sin asignar";
-  
-      if (!acc[clave]) acc[clave] = [];
-      acc[clave].push(r);
-  
-      return acc;
-    },
-    {}
-  );
+const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);
+
 
 return (
     <div
