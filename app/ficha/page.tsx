@@ -485,6 +485,267 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
+
+  const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: Record<string, any[]>, r: any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);
+
+
+  const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+    (acc: Record<string, any[]>, r: any) => {
+      const clave =
+        r.sgipe && String(r.sgipe).trim() !== ""
+          ? `SGIPE ${r.sgipe}`
+          : r.grupo && String(r.grupo).trim() !== ""
+            ? `Grupo ${r.grupo}`
+            : "Sin asignar";
+  
+      if (!acc[clave]) acc[clave] = [];
+      acc[clave].push(r);
+  
+      return acc;
+    },
+    {}
+  );
+
   return (
     <div
       style={{
@@ -1227,7 +1488,25 @@ observaciones_preparacion_reasignacion:
         No hay reasignaciones para este atlas.
       </div>
     ) : (
-      reasignacionesEjecucionFiltradas.map((r:any,index:number)=>(
+      
+    Object.entries(serviciosAgrupados).map(([tituloGrupo, items]: any) => (
+      <div key={tituloGrupo}>
+    
+        <div
+          style={{
+            background:"#0070c0",
+            color:"#fff",
+            fontWeight:"bold",
+            padding:"5px 10px",
+            margin:"8px 0 6px 0",
+            borderRadius:4,
+            fontSize:12
+          }}
+        >
+          {tituloGrupo} — {items.length} servicio(s)
+        </div>
+
+    {items.map((r:any,index:number)=>(
         <div
           key={r.id || index}
           style={{
@@ -1546,25 +1825,16 @@ observaciones_preparacion_reasignacion:
 
 
               
-            </div>
+            </div>  {/* FIN FILA 3 */}
             
 
-            
-
-            
-
-            
-              
-
-             
-            
-            
-
-
-          </div>
-        </div>
-      ))
-    )}
+          </div> {/* FIN CONTENIDO TARJETA */}
+        </div> {/* FIN TARJETA */}
+        
+      ))}
+    </div>
+  ))
+  )}
   </>
 )}
 
