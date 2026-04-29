@@ -612,7 +612,13 @@ observaciones_preparacion_reasignacion:
           </div>
         </div>
 
-        <CabeceraFicha formData={formData} />
+        <CabeceraFicha
+          formData={formData}
+          handleChange={handleChange}
+          provincias={provincias}
+          empresasPI={empresasPI}
+          setMostrarMemoria={setMostrarMemoria}
+        />
 
 
         <div
