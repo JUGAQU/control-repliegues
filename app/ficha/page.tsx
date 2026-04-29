@@ -485,23 +485,6 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
-  const serviciosAgrupados: Record<string, any[]> =
-  reasignacionesEjecucionFiltradas.reduce(
-    (acc: Record<string, any[]>, r: any) => {
-      const clave =
-        r.sgipe && String(r.sgipe).trim() !== ""
-          ? `SGIPE ${r.sgipe}`
-          : r.grupo && String(r.grupo).trim() !== ""
-            ? `Grupo ${r.grupo}`
-            : "Sin asignar";
-
-      if (!acc[clave]) acc[clave] = [];
-      acc[clave].push(r);
-      return acc;
-    },
-    {} as Record<string, any[]>
-  );
- 
   return (
     <div
       style={{
@@ -1244,358 +1227,347 @@ observaciones_preparacion_reasignacion:
         No hay reasignaciones para este atlas.
       </div>
     ) : (
-    Object.entries(serviciosAgrupados).map(([tituloGrupo, items]) => (
-    <div key={tituloGrupo}> {/*TITULO GRUPO---------------------------------------------------------------------------- */}
-  
-                <div
-                  style={{
-                    background:"#0070c0",
-                    color:"#fff",
-                    fontWeight:"bold",
-                    padding:"5px 10px",
-                    margin:"8px 0 6px 0",
-                    borderRadius:4,
-                    fontSize:12
-                  }}
-                >
-                  {tituloGrupo} — {(items as any[]).length} servicio(s)
-                </div>
+      reasignacionesEjecucionFiltradas.map((r:any,index:number)=>(
+        <div
+          key={r.id || index}
+          style={{
+            display:"flex",
+            border:"1px solid #8ea9bf",
+            background:"#d9edf7",
+            marginBottom:12
+          }}
+        >
+          <div
+            style={{
+              width:35,
+              background:"#bdd7e7",
+              display:"flex",
+              alignItems:"center",
+              justifyContent:"center",
+              fontWeight:"bold",
+              fontSize:18
+            }}
+          >
+            {index+1}
+          </div>
 
-                {(items as any[]).map((r:any,index:number)=>(
-                  <div 
-                        key={r.id || index}
-                        style={{
-                          display:"flex",
-                          border:"1px solid #8ea9bf",
-                          background:"#d9edf7",
-                          marginBottom:12
-                        }}
-                      >
-
-                        <div
-                          style={{
-                            width:35,
-                            background:"#bdd7e7",
-                            display:"flex",
-                            alignItems:"center",
-                            justifyContent:"center",
-                            fontWeight:"bold",
-                            fontSize:18
-                          }}
-                        >
-                          {index+1}
-                        </div>
-
-                       {/* STYLE */}
-                       <div style={{flex:1,padding:6}}>
+          <div style={{flex:1,padding:6}}>
 
 
-                          {/* FILA 1 */}
-                          <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
-                              <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
-                              <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
-                              <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
-                              <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={470}/>
-                              <CampoInputAuto label="SGIPE" value={r.sgipe || ""} minWidth={70} onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}/>
-                              <CampoSelectAuto
-                                label="Grupo"
-                                value={r.grupo || ""}
-                                options={OPCIONES_GRUPO}
-                                minWidth={25}
-                                onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
-                              />
+          {/* FILA 1 */}
+          <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+          
+            <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
+            <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
+            <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
+            <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={470}/>
+            <CampoInputAuto label="SGIPE" value={r.sgipe || ""} minWidth={70} onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}/>
+            <CampoSelectAuto
+              label="Grupo"
+              value={r.grupo || ""}
+              options={OPCIONES_GRUPO}
+              minWidth={25}
+              onChange={(v)=>handleReasignacionChange(index,"grupo",v)}
+            />
             
           
       
-                              <CampoSelectEstado
-                                label="Estado Trabajo"
-                                value={r.estado_trabajos}
-                                options={OPCIONES_ESTADO_TRABAJOS}
-                                onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
-                              />
+            <CampoSelectEstado
+              label="Estado Trabajo"
+              value={r.estado_trabajos}
+              options={OPCIONES_ESTADO_TRABAJOS}
+              onChange={(v)=>handleReasignacionChange(index,"estado_trabajos",v)}
+            />
           
-                             <div style={{ minWidth:130, flex:"0 0 auto" }}>
-                                      <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
-                                        Fecha Ejecución
-                                      </div>
-                    
-                                          <input
-                                            type="date"
-                                            value={r.fecha_ejecucion || ""}
-                                                 disabled={!(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")}
-                                        onChange={(e)=>handleReasignacionChange(index,"fecha_ejecucion",e.target.value)}
-                                        style={{
-                                          width:"100%",
-                                          height:20,
-                                          padding:"1px 5px",
-                                          background:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
-                                            ? COLORES.fondoCampo
-                                            : COLORES.fondoSoloLectura,
-                                          color:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
-                                            ? "#000"
-                                            : COLORES.textoSoloLectura,
-                                          border:"1px solid #888",
-                                          borderRadius:4,
-                                          fontSize:11,
-                                          fontFamily:"Arial",
-                                          boxSizing:"border-box"
-                                        }}
-                                      />
-                             </div>
+            <div style={{ minWidth:130, flex:"0 0 auto" }}>
+              <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
+                Fecha Ejecución
+              </div>
           
-                          </div>  {/* FILA 1 */}
+              <input
+                type="date"
+                value={r.fecha_ejecucion || ""}
+                disabled={!(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")}
+                onChange={(e)=>handleReasignacionChange(index,"fecha_ejecucion",e.target.value)}
+                style={{
+                  width:"100%",
+                  height:20,
+                  padding:"1px 5px",
+                  background:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
+                    ? COLORES.fondoCampo
+                    : COLORES.fondoSoloLectura,
+                  color:(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")
+                    ? "#000"
+                    : COLORES.textoSoloLectura,
+                  border:"1px solid #888",
+                  borderRadius:4,
+                  fontSize:11,
+                  fontFamily:"Arial",
+                  boxSizing:"border-box"
+                }}
+              />
+            </div>
           
-                          {/* FILA 2 */}
-                          <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+          </div>
+          
+          {/* FILA 2 */}
+            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
                       
-                            <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={100}/>
-                            <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={100}/>
-                            <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={100}/>
-                            <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={100}/>
-                            <CampoReaSoloLecturaAuto label="Veloc. Interface" value={r.velocidad_interface} minWidth={60}/>
-                            <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={130} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
-                            <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
-                            <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
-                            <div style={{ minWidth:150, flex:"0 0 auto" }}>
-                                        <div
-                                          style={{
-                                            fontSize:11,
-                                            fontWeight:"bold",
-                                            color:COLORES.textoAzul,
-                                            marginBottom:3
-                                          }}
-                                        >
-                                          Ventana GECO
-                                        </div>
-                                      
-                                        <input
-                                          type="datetime-local"
-                                          value={r.ventana_geco || ""}
-                                          onChange={(e)=>
-                                            handleReasignacionChange(
-                                              index,
-                                              "ventana_geco",
-                                              e.target.value
-                                            )
-                                          }
-                                          style={{
-                                            width:"100%",
-                                            height:20,
-                                            padding:"1px 5px",
-                                            background:COLORES.fondoCampo,
-                                            border:"1px solid #666",
-                                            borderRadius:4,
-                                            fontSize:11,
-                                            boxSizing:"border-box"
-                                          }}
-                                        />
-                            </div> 
-                                  
-      
-                            {/* BLOQUE CHECKS */}
-                            <div style={{ minWidth:330, flex:"0 0 auto" }}>
-                  
-                                  {/* Etiqueta como el resto de campos */}
-                                  <div
-                                      style={{
-                                      fontSize:11,
-                                      fontWeight:"bold",
-                                      color:COLORES.textoAzul,
-                                      marginBottom:3
-                                    }}
-                                  >
-                                    Coordinado trabajos
-                                    </div> {/* Etiqueta como el resto de campos */}
-                  
-                                    {/* Caja de checks */}
-                                    <div
-                                        style={{
-                                        display:"flex",
-                                        gap:10,
-                                        alignItems:"center",
-                                        background:"#d9ead3",
-                                        border:"1px solid #888",
-                                        borderRadius:4,
-                                        padding:"0px 8px",
-                                        height:20
-                                        }}
-                                      >
-                  
-                                        <label style={{
-                                        display:"flex",
-                                        alignItems:"center",
-                                        gap:4,
-                                        fontSize:11,
-                                        fontWeight:"bold",
-                                        color:COLORES.textoAzul
-                                      }}>
-                                      GECO
-                                      <input
-                                        type="checkbox"
-                                        checked={!!r.geco}
-                                        onChange={(e)=>
-                                          handleReasignacionChange(
-                                            index,
-                                            "geco",
-                                            String(e.target.checked)
-                                          )
-                                        }
-                                        style={{
-                                          transform:"scale(0.85)",
-                                          margin:0
-                                        }}
-                                        />
-                                        </label>
-                                
-                                        <label style={{
-                                          display:"flex",
-                                          alignItems:"center",
-                                          gap:4,
-                                          fontSize:11,
-                                          fontWeight:"bold",
-                                          color:COLORES.textoAzul
-                                        }}>
-                                        CEX
-                                        <input
-                                        type="checkbox"
-                                        checked={!!r.cex}
-                                        onChange={(e)=>
-                                          handleReasignacionChange(
-                                            index,
-                                            "cex",
-                                            String(e.target.checked)
-                                          )
-                                        }
-                                        style={{
-                                          transform:"scale(0.85)",
-                                        margin:0
-                                          }}
-                                        />
-                                        </label>
-                                    
-                                        <label style={{
-                                          display:"flex",
-                                          alignItems:"center",
-                                          gap:4,
-                                          fontSize:11,
-                                          fontWeight:"bold",
-                                          color:COLORES.textoAzul
-                                        }}>
-                                          RIMA
-                                          <input
-                                            type="checkbox"
-                                            checked={!!r.rima}
-                                            onChange={(e)=>
-                                              handleReasignacionChange(
-                                                index,
-                                                "rima",
-                                                String(e.target.checked)
-                                              )
-                                            }
-                                            style={{
-                                              transform:"scale(0.85)",
-                                              margin:0
-                                            }}
-                                          />
-                                        </label>
-                                    
-                                        <label style={{
-                                          display:"flex",
-                                          alignItems:"center",
-                                          gap:4,
-                                          fontSize:11,
-                                          fontWeight:"bold",
-                                          color:COLORES.textoAzul
-                                        }}>
-                                        REDES PRIV
-                                        <input
-                                          type="checkbox"
-                                          checked={!!r.redes_priv}
-                                          onChange={(e)=>
-                                            handleReasignacionChange(
-                                              index,
-                                              "redes_priv",
-                                              String(e.target.checked)
-                                            )
-                                          }
-                                          style={{
-                                            transform:"scale(0.85)",
-                                            margin:0
-                                          }}
-                                        />
-                                      </label>
-                        
-                                      <label style={{
-                                        display:"flex",
-                                        alignItems:"center",
-                                        gap:4,
-                                        fontSize:11,
-                                        fontWeight:"bold",
-                                        color:COLORES.textoAzul
-                                      }}>
-                                        DWDM
-                                        <input
-                                          type="checkbox"
-                                          checked={!!r.dwdm}
-                                          onChange={(e)=>
-                                            handleReasignacionChange(
-                                              index,
-                                              "dwdm",
-                                              String(e.target.checked)
-                                            )
-                                          }
-                                          style={{
-                                            transform:"scale(0.85)",
-                                            margin:0
-                                          }}
-                                        />
-                                      </label>
-                        
-                                    </div>  {/* Caja de checks */}
-                  
-                            </div> {/* BLOQUE CHECKS */}
-                    
-                            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={300} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
-      
-      
-                          </div> {/* FILA 2 */}
+              <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={100}/>
+              <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={100}/>
+              <CampoReaSoloLecturaAuto label="Tipo Diversificado" value={r.tipo_diversificado} minWidth={100}/>
+              <CampoReaSoloLecturaAuto label="Tipo Interface" value={r.tipo_velocidad_interface} minWidth={100}/>
+              <CampoReaSoloLecturaAuto label="Veloc. Interface" value={r.velocidad_interface} minWidth={60}/>
+              <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={130} onChange={(v)=>handleReasignacionChange(index,"pba_atenuacion",v)}/>
+              <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"autonegociacion",v)}/>
+              <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={170} onChange={(v)=>handleReasignacionChange(index,"configuracion_puerto_destino",v)}/>
+              <div style={{ minWidth:150, flex:"0 0 auto" }}>
+              <div
+                style={{
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul,
+                  marginBottom:3
+                }}
+              >
+                Ventana GECO
+              </div>
+            
+              <input
+                type="datetime-local"
+                value={r.ventana_geco || ""}
+                onChange={(e)=>
+                  handleReasignacionChange(
+                    index,
+                    "ventana_geco",
+                    e.target.value
+                  )
+                }
+                style={{
+                  width:"100%",
+                  height:20,
+                  padding:"1px 5px",
+                  background:COLORES.fondoCampo,
+                  border:"1px solid #666",
+                  borderRadius:4,
+                  fontSize:11,
+                  boxSizing:"border-box"
+                }}
+              />
+            </div>
+              
+
+            {/* BLOQUE CHECKS */}
+            <div style={{ minWidth:330, flex:"0 0 auto" }}>
+            
+              {/* Etiqueta como el resto de campos */}
+              <div
+                style={{
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul,
+                  marginBottom:3
+                }}
+              >
+                Coordinado trabajos
+              </div> {/* Etiqueta como el resto de campos */}
+            
+              {/* Caja de checks */}
+              <div
+                style={{
+                  display:"flex",
+                  gap:10,
+                  alignItems:"center",
+                  background:"#d9ead3",
+                  border:"1px solid #888",
+                  borderRadius:4,
+                  padding:"0px 8px",
+                  height:20
+                }}
+              >
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  GECO
+                  <input
+                    type="checkbox"
+                    checked={!!r.geco}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "geco",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  CEX
+                  <input
+                    type="checkbox"
+                    checked={!!r.cex}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "cex",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  RIMA
+                  <input
+                    type="checkbox"
+                    checked={!!r.rima}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "rima",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  REDES PRIV
+                  <input
+                    type="checkbox"
+                    checked={!!r.redes_priv}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "redes_priv",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
+                <label style={{
+                  display:"flex",
+                  alignItems:"center",
+                  gap:4,
+                  fontSize:11,
+                  fontWeight:"bold",
+                  color:COLORES.textoAzul
+                }}>
+                  DWDM
+                  <input
+                    type="checkbox"
+                    checked={!!r.dwdm}
+                    onChange={(e)=>
+                      handleReasignacionChange(
+                        index,
+                        "dwdm",
+                        String(e.target.checked)
+                      )
+                    }
+                    style={{
+                      transform:"scale(0.85)",
+                      margin:0
+                    }}
+                  />
+                </label>
+            
+              </div>  {/* Caja de checks */}
+            
+            </div> {/* BLOQUE CHECKS */}
+              
+            <CampoInputAuto label="Supervisa el Corte" value={r.supervisa_corte || ""} minWidth={300} onChange={(v)=>handleReasignacionChange(index,"supervisa_corte",v)}/>
+
+
+            </div> {/* FILA 2 */}
        
                 
           
 
-                          {/* FILA 3 */}
-                          <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
-                              <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
-                              <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"orden_atlas",v)}/>
-                              <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChange(index,"estado_orden_atlas",v)}/>
-                              <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"uo_atlas",v)}/>
-                              <div style={{flex:1,minWidth:600}}>
-                                <CampoInputAuto
-                                  label="Observaciones Preparación"
-                                  value={r.observaciones_preparacion_reasignacion || ""}
-                                  minWidth={1220}
-                                  onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
-                                />
-                              </div>  
+            {/* FILA 3 */}
+            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+              <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
+              <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChange(index,"orden_atlas",v)}/>
+              <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChange(index,"estado_orden_atlas",v)}/>
+              <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChange(index,"uo_atlas",v)}/>
+              <div style={{flex:1,minWidth:600}}>
+                <CampoInputAuto
+                  label="Observaciones Preparación"
+                  value={r.observaciones_preparacion_reasignacion || ""}
+                  minWidth={1220}
+                  onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
+                />
+              </div>
 
 
-                          </div>  {/* FILA 3 */}
 
-                                 
+              
+            </div>
             
 
-                  
-                       </div> {/* STYLE */}
-                  </div> {/* FIN TARJETA */}
+            
 
-    ))}
-      
-    </div> {/* FIN TITULO GRUPO ----------------------------------------------------------------------------*/}    
-      
-  ))
-)}  {/* <- cierra:reasignacionesEjecucionFiltradas.length===0 ? ... : (...) */}
-   </>
-      )}
+            
+
+            
+              
+
+             
+            
+            
+
+
+          </div>
+        </div>
+      ))
+    )}
+  </>
+)}
+
             {bloqueActivo === "visitas" && (
               <div
                 style={{
