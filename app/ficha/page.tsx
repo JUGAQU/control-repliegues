@@ -502,11 +502,7 @@ observaciones_preparacion_reasignacion:
   {}
 );
 
-return (
-   
-
-  
-  
+ 
   return (
     <div
       style={{
