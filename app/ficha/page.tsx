@@ -1247,7 +1247,7 @@ observaciones_preparacion_reasignacion:
       </div>
     ) : (
     Object.entries(serviciosAgrupados).map(([tituloGrupo, items]) => (
-    <div key={tituloGrupo}> {/*TITULO GRUPO */}
+    <div key={tituloGrupo}> {/*TITULO GRUPO---------------------------------------------------------------------------- */}
   
                 <div
                   style={{
@@ -1264,7 +1264,8 @@ observaciones_preparacion_reasignacion:
                 </div>
 
                 {(items as any[]).map((r:any,index:number)=>(
-                  <div  {/* TARJETA */}
+                  
+                  <div 
                         key={r.id || index}
                         style={{
                           display:"flex",
@@ -1273,6 +1274,7 @@ observaciones_preparacion_reasignacion:
                           marginBottom:12
                         }}
                       >
+                    {/* EL DE ARRIBA ES EL <div de TARJETA */}
                         <div
                           style={{
                             width:35,
@@ -1588,7 +1590,7 @@ observaciones_preparacion_reasignacion:
                        </div> {/* STYLE */}
                   </div> {/* FIN TARJETA */}
       ))}
-    </div> {/* FIN TITULO GRUPO */}     
+    </div> {/* FIN TITULO GRUPO ----------------------------------------------------------------------------*/}     
   ))
 )}
   </>
