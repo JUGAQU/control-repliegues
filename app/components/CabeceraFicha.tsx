@@ -1,7 +1,7 @@
-export default function CabeceraFicha() {
+export default function CabeceraFicha({ formData }: { formData: any }) {
   return (
     <div>
-      Cabecera ficha
+      Atlas: {formData?.atlas || ""}
     </div>
   );
 }
