@@ -498,6 +498,7 @@ observaciones_preparacion_reasignacion:
 
   return cumpleTipo && cumpleSgipe && cumpleGrupo;
 });
+  
 
   const totalPorGrupo = (grupo: GrupoEjecucion) =>
     reasignaciones.filter(
