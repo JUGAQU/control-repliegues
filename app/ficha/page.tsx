@@ -461,29 +461,35 @@ observaciones_preparacion_reasignacion:
     gap: 8,
   };
 
-    const reasignacionesEjecucionFiltradas = reasignaciones.filter((r: any) => {
+   const reasignacionesEjecucionFiltradas = reasignaciones.filter((r:any) => {
   const cumpleTipo =
     filtrosEjecucion[grupoModoReasignacion(r.modo_reasignacion)];
 
   const cumpleSgipe =
     filtroSgipe.trim() === "" ||
-    String(r.sgipe || "").toLowerCase().includes(filtroSgipe.toLowerCase());
+    String(r.sgipe || "").toLowerCase().includes(
+      filtroSgipe.toLowerCase()
+    );
 
   const cumpleGrupo =
     filtroGrupo.trim() === "" ||
-    String(r.grupo || "").toLowerCase().includes(filtroGrupo.toLowerCase());
+    String(r.grupo || "").toLowerCase().includes(
+      filtroGrupo.toLowerCase()
+    );
 
   return cumpleTipo && cumpleSgipe && cumpleGrupo;
 });
 
-const totalPorGrupo = (grupo: GrupoEjecucion) =>
-  reasignaciones.filter(
-    (r: any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
+const totalPorGrupo = (grupo: GrupoEjecucion) => {
+  return reasignaciones.filter(
+    (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
+};
 
 const serviciosAgrupados: Record<string, any[]> = {};
 
-reasignacionesEjecucionFiltradas.forEach((r: any) => {
+reasignacionesEjecucionFiltradas.forEach((r:any) => {
+
   const clave =
     r.sgipe && String(r.sgipe).trim() !== ""
       ? `SGIPE ${r.sgipe}`
@@ -491,11 +497,15 @@ reasignacionesEjecucionFiltradas.forEach((r: any) => {
         ? `Grupo ${r.grupo}`
         : "Sin asignar";
 
-  if (!serviciosAgrupados[clave]) serviciosAgrupados[clave] = [];
+  if (!serviciosAgrupados[clave]) {
+    serviciosAgrupados[clave] = [];
+  }
+
   serviciosAgrupados[clave].push(r);
+
 });
 
-  return (
+return (
     <div
       style={{
         height: "100vh",
