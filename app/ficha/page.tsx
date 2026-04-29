@@ -1371,7 +1371,7 @@ observaciones_preparacion_reasignacion:
                 type="date"
                 value={r.fecha_ejecucion || ""}
                 disabled={!(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")}
-                onChange={(e)=>handleReasignacionChange(index,"fecha_ejecucion",e.target.value)}
+                onChange={(e)=>handleReasignacionChangeById(r.id,"fecha_ejecucion",e.target.value)}
                 style={{
                   width:"100%",
                   height:20,
@@ -1420,8 +1420,8 @@ observaciones_preparacion_reasignacion:
                 type="datetime-local"
                 value={r.ventana_geco || ""}
                 onChange={(e)=>
-                  handleReasignacionChange(
-                    index,
+                  handleReasignacionChangeById(
+                    r.id,
                     "ventana_geco",
                     e.target.value
                   )
