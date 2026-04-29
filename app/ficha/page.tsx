@@ -527,15 +527,17 @@ observaciones_preparacion_reasignacion:
   {}
 );
 
-    const gruposOrdenados = Object.entries(serviciosAgrupados).sort(
-  ([a], [b]) => {
-    const prioridad = (txt: string) => {
+const gruposOrdenados = Object.entries(serviciosAgrupados).sort(
+  ([a],[b]) => {
+
+    const prioridad = (txt:string) => {
       if (txt.startsWith("SGIPE")) return 1;
       if (txt.startsWith("Grupo")) return 2;
       return 3;
     };
 
     return prioridad(a) - prioridad(b);
+
   }
 );
 
