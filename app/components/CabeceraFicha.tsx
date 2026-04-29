@@ -52,21 +52,8 @@ const bloqueSuperior: React.CSSProperties = {
 
 
   
-  return (
-    <div
-  style={{
-    width: "100%",
-    boxSizing: "border-box",
-    border: "1px solid #b7c6d0",
-    padding: "12px 10px",
-    background: "#c9e3f2",
-    display: "flex",
-    flexWrap: "nowrap",
-    overflowX: "auto",
-    gap: 8,
-    marginBottom: 5,
-    fontFamily: "Arial",
-  }}
+return (
+  <div style={{ ...bloqueSuperior, marginBottom: 5 }}>
 >
    <div style={campo}>
             <span>Atlas:</span>
