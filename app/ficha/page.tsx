@@ -485,6 +485,13 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
+  const totalPorGrupo = (grupo: GrupoEjecucion) =>
+  reasignaciones.filter(
+    (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
+  ).length;
+
+
+
   return (
     <div
       style={{
