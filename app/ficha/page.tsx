@@ -504,6 +504,28 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
+  const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc:any, r:any) => {
+
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? "SGIPE " + r.sgipe
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? "Grupo " + r.grupo
+          : "Sin asignar";
+
+    if (!acc[clave]) {
+      acc[clave] = [];
+    }
+
+    acc[clave].push(r);
+
+    return acc;
+
+  },
+  {}
+);
+
   return (
     <div
       style={{
