@@ -1246,7 +1246,24 @@ observaciones_preparacion_reasignacion:
         No hay reasignaciones para este atlas.
       </div>
     ) : (
-      reasignacionesEjecucionFiltradas.map((r:any,index:number)=>(
+      Object.entries(serviciosAgrupados).map(([tituloGrupo, items]) => (
+        <div key={tituloGrupo}>
+      
+          <div
+            style={{
+              background:"#0070c0",
+              color:"#fff",
+              fontWeight:"bold",
+              padding:"5px 10px",
+              margin:"8px 0 6px 0",
+              borderRadius:4,
+              fontSize:12
+            }}
+          >
+            {tituloGrupo} — {(items as any[]).length} servicio(s)
+          </div>
+
+          {(items as any[]).map((r:any,index:number)=>(
         <div
           key={r.id || index}
           style={{
