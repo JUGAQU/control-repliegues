@@ -10,6 +10,9 @@ export default function Actuaciones() {
   const searchParams = useSearchParams();
   const grupo = searchParams.get("grupo") || "";
   const id = searchParams.get("id");
+
+  console.log("ID recibido en actuaciones:", id);
+  
   const [formData, setFormData] = useState<any>(null);
   const handleChange = () => {};
   const provincias: any[] = [];
