@@ -1590,11 +1590,11 @@ observaciones_preparacion_reasignacion:
                        </div> {/* STYLE */}
                   </div> {/* FIN TARJETA */}
       ))}
-    </div> {/* FIN TITULO GRUPO ----------------------------------------------------------------------------*/}     
-  ))
-)}
-  </>
-)}
+    </div> {/* FIN TITULO GRUPO ----------------------------------------------------------------------------*/}    
+      
+  ))}
+)}  {/* <- cierra:reasignacionesEjecucionFiltradas.length===0 ? ... : (...) */}
+
 
             {bloqueActivo === "visitas" && (
               <div
