@@ -100,14 +100,6 @@ function grupoModoReasignacion(modo?: string | null): GrupoEjecucion {
   return "resto";
 }
 
-function tipoAgrupacion(r: any) {
-  if (r.sgipe && String(r.sgipe).trim() !== "") return 1;
-  if (r.grupo && String(r.grupo).trim() !== "") return 2;
-  return 3;
-}
-
-
-
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
@@ -1371,7 +1363,7 @@ observaciones_preparacion_reasignacion:
                 type="date"
                 value={r.fecha_ejecucion || ""}
                 disabled={!(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")}
-                onChange={(e)=>handleReasignacionChangeById(r.id,"fecha_ejecucion",e.target.value)}
+                onChange={(e)=>handleReasignacionChange(index,"fecha_ejecucion",e.target.value)}
                 style={{
                   width:"100%",
                   height:20,
@@ -1420,8 +1412,8 @@ observaciones_preparacion_reasignacion:
                 type="datetime-local"
                 value={r.ventana_geco || ""}
                 onChange={(e)=>
-                  handleReasignacionChangeById(
-                    r.id,
+                  handleReasignacionChange(
+                    index,
                     "ventana_geco",
                     e.target.value
                   )
