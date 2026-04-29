@@ -1069,10 +1069,7 @@ observaciones_preparacion_reasignacion:
           <button
             type="button"
             onClick={() => {
-              window.open(
-                `/actuaciones?id=${formData.id}&grupo=${encodeURIComponent(tituloGrupo)}`,
-                "_blank"
-              );
+            window.open(`/actuaciones?grupo=${encodeURIComponent(tituloGrupo)}`, "_blank");  
             }}
             style={{
               fontSize:11,
