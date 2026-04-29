@@ -9,16 +9,18 @@ const grupo = searchParams.get("grupo") || "";
 
 return (
 
-<CabeceraFicha
-  formData={formData}
-  handleChange={handleChange}
-  provincias={provincias}
-  empresasPI={empresasPI}
-  setMostrarMemoria={setMostrarMemoria}
-/>
-  
-<div
-style={{
+return (
+  <>
+    <CabeceraFicha
+      formData={formData}
+      handleChange={handleChange}
+      provincias={provincias}
+      empresasPI={empresasPI}
+      setMostrarMemoria={setMostrarMemoria}
+    />
+
+    <div
+      style={{
 background:"#dfe3e6",
 minHeight:"100vh",
 fontFamily:"Arial"
@@ -117,6 +119,7 @@ color:"#0b5394"
 </div>
 
 </div>
+</>
 );
 
 }
