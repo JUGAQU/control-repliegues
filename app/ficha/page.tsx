@@ -496,7 +496,7 @@ reasignacionesEjecucionFiltradas.forEach((r: any) => {
 });
 
 return (
-return (
+
     <div
       style={{
         height: "100vh",
