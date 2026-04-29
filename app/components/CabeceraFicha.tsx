@@ -2,10 +2,56 @@ import React from "react";
 
 type Props = {
   formData: any;
-  handleChange?: any;
+  handleChange: any;
+  provincias: any[];
+  empresasPI: any[];
+  setMostrarMemoria: any;
 };
 
-export default function CabeceraFicha({ formData, handleChange }: Props) {
+export default function CabeceraFicha({
+  formData,
+  handleChange,
+  provincias,
+  empresasPI,
+  setMostrarMemoria,
+}: Props) {
+
+  const campo: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: 4,
+  fontSize: 12,
+  fontWeight: "bold",
+  color: "#0b5394",
+  flex: "0 0 auto",
+  fontFamily: "Arial",
+};
+
+const valor: React.CSSProperties = {
+  background: "#d9ead3",
+  padding: "1px 5px",
+  height: 20,
+  borderRadius: 4,
+  border: "1px solid #93c47d",
+  fontSize: 11,
+  boxSizing: "border-box",
+  fontFamily: "Arial",
+};
+
+const bloqueSuperior: React.CSSProperties = {
+  width: "100%",
+  boxSizing: "border-box",
+  border: "1px solid #b7c6d0",
+  padding: "12px 10px",
+  background: "#c9e3f2",
+  display: "flex",
+  flexWrap: "nowrap",
+  overflowX: "auto",
+  gap: 8,
+};
+
+
+  
   return (
     <div
   style={{
@@ -22,41 +68,32 @@ export default function CabeceraFicha({ formData, handleChange }: Props) {
     fontFamily: "Arial",
   }}
 >
-  <div style={{ fontSize:12, fontWeight:"bold", color:"#0b5394" }}>
-    Atlas:
-    <input
-      value={formData?.atlas || ""}
-      readOnly
-      style={{
-        marginLeft:4,
-        width:58,
-        height:20,
-        background:"#eee",
-        color:"#666",
-        border:"1px solid #999",
-        borderRadius:4,
-        fontSize:11,
-      }}
-    />
-  </div>
+   <div style={campo}>
+            <span>Atlas:</span>
+            <input
+              name="atlas"
+              value={formData.atlas || ""}
+              readOnly
+              style={{
+                ...valor,
+                width: 58,
+                background: "#eee",
+                color: "#666",
+                border: "1px solid #999",
+              }}
+            />
+    </div>
 
-  <div style={{ fontSize:12, fontWeight:"bold", color:"#0b5394" }}>
-    Lote:
-    <input
-      name="lote"
-      value={formData?.lote || ""}
-      onChange={handleChange}
-      style={{
-        marginLeft:4,
-        width:70,
-        height:20,
-        background:"#d9ead3",
-        border:"1px solid #93c47d",
-        borderRadius:4,
-        fontSize:11,
-      }}
-    />
-  </div>
+    <div style={campo}>
+            <span>Lote:</span>
+            <input
+              name="lote"
+              value={formData.lote || ""}
+              onChange={handleChange}
+              style={{ ...valor, width: 70 }}
+            />
+    </div>
+
 </div>
   );
 }
