@@ -53,7 +53,8 @@ const bloqueSuperior: React.CSSProperties = {
 
   
 return (
-  <div style={{ ...bloqueSuperior, marginBottom: 5 }}>
+  <>
+    <div style={{ ...bloqueSuperior, marginBottom: 5 }}>
 
    <div style={campo}>
             <span>Atlas:</span>
@@ -346,6 +347,7 @@ return (
 
     
 
-</div>
+    </div>
+  </>
   );
 }
