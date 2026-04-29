@@ -1,13 +1,22 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-
+import CabeceraFicha from "../components/CabeceraFicha";
 export default function Actuaciones() {
 
 const searchParams = useSearchParams();
 const grupo = searchParams.get("grupo") || "";
 
 return (
+
+<CabeceraFicha
+  formData={formData}
+  handleChange={handleChange}
+  provincias={provincias}
+  empresasPI={empresasPI}
+  setMostrarMemoria={setMostrarMemoria}
+/>
+  
 <div
 style={{
 background:"#dfe3e6",
