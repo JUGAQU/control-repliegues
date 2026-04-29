@@ -485,6 +485,9 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
+
+  const serviciosAgrupados: Record<string, any[]> = {};
+
   return (
     <div
       style={{
