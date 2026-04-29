@@ -110,7 +110,7 @@ export default function Ficha() {
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
   const [filtroSgipe, setFiltroSgipe] = useState("");
-  const [filtroGrupo, setFiltroGrupo] = useState("");
+const [filtroGrupo, setFiltroGrupo] = useState("");
   const [filtrosEjecucion, setFiltrosEjecucion] =
   useState<Record<GrupoEjecucion, boolean>>({
     nuevo_cable: true,
@@ -461,34 +461,31 @@ observaciones_preparacion_reasignacion:
     gap: 8,
   };
 
-   const reasignacionesEjecucionFiltradas = reasignaciones.filter((r:any) => {
+  const reasignacionesEjecucionFiltradas = reasignaciones.filter((r:any) => {
   const cumpleTipo =
     filtrosEjecucion[grupoModoReasignacion(r.modo_reasignacion)];
 
   const cumpleSgipe =
     filtroSgipe.trim() === "" ||
-    String(r.sgipe || "").toLowerCase().includes(
-      filtroSgipe.toLowerCase()
-    );
+    String(r.sgipe || "")
+      .toLowerCase()
+      .includes(filtroSgipe.toLowerCase());
 
   const cumpleGrupo =
     filtroGrupo.trim() === "" ||
-    String(r.grupo || "").toLowerCase().includes(
-      filtroGrupo.toLowerCase()
-    );
+    String(r.grupo || "")
+      .toLowerCase()
+      .includes(filtroGrupo.toLowerCase());
 
   return cumpleTipo && cumpleSgipe && cumpleGrupo;
 });
 
-const totalPorGrupo = (grupo: GrupoEjecucion) => {
-  return reasignaciones.filter(
+  const totalPorGrupo = (grupo: GrupoEjecucion) =>
+    reasignaciones.filter(
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
-};
 
-
-
-return (
+  return (
     <div
       style={{
         height: "100vh",
@@ -1230,25 +1227,7 @@ return (
         No hay reasignaciones para este atlas.
       </div>
     ) : (
-      
-    Object.entries(serviciosAgrupados).map(([tituloGrupo, items]: any) => (
-      <div key={tituloGrupo}>
-    
-        <div
-          style={{
-            background:"#0070c0",
-            color:"#fff",
-            fontWeight:"bold",
-            padding:"5px 10px",
-            margin:"8px 0 6px 0",
-            borderRadius:4,
-            fontSize:12
-          }}
-        >
-          {tituloGrupo} — {items.length} servicio(s)
-        </div>
-
-    {items.map((r:any,index:number)=>(
+      reasignacionesEjecucionFiltradas.map((r:any,index:number)=>(
         <div
           key={r.id || index}
           style={{
@@ -1567,16 +1546,25 @@ return (
 
 
               
-            </div>  {/* FIN FILA 3 */}
+            </div>
             
 
-          </div> {/* FIN CONTENIDO TARJETA */}
-        </div> {/* FIN TARJETA */}
-        
-      ))}
-    </div>
-  ))
-  )}
+            
+
+            
+
+            
+              
+
+             
+            
+            
+
+
+          </div>
+        </div>
+      ))
+    )}
   </>
 )}
 
