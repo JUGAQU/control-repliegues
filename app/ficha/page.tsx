@@ -485,10 +485,7 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
-  const totalPorGrupo = (grupo: GrupoEjecucion) =>
-  reasignaciones.filter(
-    (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
-  ).length;
+
 
 
 
@@ -1548,7 +1545,7 @@ observaciones_preparacion_reasignacion:
                   minWidth={1220}
                   onChange={(v)=>handleReasignacionChange(index,"observaciones_preparacion_reasignacion",v)}
                 />
-              </div>
+              </div>  {/* FILA 3 */}
 
 
 
