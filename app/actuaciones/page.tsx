@@ -1,28 +1,11 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import CabeceraFicha from "../components/CabeceraFicha";
 
-
 export default function Actuaciones() {
   const searchParams = useSearchParams();
-  const grupo = searchParams.get("grupo") || "";
-  const id = searchParams.get("id");
-
-  
-  
-  const [formData, setFormData] = useState<any>(null);
-  const handleChange = () => {};
-  const provincias: any[] = [];
-  const empresasPI: any[] = [];
-  const setMostrarMemoria = () => {};
-
-export default function Actuaciones() {
-
-  const searchParams = useSearchParams();
-
   const grupo = searchParams.get("grupo") || "";
   const id = searchParams.get("id");
 
@@ -33,7 +16,6 @@ export default function Actuaciones() {
   const empresasPI: any[] = [];
   const setMostrarMemoria = () => {};
 
-  // AQUI VA EL useEffect
   useEffect(() => {
     const cargarFicha = async () => {
       if (!id) return;
@@ -42,21 +24,16 @@ export default function Actuaciones() {
       const data = await res.json();
 
       if (Array.isArray(data)) {
-        const registro = data.find(
-          (d: any) => String(d.id) === String(id)
-        );
-
+        const registro = data.find((d: any) => String(d.id) === String(id));
         if (registro) setFormData(registro);
       }
     };
 
     cargarFicha();
-
   }, [id]);
 
-  // TAMBIEN AQUI
   if (!formData) {
-    return <div style={{ padding:20 }}>Cargando actuaciones...</div>;
+    return <div style={{ padding: 20 }}>Cargando actuaciones...</div>;
   }
 
   return (
@@ -69,56 +46,14 @@ export default function Actuaciones() {
         setMostrarMemoria={setMostrarMemoria}
       />
 
-      <div>
-        ...
-      </div>
-
-    </>
-  );
-}
-  
-
-  return (
-    <>
-      <CabeceraFicha
-        formData={formData}
-        handleChange={handleChange}
-        provincias={provincias}
-        empresasPI={empresasPI}
-        setMostrarMemoria={setMostrarMemoria}
-      />
-
-      <div
-        style={{
-          background: "#dfe3e6",
-          minHeight: "100vh",
-          fontFamily: "Arial",
-          padding: 20,
-        }}
-      >
-        <div
-          style={{
-            background: "#c9e3f2",
-            border: "1px solid #b7c6d0",
-            padding: "12px",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <button
-              style={{
-                background: "#0070c0",
-                color: "#fff",
-                border: "none",
-                padding: "10px 18px",
-                borderRadius: 4,
-                fontWeight: "bold",
-                fontSize: 24,
-              }}
-            >
+      <div style={{ background:"#dfe3e6", minHeight:"100vh", fontFamily:"Arial", padding:20 }}>
+        <div style={{ background:"#c9e3f2", border:"1px solid #b7c6d0", padding:12 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:14 }}>
+            <button style={{ background:"#0070c0", color:"#fff", border:"none", padding:"10px 18px", borderRadius:4, fontWeight:"bold", fontSize:24 }}>
               Actuaciones
             </button>
 
-            <div style={{ fontSize: 32, fontWeight: "bold", color: "#0b5394" }}>
+            <div style={{ fontSize:32, fontWeight:"bold", color:"#0b5394" }}>
               {grupo}
             </div>
           </div>
