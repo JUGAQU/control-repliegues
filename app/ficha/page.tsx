@@ -100,6 +100,14 @@ function grupoModoReasignacion(modo?: string | null): GrupoEjecucion {
   return "resto";
 }
 
+function tipoAgrupacion(r: any) {
+  if (r.sgipe && String(r.sgipe).trim() !== "") return 1;
+  if (r.grupo && String(r.grupo).trim() !== "") return 2;
+  return 3;
+}
+
+
+
 export default function Ficha() {
   const [formData, setFormData] = useState<any>(null);
   const [cambiosSinGuardar, setCambiosSinGuardar] = useState(false);
