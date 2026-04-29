@@ -486,7 +486,7 @@ observaciones_preparacion_reasignacion:
   ).length;
 
 
-   const serviciosAgrupados: Record<string, any[]> = {};
+   const serviciosAgrupados = {} as Record<string, any[]>;
    reasignacionesEjecucionFiltradas.forEach((r:any) => {
     const clave =
       r.sgipe && String(r.sgipe).trim() !== ""
