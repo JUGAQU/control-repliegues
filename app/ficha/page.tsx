@@ -110,7 +110,7 @@ export default function Ficha() {
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
   const [filtroSgipe, setFiltroSgipe] = useState("");
-const [filtroGrupo, setFiltroGrupo] = useState("");
+  const [filtroGrupo, setFiltroGrupo] = useState("");
   const [filtrosEjecucion, setFiltrosEjecucion] =
   useState<Record<GrupoEjecucion, boolean>>({
     nuevo_cable: true,
@@ -487,22 +487,23 @@ observaciones_preparacion_reasignacion:
 
 
   const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
-  (acc: Record<string, any[]>, r: any) => {
-    const clave =
-      r.sgipe && String(r.sgipe).trim() !== ""
-        ? `SGIPE ${r.sgipe}`
-        : r.grupo && String(r.grupo).trim() !== ""
-          ? `Grupo ${r.grupo}`
-          : "Sin asignar";
+    (acc: Record<string, any[]>, r: any) => {
+      const clave =
+        r.sgipe && String(r.sgipe).trim() !== ""
+          ? `SGIPE ${r.sgipe}`
+          : r.grupo && String(r.grupo).trim() !== ""
+            ? `Grupo ${r.grupo}`
+            : "Sin asignar";
+  
+      if (!acc[clave]) acc[clave] = [];
+      acc[clave].push(r);
+  
+      return acc;
+    },
+    {}
+  );
 
-    if (!acc[clave]) acc[clave] = [];
-    acc[clave].push(r);
-
-    return acc;
-  },
-  {}
-);
-  return (
+return (
     <div
       style={{
         height: "100vh",
