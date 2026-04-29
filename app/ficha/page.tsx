@@ -926,53 +926,10 @@ observaciones_preparacion_reasignacion:
               boxSizing: "border-box",
             }}
           >
-            {bloqueActivo === "ejecucion_reasignaciones" ? (
-             
-            <div style={{ display: "flex", alignItems: "center", gap: 8, overflowX: "auto" }}>
-              <span style={{ whiteSpace: "nowrap" }}>Ejecución Reasignaciones</span>
-          
-                  {/* FILTRO SGIPE */}
-    <input
-      placeholder="SGIPE"
-      value={filtroSgipe}
-      onChange={(e)=>setFiltroSgipe(e.target.value)}
-      style={{
-        width:80,
-        height:22,
-        fontSize:11,
-        padding:"1px 5px",
-        border:"1px solid #7fa7c7",
-        borderRadius:3
-      }}
-    />
-    
-    {/* FILTRO GRUPO */}
-    <select
-      value={filtroGrupo}
-      onChange={(e)=>setFiltroGrupo(e.target.value)}
-      style={{
-        width:90,
-        height:22,
-        fontSize:11,
-        padding:"1px 5px",
-        border:"1px solid #7fa7c7",
-        borderRadius:3
-      }}
-    >
-      <option value="">Grupo</option>
-      {OPCIONES_GRUPO.map((g)=>(
-        <option key={g} value={g}>
-          {g}
-        </option>
-      ))}
-    </select>
-
-
-
-      
-    </div>
+            {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
+          </div>
         </div>
-      )}
+      </div>
 
       <div
         style={{
@@ -1211,19 +1168,7 @@ observaciones_preparacion_reasignacion:
             {bloqueActivo === "ejecucion_reasignaciones" && (
   <>
 
-            </div>
-          ) : (
-            bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"
-          )}
-          </div>
-        </div>
-      </div>
-
-      {bloqueActivo === "ejecucion_reasignaciones" && (
-        <div style={{ padding: "0 20px 8px 20px" }}>
-          
-          
-          {/* BARRA FILTROS EJECUCIÓN */}
+    {/* BARRA FILTROS EJECUCIÓN */}
     <div
       style={{
         display:"flex",
@@ -1291,8 +1236,47 @@ observaciones_preparacion_reasignacion:
       </label>
     ))}
     
-
+    {/* FILTRO SGIPE */}
+    <input
+      placeholder="SGIPE"
+      value={filtroSgipe}
+      onChange={(e)=>setFiltroSgipe(e.target.value)}
+      style={{
+        width:80,
+        height:22,
+        fontSize:11,
+        padding:"1px 5px",
+        border:"1px solid #7fa7c7",
+        borderRadius:3
+      }}
+    />
     
+    {/* FILTRO GRUPO */}
+    <select
+      value={filtroGrupo}
+      onChange={(e)=>setFiltroGrupo(e.target.value)}
+      style={{
+        width:90,
+        height:22,
+        fontSize:11,
+        padding:"1px 5px",
+        border:"1px solid #7fa7c7",
+        borderRadius:3
+      }}
+    >
+      <option value="">Grupo</option>
+      {OPCIONES_GRUPO.map((g)=>(
+        <option key={g} value={g}>
+          {g}
+        </option>
+      ))}
+    </select>
+
+
+
+      
+    </div>
+
     {reasignacionesEjecucionFiltradas.length === 0 ? (
       <div style={{ background:"#fff", border:"1px solid #ddd", padding:10 }}>
         No hay reasignaciones para este atlas.
