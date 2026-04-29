@@ -251,6 +251,25 @@ const [filtroGrupo, setFiltroGrupo] = useState("");
     setCambiosSinGuardar(true);
   };
 
+  const handleReasignacionChangeById = (
+  id: any,
+  field: string,
+  value: string
+) => {
+  setReasignaciones((prev) =>
+    prev.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            [field]: value,
+          }
+        : item
+    )
+  );
+
+  setCambiosSinGuardar(true);
+};
+
   const guardarCambios = async () => {
     if (!formData?.id) {
       alert("Error: no hay ID");
@@ -1261,7 +1280,7 @@ observaciones_preparacion_reasignacion:
             <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
             <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
             <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={470}/>
-            <CampoInputAuto label="SGIPE" value={r.sgipe || ""} minWidth={70} onChange={(v)=>handleReasignacionChange(index,"sgipe",v)}/>
+            <CampoInputAuto label="SGIPE" value={r.sgipe || ""} minWidth={70} onChange={(v)=>handleReasignacionChangeById(r.id,"sgipe",v)}/>
             <CampoSelectAuto
               label="Grupo"
               value={r.grupo || ""}
