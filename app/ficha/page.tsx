@@ -495,8 +495,7 @@ reasignacionesEjecucionFiltradas.forEach((r: any) => {
   serviciosAgrupados[clave].push(r);
 });
 
-return (
-
+  return (
     <div
       style={{
         height: "100vh",
