@@ -504,6 +504,18 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
+  const gruposOrdenados = Object.entries(serviciosAgrupados).sort(
+    ([tituloA], [tituloB]) => {
+      const orden = (titulo: string) => {
+        if (titulo.startsWith("SGIPE")) return 1;
+        if (titulo.startsWith("Grupo")) return 2;
+        return 3;
+      };
+  
+      return orden(tituloA) - orden(tituloB);
+    }
+  );
+
 
   const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
   (acc:any, r:any) => {
