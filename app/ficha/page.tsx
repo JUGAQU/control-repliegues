@@ -486,7 +486,7 @@ observaciones_preparacion_reasignacion:
   ).length;
 
 
-
+   const serviciosAgrupados: Record<string, any[]> = {};
 
 
   return (
