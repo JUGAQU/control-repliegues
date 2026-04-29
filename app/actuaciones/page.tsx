@@ -1,18 +1,79 @@
 "use client";
 
 
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import CabeceraFicha from "../components/CabeceraFicha";
+
 
 export default function Actuaciones() {
   const searchParams = useSearchParams();
   const grupo = searchParams.get("grupo") || "";
-
-  const formData = {};
+  const id = searchParams.get("id");
+  const [formData, setFormData] = useState<any>(null);
   const handleChange = () => {};
   const provincias: any[] = [];
   const empresasPI: any[] = [];
   const setMostrarMemoria = () => {};
+
+export default function Actuaciones() {
+
+  const searchParams = useSearchParams();
+
+  const grupo = searchParams.get("grupo") || "";
+  const id = searchParams.get("id");
+
+  const [formData, setFormData] = useState<any>(null);
+
+  const handleChange = () => {};
+  const provincias: any[] = [];
+  const empresasPI: any[] = [];
+  const setMostrarMemoria = () => {};
+
+  // AQUI VA EL useEffect
+  useEffect(() => {
+    const cargarFicha = async () => {
+      if (!id) return;
+
+      const res = await fetch("/api/fichas");
+      const data = await res.json();
+
+      if (Array.isArray(data)) {
+        const registro = data.find(
+          (d: any) => String(d.id) === String(id)
+        );
+
+        if (registro) setFormData(registro);
+      }
+    };
+
+    cargarFicha();
+
+  }, [id]);
+
+  // TAMBIEN AQUI
+  if (!formData) {
+    return <div style={{ padding:20 }}>Cargando actuaciones...</div>;
+  }
+
+  return (
+    <>
+      <CabeceraFicha
+        formData={formData}
+        handleChange={handleChange}
+        provincias={provincias}
+        empresasPI={empresasPI}
+        setMostrarMemoria={setMostrarMemoria}
+      />
+
+      <div>
+        ...
+      </div>
+
+    </>
+  );
+}
+  
 
   return (
     <>
