@@ -1268,7 +1268,7 @@ observaciones_preparacion_reasignacion:
         No hay reasignaciones para este atlas.
       </div>
     ) : (
-      Object.entries(serviciosAgrupados).map(([tituloGrupo, items]:any)=>(
+      
       Object.entries(serviciosAgrupados).map(([tituloGrupo, items]:any)=>(
 
       <div key={tituloGrupo}>
