@@ -612,7 +612,7 @@ observaciones_preparacion_reasignacion:
           </div>
         </div>
 
-        <CabeceraFicha />
+        <CabeceraFicha formData={formData} />
         <div style={{ ...bloqueSuperior, marginBottom: 5 }}>
           <div style={campo}>
             <span>Atlas:</span>
