@@ -488,6 +488,22 @@ observaciones_preparacion_reasignacion:
 
   const serviciosAgrupados: Record<string, any[]> = {};
 
+  reasignacionesEjecucionFiltradas.forEach((r:any) => {
+    const clave =
+      r.sgipe && String(r.sgipe).trim() !== ""
+        ? `SGIPE ${r.sgipe}`
+        : r.grupo && String(r.grupo).trim() !== ""
+          ? `Grupo ${r.grupo}`
+          : "Sin asignar";
+  
+    if (!serviciosAgrupados[clave]) {
+      serviciosAgrupados[clave] = [];
+    }
+
+    serviciosAgrupados[clave].push(r);
+  });
+  
+
   return (
     <div
       style={{
