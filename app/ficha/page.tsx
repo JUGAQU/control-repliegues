@@ -1,4 +1,5 @@
 "use client";
+
 export const dynamic = "force-dynamic";
 
 import React, { useEffect, useState } from "react";
@@ -1598,9 +1599,14 @@ observaciones_preparacion_reasignacion:
 
 
           </div>
-        </div>
-      ))
-    )}
+
+        </div> {/* FIN TARJETA */}
+
+      ))}
+    </div>
+  ))
+)}
+
   </>
 )}
 
