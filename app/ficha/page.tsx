@@ -931,6 +931,121 @@ observaciones_preparacion_reasignacion:
         </div>
       </div>
 
+      {bloqueActivo === "ejecucion_reasignaciones" && (
+        <div style={{ padding: "0 20px 8px 20px" }}>
+          {/* BARRA FILTROS EJECUCIÓN */}
+          
+          {/* BARRA FILTROS EJECUCIÓN */}
+    <div
+      style={{
+        display:"flex",
+        gap:8,
+        alignItems:"center",
+        marginBottom:10,
+        padding:8,
+        background:"#cfe8f6",
+        border:"1px solid #9fc5e8",
+        overflowX:"auto"
+      }}
+    >
+      <div
+        style={{
+          background:"#0070c0",
+          color:"#fff",
+          fontWeight:"bold",
+          padding:"8px 12px",
+          borderRadius:4,
+          whiteSpace:"nowrap"
+        }}
+      >
+        Ejecución Reasignaciones
+      </div>
+
+        {GRUPOS_EJECUCION.map((g)=>(
+      <label
+        key={g.key}
+        style={{
+          display:"flex",
+          alignItems:"center",
+          gap:5,
+          border:"1px solid #7fa7c7",
+          background:"#eaf5ff",
+          padding:"4px 8px",
+          fontSize:11,
+          fontWeight:"bold",
+          whiteSpace:"nowrap"
+        }}
+      >
+        <span
+          style={{
+            background:"#0070c0",
+            color:"#fff",
+            padding:"2px 6px",
+            borderRadius:3
+          }}
+        >
+          {totalPorGrupo(g.key)}
+        </span>
+    
+        <input
+          type="checkbox"
+          checked={filtrosEjecucion[g.key]}
+          onChange={(e)=>
+            setFiltrosEjecucion((prev)=>({
+              ...prev,
+              [g.key]: e.target.checked
+            }))
+          }
+        />
+    
+        {g.label.toUpperCase()}
+    
+      </label>
+    ))}
+    
+    {/* FILTRO SGIPE */}
+    <input
+      placeholder="SGIPE"
+      value={filtroSgipe}
+      onChange={(e)=>setFiltroSgipe(e.target.value)}
+      style={{
+        width:80,
+        height:22,
+        fontSize:11,
+        padding:"1px 5px",
+        border:"1px solid #7fa7c7",
+        borderRadius:3
+      }}
+    />
+    
+    {/* FILTRO GRUPO */}
+    <select
+      value={filtroGrupo}
+      onChange={(e)=>setFiltroGrupo(e.target.value)}
+      style={{
+        width:90,
+        height:22,
+        fontSize:11,
+        padding:"1px 5px",
+        border:"1px solid #7fa7c7",
+        borderRadius:3
+      }}
+    >
+      <option value="">Grupo</option>
+      {OPCIONES_GRUPO.map((g)=>(
+        <option key={g} value={g}>
+          {g}
+        </option>
+      ))}
+    </select>
+
+
+
+      
+    </div>
+        </div>
+      )}
+
       <div
         style={{
           flex: 1,
@@ -1168,115 +1283,7 @@ observaciones_preparacion_reasignacion:
             {bloqueActivo === "ejecucion_reasignaciones" && (
   <>
 
-    {/* BARRA FILTROS EJECUCIÓN */}
-    <div
-      style={{
-        display:"flex",
-        gap:8,
-        alignItems:"center",
-        marginBottom:10,
-        padding:8,
-        background:"#cfe8f6",
-        border:"1px solid #9fc5e8",
-        overflowX:"auto"
-      }}
-    >
-      <div
-        style={{
-          background:"#0070c0",
-          color:"#fff",
-          fontWeight:"bold",
-          padding:"8px 12px",
-          borderRadius:4,
-          whiteSpace:"nowrap"
-        }}
-      >
-        Ejecución Reasignaciones
-      </div>
-
-        {GRUPOS_EJECUCION.map((g)=>(
-      <label
-        key={g.key}
-        style={{
-          display:"flex",
-          alignItems:"center",
-          gap:5,
-          border:"1px solid #7fa7c7",
-          background:"#eaf5ff",
-          padding:"4px 8px",
-          fontSize:11,
-          fontWeight:"bold",
-          whiteSpace:"nowrap"
-        }}
-      >
-        <span
-          style={{
-            background:"#0070c0",
-            color:"#fff",
-            padding:"2px 6px",
-            borderRadius:3
-          }}
-        >
-          {totalPorGrupo(g.key)}
-        </span>
     
-        <input
-          type="checkbox"
-          checked={filtrosEjecucion[g.key]}
-          onChange={(e)=>
-            setFiltrosEjecucion((prev)=>({
-              ...prev,
-              [g.key]: e.target.checked
-            }))
-          }
-        />
-    
-        {g.label.toUpperCase()}
-    
-      </label>
-    ))}
-    
-    {/* FILTRO SGIPE */}
-    <input
-      placeholder="SGIPE"
-      value={filtroSgipe}
-      onChange={(e)=>setFiltroSgipe(e.target.value)}
-      style={{
-        width:80,
-        height:22,
-        fontSize:11,
-        padding:"1px 5px",
-        border:"1px solid #7fa7c7",
-        borderRadius:3
-      }}
-    />
-    
-    {/* FILTRO GRUPO */}
-    <select
-      value={filtroGrupo}
-      onChange={(e)=>setFiltroGrupo(e.target.value)}
-      style={{
-        width:90,
-        height:22,
-        fontSize:11,
-        padding:"1px 5px",
-        border:"1px solid #7fa7c7",
-        borderRadius:3
-      }}
-    >
-      <option value="">Grupo</option>
-      {OPCIONES_GRUPO.map((g)=>(
-        <option key={g} value={g}>
-          {g}
-        </option>
-      ))}
-    </select>
-
-
-
-      
-    </div>
-
     {reasignacionesEjecucionFiltradas.length === 0 ? (
       <div style={{ background:"#fff", border:"1px solid #ddd", padding:10 }}>
         No hay reasignaciones para este atlas.
