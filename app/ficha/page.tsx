@@ -485,22 +485,25 @@ observaciones_preparacion_reasignacion:
     (r:any) => grupoModoReasignacion(r.modo_reasignacion) === grupo
   ).length;
 
-
-   const serviciosAgrupados = {} as Record<string, any[]>;
-   reasignacionesEjecucionFiltradas.forEach((r:any) => {
+  const serviciosAgrupados = reasignacionesEjecucionFiltradas.reduce(
+  (acc: any, r: any) => {
     const clave =
       r.sgipe && String(r.sgipe).trim() !== ""
         ? `SGIPE ${r.sgipe}`
         : r.grupo && String(r.grupo).trim() !== ""
           ? `Grupo ${r.grupo}`
           : "Sin asignar";
-  
-    if (!serviciosAgrupados[clave]) {
-      serviciosAgrupados[clave] = [];
-    }
-  
-    serviciosAgrupados[clave].push(r);
-  });
+
+    if (!acc[clave]) acc[clave] = [];
+    acc[clave].push(r);
+
+    return acc;
+  },
+  {}
+);
+
+return (
+   
 
   
   
@@ -1263,7 +1266,7 @@ observaciones_preparacion_reasignacion:
                   {tituloGrupo} — {(items as any[]).length} servicio(s)
                 </div>
 
-                {(items as any[]).map((r:any,index:number)=>(
+                {items.map((r:any,index:number)=>(
                   
                   <div 
                         key={r.id || index}
@@ -1274,7 +1277,7 @@ observaciones_preparacion_reasignacion:
                           marginBottom:12
                         }}
                       >
-                    {/* EL DE ARRIBA ES EL <div de TARJETA */}
+
                         <div
                           style={{
                             width:35,
@@ -1597,7 +1600,8 @@ observaciones_preparacion_reasignacion:
       
   ))
 )}  {/* <- cierra:reasignacionesEjecucionFiltradas.length===0 ? ... : (...) */}
-
+   </>
+      )}
             {bloqueActivo === "visitas" && (
               <div
                 style={{
