@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import CabeceraFicha from "../components/CabeceraFicha";
+import cabeceraActuaciones from "../components/cabeceraActuaciones";
 
 export default function Actuaciones() {
   const searchParams = useSearchParams();
@@ -38,7 +38,7 @@ export default function Actuaciones() {
 
   return (
     <>
-      <CabeceraFicha
+      <cabeceraActuaciones
         formData={formData}
         handleChange={handleChange}
         provincias={provincias}
