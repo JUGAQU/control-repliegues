@@ -926,84 +926,12 @@ observaciones_preparacion_reasignacion:
               boxSizing: "border-box",
             }}
           >
-            {bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"}
-          </div>
-        </div>
-      </div>
-
-      {bloqueActivo === "ejecucion_reasignaciones" && (
-        <div style={{ padding: "0 20px 8px 20px" }}>
-          {/* BARRA FILTROS EJECUCIÓN */}
+            {bloqueActivo === "ejecucion_reasignaciones" ? (
+             
+            <div style={{ display: "flex", alignItems: "center", gap: 8, overflowX: "auto" }}>
+              <span style={{ whiteSpace: "nowrap" }}>Ejecución Reasignaciones</span>
           
-          {/* BARRA FILTROS EJECUCIÓN */}
-    <div
-      style={{
-        display:"flex",
-        gap:8,
-        alignItems:"center",
-        marginBottom:10,
-        padding:8,
-        background:"#cfe8f6",
-        border:"1px solid #9fc5e8",
-        overflowX:"auto"
-      }}
-    >
-      <div
-        style={{
-          background:"#0070c0",
-          color:"#fff",
-          fontWeight:"bold",
-          padding:"8px 12px",
-          borderRadius:4,
-          whiteSpace:"nowrap"
-        }}
-      >
-        Ejecución Reasignaciones
-      </div>
-
-        {GRUPOS_EJECUCION.map((g)=>(
-      <label
-        key={g.key}
-        style={{
-          display:"flex",
-          alignItems:"center",
-          gap:5,
-          border:"1px solid #7fa7c7",
-          background:"#eaf5ff",
-          padding:"4px 8px",
-          fontSize:11,
-          fontWeight:"bold",
-          whiteSpace:"nowrap"
-        }}
-      >
-        <span
-          style={{
-            background:"#0070c0",
-            color:"#fff",
-            padding:"2px 6px",
-            borderRadius:3
-          }}
-        >
-          {totalPorGrupo(g.key)}
-        </span>
-    
-        <input
-          type="checkbox"
-          checked={filtrosEjecucion[g.key]}
-          onChange={(e)=>
-            setFiltrosEjecucion((prev)=>({
-              ...prev,
-              [g.key]: e.target.checked
-            }))
-          }
-        />
-    
-        {g.label.toUpperCase()}
-    
-      </label>
-    ))}
-    
-    {/* FILTRO SGIPE */}
+                  {/* FILTRO SGIPE */}
     <input
       placeholder="SGIPE"
       value={filtroSgipe}
@@ -1282,6 +1210,87 @@ observaciones_preparacion_reasignacion:
 
             {bloqueActivo === "ejecucion_reasignaciones" && (
   <>
+
+            </div>
+          ) : (
+            bloqueActivo ? getTituloBloque() : "Ningún bloque seleccionado"
+          )}
+          </div>
+        </div>
+      </div>
+
+      {bloqueActivo === "ejecucion_reasignaciones" && (
+        <div style={{ padding: "0 20px 8px 20px" }}>
+          
+          
+          {/* BARRA FILTROS EJECUCIÓN */}
+    <div
+      style={{
+        display:"flex",
+        gap:8,
+        alignItems:"center",
+        marginBottom:10,
+        padding:8,
+        background:"#cfe8f6",
+        border:"1px solid #9fc5e8",
+        overflowX:"auto"
+      }}
+    >
+      <div
+        style={{
+          background:"#0070c0",
+          color:"#fff",
+          fontWeight:"bold",
+          padding:"8px 12px",
+          borderRadius:4,
+          whiteSpace:"nowrap"
+        }}
+      >
+        Ejecución Reasignaciones
+      </div>
+
+        {GRUPOS_EJECUCION.map((g)=>(
+      <label
+        key={g.key}
+        style={{
+          display:"flex",
+          alignItems:"center",
+          gap:5,
+          border:"1px solid #7fa7c7",
+          background:"#eaf5ff",
+          padding:"4px 8px",
+          fontSize:11,
+          fontWeight:"bold",
+          whiteSpace:"nowrap"
+        }}
+      >
+        <span
+          style={{
+            background:"#0070c0",
+            color:"#fff",
+            padding:"2px 6px",
+            borderRadius:3
+          }}
+        >
+          {totalPorGrupo(g.key)}
+        </span>
+    
+        <input
+          type="checkbox"
+          checked={filtrosEjecucion[g.key]}
+          onChange={(e)=>
+            setFiltrosEjecucion((prev)=>({
+              ...prev,
+              [g.key]: e.target.checked
+            }))
+          }
+        />
+    
+        {g.label.toUpperCase()}
+    
+      </label>
+    ))}
+    
 
     
     {reasignacionesEjecucionFiltradas.length === 0 ? (
