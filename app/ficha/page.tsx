@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import CabeceraFicha from "../components/CabeceraFicha";
 
+
 const OPCIONES_MODO_REASIGNACION = [
   "NUEVO CABLE DE FIBRA A EEBB",
   "POR RADIONLACE",
