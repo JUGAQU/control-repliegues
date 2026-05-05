@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import CabeceraFicha from "../components/CabeceraFicha";
+import { supabase } from "../lib/supabase";
 
 export default function Actuaciones() {
   const searchParams = useSearchParams();
@@ -15,6 +16,11 @@ export default function Actuaciones() {
   const provincias: any[] = [];
   const empresasPI: any[] = [];
   const setMostrarMemoria = () => {};
+
+  const atlas = searchParams.get("atlas") || "";
+  const sgipe = searchParams.get("sgipe") || "";
+  const grupoFiltro = searchParams.get("grupo") || "";
+  const [actuaciones, setActuaciones] = useState<any[]>([]);
 
   useEffect(() => {
     const cargarFicha = async () => {
