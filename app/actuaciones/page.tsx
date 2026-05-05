@@ -22,18 +22,7 @@ export default function Actuaciones() {
   const grupoFiltro = searchParams.get("grupo") || "";
   const [actuaciones, setActuaciones] = useState<any[]>([]);
 
-  useEffect(() => {
-    const cargarFicha = async () => {
-      if (!id) return;
 
-      const res = await fetch("/api/fichas");
-      const data = await res.json();
-
-      if (Array.isArray(data)) {
-        const registro = data.find((d: any) => String(d.id) === String(id));
-        if (registro) setFormData(registro);
-      }
-    };
 
     cargarFicha();
   }, [id]);
