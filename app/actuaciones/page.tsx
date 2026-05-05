@@ -20,8 +20,9 @@ const searchParams = useSearchParams();
   const atlas = searchParams.get("atlas") || "";
   const sgipe = searchParams.get("sgipe") || "";
   const grupoFiltro = searchParams.get("grupo") || "";
+  const nservicios = searchParams.get("nservicios") || "";
 
-const [actuaciones, setActuaciones] = useState<any[]>([]);
+  const [actuaciones, setActuaciones] = useState<any[]>([]);
 
 useEffect(() => {
   const cargarFicha = async () => {
@@ -76,7 +77,7 @@ const vacia = {
   tecnico_p_ext: "",
   telefono_p_ext: "",
   gestor_atelco: "",
-  numero_reasignaciones_tratadas: "",
+  numero_reasignaciones_tratadas: nservicios,
   fecha_prevista: "",
   actuacion_nocturna: false,
   estado_actuacion: "",
