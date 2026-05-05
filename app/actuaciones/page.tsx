@@ -175,6 +175,11 @@ if (!formData) {
   {/* 🔵 BLOQUE INTERIOR */}
   <div style={{ display: "flex", gap: 30, flexWrap: "wrap" }}>
 
+    {/*inicio */}
+    <div style={{ display: "flex", gap: 5 }}>
+      <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={90} onChange={()=>{}} />
+    </div>
+
     {/* IZQUIERDA */}
     <div style={{ display: "flex", gap: 5 }}>
       <CampoInputAuto label="Empresa Planta Int." value={a.ec_pi || ""} minWidth={150} onChange={()=>{}} />
