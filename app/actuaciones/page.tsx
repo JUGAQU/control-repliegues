@@ -155,31 +155,49 @@ if (!formData) {
 
         {/* 🔴 AQUÍ VAN LAS TARJETAS */}
         {actuaciones.map((a:any, index:number) => (
-          <div key={a.id || index}
-            style={{
-              background:"#d9edf7",
-              border:"1px solid #8ea9bf",
-              marginTop:12,
-              padding:8,
-              display:"flex",
-              gap:8,
-              overflowX:"auto"
-            }}
-          >
-            <CampoInputAuto label="EC PI" value={a.ec_pi || ""} minWidth={90} onChange={()=>{}} />
-            <CampoInputAuto label="Técnicos necesarios" value={a.tecnicos_necesarios || ""} minWidth={130} onChange={()=>{}} />
-            <CampoInputAuto label="Técnico P. Int" value={a.tecnico_p_int || ""} minWidth={130} onChange={()=>{}} />
-            <CampoInputAuto label="Teléfono P. Int" value={a.telefono_p_int || ""} minWidth={110} onChange={()=>{}} />
-            <CampoInputAuto label="Técnico P. Ext" value={a.tecnico_p_ext || ""} minWidth={130} onChange={()=>{}} />
-            <CampoInputAuto label="Teléfono P. Ext" value={a.telefono_p_ext || ""} minWidth={110} onChange={()=>{}} />
-            <CampoInputAuto label="Gestor Atelco" value={a.gestor_atelco || ""} minWidth={120} onChange={()=>{}} />
-            <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={90} onChange={()=>{}} />
-            <CampoInputAuto label="Fecha prevista" value={a.fecha_prevista || ""} minWidth={120} onChange={()=>{}} />
-            <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={130} onChange={()=>{}} />
-            <CampoInputAuto label="Observaciones" value={a.observaciones_actuacion || ""} minWidth={300} onChange={()=>{}} />
-            <CampoInputAuto label="Fecha certificación" value={a.fecha_certificacion || ""} minWidth={130} onChange={()=>{}} />
-          </div>
-        ))}
+        <div
+        key={a.id || index}
+        style={{
+          background: "#7fe08a",
+          borderTop: "2px solid #000",
+          borderBottom: "2px solid #000",
+          marginTop: 12,
+          padding: 10,
+          display: "grid",
+          gridTemplateColumns: "110px 80px 190px 110px 190px 110px 170px 100px 80px 110px 1fr",
+          gap: "6px 10px",
+          alignItems: "start",
+        }}
+      >
+        <CampoInputAuto label="EC PI" value={a.ec_pi || ""} minWidth={110} onChange={()=>{}} />
+        <CampoInputAuto label="Nº Tec." value={a.tecnicos_necesarios || ""} minWidth={80} onChange={()=>{}} />
+        <CampoInputAuto label="Técnico Responsable" value={a.tecnico_p_int || ""} minWidth={190} onChange={()=>{}} />
+        <CampoInputAuto label="Teléfono" value={a.telefono_p_int || ""} minWidth={110} onChange={()=>{}} />
+        <CampoInputAuto label="Técnico Pta. Exterior" value={a.tecnico_p_ext || ""} minWidth={190} onChange={()=>{}} />
+        <CampoInputAuto label="Teléfono" value={a.telefono_p_ext || ""} minWidth={110} onChange={()=>{}} />
+        <CampoInputAuto label="Gestor Atelco" value={a.gestor_atelco || ""} minWidth={170} onChange={()=>{}} />
+        <CampoInputAuto label="Fecha BTP" value={a.fecha_prevista || ""} minWidth={100} onChange={()=>{}} />
+        <CampoInputAuto label="Noctur." value={a.actuacion_nocturna ? "SI" : ""} minWidth={80} onChange={()=>{}} />
+        <CampoInputAuto label="BTP" value={a.fecha_certificacion || ""} minWidth={110} onChange={()=>{}} />
+      
+        <div style={{ gridRow: "span 2" }}>
+          <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={350} onChange={()=>{}} />
+        </div>
+      
+        <CampoInputAuto label="Estado Actuación" value={a.estado_actuacion || ""} minWidth={190} onChange={()=>{}} />
+      </div>
+          
+
+
+
+
+
+
+
+
+
+
+))}
             
 
 
