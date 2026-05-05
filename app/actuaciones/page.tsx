@@ -6,9 +6,9 @@ import CabeceraFicha from "../components/CabeceraFicha";
 import { supabase } from "../lib/supabase";
 
 export default function Actuaciones() {
-  const searchParams = useSearchParams();
-  const grupo = searchParams.get("grupo") || "";
-  const id = searchParams.get("id");
+const searchParams = useSearchParams();
+
+
 
   const [formData, setFormData] = useState<any>(null);
 
