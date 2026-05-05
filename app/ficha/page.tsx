@@ -1070,14 +1070,14 @@ observaciones_preparacion_reasignacion:
           
           <button
             type="button"
-            onClick={() => {
-              const primero: any = items[0];
-            
-              window.open(
-                `/actuaciones?atlas=${encodeURIComponent(formData.atlas || "")}&sgipe=${encodeURIComponent(primero?.sgipe || "")}&grupo=${encodeURIComponent(primero?.grupo || "")}`,
-                "_blank"
-              );
-            }}
+          onClick={() => {
+            const primero: any = items[0];
+          
+            window.open(
+              `/actuaciones?atlas=${encodeURIComponent(formData.atlas || "")}&sgipe=${encodeURIComponent(primero?.sgipe || "")}&grupo=${encodeURIComponent(tituloGrupo || "")}`,
+              "_blank"
+            );
+          }}
             style={{
               fontSize:11,
               fontWeight:"bold",
