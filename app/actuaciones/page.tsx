@@ -162,3 +162,48 @@ export default function Actuaciones() {
     </>
   );
 }
+
+
+
+function CampoInputAuto({
+  label,
+  value,
+  minWidth = 100,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  minWidth?: number;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div style={{ width: minWidth, flex: "0 0 auto" }}>
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: "bold",
+          color: "#0b5394",
+          marginBottom: 3,
+        }}
+      >
+        {label}
+      </div>
+
+      <input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={{
+          width: "100%",
+          height: 20,
+          padding: "1px 5px",
+          background: "#d9ead3",
+          border: "1px solid #666",
+          borderRadius: 4,
+          fontSize: 11,
+          boxSizing: "border-box",
+          fontFamily: "Arial",
+        }}
+      />
+    </div>
+  );
+}
