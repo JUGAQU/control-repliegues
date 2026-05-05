@@ -173,7 +173,7 @@ if (!formData) {
 >
 
   {/* 🔵 BLOQUE INTERIOR */}
-  <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+  <div style={{ display: "flex", gap: 30, flexWrap: "wrap" }}>
 
     {/* IZQUIERDA */}
     <div style={{ display: "flex", gap: 5 }}>
