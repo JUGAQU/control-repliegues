@@ -60,7 +60,7 @@ return (
             <span>Atlas:</span>
             <input
               name="atlas"
-              value={formData.atlas || ""}
+              value={formData?.atlas || ""}
               readOnly
               style={{
                 ...valor,
@@ -76,7 +76,7 @@ return (
             <span>Lote:</span>
             <input
               name="lote"
-              value={formData.lote || ""}
+              value={formData?.lote || ""}
               onChange={handleChange}
               style={{ ...valor, width: 70 }}
             />
@@ -86,7 +86,7 @@ return (
             <span>Nombre:</span>
             <input
               name="nombre"
-              value={formData.nombre || ""}
+              value={formData?.nombre || ""}
               onChange={handleChange}
               style={{ ...valor, width: 150 }}
             />
@@ -96,7 +96,7 @@ return (
             <span>Provincia:</span>
             <select
               name="provincia"
-              value={formData.provincia || ""}
+              value={formData?.provincia || ""}
               onChange={handleChange}
               style={{ ...valor, width: 115 }}
             >
@@ -113,7 +113,7 @@ return (
             <span>Miga:</span>
             <input
               name="miga"
-              value={formData.miga || ""}
+              value={formData?.miga || ""}
               onChange={handleChange}
               style={{ ...valor, width: 52 }}
             />
@@ -123,14 +123,14 @@ return (
             <span>Coordenadas:</span>
             <input
               name="coordenadas"
-              value={formData.coordenadas || ""}
+              value={formData?.coordenadas || ""}
               onChange={handleChange}
               style={{ ...valor, width: 105 }}
             />
-            {formData.coordenadas && (
+            {formData?.coordenadas && (
               <a
                 href={`https://www.google.com/maps?q=${encodeURIComponent(
-                  formData.coordenadas
+                  formData?.coordenadas
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -145,7 +145,7 @@ return (
             <span>Tipo Edificio:</span>
             <input
               name="tipo_edificio"
-              value={formData.tipo_edificio || ""}
+              value={formData?.tipo_edificio || ""}
               onChange={handleChange}
               style={{ ...valor, width: 72 }}
             />
@@ -155,7 +155,7 @@ return (
             <span>Tipo Repliegue:</span>
             <input
               name="tipo_repliegue"
-              value={formData.tipo_repliegue || ""}
+              value={formData?.tipo_repliegue || ""}
               onChange={handleChange}
               style={{ ...valor, width: 80 }}
             />
@@ -165,7 +165,7 @@ return (
             <span>Senda:</span>
             <input
               name="tipo_senda"
-              value={formData.tipo_senda || "ACELERADA_2026"}
+              value={formData?.tipo_senda || "ACELERADA_2026"}
               onChange={handleChange}
               style={{ ...valor, width: 115 }}
             />
@@ -176,7 +176,7 @@ return (
             <input
               type="date"
               name="fecha_abandono"
-              value={formData.fecha_abandono || ""}
+              value={formData?.fecha_abandono || ""}
               onChange={handleChange}
               style={{ ...valor, width: 125 }}
             />
@@ -189,7 +189,7 @@ return (
             <input
               type="checkbox"
               name="prioritario"
-              checked={!!formData.prioritario}
+              checked={!!formData?.prioritario}
               onChange={handleChange}
             />
           </div>
@@ -199,7 +199,7 @@ return (
             <input
               type="checkbox"
               name="central_vendida"
-              checked={!!formData.central_vendida}
+              checked={!!formData?.central_vendida}
               onChange={handleChange}
             />
           </div>
@@ -208,7 +208,7 @@ return (
             <span>Proyecto Inversión:</span>
             <input
               name="proyecto_inversion"
-              value={formData.proyecto_inversion || ""}
+              value={formData?.proyecto_inversion || ""}
               onChange={handleChange}
               style={{ ...valor, width: 62 }}
             />
@@ -218,7 +218,7 @@ return (
             <span>Técnico Análisis:</span>
             <input
               name="tecnico_analisis"
-              value={formData.tecnico_analisis || ""}
+              value={formData?.tecnico_analisis || ""}
               onChange={handleChange}
               style={{ ...valor, width: 110 }}
             />
@@ -228,7 +228,7 @@ return (
             <span>Técnico Reasignaciones:</span>
             <input
               name="tecnico_reasignaciones"
-              value={formData.tecnico_reasignaciones || ""}
+              value={formData?.tecnico_reasignaciones || ""}
               onChange={handleChange}
               style={{ ...valor, width: 110 }}
             />
@@ -238,7 +238,7 @@ return (
             <span>Empresa Planta Int.:</span>
             <select
               name="empresa_pi"
-              value={formData.empresa_pi || ""}
+              value={formData?.empresa_pi || ""}
               onChange={handleChange}
               style={{ ...valor, width: 120 }}
             >
@@ -255,7 +255,7 @@ return (
             <span>Empresa Planta Ext.:</span>
             <input
               name="empresa_pe"
-              value={formData.empresa_pe || ""}
+              value={formData?.empresa_pe || ""}
               onChange={handleChange}
               style={{ ...valor, width: 115 }}
             />
@@ -265,7 +265,7 @@ return (
             <span>Empresa Recicladora:</span>
             <input
               name="empresa_recicladora"
-              value={formData.empresa_recicladora || ""}
+              value={formData?.empresa_recicladora || ""}
               onChange={handleChange}
               style={{ ...valor, width: 115 }}
             />
@@ -296,7 +296,7 @@ return (
               onClick={() =>
                 window.open(
                   `https://spock.es.telefonica/spoc_ec/faro2/faro_detalle_nacional_repliegue.asp?central=${encodeURIComponent(
-                    formData.atlas || ""
+                    formData?.atlas || ""
                   )}`,
                   "_blank"
                 )
