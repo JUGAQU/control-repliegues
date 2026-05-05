@@ -1066,7 +1066,8 @@ observaciones_preparacion_reasignacion:
       >
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <span>{tituloGrupo} ({items.length})</span>
-        
+
+          
           <button
             type="button"
             onClick={() => {
