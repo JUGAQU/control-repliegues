@@ -47,53 +47,53 @@ useEffect(() => {
 }, [atlas]);
 
   
-  useEffect(() => {
-    const cargarActuaciones = async () => {
-      if (!atlas) return;
-  
-      let query = supabase
-        .from("actuaciones")
-        .select("*")
-        .eq("atlas", atlas);
-  
-      if (sgipe) query = query.eq("sgipe", sgipe);
-      if (grupoFiltro) query = query.eq("grupo", grupoFiltro);
-  
-      const { data, error } = await query.order("id", { ascending: true });
-  
-      if (error) {
-        console.error("Error cargando actuaciones:", error);
-        return;
-      }
-  
-      if (!data || data.length === 0) {
-        setActuaciones([
-          {
-            atlas,
-            sgipe,
-            grupo: grupoFiltro,
-            ec_pi: "",
-            tecnicos_necesarios: "",
-            tecnico_p_int: "",
-            telefono_p_int: "",
-            tecnico_p_ext: "",
-            telefono_p_ext: "",
-            gestor_atelco: "",
-            numero_reasignaciones_tratadas: "",
-            fecha_prevista: "",
-            actuacion_nocturna: false,
-            estado_actuacion: "",
-            observaciones_actuacion: "",
-            fecha_certificacion: "",
-          },
-        ]);
-      } else {
-        setActuaciones(data);
-      }
-    };
-  
-    cargarActuaciones();
-  }, [atlas, sgipe, grupoFiltro]);
+useEffect(() => {
+  const cargarActuaciones = async () => {
+    if (!atlas) return;
+
+    let query = supabase
+      .from("actuaciones")
+      .select("*")
+      .eq("atlas", atlas);
+
+    if (sgipe) query = query.eq("sgipe", sgipe);
+    if (grupoFiltro) query = query.eq("grupo", grupoFiltro);
+
+    const { data, error } = await query.order("id", { ascending: true });
+
+    if (error) {
+      console.error("Error cargando actuaciones:", error);
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      setActuaciones([
+        {
+          atlas,
+          sgipe,
+          grupo: grupoFiltro,
+          ec_pi: "",
+          tecnicos_necesarios: "",
+          tecnico_p_int: "",
+          telefono_p_int: "",
+          tecnico_p_ext: "",
+          telefono_p_ext: "",
+          gestor_atelco: "",
+          numero_reasignaciones_tratadas: "",
+          fecha_prevista: "",
+          actuacion_nocturna: false,
+          estado_actuacion: "",
+          observaciones_actuacion: "",
+          fecha_certificacion: "",
+        },
+      ]);
+    } else {
+      setActuaciones(data);
+    }
+  };
+
+  cargarActuaciones();
+}, [atlas, sgipe, grupoFiltro]);
 
 
 if (!formData) {
@@ -129,8 +129,7 @@ if (!formData) {
 
         {/* 🔴 AQUÍ VAN LAS TARJETAS */}
         {actuaciones.map((a:any, index:number) => (
-          <div
-            key={a.id || index}
+          <div key={a.id || index}
             style={{
               background:"#d9edf7",
               border:"1px solid #8ea9bf",
