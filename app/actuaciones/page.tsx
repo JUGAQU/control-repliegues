@@ -64,39 +64,45 @@ if (grupoFiltro) {
   query = query.eq("grupo", grupoFiltro);
 }
 
-    const { data, error } = await query.order("id", { ascending: true });
+    
+const vacia = {
+  atlas,
+  sgipe,
+  grupo: grupoFiltro,
+  ec_pi: "",
+  tecnicos_necesarios: "",
+  tecnico_p_int: "",
+  telefono_p_int: "",
+  tecnico_p_ext: "",
+  telefono_p_ext: "",
+  gestor_atelco: "",
+  numero_reasignaciones_tratadas: "",
+  fecha_prevista: "",
+  actuacion_nocturna: false,
+  estado_actuacion: "",
+  observaciones_actuacion: "",
+  fecha_certificacion: "",
+};
 
-    if (error) {
-      console.error("Error cargando actuaciones:", error);
-      return;
-    }
+const { data, error } = await query.order("id", { ascending: true });
 
-    if (!data || data.length === 0) {
-      setActuaciones([
-        {
-          atlas,
-          sgipe,
-          grupo: grupoFiltro,
-          ec_pi: "",
-          tecnicos_necesarios: "",
-          tecnico_p_int: "",
-          telefono_p_int: "",
-          tecnico_p_ext: "",
-          telefono_p_ext: "",
-          gestor_atelco: "",
-          numero_reasignaciones_tratadas: "",
-          fecha_prevista: "",
-          actuacion_nocturna: false,
-          estado_actuacion: "",
-          observaciones_actuacion: "",
-          fecha_certificacion: "",
-        },
-      ]);
-    } else {
-      setActuaciones(data);
-    }
-  };
+console.log("DATA actuaciones:", data);
+console.log("ERROR actuaciones:", error);
 
+if (error) {
+  setActuaciones([vacia]);
+  return;
+}
+
+if (!data || data.length === 0) {
+  setActuaciones([vacia]);
+} else {
+  setActuaciones(data);
+}
+
+
+
+    
   cargarActuaciones();
 }, [atlas, sgipe, grupoFiltro]);
 
@@ -131,6 +137,22 @@ if (!formData) {
             </div>
           </div>
         </div>
+
+
+<div style={{ padding: 10 }}>
+  Actuaciones cargadas: {actuaciones.length}
+</div>
+
+
+
+
+
+
+
+
+
+        
+        
 
         {/* 🔴 AQUÍ VAN LAS TARJETAS */}
         {actuaciones.map((a:any, index:number) => (
