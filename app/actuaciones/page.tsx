@@ -51,13 +51,18 @@ useEffect(() => {
   const cargarActuaciones = async () => {
     if (!atlas) return;
 
-    let query = supabase
-      .from("actuaciones")
-      .select("*")
-      .eq("atlas", atlas);
+let query = supabase
+  .from("actuaciones")
+  .select("*")
+  .eq("atlas", atlas);
 
-    if (sgipe) query = query.eq("sgipe", sgipe);
-    if (grupoFiltro) query = query.eq("grupo", grupoFiltro);
+if (sgipe) {
+  query = query.eq("sgipe", sgipe);
+}
+
+if (grupoFiltro) {
+  query = query.eq("grupo", grupoFiltro);
+}
 
     const { data, error } = await query.order("id", { ascending: true });
 
