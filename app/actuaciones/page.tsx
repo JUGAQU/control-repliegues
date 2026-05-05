@@ -100,9 +100,8 @@ if (!data || data.length === 0) {
   setActuaciones(data);
 }
 
+  };
 
-
-    
   cargarActuaciones();
 }, [atlas, sgipe, grupoFiltro]);
 
