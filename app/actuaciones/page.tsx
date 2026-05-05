@@ -122,7 +122,7 @@ if (!formData) {
             </button>
 
             <div style={{ fontSize:32, fontWeight:"bold", color:"#0b5394" }}>
-              {grupo}
+              {grupoFiltro}
             </div>
           </div>
         </div>
