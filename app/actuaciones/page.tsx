@@ -177,23 +177,29 @@ if (!formData) {
 
     {/* IZQUIERDA */}
     <div style={{ display: "flex", gap: 8 }}>
-      <CampoInputAuto label="EC PI" value={a.ec_pi || ""} minWidth={100} onChange={()=>{}} />
+      <CampoInputAuto label="Empresa Planta Int." value={a.ec_pi || ""} minWidth={100} onChange={()=>{}} />
       <CampoInputAuto label="Nº Tec." value={a.tecnicos_necesarios || ""} minWidth={80} onChange={()=>{}} />
-      <CampoInputAuto label="Téc. Responsable" value={a.tecnico_p_int || ""} minWidth={170} onChange={()=>{}} />
+      <CampoInputAuto label="Técnico Responsable" value={a.tecnico_p_int || ""} minWidth={170} onChange={()=>{}} />
       <CampoInputAuto label="Teléfono" value={a.telefono_p_int || ""} minWidth={110} onChange={()=>{}} />
     </div>
 
-    {/* DERECHA */}
+    {/*centro */}
     <div style={{ display: "flex", gap: 8 }}>
       <CampoInputAuto label="Téc. Pta Ext." value={a.tecnico_p_ext || ""} minWidth={170} onChange={()=>{}} />
       <CampoInputAuto label="Teléfono" value={a.telefono_p_ext || ""} minWidth={110} onChange={()=>{}} />
+    </div>
+
+        {/*derecha */}
+    <div style={{ display: "flex", gap: 8 }}>
+      <CampoInputAuto label="Gestor Atelco" value={a.gestor_atelco || ""} minWidth={150} onChange={()=>{}} />
+      
     </div>
 
   </div>
 
   {/* 🔵 SEGUNDA FILA */}
   <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-    <CampoInputAuto label="Gestor Atelco" value={a.gestor_atelco || ""} minWidth={150} onChange={()=>{}} />
+    
     <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={90} onChange={()=>{}} />
     <CampoInputAuto label="Fecha prevista" value={a.fecha_prevista || ""} minWidth={120} onChange={()=>{}} />
     <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={150} onChange={()=>{}} />
