@@ -107,6 +107,7 @@ export default function Actuaciones() {
       />
 
       <div style={{ background:"#dfe3e6", minHeight:"100vh", fontFamily:"Arial", padding:20 }}>
+        {/* 🔵 BARRA AZUL */} 
         <div style={{ background:"#c9e3f2", border:"1px solid #b7c6d0", padding:12 }}>
           <div style={{ display:"flex", alignItems:"center", gap:14 }}>
             <button style={{ background:"#0070c0", color:"#fff", border:"none", padding:"10px 18px", borderRadius:4, fontWeight:"bold", fontSize:24 }}>
@@ -118,6 +119,45 @@ export default function Actuaciones() {
             </div>
           </div>
         </div>
+
+        {/* 🔴 AQUÍ VAN LAS TARJETAS */}
+        {actuaciones.map((a:any, index:number) => (
+          <div
+            key={a.id || index}
+            style={{
+              background:"#d9edf7",
+              border:"1px solid #8ea9bf",
+              marginTop:12,
+              padding:8,
+              display:"flex",
+              gap:8,
+              overflowX:"auto"
+            }}
+          >
+            <CampoInputAuto label="EC PI" value={a.ec_pi || ""} minWidth={90} onChange={()=>{}} />
+            <CampoInputAuto label="Técnicos necesarios" value={a.tecnicos_necesarios || ""} minWidth={130} onChange={()=>{}} />
+            <CampoInputAuto label="Técnico P. Int" value={a.tecnico_p_int || ""} minWidth={130} onChange={()=>{}} />
+            <CampoInputAuto label="Teléfono P. Int" value={a.telefono_p_int || ""} minWidth={110} onChange={()=>{}} />
+            <CampoInputAuto label="Técnico P. Ext" value={a.tecnico_p_ext || ""} minWidth={130} onChange={()=>{}} />
+            <CampoInputAuto label="Teléfono P. Ext" value={a.telefono_p_ext || ""} minWidth={110} onChange={()=>{}} />
+            <CampoInputAuto label="Gestor Atelco" value={a.gestor_atelco || ""} minWidth={120} onChange={()=>{}} />
+            <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={90} onChange={()=>{}} />
+            <CampoInputAuto label="Fecha prevista" value={a.fecha_prevista || ""} minWidth={120} onChange={()=>{}} />
+            <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={130} onChange={()=>{}} />
+            <CampoInputAuto label="Observaciones" value={a.observaciones_actuacion || ""} minWidth={300} onChange={()=>{}} />
+            <CampoInputAuto label="Fecha certificación" value={a.fecha_certificacion || ""} minWidth={130} onChange={()=>{}} />
+          </div>
+        ))}
+            
+
+
+
+
+        
+
+
+
+        
       </div>
     </>
   );
