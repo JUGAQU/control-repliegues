@@ -176,15 +176,15 @@ if (!formData) {
   <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
 
     {/* IZQUIERDA */}
-    <div style={{ display: "flex", gap: 8 }}>
-      <CampoInputAuto label="Empresa Planta Int." value={a.ec_pi || ""} minWidth={100} onChange={()=>{}} />
+    <div style={{ display: "flex", gap: 5 }}>
+      <CampoInputAuto label="Empresa Planta Int." value={a.ec_pi || ""} minWidth={150} onChange={()=>{}} />
       <CampoInputAuto label="Nº Tec." value={a.tecnicos_necesarios || ""} minWidth={80} onChange={()=>{}} />
       <CampoInputAuto label="Técnico Responsable" value={a.tecnico_p_int || ""} minWidth={170} onChange={()=>{}} />
       <CampoInputAuto label="Teléfono" value={a.telefono_p_int || ""} minWidth={110} onChange={()=>{}} />
     </div>
 
     {/*centro */}
-    <div style={{ display: "flex", gap: 8 }}>
+    <div style={{ display: "flex", gap: 5 }}>
       <CampoInputAuto label="Téc. Pta Ext." value={a.tecnico_p_ext || ""} minWidth={170} onChange={()=>{}} />
       <CampoInputAuto label="Teléfono" value={a.telefono_p_ext || ""} minWidth={110} onChange={()=>{}} />
     </div>
