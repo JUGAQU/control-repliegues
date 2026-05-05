@@ -206,7 +206,7 @@ if (!formData) {
   {/* 🔵 SEGUNDA FILA */}
   <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
     
-    <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={90} onChange={()=>{}} />
+    
     <CampoInputAuto label="Fecha prevista" value={a.fecha_prevista || ""} minWidth={120} onChange={()=>{}} />
     <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={150} onChange={()=>{}} />
   </div>
