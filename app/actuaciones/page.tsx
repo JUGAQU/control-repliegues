@@ -20,17 +20,33 @@ const searchParams = useSearchParams();
   const atlas = searchParams.get("atlas") || "";
   const sgipe = searchParams.get("sgipe") || "";
   const grupoFiltro = searchParams.get("grupo") || "";
-  const [actuaciones, setActuaciones] = useState<any[]>([]);
 
+const [actuaciones, setActuaciones] = useState<any[]>([]);
 
+useEffect(() => {
+  const cargarFicha = async () => {
+    if (!atlas) return;
 
-    cargarFicha();
-  }, [id]);
+    const res = await fetch("/api/fichas");
+    const data = await res.json();
 
-  if (!formData) {
-    return <div style={{ padding: 20 }}>Cargando actuaciones...</div>;
-  }
+    if (Array.isArray(data)) {
+      const registro = data.find(
+        (d: any) => String(d.atlas).trim() === String(atlas).trim()
+      );
 
+      if (registro) {
+        setFormData(registro);
+      } else {
+        setFormData({ atlas });
+      }
+    }
+  };
+
+  cargarFicha();
+}, [atlas]);
+
+  
   useEffect(() => {
     const cargarActuaciones = async () => {
       if (!atlas) return;
@@ -80,7 +96,9 @@ const searchParams = useSearchParams();
   }, [atlas, sgipe, grupoFiltro]);
 
 
-
+if (!formData) {
+  return <div style={{ padding: 20 }}>Cargando actuaciones...</div>;
+}
 
 
   
