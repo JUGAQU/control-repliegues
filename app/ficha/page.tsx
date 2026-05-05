@@ -1071,10 +1071,12 @@ observaciones_preparacion_reasignacion:
           <button
             type="button"
             onClick={() => {
-            window.open(
-              `/actuaciones?atlas=${encodeURIComponent(r.atlas || formData.atlas || "")}&sgipe=${encodeURIComponent(r.sgipe || "")}&grupo=${encodeURIComponent(r.grupo || "")}`,
-              "_blank"
-            );;
+              const primero: any = items[0];
+            
+              window.open(
+                `/actuaciones?atlas=${encodeURIComponent(formData.atlas || "")}&sgipe=${encodeURIComponent(primero?.sgipe || "")}&grupo=${encodeURIComponent(primero?.grupo || "")}`,
+                "_blank"
+              );
             }}
             style={{
               fontSize:11,
