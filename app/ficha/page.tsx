@@ -1072,9 +1072,11 @@ observaciones_preparacion_reasignacion:
             type="button"
           onClick={() => {
             const primero: any = items[0];
+
+            const numServicios = items.length;
           
             window.open(
-              `/actuaciones?atlas=${encodeURIComponent(formData.atlas || "")}&sgipe=${encodeURIComponent(primero?.sgipe || "")}&grupo=${encodeURIComponent(tituloGrupo || "")}`,
+              `/actuaciones?atlas=${encodeURIComponent(formData.atlas || "")}&sgipe=${encodeURIComponent(primero?.sgipe || "")}&grupo=${encodeURIComponent(tituloGrupo || "")}&nservicios=${numServicios}`,
               "_blank"
             );
           }}
