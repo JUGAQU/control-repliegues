@@ -1071,7 +1071,7 @@ observaciones_preparacion_reasignacion:
             type="button"
             onClick={() => {
             window.open(
-              `/actuaciones?atlas=${encodeURIComponent(r.atlas || formData.atlas || "")}&sgipe=${encodeURIComponent(r.sgipe || "")}&grupo=${encodeURIComponent(r.grupo || "")}`,
+              `/actuaciones?id=${formData.id}&grupo=${encodeURIComponent(tituloGrupo)}`,
               "_blank"
             );
             }}
