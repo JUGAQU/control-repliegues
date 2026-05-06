@@ -238,7 +238,7 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
         } 
       />
       <CampoSelectSimple label="Estado actuación" value={a.estado_actuacion || "Pendiente"} options={["Pendiente", "Realizada OK", "Fallida", "Pte. Nueva Actuación"]} minWidth={125} onChange={(value) => actualizarCampo(index, "estado_actuacion", value)} />
-      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={450} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
+      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={550} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
     </div>
 
   </div>
