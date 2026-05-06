@@ -59,7 +59,7 @@ type BloqueActivo =
   | null;
 
 const COLORES = {
-  fondoPantalla: "#dfe3e6",
+  fondoPantalla: "#e6e6e6",
   fondoBloque: "#c9e3f2",
   fondoCampo: "#d9ead3",
   bordeCampo: "#93c47d",
