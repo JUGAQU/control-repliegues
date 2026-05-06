@@ -284,65 +284,8 @@ function CampoInputAuto({
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
-
-
   
-function CampoSelectAuto({
-  label,
-  value,
-  options,
-  minWidth = 120,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  options: any[];
-  minWidth?: number;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div style={{ width: minWidth }}>
-      <div
-        style={{
-          fontSize: 11,
-          fontWeight: "bold",
-          color: "#0b5394",
-          marginBottom: 3,
-        }}
-      >
-        {label}
-      </div>
-
-      <select
-        value={value || ""}
-        onChange={(e) => onChange(e.target.value)}
-        style={{
-          width: "100%",
-          height: 22,
-          background: "#ffffff",
-          border: "1px solid #666",
-          borderRadius: 4,
-          fontSize: 11,
-        }}
-      >
-        <option value="">-- Seleccionar --</option>
-
-        {options.map((op: any) => (
-          <option key={op.id || op.nombre} value={op.nombre}>
-            {op.nombre}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
-
-
-
-
-  
-  return (
+return (
     <div style={{ width: minWidth, flex: "0 0 auto" }}>
       <div
         style={{
@@ -373,3 +316,59 @@ function CampoSelectAuto({
     </div>
   );
 }
+
+
+
+
+function CampoSelectAuto({
+  label,
+  value,
+  options,
+  minWidth = 120,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: any[];
+  minWidth?: number;
+  onChange: (value: string) => void;
+}) {
+
+  return (
+    <div style={{ width: minWidth, flex: "0 0 auto" }}>
+      <div style={{ fontSize: 11, fontWeight: "bold", color: "#0b5394", marginBottom: 3 }}>
+        {label}
+      </div>
+
+      <select
+        value={value || ""}
+        onChange={(e) => onChange(e.target.value)}
+        style={{
+          width: "100%",
+          height: 22,
+          background: "#ffffff",
+          border: "1px solid #666",
+          borderRadius: 4,
+          fontSize: 11,
+          boxSizing: "border-box",
+        }}
+      >
+        <option value="">-- Seleccionar --</option>
+
+        {empresasPI.map((op: any) => (
+          <option key={op.id || op.nombre} value={op.nombre}>
+            {op.nombre}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+  
+
+
+
+
+  
+  
