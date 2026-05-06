@@ -231,7 +231,7 @@ const actualizarCampo = (index: number, campo: string, valor: string) => {
 
       <CampoInputAuto label="Fecha Act." value={a.fecha_prevista || ""} minWidth={100} tipo="date" onChange={(value) => actualizarCampo(index, "fecha_prevista", value)} />
       <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={100} onChange={(value) => actualizarCampo(index, "estado_actuacion", value)} />
-      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={550} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
+      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={500} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
     </div>
 
   </div>
