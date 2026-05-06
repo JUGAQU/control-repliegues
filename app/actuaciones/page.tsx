@@ -7,25 +7,16 @@ import { supabase } from "../lib/supabase";
 
 export default function Actuaciones() {
 const searchParams = useSearchParams();
-
 const [empresasPI, setEmpresasPI] = useState<any[]>([]);
-
-  const [formData, setFormData] = useState<any>(null);
-
-  const handleChange = () => {};
-  const provincias: any[] = [];
-
-
-  
-  
-  const setMostrarMemoria = () => {};
-
-  const atlas = searchParams.get("atlas") || "";
-  const sgipe = searchParams.get("sgipe") || "";
-  const grupoFiltro = searchParams.get("grupo") || "";
-  const nservicios = searchParams.get("nservicios") || "";
-
-  const [actuaciones, setActuaciones] = useState<any[]>([]);
+const [formData, setFormData] = useState<any>(null);
+const handleChange = () => {};
+const provincias: any[] = [];
+const setMostrarMemoria = () => {};
+const atlas = searchParams.get("atlas") || "";
+const sgipe = searchParams.get("sgipe") || "";
+const grupoFiltro = searchParams.get("grupo") || "";
+const nservicios = searchParams.get("nservicios") || "";
+const [actuaciones, setActuaciones] = useState<any[]>([]);
 
 useEffect(() => {
   const cargarFicha = async () => {
@@ -46,6 +37,9 @@ useEffect(() => {
       }
     }
   };
+
+    cargarFicha();
+}, [atlas]);
 
 useEffect(() => {
   const cargarEmpresas = async () => {
@@ -69,8 +63,7 @@ useEffect(() => {
 
   
 
-  cargarFicha();
-}, [atlas]);
+
 
   
 useEffect(() => {
