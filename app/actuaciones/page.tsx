@@ -317,9 +317,6 @@ return (
   );
 }
 
-
-
-
 function CampoSelectAuto({
   label,
   value,
@@ -333,10 +330,16 @@ function CampoSelectAuto({
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
-
   return (
     <div style={{ width: minWidth, flex: "0 0 auto" }}>
-      <div style={{ fontSize: 11, fontWeight: "bold", color: "#0b5394", marginBottom: 3 }}>
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: "bold",
+          color: "#0b5394",
+          marginBottom: 3,
+        }}
+      >
         {label}
       </div>
 
@@ -350,12 +353,11 @@ function CampoSelectAuto({
           border: "1px solid #666",
           borderRadius: 4,
           fontSize: 11,
-          boxSizing: "border-box",
         }}
       >
         <option value="">-- Seleccionar --</option>
 
-        {empresasPI.map((op: any) => (
+        {options.map((op: any) => (
           <option key={op.id || op.nombre} value={op.nombre}>
             {op.nombre}
           </option>
@@ -364,6 +366,9 @@ function CampoSelectAuto({
     </div>
   );
 }
+
+
+
 
   
 
