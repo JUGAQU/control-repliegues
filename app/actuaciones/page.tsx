@@ -317,29 +317,23 @@ return (
   );
 }
 
+
 function CampoSelectAuto({
   label,
   value,
-  options,
+  options = [],
   minWidth = 120,
   onChange,
 }: {
   label: string;
   value: string;
-  options: any[];
+  options?: any[];
   minWidth?: number;
   onChange: (value: string) => void;
 }) {
   return (
     <div style={{ width: minWidth, flex: "0 0 auto" }}>
-      <div
-        style={{
-          fontSize: 11,
-          fontWeight: "bold",
-          color: "#0b5394",
-          marginBottom: 3,
-        }}
-      >
+      <div style={{ fontSize: 11, fontWeight: "bold", color: "#0b5394", marginBottom: 3 }}>
         {label}
       </div>
 
@@ -357,9 +351,9 @@ function CampoSelectAuto({
       >
         <option value="">-- Seleccionar --</option>
 
-        {options.map((op: any) => (
-          <option key={op.id || op.nombre} value={op.nombre}>
-            {op.nombre}
+        {(options || []).map((op: any, i: number) => (
+          <option key={op.id || op.nombre || i} value={op.nombre || ""}>
+            {op.nombre || ""}
           </option>
         ))}
       </select>
@@ -367,13 +361,3 @@ function CampoSelectAuto({
   );
 }
 
-
-
-
-  
-
-
-
-
-  
-  
