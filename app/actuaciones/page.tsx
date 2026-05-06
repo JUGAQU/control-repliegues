@@ -178,33 +178,33 @@ if (!formData) {
 
     {/*nºregistros */}
     <div style={{ display: "flex", gap: 5 }}>
-      <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={90} onChange={()=>{}} />
+      <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={30} onChange={()=>{}} />
     </div>
 
     {/* plta interior */}
     <div style={{ display: "flex", gap: 5 }}>
       <CampoInputAuto label="Empresa Planta Int." value={a.ec_pi || ""} minWidth={150} onChange={()=>{}} />
-      <CampoInputAuto label="Nº Tec." value={a.tecnicos_necesarios || ""} minWidth={80} onChange={()=>{}} />
+      <CampoInputAuto label="Nº Tec." value={a.tecnicos_necesarios || ""} minWidth={30} onChange={()=>{}} />
       <CampoInputAuto label="Técnico Responsable" value={a.tecnico_p_int || ""} minWidth={170} onChange={()=>{}} />
-      <CampoInputAuto label="Teléfono" value={a.telefono_p_int || ""} minWidth={110} onChange={()=>{}} />
+      <CampoInputAuto label="Teléfono" value={a.telefono_p_int || ""} minWidth={80} onChange={()=>{}} />
     </div>
 
     {/*plta exterior */}
     <div style={{ display: "flex", gap: 5 }}>
       <CampoInputAuto label="Téc. Pta Ext." value={a.tecnico_p_ext || ""} minWidth={170} onChange={()=>{}} />
-      <CampoInputAuto label="Teléfono" value={a.telefono_p_ext || ""} minWidth={110} onChange={()=>{}} />
+      <CampoInputAuto label="Teléfono" value={a.telefono_p_ext || ""} minWidth={80} onChange={()=>{}} />
     </div>
 
         {/*atelco */}
     <div style={{ display: "flex", gap: 8 }}>
-      <CampoInputAuto label="Gestor Atelco" value={a.gestor_atelco || ""} minWidth={150} onChange={()=>{}} />
+      <CampoInputAuto label="Gestor Atelco" value={a.gestor_atelco || ""} minWidth={170} onChange={()=>{}} />
       
     </div>
 
         {/*fecha prevista */}
     <div style={{ display: "flex", gap: 8 }}>
-      <CampoInputAuto label="Fecha prevista" value={a.fecha_prevista || ""} minWidth={120} onChange={()=>{}} />
-      <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={150} onChange={()=>{}} />
+      <CampoInputAuto label="Fecha prevista" value={a.fecha_prevista || ""} minWidth={80} onChange={()=>{}} />
+      <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={100} onChange={()=>{}} />
       <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={500} onChange={()=>{}} />
       
     </div>
