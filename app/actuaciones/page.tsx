@@ -188,8 +188,8 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
   key={a.id || index}
   style={{
     background: "#7fe08a",
-    borderTop: "2px solid #000",
-    borderBottom: "2px solid #000",
+    border: "1px solid #8ea9bf",   // 👈 borde igual que servicios
+    borderRadius: 4,               // opcional (seguro que lo usas)
     marginTop: 12,
     padding: 10,
     display: "flex",
