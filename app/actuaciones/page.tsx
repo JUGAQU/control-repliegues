@@ -201,10 +201,6 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
   {/* 🔵 BLOQUE INTERIOR */}
   <div style={{ display: "flex", gap: 30, flexWrap: "wrap" }}>
 
-    {/*nºregistros */}
-    <div style={{ display: "flex", gap: 5 }}>
-      <CampoInputAuto label="Reasignaciones" value={a.numero_reasignaciones_tratadas || ""} minWidth={80} onChange={(value) => actualizarCampo(index, "numero_reasignaciones_tratadas", value)} />
-    </div>
 
     {/* plta interior */}
     <div style={{ display: "flex", gap: 5 }}>
