@@ -336,7 +336,7 @@ function CampoSelectAuto({
         style={{
           width: "100%",
           height: 22,
-          background: "#ffffff",
+          background: "#d9ead3",
           border: "1px solid #666",
           borderRadius: 4,
           fontSize: 11,
