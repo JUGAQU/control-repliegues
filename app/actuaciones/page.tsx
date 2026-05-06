@@ -189,7 +189,7 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
   style={{
     background: "#7fe08a",
     border: "1px solid #8ea9bf",   // 👈 borde igual que servicios
-    borderRadius: 4,               // opcional (seguro que lo usas)
+    borderRadius: 0,               // opcional (seguro que lo usas)
     marginTop: 12,
     padding: 10,
     display: "flex",
