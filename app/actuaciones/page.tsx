@@ -149,7 +149,7 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
         setMostrarMemoria={setMostrarMemoria}
       />
 
-      <div style={{ background:"#dfe3e6", minHeight:"100vh", fontFamily:"Arial", padding:20 }}>
+      <div style={{ background:"#dfe3e6", minHeight:"100vh", fontFamily:"Arial", padding:10 }}>
         {/* 🔵 BARRA AZUL */} 
         <div style={{ background:"#c9e3f2", border:"1px solid #b7c6d0", padding:12 }}>
           <div style={{ display:"flex", alignItems:"center", gap:14 }}>
@@ -157,8 +157,17 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
               Actuaciones
             </button>
 
-            <div style={{ fontSize:32, fontWeight:"bold", color:"#0b5394" }}>
-              {grupoFiltro}
+            <<div
+              style={{
+                display: "flex",
+                gap: 40,
+                fontSize: 32,
+                fontWeight: "bold",
+                color: "#0b5394"
+              }}
+            >
+              <div>SGIPE: {grupoFiltro}</div>
+              <div>Nº de Reasignaciones: {actuaciones.length}</div>
             </div>
           </div>
         </div>
