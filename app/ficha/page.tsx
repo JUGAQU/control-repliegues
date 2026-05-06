@@ -1094,13 +1094,13 @@ observaciones_preparacion_reasignacion:
                 background: "#7fe08a",           // verde 
                 border: "1px solid #6aa84f",     // borde verde
                 color: "#215e21",                // texto verde oscuro
-                padding: "6px 14px",
+                padding: "6px 20px",
                 borderRadius: 6,
                 fontSize: 8,
                 cursor: "pointer"
               }}
           >
-            Actuaciones
+            Ver Actuaciones
           </button>
         </div>
       </div>
