@@ -267,7 +267,6 @@ const actualizarCampo = (index: number, campo: string, valor: string) => {
 }
 
 
-
 function CampoInputAuto({
   label,
   value,
@@ -281,13 +280,7 @@ function CampoInputAuto({
   onChange: (value: string) => void;
   tipo?: string;
 }) {
-  label: string;
-  value: string;
-  minWidth?: number;
-  onChange: (value: string) => void;
-}) {
-  
-return (
+  return (
     <div style={{ width: minWidth, flex: "0 0 auto" }}>
       <div
         style={{
@@ -319,6 +312,7 @@ return (
     </div>
   );
 }
+
 
 
 function CampoSelectAuto({
