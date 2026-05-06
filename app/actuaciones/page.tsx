@@ -357,3 +357,44 @@ function CampoSelectAuto({
   );
 }
 
+function CampoSelectSimple({
+  label,
+  value,
+  options,
+  minWidth = 100,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: string[];
+  minWidth?: number;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div style={{ width: minWidth, flex: "0 0 auto" }}>
+      <div style={{ fontSize: 11, fontWeight: "bold", color: "#0b5394", marginBottom: 3 }}>
+        {label}
+      </div>
+
+      <select
+        value={value || ""}
+        onChange={(e) => onChange(e.target.value)}
+        style={{
+          width: "100%",
+          height: 22,
+          background: "#d9ead3",
+          border: "1px solid #666",
+          borderRadius: 4,
+          fontSize: 11,
+        }}
+      >
+        {options.map((op) => (
+          <option key={op} value={op}>
+            {op}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
