@@ -231,7 +231,6 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
       <CampoInputAuto label="Fecha Act." value={a.fecha_prevista || ""} minWidth={100} tipo="date" onChange={(value) => actualizarCampo(index, "fecha_prevista", value)} />
       <CampoSelectSimple label="Nocturna" value={a.actuacion_nocturna ? "SI" : "NO"} options={["SI", "NO"]} minWidth={50} onChange={(value) => actualizarCampo(index, "actuacion_nocturna", value === "SI") } />
       <CampoSelectSimple label="Estado actuación" value={a.estado_actuacion || "En Curso"} options={["En Curso", "Ejecutada", "Finalizada"]} minWidth={100} onChange={(value) => actualizarCampo(index, "estado_actuacion", value)} />
-      <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={100} onChange={(value) => actualizarCampo(index, "estado_actuacion", value)} />
       <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={400} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
     </div>
 
