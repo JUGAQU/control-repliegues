@@ -1080,11 +1080,15 @@ observaciones_preparacion_reasignacion:
               "_blank"
             );
           }}
-            style={{
-              fontSize:11,
-              fontWeight:"bold",
-              cursor:"pointer"
-            }}
+             style={{
+                background: "#c6efce",           // verde claro tipo Excel
+                border: "1px solid #6aa84f",     // borde verde
+                color: "#215e21",                // texto verde oscuro
+                padding: "6px 14px",
+                borderRadius: 6,
+                fontSize: 12,
+                cursor: "pointer"
+              }}
           >
             Actuaciones
           </button>
