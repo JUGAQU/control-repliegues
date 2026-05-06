@@ -43,9 +43,9 @@ useEffect(() => {
 
 useEffect(() => {
   const cargarEmpresas = async () => {
-    const { data, error } = await supabase
-      .from("empresas_pi")
-      .select("*");
+   const { data, error } = await supabase
+  .from("empresaspi")
+  .select("*");
 
     if (error) {
       console.error("Error cargando empresas:", error);
