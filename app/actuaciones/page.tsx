@@ -8,7 +8,7 @@ import { supabase } from "../lib/supabase";
 export default function Actuaciones() {
 const searchParams = useSearchParams();
 
-
+const [empresasPI, setEmpresasPI] = useState<any[]>([]);
 
   const [formData, setFormData] = useState<any>(null);
 
@@ -17,7 +17,7 @@ const searchParams = useSearchParams();
 
 
   
-  const empresasPI: any[] = [];
+  
   const setMostrarMemoria = () => {};
 
   const atlas = searchParams.get("atlas") || "";
@@ -46,6 +46,28 @@ useEffect(() => {
       }
     }
   };
+
+useEffect(() => {
+  const cargarEmpresas = async () => {
+    const { data, error } = await supabase
+      .from("empresas_pi")
+      .select("*");
+
+    if (error) {
+      console.error("Error cargando empresas:", error);
+      return;
+    }
+
+    if (data) {
+      setEmpresasPI(data);
+    }
+  };
+
+  cargarEmpresas();
+}, []);
+
+
+  
 
   cargarFicha();
 }, [atlas]);
@@ -193,7 +215,7 @@ const actualizarCampo = (index: number, campo: string, valor: string) => {
 
     {/* plta interior */}
     <div style={{ display: "flex", gap: 5 }}>
-      <CampoInputAuto label="Empresa Planta Int." value={a.ec_pi || ""} minWidth={150} onChange={(value) => actualizarCampo(index, "ec_pi", value)} />
+      <CampoSelectAuto label="Empresa Planta Int." value={a.empresa_planta_interior || ""} options={empresasPI} minWidth={150} onChange={(value) => actualizarCampo(index, "empresa_planta_interior", value) } />      
       <CampoInputAuto label="Nº Tec." value={a.tecnicos_necesarios || ""} minWidth={50} onChange={(value) => actualizarCampo(index, "tecnicos_necesarios", value)} />
       <CampoInputAuto label="Técnico Responsable" value={a.tecnico_p_int || ""} minWidth={170} onChange={(value) => actualizarCampo(index, "tecnico_p_int", value)} />
       <CampoInputAuto label="Teléfono" value={a.telefono_p_int || ""} minWidth={80} onChange={(value) => actualizarCampo(index, "telefono_p_int", value)} />
