@@ -228,6 +228,8 @@ const actualizarCampo = (index: number, campo: string, valor: string) => {
 
         {/*datpos actuacion */}
     <div style={{ display: "flex", gap: 8 }}>
+
+      <CampoInputAuto label="Fecha Act." value={a.fecha_prevista || ""} minWidth={80} tipo="date" onChange={(value) => actualizarCampo(index, "fecha_prevista", value)} />
       <CampoInputAuto label="Fecha Act." value={a.fecha_prevista || ""} minWidth={80} onChange={(value) => actualizarCampo(index, "fecha_prevista", value)} />
       <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={100} onChange={(value) => actualizarCampo(index, "estado_actuacion", value)} />
       <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={560} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
@@ -271,7 +273,14 @@ function CampoInputAuto({
   value,
   minWidth = 100,
   onChange,
+  tipo = "text",
 }: {
+  label: string;
+  value: string;
+  minWidth?: number;
+  onChange: (value: string) => void;
+  tipo?: string;
+}) {
   label: string;
   value: string;
   minWidth?: number;
@@ -292,6 +301,7 @@ return (
       </div>
 
       <input
+        type={tipo}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         style={{
