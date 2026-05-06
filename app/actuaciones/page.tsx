@@ -215,7 +215,8 @@ const actualizarCampo = (index: number, campo: string, valor: string) => {
 
     {/* plta interior */}
     <div style={{ display: "flex", gap: 5 }}>
-      <CampoSelectAuto label="Empresa Planta Int." value={a.empresa_planta_interior || ""} options={empresasPI} minWidth={150} onChange={(value) => actualizarCampo(index, "empresa_planta_interior", value) } />      
+
+      <CampoSelectAuto label="Empresa Planta Int." value={a.ec_pi || ""} options={empresasPI} minWidth={150} onChange={(value) => actualizarCampo(index, "ec_pi", value) } />
       <CampoInputAuto label="Nº Tec." value={a.tecnicos_necesarios || ""} minWidth={50} onChange={(value) => actualizarCampo(index, "tecnicos_necesarios", value)} />
       <CampoInputAuto label="Técnico Responsable" value={a.tecnico_p_int || ""} minWidth={170} onChange={(value) => actualizarCampo(index, "tecnico_p_int", value)} />
       <CampoInputAuto label="Teléfono" value={a.telefono_p_int || ""} minWidth={80} onChange={(value) => actualizarCampo(index, "telefono_p_int", value)} />
