@@ -527,9 +527,9 @@ observaciones_preparacion_reasignacion:
 
     const clave =
       r.sgipe && String(r.sgipe).trim() !== ""
-        ? "SGIPE " + r.sgipe
+        ? "SGIPE: " + r.sgipe
         : r.grupo && String(r.grupo).trim() !== ""
-          ? "Grupo " + r.grupo
+          ? "Grupo: " + r.grupo
           : "Sin asignar";
 
     if (!acc[clave]) {
@@ -1405,7 +1405,8 @@ observaciones_preparacion_reasignacion:
 
             </div> {/* FILA 2 */}
        
-                
+
+            
           
 
             {/* FILA 3 */}
