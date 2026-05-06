@@ -178,7 +178,7 @@ if (!formData) {
 
     {/*nºregistros */}
     <div style={{ display: "flex", gap: 5 }}>
-      <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={50} onChange={()=>{}} />
+      <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={70} onChange={()=>{}} />
     </div>
 
     {/* plta interior */}
