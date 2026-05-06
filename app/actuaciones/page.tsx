@@ -157,9 +157,18 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
               Actuaciones
             </button>
 
-            <div style={{ fontSize:32, fontWeight:"bold", color:"#0b5394" }}>
-              {grupoFiltro}
-            </div>
+            <div
+              style={{
+                display: "flex",
+                gap: 40,
+                fontSize: 32,
+                fontWeight: "bold",
+                color: "#0b5394"
+              }}
+            >
+              <div>SGIPE: {grupoFiltro}</div>
+              <div>Nº de Reasignaciones: {actuaciones.length}</div>
+</div>
           </div>
         </div>
 
