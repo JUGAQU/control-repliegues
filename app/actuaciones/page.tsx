@@ -203,7 +203,7 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
 
     {/*nºregistros */}
     <div style={{ display: "flex", gap: 5 }}>
-      <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={70} onChange={(value) => actualizarCampo(index, "numero_reasignaciones_tratadas", value)} />
+      <CampoInputAuto label="Nº Reasignaciones." value={a.numero_reasignaciones_tratadas || ""} minWidth={75} onChange={(value) => actualizarCampo(index, "numero_reasignaciones_tratadas", value)} />
     </div>
 
     {/* plta interior */}
@@ -241,8 +241,8 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
         onChange={(value) => actualizarCampo(index, "actuacion_nocturna", value === "SI")
         } 
       />
-      <CampoSelectSimple label="Estado actuación" value={a.estado_actuacion || "Pendiente"} options={["Pendiente", "Realizada OK", "Fallida", "Pte. Nueva Actuación"]} minWidth={120} onChange={(value) => actualizarCampo(index, "estado_actuacion", value)} />
-      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={400} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
+      <CampoSelectSimple label="Estado actuación" value={a.estado_actuacion || "Pendiente"} options={["Pendiente", "Realizada OK", "Fallida", "Pte. Nueva Actuación"]} minWidth={125} onChange={(value) => actualizarCampo(index, "estado_actuacion", value)} />
+      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={450} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
     </div>
 
   </div>
