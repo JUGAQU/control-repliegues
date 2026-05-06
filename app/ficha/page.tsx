@@ -1086,7 +1086,7 @@ observaciones_preparacion_reasignacion:
                 color: "#215e21",                // texto verde oscuro
                 padding: "6px 14px",
                 borderRadius: 6,
-                fontSize: 12,
+                fontSize: 8,
                 cursor: "pointer"
               }}
           >
