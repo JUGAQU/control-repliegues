@@ -587,6 +587,7 @@ observaciones_preparacion_reasignacion:
           <div style={{ display: "flex", justifyContent: "flex-start", gap: 10 }}>
             <button onClick={guardarCambios}>💾</button>
           </div>
+          
 
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img
