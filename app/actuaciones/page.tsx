@@ -167,7 +167,7 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
               }}
             >
               <div>SGIPE: {grupoFiltro}</div>
-              <div>Nº de Reasignaciones: {actuaciones.length}</div>
+              <div>Reasignaciones tratadas: {actuaciones[0]?.numero_reasignaciones_tratadas || 0}</div>
 </div>
           </div>
         </div>
