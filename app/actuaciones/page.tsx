@@ -129,7 +129,7 @@ if (!formData) {
   return <div style={{ padding: 20 }}>Cargando actuaciones...</div>;
 }
 
-const actualizarCampo = (index: number, campo: string, valor: string) => {
+const actualizarCampo = (index: number, campo: string, valor: any) => {
   const nuevas = [...actuaciones];
   nuevas[index] = {
     ...nuevas[index],
