@@ -111,7 +111,14 @@ if (!formData) {
   return <div style={{ padding: 20 }}>Cargando actuaciones...</div>;
 }
 
-
+const actualizarCampo = (index: number, campo: string, valor: string) => {
+  const nuevas = [...actuaciones];
+  nuevas[index] = {
+    ...nuevas[index],
+    [campo]: valor,
+  };
+  setActuaciones(nuevas);
+};
   
 
   return (
@@ -178,33 +185,33 @@ if (!formData) {
 
     {/*nºregistros */}
     <div style={{ display: "flex", gap: 5 }}>
-      <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={70} onChange={()=>{}} />
+      <CampoInputAuto label="Nº Reasig." value={a.numero_reasignaciones_tratadas || ""} minWidth={70} onChange={(value) => actualizarCampo(index, "numero_reasignaciones_tratadas", value)} />
     </div>
 
     {/* plta interior */}
     <div style={{ display: "flex", gap: 5 }}>
-      <CampoInputAuto label="Empresa Planta Int." value={a.ec_pi || ""} minWidth={150} onChange={()=>{}} />
-      <CampoInputAuto label="Nº Tec." value={a.tecnicos_necesarios || ""} minWidth={50} onChange={()=>{}} />
-      <CampoInputAuto label="Técnico Responsable" value={a.tecnico_p_int || ""} minWidth={170} onChange={()=>{}} />
-      <CampoInputAuto label="Teléfono" value={a.telefono_p_int || ""} minWidth={80} onChange={()=>{}} />
+      <CampoInputAuto label="Empresa Planta Int." value={a.ec_pi || ""} minWidth={150} onChange={(value) => actualizarCampo(index, "ec_pi", value)} />
+      <CampoInputAuto label="Nº Tec." value={a.tecnicos_necesarios || ""} minWidth={50} onChange={(value) => actualizarCampo(index, "tecnicos_necesarios", value)} />
+      <CampoInputAuto label="Técnico Responsable" value={a.tecnico_p_int || ""} minWidth={170} onChange={(value) => actualizarCampo(index, "tecnico_p_int", value)} />
+      <CampoInputAuto label="Teléfono" value={a.telefono_p_int || ""} minWidth={80} onChange={(value) => actualizarCampo(index, "telefono_p_int", value)} />
     </div>
 
     {/*plta exterior */}
     <div style={{ display: "flex", gap: 5 }}>
-      <CampoInputAuto label="Téc. Pta Ext." value={a.tecnico_p_ext || ""} minWidth={170} onChange={()=>{}} />
-      <CampoInputAuto label="Teléfono" value={a.telefono_p_ext || ""} minWidth={80} onChange={()=>{}} />
+      <CampoInputAuto label="Téc. Pta Ext." value={a.tecnico_p_ext || ""} minWidth={170} onChange={(value) => actualizarCampo(index, "tecnico_p_ext", value)} />
+      <CampoInputAuto label="Teléfono" value={a.telefono_p_ext || ""} minWidth={80} onChange={(value) => actualizarCampo(index, "telefono_p_ext", value)} />
     </div>
 
         {/*atelco */}
     <div style={{ display: "flex", gap: 8 }}>
-      <CampoInputAuto label="Gestor Atelco" value={a.gestor_atelco || ""} minWidth={170} onChange={()=>{}} />
+      <CampoInputAuto label="Gestor Atelco" value={a.gestor_atelco || ""} minWidth={170} onChange={(value) => actualizarCampo(index, "gestor_atelco", value)} />
     </div>
 
         {/*datpos actuacion */}
     <div style={{ display: "flex", gap: 8 }}>
-      <CampoInputAuto label="Fecha prevista" value={a.fecha_prevista || ""} minWidth={80} onChange={()=>{}} />
-      <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={100} onChange={()=>{}} />
-      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={550} onChange={()=>{}} />  
+      <CampoInputAuto label="Fecha Actuación" value={a.fecha_prevista || ""} minWidth={80} onChange={(value) => actualizarCampo(index, "fecha_prevista", value)} />
+      <CampoInputAuto label="Estado actuación" value={a.estado_actuacion || ""} minWidth={100} onChange={(value) => actualizarCampo(index, "estado_actuacion", value)} />
+      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={550} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
     </div>
 
   </div>
