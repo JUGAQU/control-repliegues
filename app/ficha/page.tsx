@@ -1065,7 +1065,17 @@ observaciones_preparacion_reasignacion:
         }}
       >
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <span>{tituloGrupo}( items.length} {items.length === 1 ? "Reasignación" : "Reasignaciones"} )</span>
+          <span>
+          {tituloGrupo} (
+            {items.length} {items.length === 1 ? "Reasignación" : "Reasignaciones"}
+          )
+          
+          
+          
+          
+          
+          
+          </span>
 
           
           <button
