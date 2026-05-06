@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import CabeceraActuaciones from "../components/CabeceraActuaciones";
+import cabeceraActuaciones from "../components/cabeceraActuaciones";
 import { supabase } from "../lib/supabase";
 
 export default function Actuaciones() {
@@ -141,7 +141,7 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
 
   return (
     <>
-      <CabeceraActuaciones
+      <cabeceraActuaciones
         formData={formData}
         handleChange={handleChange}
         provincias={provincias}
