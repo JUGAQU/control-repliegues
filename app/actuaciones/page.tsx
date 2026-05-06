@@ -149,7 +149,7 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
         setMostrarMemoria={setMostrarMemoria}
       />
 
-      <div style={{ background:"#dfe3e6", minHeight:"100vh", fontFamily:"Arial", padding:10 }}>
+      <div style={{ background:"#dfe3e6", minHeight:"100vh", fontFamily:"Arial", padding:20 }}>
         {/* 🔵 BARRA AZUL */} 
         <div style={{ background:"#c9e3f2", border:"1px solid #b7c6d0", padding:12 }}>
           <div style={{ display:"flex", alignItems:"center", gap:14 }}>
@@ -157,17 +157,8 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
               Actuaciones
             </button>
 
-            <<div
-              style={{
-                display: "flex",
-                gap: 40,
-                fontSize: 32,
-                fontWeight: "bold",
-                color: "#0b5394"
-              }}
-            >
-              <div>SGIPE: {grupoFiltro}</div>
-              <div>Nº de Reasignaciones: {actuaciones.length}</div>
+            <div style={{ fontSize:32, fontWeight:"bold", color:"#0b5394" }}>
+              {grupoFiltro}
             </div>
           </div>
         </div>
@@ -210,6 +201,10 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
   {/* 🔵 BLOQUE INTERIOR */}
   <div style={{ display: "flex", gap: 30, flexWrap: "wrap" }}>
 
+    {/*nºregistros */}
+    <div style={{ display: "flex", gap: 5 }}>
+      <CampoInputAuto label="Reasignaciones" value={a.numero_reasignaciones_tratadas || ""} minWidth={80} onChange={(value) => actualizarCampo(index, "numero_reasignaciones_tratadas", value)} />
+    </div>
 
     {/* plta interior */}
     <div style={{ display: "flex", gap: 5 }}>
@@ -247,7 +242,7 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
         } 
       />
       <CampoSelectSimple label="Estado actuación" value={a.estado_actuacion || "Pendiente"} options={["Pendiente", "Realizada OK", "Fallida", "Pte. Nueva Actuación"]} minWidth={125} onChange={(value) => actualizarCampo(index, "estado_actuacion", value)} />
-      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={550} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
+      <CampoInputAuto label="Observaciones Actuación" value={a.observaciones_actuacion || ""} minWidth={450} onChange={(value) => actualizarCampo(index, "observaciones_actuacion", value)} />  
     </div>
 
   </div>
