@@ -1091,7 +1091,7 @@ observaciones_preparacion_reasignacion:
             );
           }}
              style={{
-                background: "#c6efce",           // verde claro tipo Excel
+                background: "#7fe08a",           // verde 
                 border: "1px solid #6aa84f",     // borde verde
                 color: "#215e21",                // texto verde oscuro
                 padding: "6px 14px",
