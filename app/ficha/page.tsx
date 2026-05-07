@@ -1268,7 +1268,33 @@ if (erroresActuaciones.length > 0) {
                 },
               ];
       
-        return actsFinal.map((act: any, index: number) => (
+        return (
+          <>
+            <div style={{ marginBottom: 6 }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const primero: any = items[0];
+                  crearNuevaActuacion(tituloGrupo, primero);
+                }}
+                style={{
+                  background: "#ffd966",
+                  border: "1px solid #bf9000",
+                  color: "#7f6000",
+                  borderRadius: "50%",
+                  width: 24,
+                  height: 24,
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+                title="Nueva actuación"
+              >
+                +
+              </button>
+            </div>
+        
+            {actsFinal.map((act: any, index: number) => (
           <React.Fragment key={act.id}>
  
 
@@ -1472,7 +1498,9 @@ if (erroresActuaciones.length > 0) {
 
 
           
-));
+    ))}
+  </>
+);
 })()}
 
       {items.map((r:any,index:number)=>(
