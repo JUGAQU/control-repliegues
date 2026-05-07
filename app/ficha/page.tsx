@@ -1236,12 +1236,42 @@ if (erroresActuaciones.length > 0) {
 
     {/* datos actuación */}
     <div style={{ display: "flex", gap: 8 }}>
-      <CampoInputAuto
-        label="Fecha Act."
-        value={act.fecha_prevista || ""}
-        minWidth={100}
-        onChange={(v) => handleActuacionChangeById(act.id, "fecha_prevista", v, act)}
-      />
+      <div style={{ width: 100, flex: "0 0 auto" }}>
+  <div
+    style={{
+      fontSize: 11,
+      fontWeight: "bold",
+      color: COLORES.textoAzul,
+      marginBottom: 3,
+    }}
+  >
+    Fecha Act.
+  </div>
+
+  <input
+    type="date"
+    value={act.fecha_prevista || ""}
+    onChange={(e) =>
+      handleActuacionChangeById(
+        act.id,
+        "fecha_prevista",
+        e.target.value,
+        act
+      )
+    }
+    style={{
+      width: "100%",
+      height: 20,
+      padding: "1px 5px",
+      background: COLORES.fondoCampo,
+      border: "1px solid #666",
+      borderRadius: 4,
+      fontSize: 11,
+      boxSizing: "border-box",
+      fontFamily: "Arial",
+    }}
+  />
+</div>
 
       <CampoSelectAuto
         label="Nocturna"
