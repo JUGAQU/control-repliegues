@@ -1234,6 +1234,53 @@ if (erroresActuaciones.length > 0) {
 >
   <div style={{ display: "flex", gap: 30, flexWrap: "wrap" }}>
 
+    {/* datos actuación */}
+    <div style={{ display: "flex", gap: 8 }}>
+      <CampoInputAuto
+        label="Fecha Act."
+        value={act.fecha_prevista || ""}
+        minWidth={100}
+        onChange={(v) => handleActuacionChangeById(act.id, "fecha_prevista", v, act)}
+      />
+
+      <CampoSelectAuto
+        label="Nocturna"
+        value={
+          act.actuacion_nocturna === true
+            ? "SI"
+            : act.actuacion_nocturna === false
+            ? "NO"
+            : ""
+        }
+        options={["SI", "NO"]}
+        minWidth={50}
+        onChange={(v) =>
+          handleActuacionChangeById(
+            act.id,
+            "actuacion_nocturna",
+            v === "SI",
+            act
+          )
+        }  
+      />
+
+      <CampoSelectAuto
+        label="Estado actuación"
+        value={act.estado_actuacion || "Pendiente"}
+        options={["Pendiente", "Realizada OK", "Fallida", "Pte. Nueva Actuación"]}
+        minWidth={125}
+        onChange={(v) => handleActuacionChangeById(act.id, "estado_actuacion", v, act)}
+      />
+
+      <CampoInputAuto
+        label="Observaciones Actuación"
+        value={act.observaciones_actuacion || ""}
+        minWidth={520}
+        onChange={(v) => handleActuacionChangeById(act.id, "observaciones_actuacion", v, act)}
+      />
+    </div>
+
+
     {/* planta interior */}
     <div style={{ display: "flex", gap: 5 }}>
       <CampoSelectAuto
@@ -1293,52 +1340,7 @@ if (erroresActuaciones.length > 0) {
       />
     </div>
 
-    {/* datos actuación */}
-    <div style={{ display: "flex", gap: 8 }}>
-      <CampoInputAuto
-        label="Fecha Act."
-        value={act.fecha_prevista || ""}
-        minWidth={100}
-        onChange={(v) => handleActuacionChangeById(act.id, "fecha_prevista", v, act)}
-      />
-
-      <CampoSelectAuto
-        label="Nocturna"
-        value={
-          act.actuacion_nocturna === true
-            ? "SI"
-            : act.actuacion_nocturna === false
-            ? "NO"
-            : ""
-        }
-        options={["SI", "NO"]}
-        minWidth={50}
-        onChange={(v) =>
-          handleActuacionChangeById(
-            act.id,
-            "actuacion_nocturna",
-            v === "SI",
-            act
-          )
-        }  
-      />
-
-      <CampoSelectAuto
-        label="Estado actuación"
-        value={act.estado_actuacion || "Pendiente"}
-        options={["Pendiente", "Realizada OK", "Fallida", "Pte. Nueva Actuación"]}
-        minWidth={125}
-        onChange={(v) => handleActuacionChangeById(act.id, "estado_actuacion", v, act)}
-      />
-
-      <CampoInputAuto
-        label="Observaciones Actuación"
-        value={act.observaciones_actuacion || ""}
-        minWidth={520}
-        onChange={(v) => handleActuacionChangeById(act.id, "observaciones_actuacion", v, act)}
-      />
-    </div>
-
+    
   </div>
 </div>
 
