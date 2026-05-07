@@ -1281,33 +1281,7 @@ if (erroresActuaciones.length > 0) {
   }}
 >
 
-  {index === actsFinal.length - 1 && (
-  <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 4 }}>
-    <button
-      type="button"
-      onClick={() => {
-        const primero: any = items[0];
-        crearNuevaActuacion(tituloGrupo, primero);
-      }}
-      style={{
-        background: "#ffd966",
-        border: "1px solid #bf9000",
-        color: "#7f6000",
-        borderRadius: "50%",
-        width: 22,
-        height: 22,
-        fontSize: 15,
-        fontWeight: "bold",
-        cursor: "pointer",
-        lineHeight: "18px",
-        padding: 0,
-      }}
-      title="Nueva actuación"
-    >
-      +
-    </button>
-  </div>
-)}
+  
 
 
   
@@ -1468,6 +1442,34 @@ if (erroresActuaciones.length > 0) {
     >
       🗑️
     </button>
+
+
+    {index === actsFinal.length - 1 && (
+  <button
+    type="button"
+    onClick={() => {
+      const primero: any = items[0];
+      crearNuevaActuacion(tituloGrupo, primero);
+    }}
+    style={{
+      background: "#ffd966",
+      border: "1px solid #bf9000",
+      color: "#7f6000",
+      borderRadius: 4,
+      cursor: "pointer",
+      fontSize: 14,
+      height: 20,
+      padding: "0 6px",
+    }}
+    title="Nueva actuación"
+  >
+    +
+  </button>
+)}
+
+
+
+    
   </div>
     
 
