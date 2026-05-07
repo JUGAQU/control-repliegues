@@ -354,13 +354,7 @@ if (sinFechaObligatoria.length > 0) {
                 ? null
                 : Number(r.numero_de_actuaciones),
           
-            ec_planta_interior: limpio(r.ec_planta_interior),
-            numero_tecnico: limpio(r.numero_tecnico),
-            tecnico_responsable: limpio(r.tecnico_responsable),
-            telefono_responsable: limpio(r.telefono_responsable),
-            tecnico_planta_exterior: limpio(r.tecnico_planta_exterior),
-            telefono_planta_exterior: limpio(r.telefono_planta_exterior),
-            gestor_atelco: limpio(r.gestor_atelco),
+
           
             nocturno: r.nocturno === true,
             geco: r.geco === true,
