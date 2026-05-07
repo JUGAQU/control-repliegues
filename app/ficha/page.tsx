@@ -1240,24 +1240,7 @@ if (erroresActuaciones.length > 0) {
               ? "Ocultar Actuaciones"
               : "Ver Actuaciones"}
           </button>
-          <button
-            type="button"
-            onClick={() => {
-              const primero: any = items[0];
-              crearNuevaActuacion(tituloGrupo, primero);
-            }}
-            style={{
-              background: "#ffd966",
-              border: "1px solid #bf9000",
-              color: "#7f6000",
-              padding: "6px 20px",
-              borderRadius: 6,
-              fontSize: 8,
-              cursor: "pointer",
-            }}
-          >
-            ➕ Nueva actuación
-          </button>
+
         </div>
       </div>
       {mostrarActuaciones[tituloGrupo] && (() => {
@@ -1286,7 +1269,36 @@ if (erroresActuaciones.length > 0) {
               ];
       
         return actsFinal.map((act: any, index: number) => (
-  <div
+ 
+
+          {index === actsFinal.length - 1 && (
+          <div style={{ marginBottom: 6 }}>
+            <button
+              type="button"
+              onClick={() => {
+                const primero: any = items[0];
+                crearNuevaActuacion(tituloGrupo, primero);
+              }}
+              style={{
+                background: "#ffd966",
+                border: "1px solid #bf9000",
+                color: "#7f6000",
+                borderRadius: "50%",
+                width: 24,
+                height: 24,
+                fontSize: 16,
+                fontWeight: "bold",
+                cursor: "pointer",
+                lineHeight: "20px",
+              }}
+              title="Nueva actuación"
+            >
+              +
+            </button>
+          </div>
+        )}
+
+<div
   key={act.id}
   style={{
     background: "#7fe08a",
