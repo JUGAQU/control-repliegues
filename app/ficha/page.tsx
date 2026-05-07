@@ -1548,7 +1548,7 @@ if (erroresActuaciones.length > 0) {
                 type="date"
                 value={r.fecha_ejecucion || ""}
                 disabled={!(r.estado_trabajos==="Ejecutada" || r.estado_trabajos==="Finalizada")}
-                onChange={(e)=>handleReasignacionChange(index,"fecha_ejecucion",e.target.value)}
+                onChange={(e)=>handleReasignacionChangeById(r.id, "fecha_ejecucion", e.target.value)}
                 style={{
                   width:"100%",
                   height:20,
