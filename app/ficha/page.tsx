@@ -575,7 +575,6 @@ if (erroresActuaciones.length > 0) {
 
       alert("Guardado Correctamente ✅");
       setCambiosSinGuardar(false);
-      router.replace("/listado");
       router.refresh();
     } catch (e) {
       console.error("Error inesperado al guardar:", e);
