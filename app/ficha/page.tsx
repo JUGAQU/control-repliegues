@@ -1156,27 +1156,121 @@ if (sinFechaObligatoria.length > 0) {
       
         return actsFinal.map((act: any) => (
   <div
-    key={act.id}
-    style={{
-      background: "#7fe08a",
-      border: "1px solid #000",
-      padding: 8,
-      marginBottom: 10,
-      display: "flex",
-      gap: 8,
-      overflowX: "auto",
-      alignItems: "flex-start",
-    }}
-  >
-    <CampoInputAuto
-      label="Observaciones Actuación"
-      value={act.observaciones_actuacion || ""}
-      minWidth={450}
-      onChange={(v) =>
-        handleActuacionChangeById(act.id, "observaciones_actuacion", v)
-      }
-    />
+  key={act.id}
+  style={{
+    background: "#7fe08a",
+    border: "1px solid #000",
+    padding: 8,
+    marginBottom: 10,
+  }}
+>
+  <div style={{ display: "flex", gap: 30, flexWrap: "wrap" }}>
+
+    {/* planta interior */}
+    <div style={{ display: "flex", gap: 5 }}>
+      <CampoSelectAuto
+        label="Empresa Planta Int."
+        value={act.ec_pi || ""}
+        options={empresasPI.map((e: any) => e.nombre)}
+        minWidth={150}
+        onChange={(v) => handleActuacionChangeById(act.id, "ec_pi", v)}
+      />
+
+      <CampoInputAuto
+        label="Nº Tec."
+        value={act.tecnicos_necesarios || ""}
+        minWidth={50}
+        onChange={(v) => handleActuacionChangeById(act.id, "tecnicos_necesarios", v)}
+      />
+
+      <CampoInputAuto
+        label="Técnico Responsable"
+        value={act.tecnico_p_int || ""}
+        minWidth={170}
+        onChange={(v) => handleActuacionChangeById(act.id, "tecnico_p_int", v)}
+      />
+
+      <CampoInputAuto
+        label="Teléfono"
+        value={act.telefono_p_int || ""}
+        minWidth={80}
+        onChange={(v) => handleActuacionChangeById(act.id, "telefono_p_int", v)}
+      />
+    </div>
+
+    {/* planta exterior */}
+    <div style={{ display: "flex", gap: 5 }}>
+      <CampoInputAuto
+        label="Téc. Pta Ext."
+        value={act.tecnico_p_ext || ""}
+        minWidth={170}
+        onChange={(v) => handleActuacionChangeById(act.id, "tecnico_p_ext", v)}
+      />
+
+      <CampoInputAuto
+        label="Teléfono"
+        value={act.telefono_p_ext || ""}
+        minWidth={80}
+        onChange={(v) => handleActuacionChangeById(act.id, "telefono_p_ext", v)}
+      />
+    </div>
+
+    {/* atelco */}
+    <div style={{ display: "flex", gap: 8 }}>
+      <CampoInputAuto
+        label="Gestor Atelco"
+        value={act.gestor_atelco || ""}
+        minWidth={170}
+        onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v)}
+      />
+    </div>
+
+    {/* datos actuación */}
+    <div style={{ display: "flex", gap: 8 }}>
+      <CampoInputAuto
+        label="Fecha Act."
+        value={act.fecha_prevista || ""}
+        minWidth={100}
+        onChange={(v) => handleActuacionChangeById(act.id, "fecha_prevista", v)}
+      />
+
+      <CampoSelectAuto
+        label="Nocturna"
+        value={
+          act.actuacion_nocturna === true
+            ? "SI"
+            : act.actuacion_nocturna === false
+            ? "NO"
+            : ""
+        }
+        options={["SI", "NO"]}
+        minWidth={50}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "actuacion_nocturna", v === "SI" ? "true" : "false")
+        }
+      />
+
+      <CampoSelectAuto
+        label="Estado actuación"
+        value={act.estado_actuacion || "Pendiente"}
+        options={["Pendiente", "Realizada OK", "Fallida", "Pte. Nueva Actuación"]}
+        minWidth={125}
+        onChange={(v) => handleActuacionChangeById(act.id, "estado_actuacion", v)}
+      />
+
+      <CampoInputAuto
+        label="Observaciones Actuación"
+        value={act.observaciones_actuacion || ""}
+        minWidth={450}
+        onChange={(v) => handleActuacionChangeById(act.id, "observaciones_actuacion", v)}
+      />
+    </div>
+
   </div>
+</div>
+
+
+          
 ));
 })()}
 
