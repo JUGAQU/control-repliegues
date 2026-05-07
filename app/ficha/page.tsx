@@ -1838,7 +1838,7 @@ if (erroresActuaciones.length > 0) {
                 <CampoInputAuto
                   label="Observaciones Preparación"
                   value={r.observaciones_preparacion_reasignacion || ""}
-                  minWidth={800}
+                  minWidth={850}
                   onChange={(v)=>handleReasignacionChangeById(r.id,"observaciones_preparacion_reasignacion",v)}
                 />
               </div>
