@@ -353,6 +353,31 @@ const crearNuevaActuacion = (tituloGrupo: string, primero: any) => {
 
   setCambiosSinGuardar(true);
 };
+
+
+const eliminarActuacion = async (act: any) => {
+  const confirmar = confirm("¿Eliminar esta actuación?");
+  if (!confirmar) return;
+
+  if (String(act.id).startsWith("nuevo-")) {
+    setActuaciones((prev) => prev.filter((a) => a.id !== act.id));
+    setCambiosSinGuardar(true);
+    return;
+  }
+
+  const { error } = await supabase
+    .from("actuaciones")
+    .delete()
+    .eq("id", act.id);
+
+  if (error) {
+    console.error("Error eliminando actuación:", error);
+    alert("Error al eliminar la actuación");
+    return;
+  }
+
+  setActuaciones((prev) => prev.filter((a) => a.id !== act.id));
+};
   
 
   const guardarCambios = async () => {
@@ -1403,15 +1428,33 @@ if (erroresActuaciones.length > 0) {
       />
     </div>
 
-    {/* atelco */}
-    <div style={{ display: "flex", gap: 8 }}>
-      <CampoInputAuto
-        label="Gestor Atelco"
-        value={act.gestor_atelco || ""}
-        minWidth={170}
-        onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
-      />
-    </div>
+   {/* atelco + papelera */}
+<div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
+  <CampoInputAuto
+    label="Gestor Atelco"
+    value={act.gestor_atelco || ""}
+    minWidth={170}
+    onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
+  />
+
+  <button
+    type="button"
+    onClick={() => eliminarActuacion(act)}
+    style={{
+      background: "#f4cccc",
+      border: "1px solid #cc0000",
+      color: "#990000",
+      borderRadius: 4,
+      cursor: "pointer",
+      fontSize: 14,
+      height: 20,
+      padding: "0 6px",
+    }}
+    title="Eliminar actuación"
+  >
+    🗑️
+  </button>
+</div>
 
     
   </div>
