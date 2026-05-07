@@ -736,7 +736,7 @@ if (erroresActuaciones.length > 0) {
 
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img
-              src="/logogris(1).png"
+              src="/logogris (1).png"
               alt="Logo"
               style={{ height: 28, objectFit: "contain" }}
             />
