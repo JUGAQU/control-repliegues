@@ -1246,9 +1246,13 @@ if (erroresActuaciones.length > 0) {
       <CampoSelectAuto
         label="Nocturna"
         value={
-          act.actuacion_nocturna === true
+          act.actuacion_nocturna === true ||
+          act.actuacion_nocturna === "true" ||
+          act.actuacion_nocturna === 1
             ? "SI"
-            : act.actuacion_nocturna === false
+            : act.actuacion_nocturna === false ||
+              act.actuacion_nocturna === "false" ||
+              act.actuacion_nocturna === 0
             ? "NO"
             : ""
         }
@@ -1258,10 +1262,9 @@ if (erroresActuaciones.length > 0) {
           handleActuacionChangeById(
             act.id,
             "actuacion_nocturna",
-            v === "SI",
-            act
+            v === "SI"   // 👈 IMPORTANTE: boolean real
           )
-        }  
+        }
       />
 
       <CampoSelectAuto
