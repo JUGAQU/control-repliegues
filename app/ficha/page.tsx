@@ -1437,24 +1437,23 @@ if (erroresActuaciones.length > 0) {
     onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
   />
 
-  <button
-    type="button"
-    onClick={() => eliminarActuacion(act)}
-    style={{
-      background: "#f4cccc",
-      border: "1px solid #cc0000",
-      color: "#990000",
-      borderRadius: 4,
-      cursor: "pointer",
-      fontSize: 14,
-      height: 20,
-      padding: "0 6px",
-    }}
-    title="Eliminar actuación"
-  >
-    🗑️
-  </button>
-</div>
+<button
+  type="button"
+  onClick={() => eliminarActuacion(act)}
+  style={{
+    background: "transparent",
+    border: "none",
+    cursor: "pointer",
+    fontSize: 14,
+    opacity: 0.6,
+    padding: "0 4px",
+  }}
+  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
+  title="Eliminar actuación"
+>
+  🗑️
+</button>
 
     
   </div>
