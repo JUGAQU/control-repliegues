@@ -1427,46 +1427,74 @@ if (erroresActuaciones.length > 0) {
       onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
     />
   
-    <button
-      type="button"
-      onClick={() => eliminarActuacion(act)}
-      style={{
-        background: "#f4cccc",
-        border: "1px solid #cc0000",
-        color: "#990000",
-        borderRadius: 4,
-        cursor: "pointer",
-        fontSize: 14,
-        height: 20,
-        padding: "0 6px",
-      }}
-      title="Eliminar actuación"
-    >
-      x
-    </button>
+   <button
+  type="button"
+  onClick={() => eliminarActuacion(act)}
+  style={{
+    background: "#f4cccc",
+    border: "1px solid #cc0000",
+    borderRadius: 4,
+    cursor: "pointer",
+    height: 20,
+    padding: "0 6px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+  title="Eliminar actuación"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#990000"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+</button>
 
 
     {index === actsFinal.length - 1 && (
-  <button
-    type="button"
-    onClick={() => {
-      const primero: any = items[0];
-      crearNuevaActuacion(tituloGrupo, primero);
-    }}
-    style={{
-      background: "#f4cccc",
-        border: "1px solid #cc0000",
-        color: "#990000",
-        borderRadius: 4,
-        cursor: "pointer",
-        fontSize: 14,
-        height: 20,
-        padding: "0 6px",
-    }}
-    title="Nueva actuación"
+ <button
+  type="button"
+  onClick={() => {
+    const primero: any = items[0];
+    crearNuevaActuacion(tituloGrupo, primero);
+  }}
+  style={{
+    background: "#d9ead3",
+    border: "1px solid #6aa84f",
+    borderRadius: 4,
+    cursor: "pointer",
+    height: 20,
+    padding: "0 6px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+  title="Nueva actuación"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#215e21"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   >
-   +
-  </button>
+    <line x1="12" y1="5" x2="12" y2="19" />
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+</button>
 )}
 
 
