@@ -1442,7 +1442,7 @@ if (erroresActuaciones.length > 0) {
       }}
       title="Eliminar actuación"
     >
-      🗑️
+      ✖
     </button>
 
 
@@ -1465,7 +1465,7 @@ if (erroresActuaciones.length > 0) {
     }}
     title="Nueva actuación"
   >
-    +
+   ➕
   </button>
 )}
 
