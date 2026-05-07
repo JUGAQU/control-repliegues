@@ -1280,6 +1280,37 @@ if (erroresActuaciones.length > 0) {
     marginBottom: 10,
   }}
 >
+
+  {index === actsFinal.length - 1 && (
+  <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 4 }}>
+    <button
+      type="button"
+      onClick={() => {
+        const primero: any = items[0];
+        crearNuevaActuacion(tituloGrupo, primero);
+      }}
+      style={{
+        background: "#ffd966",
+        border: "1px solid #bf9000",
+        color: "#7f6000",
+        borderRadius: "50%",
+        width: 22,
+        height: 22,
+        fontSize: 15,
+        fontWeight: "bold",
+        cursor: "pointer",
+        lineHeight: "18px",
+        padding: 0,
+      }}
+      title="Nueva actuación"
+    >
+      +
+    </button>
+  </div>
+)}
+
+
+  
   <div style={{ display: "flex", gap: 30, flexWrap: "wrap" }}>
 
     {/* datos actuación */}
