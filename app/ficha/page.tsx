@@ -1270,7 +1270,7 @@ if (erroresActuaciones.length > 0) {
                 },
               ];
       
-        return actsFinal.map((act: any) => (
+        return actsFinal.map((act: any, index: number) => (
   <div
   key={act.id}
   style={{
