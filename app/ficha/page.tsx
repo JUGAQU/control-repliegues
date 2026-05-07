@@ -1454,14 +1454,14 @@ if (erroresActuaciones.length > 0) {
       crearNuevaActuacion(tituloGrupo, primero);
     }}
     style={{
-      background: "#ffd966",
-      border: "1px solid #bf9000",
-      color: "#7f6000",
-      borderRadius: 4,
-      cursor: "pointer",
-      fontSize: 14,
-      height: 20,
-      padding: "0 6px",
+      background: "#f4cccc",
+        border: "1px solid #cc0000",
+        color: "#990000",
+        borderRadius: 4,
+        cursor: "pointer",
+        fontSize: 14,
+        height: 20,
+        padding: "0 6px",
     }}
     title="Nueva actuación"
   >
