@@ -166,7 +166,7 @@ const actualizarCampo = (index: number, campo: string, valor: any) => {
                 color: "#0b5394"
               }}
             >
-              <div>SGIPE: {grupoFiltro}</div>
+              <div>{grupoFiltro}</div>
               <div>REASIGNACIONES DE LA ACTUACION: {actuaciones[0]?.numero_reasignaciones_tratadas || 0}</div>
 </div>
           </div>
