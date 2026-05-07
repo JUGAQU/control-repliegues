@@ -1103,7 +1103,7 @@ if (sinFechaObligatoria.length > 0) {
           
           </span>
 
-          <button
+         <button
             type="button"
             onClick={() =>
               setMostrarActuaciones((prev) => ({
@@ -1120,21 +1120,10 @@ if (sinFechaObligatoria.length > 0) {
               fontSize: 8,
               cursor: "pointer",
             }}
-            >
-              {mostrarActuaciones[tituloGrupo] ? "Ocultar Actuaciones" : "Ver Actuaciones"}
-            </button>
-
-             style={{
-                background: "#7fe08a",           // verde 
-                border: "1px solid #6aa84f",     // borde verde
-                color: "#215e21",                // texto verde oscuro
-                padding: "6px 20px",
-                borderRadius: 6,
-                fontSize: 8,
-                cursor: "pointer"
-              }}
           >
-            Ver Actuaciones
+            {mostrarActuaciones[tituloGrupo]
+              ? "Ocultar Actuaciones"
+              : "Ver Actuaciones"}
           </button>
         </div>
       </div>
