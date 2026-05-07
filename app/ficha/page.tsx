@@ -111,6 +111,7 @@ export default function Ficha() {
   const [mostrarMemoria, setMostrarMemoria] = useState(false);
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
+  const [actuaciones, setActuaciones] = useState<any[]>([]);
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
   const [filtroSgipe, setFiltroSgipe] = useState("");
   const [filtroGrupo, setFiltroGrupo] = useState("");
@@ -221,6 +222,31 @@ export default function Ficha() {
     cargarReasignaciones();
   }, [formData?.atlas]);
 
+  useEffect(() => {
+  const cargarActuaciones = async () => {
+    if (!formData?.atlas) {
+      setActuaciones([]);
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("actuaciones")
+      .select("*")
+      .eq("atlas", formData.atlas)
+      .order("id", { ascending: true });
+
+    if (error) {
+      console.error("Error cargando actuaciones:", error);
+      setActuaciones([]);
+      return;
+    }
+
+    setActuaciones(data || []);
+  };
+
+  cargarActuaciones();
+}, [formData?.atlas]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -260,6 +286,25 @@ export default function Ficha() {
   value: string
 ) => {
   setReasignaciones((prev) =>
+    prev.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            [field]: value,
+          }
+        : item
+    )
+  );
+
+  setCambiosSinGuardar(true);
+};
+
+  const handleActuacionChangeById = (
+  id: any,
+  field: string,
+  value: string
+) => {
+  setActuaciones((prev) =>
     prev.map((item) =>
       item.id === id
         ? {
@@ -1079,6 +1124,144 @@ if (sinFechaObligatoria.length > 0) {
           </button>
         </div>
       </div>
+      {actuaciones
+  .filter((act: any) => {
+    const primero: any = items[0];
+
+    return (
+      String(act.sgipe || "") === String(primero?.sgipe || "") ||
+      String(act.grupo || "") === String(primero?.grupo || "")
+    );
+  })
+  .map((act: any) => (
+    <div
+      key={act.id}
+      style={{
+        background: "#7fe08a",
+        border: "1px solid #000",
+        padding: 8,
+        marginBottom: 10,
+        display: "flex",
+        gap: 8,
+        overflowX: "auto",
+        alignItems: "flex-start",
+      }}
+    >
+      <CampoSelectAuto
+        label="Empresa Planta Int."
+        value={act.ec_planta_interior || ""}
+        options={empresasPI.map((e: any) => e.nombre)}
+        minWidth={150}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "ec_planta_interior", v)
+        }
+      />
+
+      <CampoInputAuto
+        label="Nº Tec."
+        value={act.numero_tecnico || ""}
+        minWidth={60}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "numero_tecnico", v)
+        }
+      />
+
+      <CampoInputAuto
+        label="Técnico Responsable"
+        value={act.tecnico_responsable || ""}
+        minWidth={170}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "tecnico_responsable", v)
+        }
+      />
+
+      <CampoInputAuto
+        label="Teléfono"
+        value={act.telefono_responsable || ""}
+        minWidth={100}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "telefono_responsable", v)
+        }
+      />
+
+      <CampoInputAuto
+        label="Téc. Pta Ext."
+        value={act.tecnico_planta_exterior || ""}
+        minWidth={170}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "tecnico_planta_exterior", v)
+        }
+      />
+
+      <CampoInputAuto
+        label="Teléfono"
+        value={act.telefono_planta_exterior || ""}
+        minWidth={100}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "telefono_planta_exterior", v)
+        }
+      />
+
+      <CampoInputAuto
+        label="Gestor Atelco"
+        value={act.gestor_atelco || ""}
+        minWidth={170}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "gestor_atelco", v)
+        }
+      />
+
+      <div style={{ minWidth: 130 }}>
+        <div style={{ fontSize:11, fontWeight:"bold", color:COLORES.textoAzul, marginBottom:3 }}>
+          Fecha Act.
+        </div>
+        <input
+          type="date"
+          value={act.fecha_actuacion || ""}
+          onChange={(e) =>
+            handleActuacionChangeById(act.id, "fecha_actuacion", e.target.value)
+          }
+          style={{
+            width:"100%",
+            height:20,
+            background:COLORES.fondoCampo,
+            border:"1px solid #666",
+            borderRadius:4,
+            fontSize:11,
+          }}
+        />
+      </div>
+
+      <CampoSelectAuto
+        label="Nocturna"
+        value={act.nocturna || "NO"}
+        options={["NO", "SI"]}
+        minWidth={80}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "nocturna", v)
+        }
+      />
+
+      <CampoSelectAuto
+        label="Estado actuación"
+        value={act.estado_actuacion || "Pendiente"}
+        options={["Pendiente", "En Curso", "Ejecutada", "Finalizada"]}
+        minWidth={140}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "estado_actuacion", v)
+        }
+      />
+
+      <CampoInputAuto
+        label="Observaciones Actuación"
+        value={act.observaciones_actuacion || ""}
+        minWidth={450}
+        onChange={(v) =>
+          handleActuacionChangeById(act.id, "observaciones_actuacion", v)
+        }
+      />
+    </div>
+  ))}
       
       {items.map((r:any,index:number)=>(
 
