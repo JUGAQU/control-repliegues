@@ -360,11 +360,12 @@ const crearNuevaActuacion = (tituloGrupo: string, primero: any) => {
   const confirmar = confirm("¿Eliminar esta actuación?");
   if (!confirmar) return;
 
-  const { data, error } = await supabase
-    .from("actuaciones")
-    .delete()
-    .eq("id", Number(act.id))
-    .select();
+  const { error } = await supabase
+  .from("actuaciones")
+  .delete()
+  .eq("id", Number(act.id));
+
+  console.log("DELETE ERROR:", error);
 
   console.log("DELETE DATA:", data);
   console.log("DELETE ERROR:", error);
