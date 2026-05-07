@@ -1285,7 +1285,7 @@ if (erroresActuaciones.length > 0) {
                 },
               ];
       
-        return actsFinal.map((act: any) => (
+        return actsFinal.map((act: any, index: number) => (
   <div
   key={act.id}
   style={{
@@ -1435,18 +1435,22 @@ if (erroresActuaciones.length > 0) {
       onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
     />
   
+    {index !== 0 && (
   <button
-    type="button"
-    onClick={() => {
-      console.log("CLICK PAPELERA ACT:", act);
-      eliminarActuacion(act);
+    onClick={() => eliminarActuacion(act)}
+    style={{
+      marginLeft: 8,
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+      color: "#cc0000",
+      fontSize: 14,
+      alignSelf: "flex-end"
     }}
-    onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-    onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
-    title="Eliminar actuación"
   >
-    🗑️
+    🗑
   </button>
+)}
   </div>
     
 
