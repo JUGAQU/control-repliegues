@@ -367,8 +367,6 @@ const crearNuevaActuacion = (tituloGrupo: string, primero: any) => {
 
   console.log("DELETE ERROR:", error);
 
-  console.log("DELETE DATA:", data);
-  console.log("DELETE ERROR:", error);
 
   if (error) {
     alert("Error al eliminar actuación");
