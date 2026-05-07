@@ -1269,6 +1269,7 @@ if (erroresActuaciones.length > 0) {
               ];
       
         return actsFinal.map((act: any, index: number) => (
+          <React.Fragment key={act.id}>
  
 
           {index === actsFinal.length - 1 && (
@@ -1291,15 +1292,14 @@ if (erroresActuaciones.length > 0) {
                 cursor: "pointer",
                 lineHeight: "20px",
               }}
-              title="Nueva actuación"
-            >
+             >
               +
             </button>
           </div>
         )}
 
 <div
-  key={act.id}
+  
   style={{
     background: "#7fe08a",
     border: "1px solid #000",
