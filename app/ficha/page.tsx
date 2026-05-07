@@ -305,33 +305,33 @@ export default function Ficha() {
   setCambiosSinGuardar(true);
 };
 
-const handleActuacionChangeById = (
-  id: any,
-  field: string,
-  value: any,
-  base?: any
-) => {
-  setActuaciones((prev) => {
-    const existe = prev.some((item) => item.id === id);
-
-    if (existe) {
-      return prev.map((item) =>
-        item.id === id ? { ...item, [field]: value } : item
-      );
-    }
-
-    return [
-      ...prev,
-      {
-        ...(base || {}),
-        id,
-        [field]: value,
-      },
-    ];
-  });
-
-  setCambiosSinGuardar(true);
-};
+  const handleActuacionChangeById = (
+    id: any,
+    field: string,
+    value: any,
+    base?: any
+  ) => {
+    setActuaciones((prev) => {
+      const existe = prev.some((item) => item.id === id);
+  
+      if (existe) {
+        return prev.map((item) =>
+          item.id === id ? { ...item, [field]: value } : item
+        );
+      }
+  
+      return [
+        ...prev,
+        {
+          ...(base || {}),
+          id,
+          [field]: value,
+        },
+      ];
+    });
+  
+    setCambiosSinGuardar(true);
+  };
 
   const guardarCambios = async () => {
     if (!formData?.id) {
@@ -1314,8 +1314,13 @@ if (erroresActuaciones.length > 0) {
         options={["SI", "NO"]}
         minWidth={50}
         onChange={(v) =>
-          handleActuacionChangeById(act.id, "actuacion_nocturna", v === "SI" ? "true" : "false")
-        }
+          handleActuacionChangeById(
+            act.id,
+            "actuacion_nocturna",
+            v === "SI",
+            act
+          )
+        }  
       />
 
       <CampoSelectAuto
