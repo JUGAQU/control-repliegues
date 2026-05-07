@@ -1,6 +1,5 @@
 "use client";
 
-
 export const dynamic = "force-dynamic";
 
 import React, { useEffect, useState } from "react";
@@ -355,27 +354,29 @@ const crearNuevaActuacion = (tituloGrupo: string, primero: any) => {
   setCambiosSinGuardar(true);
 };
 
- const eliminarActuacion = async (act: any) => {
-  console.log("ENTRA EN eliminarActuacion:", act);
-
+  const eliminarActuacion = async (act: any) => {
   const confirmar = confirm("¿Eliminar esta actuación?");
   if (!confirmar) return;
 
+  if (String(act.id).startsWith("nuevo-")) {
+    setActuaciones((prev) => prev.filter((a) => a.id !== act.id));
+    setCambiosSinGuardar(true);
+    return;
+  }
+
   const { error } = await supabase
-  .from("actuaciones")
-  .delete()
-  .eq("id", Number(act.id));
-
-  console.log("DELETE ERROR:", error);
-
+    .from("actuaciones")
+    .delete()
+    .eq("id", act.id);
 
   if (error) {
-    alert("Error al eliminar actuación");
+    console.error("Error eliminando actuación:", error);
+    alert("Error al eliminar la actuación");
     return;
   }
 
   setActuaciones((prev) => prev.filter((a) => a.id !== act.id));
-}; 
+};
   
   
 
@@ -1241,7 +1242,24 @@ if (erroresActuaciones.length > 0) {
               ? "Ocultar Actuaciones"
               : "Ver Actuaciones"}
           </button>
-
+          <button
+            type="button"
+            onClick={() => {
+              const primero: any = items[0];
+              crearNuevaActuacion(tituloGrupo, primero);
+            }}
+            style={{
+              background: "#ffd966",
+              border: "1px solid #bf9000",
+              color: "#7f6000",
+              padding: "6px 20px",
+              borderRadius: 6,
+              fontSize: 8,
+              cursor: "pointer",
+            }}
+          >
+            ➕ Nueva actuación
+          </button>
         </div>
       </div>
       {mostrarActuaciones[tituloGrupo] && (() => {
@@ -1269,64 +1287,9 @@ if (erroresActuaciones.length > 0) {
                 },
               ];
       
-        return (
-          <>
-            <div style={{ marginBottom: 6 }}>
-              <button
-                type="button"
-                onClick={() => {
-                  const primero: any = items[0];
-                  crearNuevaActuacion(tituloGrupo, primero);
-                }}
-                style={{
-                  background: "#ffd966",
-                  border: "1px solid #bf9000",
-                  color: "#7f6000",
-                  borderRadius: "50%",
-                  width: 24,
-                  height: 24,
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                }}
-                title="Nueva actuación"
-              >
-                +
-              </button>
-            </div>
-        
-            {actsFinal.map((act: any, index: number) => (
-          <React.Fragment key={act.id}>
- 
-
-          {index === actsFinal.length - 1 && (
-          <div style={{ marginBottom: 6 }}>
-            <button
-              type="button"
-              onClick={() => {
-                const primero: any = items[0];
-                crearNuevaActuacion(tituloGrupo, primero);
-              }}
-              style={{
-                background: "#ffd966",
-                border: "1px solid #bf9000",
-                color: "#7f6000",
-                borderRadius: "50%",
-                width: 24,
-                height: 24,
-                fontSize: 16,
-                fontWeight: "bold",
-                cursor: "pointer",
-                lineHeight: "20px",
-              }}
-             >
-              +
-            </button>
-          </div>
-        )}
-
-<div
-  
+        return actsFinal.map((act: any) => (
+  <div
+  key={act.id}
   style={{
     background: "#7fe08a",
     border: "1px solid #000",
@@ -1410,7 +1373,7 @@ if (erroresActuaciones.length > 0) {
       <CampoInputAuto
         label="Observaciones Actuación"
         value={act.observaciones_actuacion || ""}
-        minWidth={480}
+        minWidth={520}
         onChange={(v) => handleActuacionChangeById(act.id, "observaciones_actuacion", v, act)}
       />
     </div>
@@ -1474,22 +1437,23 @@ if (erroresActuaciones.length > 0) {
       onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
     />
   
-    {index !== 0 && (
-  <button
-    onClick={() => eliminarActuacion(act)}
-    style={{
-      marginLeft: 8,
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-      color: "#cc0000",
-      fontSize: 14,
-      alignSelf: "flex-end"
-    }}
-  >
-    🗑
-  </button>
-)}
+    <button
+      type="button"
+      onClick={() => eliminarActuacion(act)}
+      style={{
+        background: "#f4cccc",
+        border: "1px solid #cc0000",
+        color: "#990000",
+        borderRadius: 4,
+        cursor: "pointer",
+        fontSize: 14,
+        height: 20,
+        padding: "0 6px",
+      }}
+      title="Eliminar actuación"
+    >
+      🗑️
+    </button>
   </div>
     
 
@@ -1499,9 +1463,7 @@ if (erroresActuaciones.length > 0) {
 
 
           
-    ))}
-  </>
-);
+));
 })()}
 
       {items.map((r:any,index:number)=>(
