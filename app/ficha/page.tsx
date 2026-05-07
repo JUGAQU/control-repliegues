@@ -462,7 +462,68 @@ if (sinFechaObligatoria.length > 0) {
         return;
       }
 
-      alert("Guardado completo en Supabase ✅");
+    const actuacionesConDatos = actuaciones.filter((a: any) =>
+      a.ec_pi ||
+      a.tecnicos_necesarios ||
+      a.tecnico_p_int ||
+      a.telefono_p_int ||
+      a.tecnico_p_ext ||
+      a.telefono_p_ext ||
+      a.gestor_atelco ||
+      a.fecha_prevista ||
+      a.estado_actuacion ||
+      a.observaciones_actuacion
+    );
+    
+    const resultadosActuaciones = await Promise.all(
+      actuacionesConDatos.map(async (a: any) => {
+        const payload = {
+          atlas: a.atlas || formData.atlas,
+          sgipe: a.sgipe || null,
+          grupo: a.grupo || null,
+          ec_pi: a.ec_pi || null,
+          tecnicos_necesarios: a.tecnicos_necesarios || null,
+          tecnico_p_int: a.tecnico_p_int || null,
+          telefono_p_int: a.telefono_p_int || null,
+          tecnico_p_ext: a.tecnico_p_ext || null,
+          telefono_p_ext: a.telefono_p_ext || null,
+          gestor_atelco: a.gestor_atelco || null,
+          fecha_prevista: a.fecha_prevista || null,
+          actuacion_nocturna:
+            a.actuacion_nocturna === true ||
+            a.actuacion_nocturna === "true" ||
+            a.actuacion_nocturna === "SI",
+          estado_actuacion: a.estado_actuacion || "Pendiente",
+          observaciones_actuacion: a.observaciones_actuacion || null,
+        };
+    
+        if (String(a.id).startsWith("nuevo-")) {
+          const { error } = await supabase
+            .from("actuaciones")
+            .insert(payload);
+    
+          return { id: a.id, error, payload };
+        }
+
+    const { error } = await supabase
+      .from("actuaciones")
+      .update(payload)
+      .eq("id", a.id);
+
+    return { id: a.id, error, payload };
+  })
+);
+
+const erroresActuaciones = resultadosActuaciones.filter((x) => x.error);
+
+if (erroresActuaciones.length > 0) {
+  console.error("Errores guardando actuaciones:", erroresActuaciones);
+  alert(`Error al guardar ${erroresActuaciones.length} actuación(es).`);
+  return;
+}
+      
+
+      alert("Guardado Correctamente ✅");
       setCambiosSinGuardar(false);
       router.replace("/listado");
       router.refresh();
@@ -1180,28 +1241,28 @@ if (sinFechaObligatoria.length > 0) {
         value={act.ec_pi || ""}
         options={empresasPI.map((e: any) => e.nombre)}
         minWidth={150}
-        onChange={(v) => handleActuacionChangeById(act.id, "ec_pi", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "ec_pi", v, act)}
       />
 
       <CampoInputAuto
         label="Nº Tec."
         value={act.tecnicos_necesarios || ""}
         minWidth={50}
-        onChange={(v) => handleActuacionChangeById(act.id, "tecnicos_necesarios", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "tecnicos_necesarios", v, act)}
       />
 
       <CampoInputAuto
         label="Técnico Responsable"
         value={act.tecnico_p_int || ""}
         minWidth={170}
-        onChange={(v) => handleActuacionChangeById(act.id, "tecnico_p_int", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "tecnico_p_int", v, act)}
       />
 
       <CampoInputAuto
         label="Teléfono"
         value={act.telefono_p_int || ""}
         minWidth={80}
-        onChange={(v) => handleActuacionChangeById(act.id, "telefono_p_int", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "telefono_p_int", v, act)}
       />
     </div>
 
@@ -1211,14 +1272,14 @@ if (sinFechaObligatoria.length > 0) {
         label="Téc. Pta Ext."
         value={act.tecnico_p_ext || ""}
         minWidth={170}
-        onChange={(v) => handleActuacionChangeById(act.id, "tecnico_p_ext", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "tecnico_p_ext", v, act)}
       />
 
       <CampoInputAuto
         label="Teléfono"
         value={act.telefono_p_ext || ""}
         minWidth={80}
-        onChange={(v) => handleActuacionChangeById(act.id, "telefono_p_ext", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "telefono_p_ext", v, act)}
       />
     </div>
 
@@ -1228,7 +1289,7 @@ if (sinFechaObligatoria.length > 0) {
         label="Gestor Atelco"
         value={act.gestor_atelco || ""}
         minWidth={170}
-        onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
       />
     </div>
 
@@ -1238,7 +1299,7 @@ if (sinFechaObligatoria.length > 0) {
         label="Fecha Act."
         value={act.fecha_prevista || ""}
         minWidth={100}
-        onChange={(v) => handleActuacionChangeById(act.id, "fecha_prevista", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "fecha_prevista", v, act)}
       />
 
       <CampoSelectAuto
@@ -1262,14 +1323,14 @@ if (sinFechaObligatoria.length > 0) {
         value={act.estado_actuacion || "Pendiente"}
         options={["Pendiente", "Realizada OK", "Fallida", "Pte. Nueva Actuación"]}
         minWidth={125}
-        onChange={(v) => handleActuacionChangeById(act.id, "estado_actuacion", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "estado_actuacion", v, act)}
       />
 
       <CampoInputAuto
         label="Observaciones Actuación"
         value={act.observaciones_actuacion || ""}
         minWidth={520}
-        onChange={(v) => handleActuacionChangeById(act.id, "observaciones_actuacion", v)}
+        onChange={(v) => handleActuacionChangeById(act.id, "observaciones_actuacion", v, act)}
       />
     </div>
 
