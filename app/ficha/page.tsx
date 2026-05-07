@@ -455,7 +455,7 @@ if (sinFechaObligatoria.length > 0) {
             observaciones_del_estudio: limpio(r.observaciones_del_estudio),
           
             fecha_ejecucion: limpio(r.fecha_ejecucion),
-            fecha_btp: limpio(r.fecha_btp),
+            
           
             numero_de_actuaciones:
               r.numero_de_actuaciones === "" || r.numero_de_actuaciones == null
