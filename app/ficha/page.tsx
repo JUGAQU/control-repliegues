@@ -354,29 +354,28 @@ const crearNuevaActuacion = (tituloGrupo: string, primero: any) => {
   setCambiosSinGuardar(true);
 };
 
-  const eliminarActuacion = async (act: any) => {
+ const eliminarActuacion = async (act: any) => {
+  console.log("ENTRA EN eliminarActuacion:", act);
+
   const confirmar = confirm("¿Eliminar esta actuación?");
   if (!confirmar) return;
 
-  if (String(act.id).startsWith("nuevo-")) {
-    setActuaciones((prev) => prev.filter((a) => a.id !== act.id));
-    setCambiosSinGuardar(true);
-    return;
-  }
-
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("actuaciones")
     .delete()
-    .eq("id", act.id);
+    .eq("id", Number(act.id))
+    .select();
+
+  console.log("DELETE DATA:", data);
+  console.log("DELETE ERROR:", error);
 
   if (error) {
-    console.error("Error eliminando actuación:", error);
-    alert("Error al eliminar la actuación");
+    alert("Error al eliminar actuación");
     return;
   }
 
   setActuaciones((prev) => prev.filter((a) => a.id !== act.id));
-};
+}; 
   
   
 
@@ -1440,7 +1439,6 @@ if (erroresActuaciones.length > 0) {
   <button
     type="button"
     onClick={() => {
-      alert("CLICK PAPELERA");
       console.log("CLICK PAPELERA ACT:", act);
       eliminarActuacion(act);
     }}
