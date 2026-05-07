@@ -356,7 +356,7 @@ if (sinFechaObligatoria.length > 0) {
           
 
           
-            nocturno: r.nocturno === true,
+            
             geco: r.geco === true,
             cex: r.cex === true,
             rima: r.rima === true,
