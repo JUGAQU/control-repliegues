@@ -1439,14 +1439,10 @@ if (erroresActuaciones.length > 0) {
   
   <button
     type="button"
-    onClick={() => eliminarActuacion(act)}
-    style={{
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-      fontSize: 14,
-      opacity: 0.6,
-      padding: "0 4px",
+    onClick={() => {
+      alert("CLICK PAPELERA");
+      console.log("CLICK PAPELERA ACT:", act);
+      eliminarActuacion(act);
     }}
     onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
     onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
