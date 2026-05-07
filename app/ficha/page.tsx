@@ -112,7 +112,7 @@ export default function Ficha() {
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
   const [filtroSgipe, setFiltroSgipe] = useState("");
-const [filtroGrupo, setFiltroGrupo] = useState("");
+  const [filtroGrupo, setFiltroGrupo] = useState("");
   const [filtrosEjecucion, setFiltrosEjecucion] =
   useState<Record<GrupoEjecucion, boolean>>({
     nuevo_cable: true,
@@ -330,82 +330,59 @@ if (sinFechaObligatoria.length > 0) {
 
       const resultados = await Promise.all(
         reasignacionesConId.map(async (r) => {
+        
+          
+          
+          const limpio = (v: any) =>
+            v === "" || v === undefined ? null : v;
+          
           const payload = {
-            estado_trabajos:
-              r.estado_trabajos && String(r.estado_trabajos).trim() !== ""
-                ? r.estado_trabajos
-                : "En Análisis",
-            modo_reasignacion:
-              r.modo_reasignacion && String(r.modo_reasignacion).trim() !== ""
-                ? r.modo_reasignacion
-                : null,
-            tipo_velocidad_interface:
-              r.tipo_velocidad_interface &&
-              String(r.tipo_velocidad_interface).trim() !== ""
-                ? r.tipo_velocidad_interface
-                : null,
-            diversificado:
-              r.diversificado && String(r.diversificado).trim() !== ""
-                ? r.diversificado
-                : null,
-            tipo_diversificado:
-              r.tipo_diversificado &&
-              String(r.tipo_diversificado).trim() !== ""
-                ? r.tipo_diversificado
-                : null,
-            indicaciones_para_el_encaminamiento:
-              r.indicaciones_para_el_encaminamiento &&
-              String(r.indicaciones_para_el_encaminamiento).trim() !== ""
-                ? r.indicaciones_para_el_encaminamiento
-                : null,
-            facturable:
-              r.facturable && String(r.facturable).trim() !== ""
-                ? r.facturable
-                : null,
-            observaciones_del_estudio:
-              r.observaciones_del_estudio &&
-              String(r.observaciones_del_estudio).trim() !== ""
-                ? r.observaciones_del_estudio
-                : null,
-            fecha_ejecucion: r.fecha_ejecucion || null,
-numero_de_actuaciones: r.numero_de_actuaciones || null,
-
-ec_planta_interior: r.ec_planta_interior || null,
-numero_tecnico: r.numero_tecnico || null,
-tecnico_responsable: r.tecnico_responsable || null,
-telefono_responsable: r.telefono_responsable || null,
-tecnico_planta_exterior: r.tecnico_planta_exterior || null,
-telefono_planta_exterior: r.telefono_planta_exterior || null,
-gestor_atelco: r.gestor_atelco || null,
-fecha_btp: r.fecha_btp || null,
-nocturno: !!r.nocturno,
-
-
-
-
-            
-geco: !!r.geco,
-cex: !!r.cex,
-rima: !!r.rima,
-redes_priv: !!r.redes_priv,
-dwdm: !!r.dwdm,
-ventana_geco: r.ventana_geco || null,
-pba_atenuacion: r.pba_atenuacion || null,
-autonegociacion: r.autonegociacion || null,
-configuracion_puerto_destino: r.configuracion_puerto_destino || null,
-supervisa_corte: r.supervisa_corte || null,
-sgipe: r.sgipe || null,
-grupo: r.grupo || null,
-orden_atlas: r.orden_atlas || null,
-estado_orden_atlas: r.estado_orden_atlas || null,
-uo_atlas: r.uo_atlas || null,
-observaciones_preparacion_reasignacion:
-  r.observaciones_preparacion_reasignacion || null,
-
-
-            
-          };
-
+            estado_trabajos: limpio(r.estado_trabajos) || "En Análisis",
+            modo_reasignacion: limpio(r.modo_reasignacion),
+            tipo_velocidad_interface: limpio(r.tipo_velocidad_interface),
+            diversificado: limpio(r.diversificado),
+            tipo_diversificado: limpio(r.tipo_diversificado),
+            indicaciones_para_el_encaminamiento: limpio(r.indicaciones_para_el_encaminamiento),
+            facturable: limpio(r.facturable),
+            observaciones_del_estudio: limpio(r.observaciones_del_estudio),
+          
+            fecha_ejecucion: limpio(r.fecha_ejecucion),
+            fecha_btp: limpio(r.fecha_btp),
+          
+            numero_de_actuaciones:
+              r.numero_de_actuaciones === "" || r.numero_de_actuaciones == null
+                ? null
+                : Number(r.numero_de_actuaciones),
+          
+            ec_planta_interior: limpio(r.ec_planta_interior),
+            numero_tecnico: limpio(r.numero_tecnico),
+            tecnico_responsable: limpio(r.tecnico_responsable),
+            telefono_responsable: limpio(r.telefono_responsable),
+            tecnico_planta_exterior: limpio(r.tecnico_planta_exterior),
+            telefono_planta_exterior: limpio(r.telefono_planta_exterior),
+            gestor_atelco: limpio(r.gestor_atelco),
+          
+            nocturno: r.nocturno === true,
+            geco: r.geco === true,
+            cex: r.cex === true,
+            rima: r.rima === true,
+            redes_priv: r.redes_priv === true,
+            dwdm: r.dwdm === true,
+          
+            ventana_geco: limpio(r.ventana_geco),
+            pba_atenuacion: limpio(r.pba_atenuacion),
+            autonegociacion: limpio(r.autonegociacion),
+            configuracion_puerto_destino: limpio(r.configuracion_puerto_destino),
+            supervisa_corte: limpio(r.supervisa_corte),
+          
+            sgipe: limpio(r.sgipe),
+            grupo: limpio(r.grupo),
+            orden_atlas: limpio(r.orden_atlas),
+            estado_orden_atlas: limpio(r.estado_orden_atlas),
+            uo_atlas: limpio(r.uo_atlas),
+            observaciones_preparacion_reasignacion:
+              limpio(r.observaciones_preparacion_reasignacion),
+          };  
 
           
 
@@ -422,6 +399,8 @@ observaciones_preparacion_reasignacion:
 
       if (errores.length > 0) {
         console.error("Errores guardando reasignaciones:", errores);
+        console.error("Primer error:", errores[0]?.error);
+        console.error("Payload primer error:", errores[0]?.payload);
         alert(
           `Error al guardar ${errores.length} reasignación(es). Mira la consola.`
         );
