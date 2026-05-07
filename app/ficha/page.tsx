@@ -333,6 +333,28 @@ export default function Ficha() {
     setCambiosSinGuardar(true);
   };
 
+
+const crearNuevaActuacion = (tituloGrupo: string, primero: any) => {
+  const nueva = {
+    id: "nuevo-" + Date.now(),
+    atlas: formData.atlas,
+    sgipe: primero?.sgipe || null,
+    grupo: primero?.grupo || null,
+    estado_actuacion: "Pendiente",
+    actuacion_nocturna: false,
+  };
+
+  setActuaciones((prev) => [...prev, nueva]);
+
+  setMostrarActuaciones((prev) => ({
+    ...prev,
+    [tituloGrupo]: true,
+  }));
+
+  setCambiosSinGuardar(true);
+};
+  
+
   const guardarCambios = async () => {
     if (!formData?.id) {
       alert("Error: no hay ID");
@@ -1194,6 +1216,24 @@ if (erroresActuaciones.length > 0) {
             {mostrarActuaciones[tituloGrupo]
               ? "Ocultar Actuaciones"
               : "Ver Actuaciones"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              const primero: any = items[0];
+              crearNuevaActuacion(tituloGrupo, primero);
+            }}
+            style={{
+              background: "#ffd966",
+              border: "1px solid #bf9000",
+              color: "#7f6000",
+              padding: "6px 20px",
+              borderRadius: 6,
+              fontSize: 8,
+              cursor: "pointer",
+            }}
+          >
+            ➕ Nueva actuación
           </button>
         </div>
       </div>
