@@ -482,6 +482,9 @@ if (sinFechaObligatoria.length > 0) {
             orden_atlas: limpio(r.orden_atlas),
             estado_orden_atlas: limpio(r.estado_orden_atlas),
             uo_atlas: limpio(r.uo_atlas),
+            btp: limpio(r.btp),
+            fecha_btp: limpio(r.fecha_btp),
+            codigo_acceso: limpio(r.codigo_acceso),
             observaciones_preparacion_reasignacion:
               limpio(r.observaciones_preparacion_reasignacion),
           };  
@@ -1792,6 +1795,45 @@ if (erroresActuaciones.length > 0) {
               <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChangeById(r.id,"orden_atlas",v)}/>
               <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChangeById(r.id,"estado_orden_atlas",v)}/>
               <CampoInputAuto label="UO Atlas" value={r.uo_atlas || ""} minWidth={100} onChange={(v)=>handleReasignacionChangeById(r.id,"uo_atlas",v)}/>
+              <CampoInputAuto
+                label="BTP"
+                value={r.btp || ""}
+                minWidth={90}
+                onChange={(v)=>handleReasignacionChangeById(r.id,"btp",v)}
+              />
+              
+              <div style={{ minWidth:130, flex:"0 0 auto" }}>
+                <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
+                  Fecha BTP
+                </div>
+              
+                <input
+                  type="date"
+                  value={r.fecha_btp || ""}
+                  onChange={(e)=>handleReasignacionChangeById(r.id,"fecha_btp",e.target.value)}
+                  style={{
+                    width:"100%",
+                    height:20,
+                    padding:"1px 5px",
+                    background:COLORES.fondoCampo,
+                    border:"1px solid #666",
+                    borderRadius:4,
+                    fontSize:11,
+                    boxSizing:"border-box"
+                  }}
+                />
+              </div>
+              
+              <CampoInputAuto
+                label="Código Acceso"
+                value={r.codigo_acceso || ""}
+                minWidth={120}
+                onChange={(v)=>handleReasignacionChangeById(r.id,"codigo_acceso",v)}
+              />
+
+
+
+              
               <div style={{flex:1,minWidth:600}}>
                 <CampoInputAuto
                   label="Observaciones Preparación"
