@@ -353,31 +353,6 @@ const crearNuevaActuacion = (tituloGrupo: string, primero: any) => {
 
   setCambiosSinGuardar(true);
 };
-
-
-const eliminarActuacion = async (act: any) => {
-  const confirmar = confirm("¿Eliminar esta actuación?");
-  if (!confirmar) return;
-
-  if (String(act.id).startsWith("nuevo-")) {
-    setActuaciones((prev) => prev.filter((a) => a.id !== act.id));
-    setCambiosSinGuardar(true);
-    return;
-  }
-
-  const { error } = await supabase
-    .from("actuaciones")
-    .delete()
-    .eq("id", act.id);
-
-  if (error) {
-    console.error("Error eliminando actuación:", error);
-    alert("Error al eliminar la actuación");
-    return;
-  }
-
-  setActuaciones((prev) => prev.filter((a) => a.id !== act.id));
-};
   
 
   const guardarCambios = async () => {
@@ -1373,7 +1348,7 @@ if (erroresActuaciones.length > 0) {
       <CampoInputAuto
         label="Observaciones Actuación"
         value={act.observaciones_actuacion || ""}
-        minWidth={480}
+        minWidth={520}
         onChange={(v) => handleActuacionChangeById(act.id, "observaciones_actuacion", v, act)}
       />
     </div>
@@ -1428,32 +1403,15 @@ if (erroresActuaciones.length > 0) {
       />
     </div>
 
-   {/* atelco + papelera */}
-<div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
-  <CampoInputAuto
-    label="Gestor Atelco"
-    value={act.gestor_atelco || ""}
-    minWidth={170}
-    onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
-  />
-
-<button
-  type="button"
-  onClick={() => eliminarActuacion(act)}
-  style={{
-    background: "transparent",
-    border: "none",
-    cursor: "pointer",
-    fontSize: 14,
-    opacity: 0.6,
-    padding: "0 4px",
-  }}
-  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
-  title="Eliminar actuación"
->
-  🗑️
-</button>
+    {/* atelco */}
+    <div style={{ display: "flex", gap: 8 }}>
+      <CampoInputAuto
+        label="Gestor Atelco"
+        value={act.gestor_atelco || ""}
+        minWidth={170}
+        onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
+      />
+    </div>
 
     
   </div>
