@@ -1373,7 +1373,7 @@ if (erroresActuaciones.length > 0) {
         label="Empresa Planta Int."
         value={act.ec_pi || ""}
         options={empresasPI.map((e: any) => e.nombre)}
-        minWidth={150}
+        minWidth={120}
         onChange={(v) => handleActuacionChangeById(act.id, "ec_pi", v, act)}
       />
 
