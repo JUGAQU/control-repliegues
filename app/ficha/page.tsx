@@ -1261,7 +1261,7 @@ if (sinFechaObligatoria.length > 0) {
       <CampoInputAuto
         label="Observaciones Actuación"
         value={act.observaciones_actuacion || ""}
-        minWidth={450}
+        minWidth={550}
         onChange={(v) => handleActuacionChangeById(act.id, "observaciones_actuacion", v)}
       />
     </div>
