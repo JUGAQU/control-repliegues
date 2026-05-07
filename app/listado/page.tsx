@@ -129,23 +129,40 @@ const ordenar = (campo: string) => {
     return <div style={{ padding: 20 }}>Cargando datos...</div>;
   }
 
-  return (
+        return (
+  <div
+    style={{
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      margin: 0,
+      padding: 0,
+      fontSize: 11,
+    }}
+  >
     <div
       style={{
-        height: "100vh",
+        height: 50,
         display: "flex",
-        flexDirection: "column",
-        margin: 0,
-        padding: 0,
-        fontSize: 11,
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#e6e6e6",
+        borderBottom: "1px solid #ccc",
       }}
-  >
-      <div
-        style={{
+    >
+      <img
+        src="/logogris.png"
+        alt="Logo"
+        style={{ height: 35, objectFit: "contain" }}
+      />
+    </div>
+
+    <div
+      style={{
         flex: 1,
         overflow: "auto",
-        }}
-  >
+      }}
+    >
         <table
           style={{
             borderCollapse: "collapse",
