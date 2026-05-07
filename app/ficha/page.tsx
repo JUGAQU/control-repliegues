@@ -305,21 +305,30 @@ export default function Ficha() {
   setCambiosSinGuardar(true);
 };
 
-  const handleActuacionChangeById = (
+const handleActuacionChangeById = (
   id: any,
   field: string,
-  value: string
+  value: any,
+  base?: any
 ) => {
-  setActuaciones((prev) =>
-    prev.map((item) =>
-      item.id === id
-        ? {
-            ...item,
-            [field]: value,
-          }
-        : item
-    )
-  );
+  setActuaciones((prev) => {
+    const existe = prev.some((item) => item.id === id);
+
+    if (existe) {
+      return prev.map((item) =>
+        item.id === id ? { ...item, [field]: value } : item
+      );
+    }
+
+    return [
+      ...prev,
+      {
+        ...(base || {}),
+        id,
+        [field]: value,
+      },
+    ];
+  });
 
   setCambiosSinGuardar(true);
 };
