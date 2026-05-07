@@ -112,6 +112,7 @@ export default function Ficha() {
   const [memoria, setMemoria] = useState("");
   const [reasignaciones, setReasignaciones] = useState<any[]>([]);
   const [actuaciones, setActuaciones] = useState<any[]>([]);
+  const [mostrarActuaciones, setMostrarActuaciones] = useState<Record<string, boolean>>({});
   const [bloqueActivo, setBloqueActivo] = useState<BloqueActivo>(null);
   const [filtroSgipe, setFiltroSgipe] = useState("");
   const [filtroGrupo, setFiltroGrupo] = useState("");
@@ -1102,19 +1103,27 @@ if (sinFechaObligatoria.length > 0) {
           
           </span>
 
-          
           <button
             type="button"
-          onClick={() => {
-            const primero: any = items[0];
+            onClick={() =>
+              setMostrarActuaciones((prev) => ({
+                ...prev,
+                [tituloGrupo]: !prev[tituloGrupo],
+              }))
+            }
+            style={{
+              background: "#7fe08a",
+              border: "1px solid #6aa84f",
+              color: "#215e21",
+              padding: "6px 20px",
+              borderRadius: 6,
+              fontSize: 8,
+              cursor: "pointer",
+            }}
+            >
+              {mostrarActuaciones[tituloGrupo] ? "Ocultar Actuaciones" : "Ver Actuaciones"}
+            </button>
 
-            const numServicios = items.length;
-          
-            window.open(
-              `/actuaciones?atlas=${encodeURIComponent(formData.atlas || "")}&sgipe=${encodeURIComponent(primero?.sgipe || "")}&grupo=${encodeURIComponent(tituloGrupo || "")}&nservicios=${numServicios}`,
-              "_blank"
-            );
-          }}
              style={{
                 background: "#7fe08a",           // verde 
                 border: "1px solid #6aa84f",     // borde verde
@@ -1129,7 +1138,7 @@ if (sinFechaObligatoria.length > 0) {
           </button>
         </div>
       </div>
-      {(() => {
+      {mostrarActuaciones[tituloGrupo] && (() => {
         const primero: any = items[0];
       
         const actsFiltradas = actuaciones.filter((act: any) => {
@@ -1261,7 +1270,7 @@ if (sinFechaObligatoria.length > 0) {
       <CampoInputAuto
         label="Observaciones Actuación"
         value={act.observaciones_actuacion || ""}
-        minWidth={510}
+        minWidth={520}
         onChange={(v) => handleActuacionChangeById(act.id, "observaciones_actuacion", v)}
       />
     </div>
