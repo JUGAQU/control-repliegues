@@ -1413,7 +1413,7 @@ if (erroresActuaciones.length > 0) {
       <CampoInputAuto
         label="Técnico Responsable"
         value={act.tecnico_p_int || ""}
-        minWidth={170}
+        minWidth={150}
         onChange={(v) => handleActuacionChangeById(act.id, "tecnico_p_int", v, act)}
       />
 
@@ -1430,7 +1430,7 @@ if (erroresActuaciones.length > 0) {
       <CampoInputAuto
         label="Téc. Pta Ext."
         value={act.tecnico_p_ext || ""}
-        minWidth={170}
+        minWidth={150}
         onChange={(v) => handleActuacionChangeById(act.id, "tecnico_p_ext", v, act)}
       />
 
@@ -1447,7 +1447,7 @@ if (erroresActuaciones.length > 0) {
     <CampoInputAuto
       label="Gestor Atelco"
       value={act.gestor_atelco || ""}
-      minWidth={170}
+      minWidth={150}
       onChange={(v) => handleActuacionChangeById(act.id, "gestor_atelco", v, act)}
     />
   
