@@ -2048,7 +2048,9 @@ function CampoReaAuto({
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
-          width: minWidth,   // 👈 clave
+          
+          width: minWidth,
+          minWidth: minWidth,
           maxWidth: minWidth,
         }}
       >
@@ -2081,17 +2083,24 @@ function CampoReaSoloLecturaAuto({
       </div>
       <div
         style={{
-          background: COLORES.fondoSoloLectura,
-          color: COLORES.textoSoloLectura,
-          border: "1px solid #888",
-          borderRadius: 4,
-          padding: "1px 5px",
-          minHeight: 20,
-          fontSize: 11,
-          fontFamily: "Arial",
-          boxSizing: "border-box",
-          whiteSpace: "nowrap",
-        }}
+    background: COLORES.fondoSoloLectura,
+    color: COLORES.textoSoloLectura,
+    border: "1px solid #888",
+    borderRadius: 4,
+    padding: "1px 5px",
+    minHeight: 20,
+    fontSize: 11,
+    fontFamily: "Arial",
+    boxSizing: "border-box",
+
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+
+    width: minWidth,
+    minWidth: minWidth,
+    maxWidth: minWidth,
+  }}
       >
         {value ?? ""}
       </div>
@@ -2113,7 +2122,9 @@ function CampoInputAuto({
   return (
     <div
       style={{
-        width: minWidth,      // <- antes minWidth
+        width: minWidth,
+        minWidth: minWidth,
+        maxWidth: minWidth,      // <- antes minWidth
         flex: "0 0 auto"
       }}
     >
