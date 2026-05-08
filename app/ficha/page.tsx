@@ -2046,6 +2046,10 @@ function CampoReaAuto({
           fontFamily: "Arial",
           boxSizing: "border-box",
           whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          width: minWidth,   // 👈 clave
+          maxWidth: minWidth,
         }}
       >
         {value ?? ""}
