@@ -1547,7 +1547,7 @@ if (erroresActuaciones.length > 0) {
             <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
             <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
             <CampoReaSoloLecturaAuto label="Modo Reasignación" value={r.modo_reasignacion} minWidth={310}/>
-            <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={420}/>
+            <CampoReaSoloLecturaAuto label="Indicaciones Encaminamiento" value={r.indicaciones_para_el_encaminamiento} minWidth={440}/>
             <CampoInputAuto label="SGIPE" value={r.sgipe || ""} minWidth={70} onChange={(v)=>handleReasignacionChangeById(r.id,"sgipe",v)}/>
             <CampoSelectAuto
               label="Grupo"
