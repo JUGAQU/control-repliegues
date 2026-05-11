@@ -9,7 +9,18 @@ const handler = NextAuth({
       tenantId: process.env.AZURE_AD_TENANT_ID!,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+
+  callbacks: {
+    async signIn({ profile }) {
+      const email = profile?.email?.toLowerCase();
+
+      if (!email) {
+        return false;
+      }
+
+      return email.endsWith("@atelcosoluciones.es");
+    },
+  },
 });
 
 export { handler as GET, handler as POST };
