@@ -3,6 +3,9 @@ import AzureADProvider from "next-auth/providers/azure-ad";
 
 const USUARIOS_AUTORIZADOS = [
   "julio.garcia@atelcosoluciones.es",
+  "ricardo.sierra@atelcosoluciones.es",
+  "rafael.lopez@atelcosoluciones.es",
+  "francisco.trejo@atelcosoluciones.es",  
   // "otro.usuario@atelcosoluciones.es",
 ];
 
