@@ -9,6 +9,7 @@ const handler = NextAuth({
       tenantId: process.env.AZURE_AD_TENANT_ID!,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
