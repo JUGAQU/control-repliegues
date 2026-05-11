@@ -1,15 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "./lib/supabase";
 import LoginMicrosoft from "./components/LoginMicrosoft";
 
 export default function Home() {
   const router = useRouter();
+  const { data: session, status } = useSession();
+
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
+
+  // 👉 REDIRECCIÓN SI YA ESTÁ LOGUEADO CON MICROSOFT
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/listado");
+    }
+  }, [status, router]);
 
   const handleLogin = async () => {
     setError("");
@@ -44,6 +54,11 @@ export default function Home() {
       setError("No se puede iniciar sesión con la VPN activa.");
     }
   };
+
+  // 👉 Mientras carga sesión
+  if (status === "loading") {
+    return <div style={{ color: "white" }}>Cargando...</div>;
+  }
 
   return (
     <div
@@ -119,16 +134,13 @@ export default function Home() {
             borderRadius: 6,
             fontSize: 16,
             cursor: "pointer",
-            transition: "0.2s",
             marginBottom: 12,
           }}
-          onMouseOver={(e) => (e.currentTarget.style.background = "#0059c1")}
-          onMouseOut={(e) => (e.currentTarget.style.background = "#0070f3")}
         >
           Entrar
         </button>
 
-        {/* 👇 BOTÓN MICROSOFT */}
+        {/* 👇 MICROSOFT */}
         <LoginMicrosoft />
       </div>
     </div>
