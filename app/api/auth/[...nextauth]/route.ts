@@ -2,33 +2,32 @@ import NextAuth from "next-auth";
 import AzureADProvider from "next-auth/providers/azure-ad";
 
 async function checkUserInSharePoint(email: string, accessToken: string) {
-  try {
-    const site = process.env.SHAREPOINT_SITE_NAME;
-    const list = process.env.SHAREPOINT_LIST_NAME;
+  const site = process.env.SHAREPOINT_SITE_NAME;
+  const list = process.env.SHAREPOINT_LIST_NAME;
 
-    const url = `https://graph.microsoft.com/v1.0/sites/atelcosoluciones.sharepoint.com:/sites/${site}:/lists/${list}/items?expand=fields`;
+  const url = `https://graph.microsoft.com/v1.0/sites/atelcosoluciones.sharepoint.com:/sites/${site}:/lists/${list}/items?expand=fields`;
 
-    const res = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-    const data = await res.json();
+  const data = await res.json();
 
-    const user = data.value?.find((item: any) => {
-      const spEmail = item.fields?.Title;
-    
-      return spEmail?.toLowerCase().trim() === email.toLowerCase().trim();
-    });
+  console.log("SHAREPOINT RESPONSE:", JSON.stringify(data, null, 2));
 
-    if (!user) return false;
+  const user = data.value?.find((item: any) => {
+    const spEmail = item.fields?.Title?.toLowerCase().trim();
+    return spEmail === email.toLowerCase().trim();
+  });
 
-    return user.fields?.activo === true;
-  } catch (error) {
-    console.error("Error SharePoint:", error);
-    return false;
-  }
+  console.log("EMAIL LOGIN:", email);
+  console.log("USUARIO ENCONTRADO:", user);
+
+  if (!user) return false;
+
+  return user.fields?.activo === true || user.fields?.activo === "true";
 }
 
 const handler = NextAuth({
@@ -37,6 +36,11 @@ const handler = NextAuth({
       clientId: process.env.AZURE_AD_CLIENT_ID!,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
       tenantId: process.env.AZURE_AD_TENANT_ID!,
+      authorization: {
+        params: {
+          scope: "openid profile email User.Read Sites.Read.All",
+        },
+      },
     }),
   ],
 
@@ -48,12 +52,7 @@ const handler = NextAuth({
         return false;
       }
 
-      const permitido = await checkUserInSharePoint(
-        email,
-        account.access_token
-      );
-
-      return permitido;
+      return await checkUserInSharePoint(email, account.access_token);
     },
   },
 });
