@@ -1290,8 +1290,8 @@ if (erroresActuaciones.length > 0) {
   <div style={{ display: "flex", gap: 30, flexWrap: "wrap" }}>
 
     {/* datos actuación */}
-    <div style={{ display: "flex", gap: 8 }}>
-      <div style={{ width: 100, flex: "0 0 auto" }}>
+    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+      <div style={{ minWidth: 100, flex: "1 1 auto" }}>
   <div
     style={{
       fontSize: 11,
@@ -1370,7 +1370,7 @@ if (erroresActuaciones.length > 0) {
 
 
     {/* planta interior */}
-    <div style={{ display: "flex", gap: 5 }}>
+    <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
       <CampoSelectAuto
         label="Empresa Planta Int."
         value={act.ec_pi || ""}
@@ -1402,7 +1402,7 @@ if (erroresActuaciones.length > 0) {
     </div>
 
     {/* planta exterior */}
-    <div style={{ display: "flex", gap: 5 }}>
+    <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
       <CampoInputAuto
         label="Téc. Pta Ext."
         value={act.tecnico_p_ext || ""}
@@ -1419,7 +1419,7 @@ if (erroresActuaciones.length > 0) {
     </div>
 
    {/* atelco + papelera */}
-  <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
+  <div style={{ display: "flex", gap: 8, alignItems: "flex-end", flexWrap: "wrap" }}>
     <CampoInputAuto
       label="Gestor Atelco"
       value={act.gestor_atelco || ""}
@@ -1566,7 +1566,7 @@ if (erroresActuaciones.length > 0) {
               onChange={(v)=>handleReasignacionChangeById(r.id,"estado_trabajos",v)}
             />
           
-            <div style={{ minWidth:130, flex:"0 0 auto" }}>
+            <div style={{ minWidth:130, flex:"1 1 auto" }}>
               <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
                 Fecha Ejecución
               </div>
@@ -1616,7 +1616,7 @@ if (erroresActuaciones.length > 0) {
               <CampoInputAuto label="Prueba de Atenuación" value={r.pba_atenuacion || ""} minWidth={130} onChange={(v)=>handleReasignacionChangeById(r.id,"pba_atenuacion",v)}/>
               <CampoInputAuto label="Autonegociación" value={r.autonegociacion || ""} minWidth={100} onChange={(v)=>handleReasignacionChangeById(r.id,"autonegociacion",v)}/>
               <CampoInputAuto label="Configuracion Puerto Destino" value={r.configuracion_puerto_destino || ""} minWidth={170} onChange={(v)=>handleReasignacionChangeById(r.id,"configuracion_puerto_destino",v)}/>
-              <div style={{ minWidth:150, flex:"0 0 auto" }}>
+              <div style={{ minWidth:150, flex:"1 1 auto" }}>
               <div
                 style={{
                   fontSize:11,
@@ -1653,7 +1653,7 @@ if (erroresActuaciones.length > 0) {
               
 
             {/* BLOQUE CHECKS */}
-            <div style={{ minWidth:330, flex:"0 0 auto" }}>
+            <div style={{ minWidth:330, flex:"1 1 auto" }}>
             
               {/* Etiqueta como el resto de campos */}
               <div
@@ -1837,7 +1837,7 @@ if (erroresActuaciones.length > 0) {
                 onChange={(v)=>handleReasignacionChangeById(r.id,"btp",v)}
               />
               
-              <div style={{ minWidth:130, flex:"0 0 auto" }}>
+              <div style={{ minWidth:130, flex:"1 1 auto" }}>
                 <div style={{fontSize:11,fontWeight:"bold",color:COLORES.textoAzul,marginBottom:3}}>
                   Fecha BTP
                 </div>
