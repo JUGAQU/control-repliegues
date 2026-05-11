@@ -636,7 +636,7 @@ if (erroresActuaciones.length > 0) {
     padding: "12px 10px",
     background: COLORES.fondoBloque,
     display: "flex",
-    flexWrap: "nowrap",
+    flexWrap: "wrap",
     overflowX: "auto",
     gap: 8,
   };
@@ -709,7 +709,7 @@ if (erroresActuaciones.length > 0) {
         fontFamily: "Arial",
         display: "flex",
         flexDirection: "column",
-        overflow: "hidden",
+        overflow: "auto",
       }}
     >
       <div
@@ -1031,7 +1031,7 @@ if (erroresActuaciones.length > 0) {
                           style={{
                             display: "flex",
                             gap: 10,
-                            flexWrap: "nowrap",
+                            flexWrap: "wrap",
                             overflowX: "auto",
                             marginBottom: 8,
                           }}
@@ -1124,7 +1124,7 @@ if (erroresActuaciones.length > 0) {
                           style={{
                             display: "flex",
                             gap: 10,
-                            flexWrap: "nowrap",
+                            flexWrap: "wrap",
                             overflowX: "auto",
                             marginBottom: 8,
                             alignItems: "flex-start",
@@ -1982,6 +1982,24 @@ if (erroresActuaciones.length > 0) {
     </div>
   );
 }
+const labelCampo: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: "bold",
+  color: COLORES.textoAzul,
+  marginBottom: 3,
+};
+
+const inputCampo: React.CSSProperties = {
+  width: "100%",
+  height: 20,
+  padding: "1px 5px",
+  background: COLORES.fondoCampo,
+  border: "1px solid #666",
+  borderRadius: 4,
+  fontSize: 11,
+  boxSizing: "border-box",
+  fontFamily: "Arial",
+};
 
 function BotonBloque({
   texto,
@@ -2024,7 +2042,7 @@ function CampoReaAuto({
   color?: string;
 }) {
   return (
-    <div style={{ minWidth, flex: "0 0 auto" }}>
+    <div style={{ minWidth, flex: "1 1 auto" }}>
       <div
         style={{
           fontSize: 11,
@@ -2048,10 +2066,8 @@ function CampoReaAuto({
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
-          
-          width: minWidth,
-          minWidth: minWidth,
-          maxWidth: minWidth,
+          width: "100%",
+
         }}
       >
         {value ?? ""}
@@ -2122,38 +2138,15 @@ function CampoInputAuto({
   return (
     <div
       style={{
-        width: minWidth,
-        minWidth: minWidth,
-        maxWidth: minWidth,      // <- antes minWidth
-        flex: "0 0 auto"
+        minWidth,
+        flex: "1 1 auto",
       }}
     >
-      <div
-        style={{
-          fontSize: 11,
-          fontWeight: "bold",
-          color: COLORES.textoAzul,
-          marginBottom: 3,
-        }}
-      >
-        {label}
-      </div>
-
+      <div style={labelCampo}>{label}</div>
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        style={{
-          width: "100%",
-          maxWidth: "100%",
-          height: 20,
-          padding: "1px 5px",
-          background: COLORES.fondoCampo,
-          border: "1px solid #666",
-          borderRadius: 4,
-          fontSize: 11,
-          boxSizing: "border-box",
-          fontFamily: "Arial",
-        }}
+        style={inputCampo}
       />
     </div>
   );
@@ -2178,7 +2171,7 @@ function CampoSelectAuto({
     : [valorActual, "", ...options];
 
   return (
-    <div style={{ minWidth, flex: "0 0 auto" }}>
+    <div style={{ minWidth, flex: "1 1 auto" }}>
       <div
         style={{
           fontSize: 11,
@@ -2193,7 +2186,7 @@ function CampoSelectAuto({
         value={valorActual}
         onChange={(e) => onChange(e.target.value)}
         style={{
-          minWidth: "100%",
+          width: "100%",
           height: 20,
           padding: "1px 5px",
           background: COLORES.fondoCampo,
