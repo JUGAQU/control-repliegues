@@ -2,46 +2,45 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { supabase } from "../lib/supabase";
 
-// 🔒 función segura
 const safe = (v: any) => (v ?? "").toString().toLowerCase();
 
 export default function Listado() {
   const router = useRouter();
+  const { data: microsoftSession, status } = useSession();
 
   const [datos, setDatos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [cargandoDatos, setCargandoDatos] = useState(true);
 
-  // 🔐 PROTECCIÓN LOGIN
   useEffect(() => {
     const checkUser = async () => {
+      if (status === "loading") return;
+
       const { data } = await supabase.auth.getSession();
 
-      if (!data.session) {
+      if (!data.session && !microsoftSession) {
         router.push("/");
-      } else {
-        setLoading(false);
+        return;
       }
+
+      setLoading(false);
     };
 
     checkUser();
-  }, []);
+  }, [status, microsoftSession, router]);
 
-  // 🚀 CGA DATOS
   useEffect(() => {
     const cargarDatos = async () => {
       try {
         const res = await fetch("/api/fichas");
         const data = await res.json();
 
-        console.log("DATOS API:", data);
-
         if (Array.isArray(data)) {
           setDatos(data);
         } else {
-          console.error("La API no devuelve array:", data);
           setDatos([]);
         }
       } catch (error) {
@@ -54,7 +53,6 @@ export default function Listado() {
     cargarDatos();
   }, []);
 
-  // 🔍 FILTROS
   const [filtros, setFiltros] = useState({
     atlas: "",
     lote: "",
@@ -71,29 +69,27 @@ export default function Listado() {
     tecnico_reasignaciones: "",
   });
 
-  // 🔼 ORDEN
   const [orden, setOrden] = useState<{
     campo: string;
     direccion: "asc" | "desc";
-}>({
-  campo: "atlas",
-  direccion: "asc",
-});
+  }>({
+    campo: "atlas",
+    direccion: "asc",
+  });
 
-const ordenar = (campo: string) => {
-  let direccion: "asc" | "desc" = "asc";
+  const ordenar = (campo: string) => {
+    let direccion: "asc" | "desc" = "asc";
 
-  if (orden.campo === campo && orden.direccion === "asc") {
-    direccion = "desc";
-  }
+    if (orden.campo === campo && orden.direccion === "asc") {
+      direccion = "desc";
+    }
 
-  setOrden({ campo, direccion });
-};
+    setOrden({ campo, direccion });
+  };
 
-  // 🔍 FILTRADO + ORDEN
   const datosFiltrados = datos
     .filter((item) => {
-      if (!item) return false; // 🔥 evita errores
+      if (!item) return false;
 
       return (
         safe(item.atlas).includes(safe(filtros.atlas)) &&
@@ -112,8 +108,6 @@ const ordenar = (campo: string) => {
       );
     })
     .sort((a: any, b: any) => {
-      if (!orden.campo) return 0;
-
       const valorA = safe(a[orden.campo]);
       const valorB = safe(b[orden.campo]);
 
@@ -122,64 +116,56 @@ const ordenar = (campo: string) => {
       return 0;
     });
 
-  // 🛑 BLOQUEOS DE RENDER
-  if (loading) return null;
+  if (loading || status === "loading") return null;
 
   if (cargandoDatos) {
     return <div style={{ padding: 20 }}>Cargando datos...</div>;
   }
 
-        return (
-  <div
-    style={{
-      height: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      margin: 0,
-      padding: 0,
-      fontSize: 11,
-    }}
-  >
+  return (
     <div
       style={{
-        height: 50,
+        height: "100vh",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#e6e6e6",
-        borderBottom: "1px solid #ccc",
+        flexDirection: "column",
+        margin: 0,
+        padding: 0,
+        fontSize: 11,
       }}
     >
-      <img
-        src="/logogris.png"
-        alt="Logo"
-        style={{ height: 35, objectFit: "contain" }}
-      />
-    </div>
+      <div
+        style={{
+          height: 50,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#e6e6e6",
+          borderBottom: "1px solid #ccc",
+        }}
+      >
+        <img
+          src="/logogris.png"
+          alt="Logo"
+          style={{ height: 35, objectFit: "contain" }}
+        />
+      </div>
 
-    <div
-      style={{
-        flex: 1,
-        overflow: "auto",
-      }}
-    >
+      <div style={{ flex: 1, overflow: "auto" }}>
         <table
           style={{
             borderCollapse: "collapse",
             width: "100%",
             tableLayout: "fixed",
-
           }}
         >
           <thead
-              style={{
-                position: "sticky",
-                top: 0,
-                background: "#ddd",
-                zIndex: 2,
-              }}
+            style={{
+              position: "sticky",
+              top: 0,
+              background: "#ddd",
+              zIndex: 2,
+            }}
           >
-            {/* 🔍 FILTROS */}
             <tr>
               {Object.keys(filtros).map((campo) => (
                 <th key={campo} style={th}>
@@ -196,7 +182,6 @@ const ordenar = (campo: string) => {
               ))}
             </tr>
 
-            {/* 🧾 CABECERA */}
             <tr style={{ background: "#ddd" }}>
               <th style={th} onClick={() => ordenar("atlas")}>Atlas</th>
               <th style={th} onClick={() => ordenar("lote")}>Lote</th>
@@ -219,13 +204,7 @@ const ordenar = (campo: string) => {
               <tr key={item.id}>
                 <td
                   style={{ ...td, cursor: "pointer" }}
-                  onClick={() => {
-                    if (!item?.id) {
-                      console.error("ID inválido:", item);
-                      return;
-                    }
-                    router.push(`/ficha?id=${item.id}`);
-                  }}
+                  onClick={() => router.push(`/ficha?id=${item.id}`)}
                 >
                   {item.atlas}
                 </td>
@@ -250,7 +229,6 @@ const ordenar = (campo: string) => {
   );
 }
 
-// 🎨 ESTILOS
 const th = {
   border: "1px solid #999",
   padding: "4px 6px",
@@ -262,7 +240,7 @@ const th = {
 const td = {
   border: "1px solid #ccc",
   padding: "3px 6px",
-  whiteSpace: "nowrap",
+  whiteSpace: "nowrap" as const,
   overflow: "hidden",
   textOverflow: "ellipsis",
 };
