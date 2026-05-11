@@ -18,7 +18,7 @@ async function checkUserInSharePoint(email: string, accessToken: string) {
 
     const user = data.value?.find(
       (item: any) =>
-        item.fields?.Title?.toLowerCase() === email.toLowerCase()
+        item.fields?.email?.toLowerCase() === email.toLowerCase()
     );
 
     if (!user) return false;
