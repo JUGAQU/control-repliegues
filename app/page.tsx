@@ -1,42 +1,9 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "./lib/supabase";
-
-
-
-
 import LoginMicrosoft from "./components/LoginMicrosoft";
-
-export default function Page() {
-  return (
-    <div>
-      <LoginMicrosoft />
-    </div>
-  );
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export default function Home() {
   const router = useRouter();
@@ -46,7 +13,6 @@ export default function Home() {
 
   const handleLogin = async () => {
     setError("");
-
     try {
       const email = user.trim() + "@app.com";
 
@@ -54,8 +20,6 @@ export default function Home() {
         email,
         password: pass,
       });
-
-      console.log("LOGIN ERROR:", error);
 
       if (error) {
         const msg = (error.message || "").toLowerCase();
@@ -67,7 +31,9 @@ export default function Home() {
         ) {
           setError("No se puede iniciar sesión con CARU activo.");
         } else {
-          setError("Usuario o contraseña incorrectos. ¡Para acceder CARU no puede estarvactivo!");
+          setError(
+            "Usuario o contraseña incorrectos. ¡Para acceder CARU no puede estar activo!"
+          );
         }
         return;
       }
@@ -154,12 +120,16 @@ export default function Home() {
             fontSize: 16,
             cursor: "pointer",
             transition: "0.2s",
+            marginBottom: 12,
           }}
           onMouseOver={(e) => (e.currentTarget.style.background = "#0059c1")}
           onMouseOut={(e) => (e.currentTarget.style.background = "#0070f3")}
         >
           Entrar
         </button>
+
+        {/* 👇 BOTÓN MICROSOFT */}
+        <LoginMicrosoft />
       </div>
     </div>
   );
