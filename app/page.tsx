@@ -3,6 +3,41 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "./lib/supabase";
 
+
+
+
+import LoginMicrosoft from "./components/LoginMicrosoft";
+
+export default function Page() {
+  return (
+    <div>
+      <LoginMicrosoft />
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default function Home() {
   const router = useRouter();
   const [user, setUser] = useState("");
