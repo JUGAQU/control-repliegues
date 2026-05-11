@@ -1869,11 +1869,11 @@ if (erroresActuaciones.length > 0) {
 
 
               
-              <div style={{flex:1,minWidth:600}}>
+              <div style={{ flex: "1 1 100%", minWidth: 0, maxWidth: "100%" }}>
                 <CampoInputAuto
                   label="Observaciones Preparación"
                   value={r.observaciones_preparacion_reasignacion || ""}
-                  minWidth={850}
+                  minWidth={300}
                   onChange={(v)=>handleReasignacionChangeById(r.id,"observaciones_preparacion_reasignacion",v)}
                 />
               </div>
@@ -2138,6 +2138,7 @@ function CampoInputAuto({
     <div
       style={{
         minWidth,
+        maxWidth: "100%",
         flex: "1 1 auto",
       }}
     >
