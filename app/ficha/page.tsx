@@ -1542,7 +1542,7 @@ if (erroresActuaciones.length > 0) {
 
 
           {/* FILA 1 */}
-          <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 6 }}>
           
             <CampoReaSoloLecturaAuto label="Tipo" value={r.tipo} minWidth={100}/>
             <CampoReaSoloLecturaAuto label="Servicio" value={r.servicio} minWidth={420}/>
@@ -1606,7 +1606,7 @@ if (erroresActuaciones.length > 0) {
           </div>
           
           {/* FILA 2 */}
-            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 6 }}>
                       
               <CampoReaSoloLecturaAuto label="Orden Partida" value={r.ordenes} minWidth={100}/>
               <CampoReaSoloLecturaAuto label="Diversificado" value={r.diversificado} minWidth={100}/>
@@ -1825,7 +1825,7 @@ if (erroresActuaciones.length > 0) {
           
 
             {/* FILA 3 */}
-            <div style={{display:"flex",gap:8,overflowX:"auto",marginBottom:6}}>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 6 }}>
               <CampoReaSoloLecturaAuto label="Administrativo" value={r.administrativo} minWidth={130}/>
               <CampoInputAuto label="Orden Atlas" value={r.orden_atlas || ""} minWidth={120} onChange={(v)=>handleReasignacionChangeById(r.id,"orden_atlas",v)}/>
               <CampoInputAuto label="Estado Orden" value={r.estado_orden_atlas || ""} minWidth={150} onChange={(v)=>handleReasignacionChangeById(r.id,"estado_orden_atlas",v)}/>
@@ -2086,7 +2086,7 @@ function CampoReaSoloLecturaAuto({
   minWidth?: number;
 }) {
   return (
-    <div style={{ minWidth, flex: "0 0 auto" }}>
+    <div style={{ minWidth, flex: "1 1 auto" }}>
       <div
         style={{
           fontSize: 11,
@@ -2112,10 +2112,9 @@ function CampoReaSoloLecturaAuto({
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    width: "100%",
 
-    width: minWidth,
-    minWidth: minWidth,
-    maxWidth: minWidth,
+
   }}
       >
         {value ?? ""}
@@ -2223,7 +2222,7 @@ function CampoSelectEstado({
     options.includes(valorActual) ? options : [valorActual, ...options];
 
   return (
-    <div style={{ minWidth: 140, flex: "0 0 auto" }}>
+    <div style={{ minWidth: 140, flex: "1 1 auto" }}>
       <div
         style={{
           fontSize: 11,
